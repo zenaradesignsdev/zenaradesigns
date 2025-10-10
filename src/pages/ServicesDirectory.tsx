@@ -6,10 +6,10 @@ const ServicesDirectory = () => {
   
   // SEO meta tags - Indexed for comprehensive service coverage
   useSEO({
-    title: "Complete Services Directory - Web Design, Development & Digital Marketing Toronto | Aura Designs",
+    title: "Complete Services Directory - Web Design, Development & Digital Marketing Toronto | Zenara Designs",
     description: "Comprehensive directory of web design, development, and digital marketing services in Toronto & GTA. Find specialized services for every business need across the Greater Toronto Area.",
     keywords: "web design services toronto, web development services gta, digital marketing toronto, business cards toronto, logo design mississauga, ecommerce development brampton",
-    canonical: "https://auradesigns.net/services-directory"
+    canonical: "https://zenaradesigns.ca/services-directory"
   });
 
   const services = [

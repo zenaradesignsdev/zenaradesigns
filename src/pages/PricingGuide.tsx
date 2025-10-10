@@ -6,10 +6,10 @@ const PricingGuide = () => {
   
   // SEO meta tags - Indexed for high-intent pricing searches
   useSEO({
-    title: "Web Design Pricing Guide Toronto | Website Development Costs GTA | Aura Designs",
+    title: "Web Design Pricing Guide Toronto | Website Development Costs GTA | Zenara Designs",
     description: "Transparent pricing guide for web design, development, and digital marketing services in Toronto & GTA. Get detailed costs for small business websites, e-commerce, and enterprise solutions.",
     keywords: "web design pricing toronto, website development cost gta, toronto web agency pricing, small business website cost, ecommerce website price toronto",
-    canonical: "https://auradesigns.net/pricing-guide"
+    canonical: "https://zenaradesigns.ca/pricing-guide"
   });
 
   const pricingCategories = [
@@ -188,7 +188,7 @@ const PricingGuide = () => {
 
         <div className="mt-12 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-lg p-8 border border-cyan-500/30">
           <h2 className="text-2xl font-semibold text-white mb-4 text-center">
-            Why Choose Aura Designs for Your Toronto Web Design Project?
+            Why Choose Zenara Designs for Your Toronto Web Design Project?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="text-center">

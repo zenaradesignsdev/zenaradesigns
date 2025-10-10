@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Mail, Phone } from 'lucide-react';
 import { scrollToTop } from '@/hooks';
 import { BUSINESS_EMAIL, BUSINESS_PHONE, NAVIGATION_LINKS } from '@/lib/constants';
-import logo from '@/assets/auralogo-transparentbg.png';
+import logo from '@/assets/zenaralogo-transparentbg.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -80,7 +80,7 @@ const Footer = () => {
       </div>
 
       <div className="relative z-10">
-        {/* AURA Brand Section */}
+        {/* ZENARA Brand Section */}
         <div className="py-16 text-center">
           <h1 className="text-8xl md:text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/5 leading-none tracking-widest uppercase" style={{
             fontFamily: 'Nunito, Quicksand, Poppins, sans-serif',
@@ -88,7 +88,7 @@ const Footer = () => {
             letterSpacing: '0.1em',
             textShadow: '0 0 20px rgba(255, 255, 255, 0.1)'
           }}>
-            Aura Designs
+            Zenara Designs
           </h1>
           
           {/* Divider Line */}
@@ -103,8 +103,8 @@ const Footer = () => {
             {/* Brand */}
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <img src={logo} alt="Aura Designs" className="h-8 w-auto" loading="lazy" decoding="async" />
-                <span className="font-normal text-lg text-white">Aura Designs</span>
+                <img src={logo} alt="Zenara Designs" className="h-8 w-auto" loading="lazy" decoding="async" />
+                <span className="font-normal text-lg text-white">Zenara Designs</span>
               </div>
               <p className="text-slate-300 max-w-xs">
                 Creating high-performing websites for small businesses and professionals using modern development workflows.
@@ -156,7 +156,7 @@ const Footer = () => {
 
           <div className="border-t border-cyan-400/20 mt-8 pt-8 text-center">
             <p className="text-slate-400">
-              © {currentYear} Aura Designs. All rights reserved.
+              © {currentYear} Zenara Designs. All rights reserved.
             </p>
           </div>
         </div>

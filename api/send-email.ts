@@ -98,7 +98,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   // Set CORS headers (more restrictive)
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN || 'https://auradesigns.net');
+  res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN || 'https://zenaradesigns.ca');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader(
     'Access-Control-Allow-Headers',
@@ -196,8 +196,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Send email using Resend with sanitized data
     const { data, error } = await resend.emails.send({
-      from: 'Aura Designs <noreply@mail.auradesigns.net>',
-      to: ['auradesigns.team@gmail.com'],
+      from: 'Zenara Designs <noreply@mail.zenaradesigns.ca>',
+      to: ['zenaradesigns.team@gmail.com'],
       replyTo: sanitizedData.email,
       subject: `New Contact Form Submission from ${sanitizedData.name}`,
       html: generateEmailHTML(sanitizedData),
@@ -229,7 +229,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
 function generateEmailText(data: any): string {
   return `
-AURA DESIGNS - New Contact Form Submission
+ZENARA DESIGNS - New Contact Form Submission
 
 CONTACT INFORMATION:
 Name: ${data.name}
@@ -246,7 +246,7 @@ MESSAGE:
 ${data.message}
 
 ---
-This email was sent from the Aura Designs contact form.
+This email was sent from the Zenara Designs contact form.
 Reply directly to this email to respond to ${data.name}.
   `;
 }
@@ -265,7 +265,7 @@ function generateEmailHTML(data: any): string {
         <!-- Header -->
         <div style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #7c3aed 100%); padding: 30px; text-align: center;">
           <h1 style="color: #ffffff; margin: 0; font-size: 28px; font-weight: bold; letter-spacing: 1px;">
-            AURA DESIGNS
+            ZENARA DESIGNS
           </h1>
           <p style="color: #cbd5e1; margin: 10px 0 0 0; font-size: 16px;">
             New Contact Form Submission
@@ -310,13 +310,13 @@ function generateEmailHTML(data: any): string {
           <!-- Footer -->
           <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #e2e8f0;">
             <p style="color: #64748b; font-size: 14px; margin: 0;">
-              This email was sent from the Aura Designs contact form.
+              This email was sent from the Zenara Designs contact form.
             </p>
             <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">
               Reply directly to this email to respond to ${escapeHtml(data.name)}.
             </p>
             <p style="color: #94a3b8; font-size: 12px; margin: 10px 0 0 0;">
-              Aura Designs - Digital Solutions for the Modern World
+              Zenara Designs - Digital Solutions for the Modern World
             </p>
           </div>
         </div>

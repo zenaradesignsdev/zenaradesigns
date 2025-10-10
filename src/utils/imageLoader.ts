@@ -11,7 +11,7 @@ export const preloadImage = (src: string): Promise<HTMLImageElement> => {
 // Preload critical images
 export const preloadCriticalImages = async () => {
   const criticalImages = [
-    '/src/assets/auralogo-transparentbg.png',
+    '/src/assets/zenaralogo-transparentbg.png',
     '/src/assets/saturn.png',
     '/src/assets/moon.png'
   ];

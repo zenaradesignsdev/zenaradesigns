@@ -1,7 +1,7 @@
 # Performance Optimization Guide
 
 ## Overview
-This document outlines the comprehensive performance optimization strategies implemented in the Aura Designs codebase. The application is designed to deliver exceptional performance across all devices and network conditions, with particular focus on Core Web Vitals, loading speed, and user experience metrics.
+This document outlines the comprehensive performance optimization strategies implemented in the Zenara Designs codebase. The application is designed to deliver exceptional performance across all devices and network conditions, with particular focus on Core Web Vitals, loading speed, and user experience metrics.
 
 ## Table of Contents
 1. [Performance Architecture](#performance-architecture)
@@ -116,7 +116,7 @@ measurePageLoad: (): PerformanceMetrics | null => {
 <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" /></noscript>
 
 <!-- Preload critical assets -->
-<link rel="preload" href="/src/assets/auralogo-transparentbg.png" as="image" type="image/png" />
+<link rel="preload" href="/src/assets/zenaralogo-transparentbg.png" as="image" type="image/png" />
 <link rel="preload" href="/src/assets/saturn.png" as="image" type="image/png" />
 <link rel="preload" href="/src/assets/moon.png" as="image" type="image/png" />
 ```
@@ -268,7 +268,7 @@ const services = useMemo(() => [
 
 const testimonials = useMemo(() => [
   {
-    quote: "Aura delivered a clean, fast site in days. Our conversion rate jumped 40% within the first month.",
+    quote: "Zenara delivered a clean, fast site in days. Our conversion rate jumped 40% within the first month.",
     author: "Sarah Chen",
     company: "TechStart Inc.",
     role: "Marketing Director"
@@ -445,7 +445,7 @@ export const preloadImage = (src: string): Promise<HTMLImageElement> => {
 
 export const preloadCriticalImages = async () => {
   const criticalImages = [
-    '/src/assets/auralogo-transparentbg.png',
+    '/src/assets/zenaralogo-transparentbg.png',
     '/src/assets/saturn.png',
     '/src/assets/moon.png'
   ];
@@ -1020,4 +1020,4 @@ export function useScrollPosition() {
 **Version**: 1.0  
 **Review Schedule**: Monthly  
 
-**Note**: This performance optimization guide ensures the Aura Designs application delivers exceptional performance across all devices and network conditions. Regular monitoring and optimization are essential to maintain optimal performance standards.
+**Note**: This performance optimization guide ensures the Zenara Designs application delivers exceptional performance across all devices and network conditions. Regular monitoring and optimization are essential to maintain optimal performance standards.

@@ -1,7 +1,7 @@
 # Mobile Optimization Guide
 
 ## Overview
-This document outlines the comprehensive mobile optimization strategies implemented in the Aura Designs codebase. The application is designed to provide an exceptional user experience across all mobile devices, from small phones to large tablets, with particular attention to performance, usability, and visual consistency.
+This document outlines the comprehensive mobile optimization strategies implemented in the Zenara Designs codebase. The application is designed to provide an exceptional user experience across all mobile devices, from small phones to large tablets, with particular attention to performance, usability, and visual consistency.
 
 ## Table of Contents
 1. [Mobile-First Design Philosophy](#mobile-first-design-philosophy)
@@ -175,9 +175,9 @@ export function useIsMobile() {
 ```json
 // From public/site.webmanifest
 {
-  "name": "Aura Designs",
-  "short_name": "Aura Designs",
-  "description": "Aura Designs creates high-performing websites for small businesses and professionals using modern development workflows.",
+  "name": "Zenara Designs",
+  "short_name": "Zenara Designs",
+  "description": "Zenara Designs creates high-performing websites for small businesses and professionals using modern development workflows.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0f172a",
@@ -226,7 +226,7 @@ export function useIsMobile() {
 <meta name="mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-<meta name="apple-mobile-web-app-title" content="Aura Designs" />
+<meta name="apple-mobile-web-app-title" content="Zenara Designs" />
 ```
 
 ### Mobile Navigation
@@ -257,8 +257,8 @@ export function useIsMobile() {
           scrollToTop();
         }}
       >
-        <img src={logo} alt="Aura Designs" className="h-10 w-auto" loading="eager" decoding="async" />
-        <span className="font-bold text-xl text-slate-800">Aura Designs</span>
+        <img src={logo} alt="Zenara Designs" className="h-10 w-auto" loading="eager" decoding="async" />
+        <span className="font-bold text-xl text-slate-800">Zenara Designs</span>
       </Link>
 
       {/* Close Button */}
@@ -531,7 +531,7 @@ export function useIsMobile() {
 ### Responsive Images
 ```html
 <!-- From index.html -->
-<link rel="preload" href="/src/assets/auralogo-transparentbg.png" as="image" type="image/png" />
+<link rel="preload" href="/src/assets/zenaralogo-transparentbg.png" as="image" type="image/png" />
 <link rel="preload" href="/src/assets/saturn.png" as="image" type="image/png" />
 <link rel="preload" href="/src/assets/moon.png" as="image" type="image/png" />
 ```
@@ -717,4 +717,4 @@ img {
 **Version**: 1.0  
 **Review Schedule**: Quarterly  
 
-**Note**: This mobile optimization guide ensures the Aura Designs application provides an exceptional mobile experience while maintaining performance and accessibility standards. Regular testing and updates are essential to maintain optimal mobile performance.
+**Note**: This mobile optimization guide ensures the Zenara Designs application provides an exceptional mobile experience while maintaining performance and accessibility standards. Regular testing and updates are essential to maintain optimal mobile performance.

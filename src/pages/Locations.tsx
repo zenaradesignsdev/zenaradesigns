@@ -6,10 +6,10 @@ const Locations = () => {
   
   // SEO meta tags - Indexed for local SEO and city-specific searches
   useSEO({
-    title: "Web Design Services GTA | Toronto, Mississauga, Brampton, Vaughan | Aura Designs",
+    title: "Web Design Services GTA | Toronto, Mississauga, Brampton, Vaughan | Zenara Designs",
     description: "Professional web design and development services across the Greater Toronto Area. Serving Toronto, Mississauga, Brampton, Vaughan, Markham, Richmond Hill, Oakville, and Burlington.",
     keywords: "web design toronto, web design mississauga, web design brampton, web design vaughan, web design markham, web design richmond hill, web design oakville, web design burlington",
-    canonical: "https://auradesigns.net/locations"
+    canonical: "https://zenaradesigns.ca/locations"
   });
 
   const locations = [
@@ -112,7 +112,7 @@ const Locations = () => {
 
         <div className="bg-white/10 backdrop-blur-md rounded-lg p-8 border border-white/20">
           <h2 className="text-2xl font-semibold text-white mb-6 text-center">
-            Why Choose Aura Designs for Your GTA Web Design Project?
+            Why Choose Zenara Designs for Your GTA Web Design Project?
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             <div className="text-center">

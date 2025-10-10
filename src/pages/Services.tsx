@@ -3,7 +3,7 @@ import { Star, ArrowRight, CheckCircle, Layers, Heart, ChevronLeft, ChevronRight
 import { Button } from '@/components/ui/button';
 import { useScrollToTop, useSEO } from '@/hooks';
 import { useState, useEffect, useRef, memo, useCallback, useMemo } from 'react';
-import logo from '@/assets/auralogo-transparentbg.png';
+import logo from '@/assets/zenaralogo-transparentbg.png';
 import realEstateWebImage from '@/assets/website-example-realestate.png';
 import rocketWebImage from '@/assets/website-example-rocket.png';
 import gardenWebImage from '@/assets/website-example-garden.png';
@@ -16,10 +16,10 @@ const Services = () => {
   
   // SEO meta tags
   useSEO({
-    title: "Web Design & Development Services Toronto | Business Cards & Logo Design GTA | Aura Designs",
+    title: "Web Design & Development Services Toronto | Business Cards & Logo Design GTA | Zenara Designs",
     description: "Professional web design, development, business cards, and logo design services in Toronto & GTA. Custom websites, e-commerce solutions, and digital marketing for small businesses.",
     keywords: "web design toronto, web development gta, business cards toronto, logo design gta, website design mississauga, digital marketing toronto",
-    canonical: "https://auradesigns.net/services"
+    canonical: "https://zenaradesigns.ca/services"
   });
   
   const [visibleItems, setVisibleItems] = useState<number[]>([]);
@@ -133,7 +133,7 @@ const Services = () => {
 
   const testimonials = useMemo(() => [
     {
-      quote: "Aura delivered a clean, fast site in days. Our conversion rate jumped 40% within the first month.",
+      quote: "Zenara delivered a clean, fast site in days. Our conversion rate jumped 40% within the first month.",
       author: "Taylor R.",
       role: "Small Business Owner",
       rating: 5
@@ -175,7 +175,7 @@ const Services = () => {
       rating: 5
     },
     {
-      quote: "From concept to completion, Aura made the entire process smooth and stress-free.",
+      quote: "From concept to completion, Zenara made the entire process smooth and stress-free.",
       author: "David C.",
       role: "Consultant",
       rating: 5

@@ -6,10 +6,10 @@ const FAQ = () => {
   
   // SEO meta tags - Indexed for long-tail keywords
   useSEO({
-    title: "FAQ - Web Design & Development Toronto | Pricing, Timelines & Process | Aura Designs",
+    title: "FAQ - Web Design & Development Toronto | Pricing, Timelines & Process | Zenara Designs",
     description: "Get answers to frequently asked questions about web design, development, and digital marketing services in Toronto & GTA. Learn about pricing, timelines, and our proven process.",
     keywords: "web design faq toronto, web development questions gta, toronto web agency faq, website design cost toronto, how long to build website gta",
-    canonical: "https://auradesigns.net/faq"
+    canonical: "https://zenaradesigns.ca/faq"
   });
 
   const faqs = [

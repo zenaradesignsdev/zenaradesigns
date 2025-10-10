@@ -18,10 +18,10 @@ const Contact = () => {
   
   // SEO meta tags
   useSEO({
-    title: "Contact Aura Designs - Web Design & Development Toronto | Get Quote | Aura Designs",
-    description: "Contact Aura Designs for professional web design, development, and digital marketing services in Toronto & GTA. Get a free quote for your project today.",
-    keywords: "contact aura designs, web design quote toronto, web development consultation gta, toronto web agency contact, get website quote",
-    canonical: "https://auradesigns.net/contact"
+    title: "Contact Zenara Designs - Web Design & Development Toronto | Get Quote | Zenara Designs",
+    description: "Contact Zenara Designs for professional web design, development, and digital marketing services in Toronto & GTA. Get a free quote for your project today.",
+    keywords: "contact zenara designs, web design quote toronto, web development consultation gta, toronto web agency contact, get website quote",
+    canonical: "https://zenaradesigns.ca/contact"
   });
   
   const [formData, setFormData] = useState<ContactFormData>({

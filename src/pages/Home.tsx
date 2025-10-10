@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useScrollToTop } from '@/hooks';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
 import type { Capability, Differentiator, SuccessMetric, AnimatedNumbers } from '@/lib/types';
-import logo from '@/assets/auralogo-transparentbg.png';
+import logo from '@/assets/zenaralogo-transparentbg.png';
 import realEstateWebImage from '@/assets/website-example-realestate.png';
 import rocketWebImage from '@/assets/website-example-rocket.png';
 import gardenWebImage from '@/assets/website-example-garden.png';
@@ -299,7 +299,7 @@ const Home = () => {
                 <span className="gradient-text"> — <span key={currentSlogan} className="cool-text-animation">{slogans[currentSlogan]}</span></span>
               </h1>
               <p className="text-lg sm:text-xl text-white/90 mb-8 leading-relaxed">
-                Aura Designs creates high-performing websites for small businesses and professionals using modern development workflows.
+                Zenara Designs creates high-performing websites for small businesses and professionals using modern development workflows.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
                 <Button asChild className="btn-hero bg-gradient-to-r from-cyan-500 to-violet-600 hover:from-cyan-600 hover:to-violet-700 border-0 text-white shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto">
@@ -329,7 +329,7 @@ const Home = () => {
                 <div className="relative z-10 group">
                   <img 
                     src={logo} 
-                    alt="Aura Designs Logo" 
+                    alt="Zenara Designs Logo" 
                     className="w-full max-w-[450px] h-auto object-contain animate-float"
                     loading="eager"
                     decoding="async"
@@ -543,7 +543,7 @@ const Home = () => {
               </h2>
               
               <p className="text-lg sm:text-xl text-slate-300 leading-relaxed max-w-lg mx-auto lg:mx-0">
-                At Aura Designs we specialize in creating beautiful websites for any industry and we work with you to bring your vision to life without all the technical details so you can focus on your core business.
+                At Zenara Designs we specialize in creating beautiful websites for any industry and we work with you to bring your vision to life without all the technical details so you can focus on your core business.
               </p>
               
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">

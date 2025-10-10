@@ -5,7 +5,7 @@ import { useScrollToTop, useSEO } from '@/hooks';
 import { useState, useEffect, useRef, memo, useMemo, useCallback } from 'react';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
 import type { TeamMember, ProcessStep, Differentiator, Position } from '@/lib/types';
-import logo from '@/assets/auralogo-transparentbg.png';
+import logo from '@/assets/zenaralogo-transparentbg.png';
 import saturnImage from '@/assets/saturn.png';
 import moonImage from '@/assets/moon.png';
 
@@ -15,10 +15,10 @@ const About = () => {
   
   // SEO meta tags
   useSEO({
-    title: "About Aura Designs - Web Design & Development Team Toronto | Aura Designs",
-    description: "Meet the Aura Designs team - Toronto's leading web design and development agency. Learn about our expertise, process, and commitment to creating exceptional digital experiences for GTA businesses.",
-    keywords: "about aura designs, web design team toronto, web development team gta, toronto web agency, web design company toronto",
-    canonical: "https://auradesigns.net/about"
+    title: "About Zenara Designs - Web Design & Development Team Toronto | Zenara Designs",
+    description: "Meet the Zenara Designs team - Toronto's leading web design and development agency. Learn about our expertise, process, and commitment to creating exceptional digital experiences for GTA businesses.",
+    keywords: "about zenara designs, web design team toronto, web development team gta, toronto web agency, web design company toronto",
+    canonical: "https://zenaradesigns.ca/about"
   });
   
   const [visibleTimelineItems, setVisibleTimelineItems] = useState<number[]>([]);
@@ -26,7 +26,7 @@ const About = () => {
   const [moonPosition, setMoonPosition] = useState<Position>({ scale: 0, x: 0, y: 0, opacity: 0 });
   const timelineRefs = useRef<(HTMLDivElement | null)[]>([]);
   const heroSectionRef = useRef<HTMLDivElement>(null);
-  const auraDifferenceRef = useRef<HTMLDivElement>(null);
+  const zenaraDifferenceRef = useRef<HTMLDivElement>(null);
 
 
   const team = useMemo((): TeamMember[] => [
@@ -153,12 +153,12 @@ const About = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Moon scroll animation for The Aura Difference section
+  // Moon scroll animation for The Zenara Difference section
   useEffect(() => {
     const handleScroll = () => {
-      if (!auraDifferenceRef.current) return;
+      if (!zenaraDifferenceRef.current) return;
 
-      const section = auraDifferenceRef.current;
+      const section = zenaraDifferenceRef.current;
       const sectionRect = section.getBoundingClientRect();
       const sectionTop = sectionRect.top;
       const sectionHeight = sectionRect.height;
@@ -278,7 +278,7 @@ const About = () => {
           <div className="text-center mb-12 sm:mb-16 md:mb-20">
             <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full px-4 py-2 sm:px-6 sm:py-3 mb-6 sm:mb-8 border border-cyan-500/30">
               <Sparkles className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400 animate-pulse" />
-              <span className="text-xs sm:text-sm font-medium text-cyan-300">About Aura Designs</span>
+              <span className="text-xs sm:text-sm font-medium text-cyan-300">About Zenara Designs</span>
             </div>
             <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 sm:mb-8 text-white leading-tight">
               We're not just developers,<br />
@@ -305,8 +305,8 @@ const About = () => {
         </div>
       </section>
 
-      {/* The Aura Difference - Space Theme */}
-      <section ref={auraDifferenceRef} className="about-section py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-black via-slate-900 to-purple-900">
+      {/* The Zenara Difference - Space Theme */}
+      <section ref={zenaraDifferenceRef} className="about-section py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-black via-slate-900 to-purple-900">
         {/* Moon in top left */}
         <div 
           className="absolute top-4 left-4 sm:top-8 sm:left-8 w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 transition-all duration-300 ease-out"
@@ -343,7 +343,7 @@ const About = () => {
               <span className="text-xs sm:text-sm font-medium text-cyan-300">Why Choose Us</span>
             </div>
             <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-white">
-              The <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Aura Difference</span>
+              The <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Zenara Difference</span>
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed px-4">
               We're not just another web agency. We're your strategic partner in digital success, combining technical excellence with business acumen.
@@ -406,7 +406,7 @@ const About = () => {
               <div className="mx-6 sm:mx-8 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-full flex items-center justify-center border-2 border-cyan-500/30 backdrop-blur-md shadow-2xl">
                 <img 
                   src={logo} 
-                  alt="Aura Designs Logo" 
+                  alt="Zenara Designs Logo" 
                   className="w-16 h-16 sm:w-24 sm:h-24 object-contain"
                   loading="eager"
                   decoding="async"

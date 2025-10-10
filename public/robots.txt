@@ -1,5 +1,5 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://auradesigns.net/sitemap.xml
-Sitemap: https://auradesigns.net/image-sitemap.xml
+Sitemap: https://zenaradesigns.ca/sitemap.xml
+Sitemap: https://zenaradesigns.ca/image-sitemap.xml

@@ -4,7 +4,7 @@ import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { scrollToTop } from '@/hooks';
 import { NAVIGATION_LINKS, BREAKPOINTS } from '@/lib/constants';
-import logo from '@/assets/auralogo-transparentbg.png';
+import logo from '@/assets/zenaralogo-transparentbg.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,8 +44,8 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2" onClick={scrollToTop}>
-            <img src={logo} alt="Aura Designs" className="h-12 w-auto" loading="eager" decoding="async" />
-            <span className={`font-normal text-xl transition-colors ${isScrolled ? 'text-white' : 'text-foreground'}`}>Aura Designs</span>
+            <img src={logo} alt="Zenara Designs" className="h-12 w-auto" loading="eager" decoding="async" />
+            <span className={`font-normal text-xl transition-colors ${isScrolled ? 'text-white' : 'text-foreground'}`}>Zenara Designs</span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -102,8 +102,8 @@ const Navbar = () => {
                       scrollToTop();
                     }}
                   >
-                    <img src={logo} alt="Aura Designs" className="h-12 w-auto" loading="eager" decoding="async" />
-                    <span className="font-normal text-xl text-slate-800">Aura Designs</span>
+                    <img src={logo} alt="Zenara Designs" className="h-12 w-auto" loading="eager" decoding="async" />
+                    <span className="font-normal text-xl text-slate-800">Zenara Designs</span>
                   </Link>
 
                   {/* Close Button */}

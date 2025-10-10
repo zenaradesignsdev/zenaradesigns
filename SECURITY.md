@@ -1,7 +1,7 @@
 # Security Implementation Guide
 
 ## Overview
-This document outlines the comprehensive security measures implemented in the Aura Designs codebase to protect against common web vulnerabilities and ensure data integrity. This guide serves as both documentation and a reference for future projects and security audits.
+This document outlines the comprehensive security measures implemented in the Zenara Designs codebase to protect against common web vulnerabilities and ensure data integrity. This guide serves as both documentation and a reference for future projects and security audits.
 
 ## Table of Contents
 1. [Security Architecture](#security-architecture)
@@ -633,7 +633,7 @@ export const SQL_INJECTION_PATTERNS = {
 ## Security Contacts
 
 ### Development Team
-- **Email**: auradesigns.team@gmail.com
+- **Email**: zenaradesigns.team@gmail.com
 - **Security Issues**: Report security concerns immediately
 - **Documentation**: This guide serves as the security reference
 

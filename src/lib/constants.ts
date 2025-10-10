@@ -1,7 +1,7 @@
 // Business contact information constants
-export const BUSINESS_EMAIL = 'auradesigns.team@gmail.com';
-export const BUSINESS_DOMAIN = 'mail.auradesigns.net';
-export const BUSINESS_NAME = 'Aura Designs';
+export const BUSINESS_EMAIL = 'zenaradesigns.team@gmail.com';
+export const BUSINESS_DOMAIN = 'mail.zenaradesigns.ca';
+export const BUSINESS_NAME = 'Zenara Designs';
 export const BUSINESS_PHONE = '(555) 123-4567';
 
 // Email configuration

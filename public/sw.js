@@ -1,5 +1,5 @@
-// Service Worker for Aura Designs
-const CACHE_NAME = 'aura-designs-v1';
+// Service Worker for Zenara Designs
+const CACHE_NAME = 'zenara-designs-v1';
 const urlsToCache = [
   '/',
   '/static/js/bundle.js',
