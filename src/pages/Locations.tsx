@@ -9,7 +9,7 @@ const Locations = () => {
     title: "Web Design Services GTA | Toronto, Mississauga, Brampton, Vaughan | Zenara Designs",
     description: "Professional web design and development services across the Greater Toronto Area. Serving Toronto, Mississauga, Brampton, Vaughan, Markham, Richmond Hill, Oakville, and Burlington.",
     keywords: "web design toronto, web design mississauga, web design brampton, web design vaughan, web design markham, web design richmond hill, web design oakville, web design burlington",
-    canonical: "https://zenaradesigns.ca/locations"
+    canonical: "https://zenaradesigns.com/locations"
   });
 
   const locations = [

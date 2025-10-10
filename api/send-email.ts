@@ -98,7 +98,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   // Set CORS headers (more restrictive)
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN || 'https://zenaradesigns.ca');
+  res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN || 'https://zenaradesigns.com');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader(
     'Access-Control-Allow-Headers',
@@ -196,7 +196,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Send email using Resend with sanitized data
     const { data, error } = await resend.emails.send({
-      from: 'Zenara Designs <noreply@mail.zenaradesigns.ca>',
+      from: 'Zenara Designs <noreply@mail.zenaradesigns.com>',
       to: ['zenaradesigns.team@gmail.com'],
       replyTo: sanitizedData.email,
       subject: `New Contact Form Submission from ${sanitizedData.name}`,

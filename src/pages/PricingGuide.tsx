@@ -9,7 +9,7 @@ const PricingGuide = () => {
     title: "Web Design Pricing Guide Toronto | Website Development Costs GTA | Zenara Designs",
     description: "Transparent pricing guide for web design, development, and digital marketing services in Toronto & GTA. Get detailed costs for small business websites, e-commerce, and enterprise solutions.",
     keywords: "web design pricing toronto, website development cost gta, toronto web agency pricing, small business website cost, ecommerce website price toronto",
-    canonical: "https://zenaradesigns.ca/pricing-guide"
+    canonical: "https://zenaradesigns.com/pricing-guide"
   });
 
   const pricingCategories = [

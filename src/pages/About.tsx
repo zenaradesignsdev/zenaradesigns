@@ -18,7 +18,7 @@ const About = () => {
     title: "About Zenara Designs - Web Design & Development Team Toronto | Zenara Designs",
     description: "Meet the Zenara Designs team - Toronto's leading web design and development agency. Learn about our expertise, process, and commitment to creating exceptional digital experiences for GTA businesses.",
     keywords: "about zenara designs, web design team toronto, web development team gta, toronto web agency, web design company toronto",
-    canonical: "https://zenaradesigns.ca/about"
+    canonical: "https://zenaradesigns.com/about"
   });
   
   const [visibleTimelineItems, setVisibleTimelineItems] = useState<number[]>([]);

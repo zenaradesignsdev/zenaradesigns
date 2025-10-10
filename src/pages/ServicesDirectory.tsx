@@ -9,7 +9,7 @@ const ServicesDirectory = () => {
     title: "Complete Services Directory - Web Design, Development & Digital Marketing Toronto | Zenara Designs",
     description: "Comprehensive directory of web design, development, and digital marketing services in Toronto & GTA. Find specialized services for every business need across the Greater Toronto Area.",
     keywords: "web design services toronto, web development services gta, digital marketing toronto, business cards toronto, logo design mississauga, ecommerce development brampton",
-    canonical: "https://zenaradesigns.ca/services-directory"
+    canonical: "https://zenaradesigns.com/services-directory"
   });
 
   const services = [

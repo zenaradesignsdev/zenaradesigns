@@ -19,7 +19,7 @@ const Services = () => {
     title: "Web Design & Development Services Toronto | Business Cards & Logo Design GTA | Zenara Designs",
     description: "Professional web design, development, business cards, and logo design services in Toronto & GTA. Custom websites, e-commerce solutions, and digital marketing for small businesses.",
     keywords: "web design toronto, web development gta, business cards toronto, logo design gta, website design mississauga, digital marketing toronto",
-    canonical: "https://zenaradesigns.ca/services"
+    canonical: "https://zenaradesigns.com/services"
   });
   
   const [visibleItems, setVisibleItems] = useState<number[]>([]);
