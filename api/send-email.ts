@@ -197,7 +197,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     // Send email using Resend with sanitized data
     const { data, error } = await resend.emails.send({
       from: 'Zenara Designs <noreply@mail.zenaradesigns.com>',
-      to: ['zenaradesigns.team@gmail.com'],
+      to: ['zenaradesigns.co@gmail.com'],
       replyTo: sanitizedData.email,
       subject: `New Contact Form Submission from ${sanitizedData.name}`,
       html: generateEmailHTML(sanitizedData),

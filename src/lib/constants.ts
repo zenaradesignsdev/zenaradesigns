@@ -1,5 +1,5 @@
 // Business contact information constants
-export const BUSINESS_EMAIL = 'zenaradesigns.team@gmail.com';
+export const BUSINESS_EMAIL = 'zenaradesigns.co@gmail.com';
 export const BUSINESS_DOMAIN = 'mail.zenaradesigns.com';
 export const BUSINESS_NAME = 'Zenara Designs';
 export const BUSINESS_PHONE = '(555) 123-4567';

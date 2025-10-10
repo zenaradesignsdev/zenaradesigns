@@ -64,7 +64,7 @@ This project is built with:
 
 This project uses Resend for email functionality with the domain `mail.zenaradesigns.com`. 
 
-- Emails are sent from `noreply@mail.zenaradesigns.com` to `zenaradesigns.team@gmail.com`
+- Emails are sent from `noreply@mail.zenaradesigns.com` to `zenaradesigns.co@gmail.com`
 - The domain `mail.zenaradesigns.com` is verified in Resend
 - Uses Vercel serverless function (`/api/send-email.ts`) for secure email sending
 - API key is kept secure on the server (not exposed to browser)

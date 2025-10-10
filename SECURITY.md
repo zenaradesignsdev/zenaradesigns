@@ -633,7 +633,7 @@ export const SQL_INJECTION_PATTERNS = {
 ## Security Contacts
 
 ### Development Team
-- **Email**: zenaradesigns.team@gmail.com
+- **Email**: zenaradesigns.co@gmail.com
 - **Security Issues**: Report security concerns immediately
 - **Documentation**: This guide serves as the security reference
 
