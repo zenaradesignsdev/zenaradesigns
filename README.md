@@ -1,83 +1,175 @@
-# Welcome to your Lovable project
+# Zenara Designs Website
 
-## Project info
+A modern, responsive website for Zenara Designs - a professional web design and development agency specializing in custom websites, business cards, and logo design for businesses in Toronto and the Greater Toronto Area (GTA).
 
-**URL**: https://lovable.dev/projects/84a33e6a-5822-48f2-899c-908d1beeeb73
+## 🌟 Features
 
-## How can I edit this code?
+- **Responsive Design**: Mobile-first approach with seamless desktop experience
+- **SEO Optimized**: Comprehensive SEO with structured data, meta tags, and sitemaps
+- **Performance Focused**: Optimized for Core Web Vitals and fast loading times
+- **Security Hardened**: Input validation, rate limiting, and security headers
+- **Accessibility**: WCAG compliant with skip links and proper ARIA labels
+- **Contact Form**: Secure email integration with Resend API
+- **Modern UI**: Built with shadcn/ui components and Tailwind CSS
 
-There are several ways of editing your application.
+## 🚀 Quick Start
 
-**Use Lovable**
+### Prerequisites
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/84a33e6a-5822-48f2-899c-908d1beeeb73) and start prompting.
+- Node.js 18+ ([install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
+- npm or yarn
 
-Changes made via Lovable will be committed automatically to this repo.
+### Installation
 
-**Use your preferred IDE**
+```bash
+# Clone the repository
+git clone https://github.com/your-username/zenaradesigns.git
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+# Navigate to the project directory
+cd zenaradesigns
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+# Install dependencies
+npm install
 
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The development server will start at `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Available Scripts
 
-**Use GitHub Codespaces**
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run build:dev    # Build in development mode
+npm run lint         # Run ESLint
+npm run preview      # Preview production build locally
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🛠️ Tech Stack
 
-## What technologies are used for this project?
+### Frontend
+- **React 18** - Modern UI library with hooks
+- **TypeScript** - Type-safe JavaScript
+- **Vite** - Fast build tool and dev server
+- **React Router** - Client-side routing
+- **Tailwind CSS** - Utility-first CSS framework
+- **shadcn/ui** - High-quality component library
+- **Lucide React** - Beautiful icons
 
-This project is built with:
+### Backend & Deployment
+- **Vercel** - Serverless deployment platform
+- **Resend** - Email API service
+- **Vercel Functions** - Serverless API endpoints
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Development Tools
+- **ESLint** - Code linting
+- **PostCSS** - CSS processing
+- **Autoprefixer** - CSS vendor prefixing
 
-## Email Integration
+## 📁 Project Structure
 
-This project uses Resend for email functionality with the domain `mail.zenaradesigns.com`. 
+```
+src/
+├── components/          # Reusable UI components
+│   ├── Layout/         # Layout components (Navbar, Footer)
+│   └── ui/             # shadcn/ui components
+├── pages/              # Page components
+├── hooks/              # Custom React hooks
+├── lib/                # Utility functions and configurations
+├── utils/              # Helper utilities
+└── assets/             # Static assets (images, icons)
 
-- Emails are sent from `noreply@mail.zenaradesigns.com` to `zenaradesigns.co@gmail.com`
-- The domain `mail.zenaradesigns.com` is verified in Resend
-- Uses Vercel serverless function (`/api/send-email.ts`) for secure email sending
-- API key is kept secure on the server (not exposed to browser)
-- Follows Vite + Vercel best practices for email integration
+api/
+└── send-email.ts       # Vercel serverless function for contact form
 
-## How can I deploy this project?
+public/                 # Static files
+├── sitemap.xml         # SEO sitemap
+├── robots.txt          # Search engine directives
+└── favicon.ico         # Site favicon
+```
 
-Simply open [Lovable](https://lovable.dev/projects/84a33e6a-5822-48f2-899c-908d1beeeb73) and click on Share -> Publish.
+## 📧 Email Integration
 
-## Can I connect a custom domain to my Lovable project?
+The contact form uses Resend for secure email delivery:
 
-Yes, you can!
+- **From**: `noreply@mail.zenaradesigns.com`
+- **To**: `zenaradesigns.co@gmail.com`
+- **Security**: Input validation, rate limiting, XSS protection
+- **API**: Vercel serverless function (`/api/send-email.ts`)
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### Environment Variables
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Create a `.env.local` file for local development:
+
+```env
+RESEND_API_KEY=re_your_resend_api_key
+ALLOWED_ORIGIN=http://localhost:8080
+```
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. **Connect Repository**: Link your GitHub repo to Vercel
+2. **Set Environment Variables**:
+   - `RESEND_API_KEY`: Your Resend API key
+   - `ALLOWED_ORIGIN`: Your production domain
+3. **Deploy**: Automatic deployment on every push to main
+
+### Manual Deployment
+
+```bash
+# Build the project
+npm run build
+
+# Deploy to Vercel
+vercel --prod
+```
+
+## 🔧 Configuration
+
+### Custom Domain Setup
+
+1. Add your domain in Vercel dashboard
+2. Update `ALLOWED_ORIGIN` environment variable
+3. Configure DNS records as instructed by Vercel
+
+### SEO Configuration
+
+- **Sitemap**: Auto-generated at `/sitemap.xml`
+- **Robots**: Configured at `/robots.txt`
+- **Meta Tags**: Dynamic per page
+- **Structured Data**: JSON-LD for better search visibility
+
+## 📱 Pages
+
+- **Home** (`/`) - Landing page with services overview
+- **About** (`/about`) - Company story and team
+- **Services** (`/services`) - Detailed service offerings
+- **Pricing** (`/pricing`) - Service packages and FAQ
+- **Process** (`/process`) - Design and development workflow
+- **Locations** (`/locations`) - Service areas in GTA
+- **FAQ** (`/faq`) - Frequently asked questions
+- **Security** (`/security`) - Security practices and policies
+- **Mobile** (`/mobile`) - Mobile-first design information
+- **Contact** (`/contact`) - Contact form and information
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is proprietary to Zenara Designs. All rights reserved.
+
+## 📞 Support
+
+For technical support or questions about this website:
+- **Email**: zenaradesigns.co@gmail.com
+- **Website**: https://zenaradesigns.com
