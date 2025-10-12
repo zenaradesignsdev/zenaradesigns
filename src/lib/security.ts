@@ -104,6 +104,35 @@ export function sanitizeForXSS(input: string): string {
   return sanitized;
 }
 
+// Disposable email domains (common ones for spam prevention)
+const DISPOSABLE_EMAIL_DOMAINS = new Set([
+  '10minutemail.com', 'tempmail.org', 'guerrillamail.com', 'mailinator.com',
+  'temp-mail.org', 'throwaway.email', 'getnada.com', 'maildrop.cc',
+  'yopmail.com', 'sharklasers.com', 'guerrillamailblock.com', 'pokemail.net',
+  'spam4.me', 'bccto.me', 'chacuo.net', 'dispostable.com', 'mailnesia.com',
+  'mailcatch.com', 'inboxalias.com', 'mailmetrash.com', 'trashmail.net',
+  'trashmail.com', 'mytrashmail.com', 'jetable.org', 'mailin8r.com',
+  'spamgourmet.com', 'spam.la', 'binkmail.com', 'bobmail.info', 'chammy.info',
+  'devnullmail.com', 'letthemeatspam.com', 'mailinater.com', 'mailinator2.com',
+  'notmailinator.com', 'reallymymail.com', 'sogetthis.com', 'spamhereplease.com',
+  'superrito.com', 'thisisnotmyrealemail.com', 'tradermail.info', 'veryrealemail.com',
+  'wegwerfmail.de', 'wegwerfmail.net', 'wegwerfmail.org', 'wegwerpmailadres.nl',
+  'wegwerpmailadres.nl', 'wegwerpmailadres.nl', 'wegwerpmailadres.nl'
+]);
+
+// Common email typos for better UX
+const EMAIL_TYPO_SUGGESTIONS: Record<string, string> = {
+  'gmial.com': 'gmail.com',
+  'gmail.co': 'gmail.com',
+  'gmail.cm': 'gmail.com',
+  'yahooo.com': 'yahoo.com',
+  'yahoo.co': 'yahoo.com',
+  'hotmial.com': 'hotmail.com',
+  'hotmail.co': 'hotmail.com',
+  'outlok.com': 'outlook.com',
+  'outlook.co': 'outlook.com'
+};
+
 // Validate email format with additional security checks
 export function validateEmail(email: string): boolean {
   if (typeof email !== 'string') return false;
@@ -120,7 +149,26 @@ export function validateEmail(email: string): boolean {
   // Standard email regex
   const emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
   
-  return emailRegex.test(sanitized);
+  if (!emailRegex.test(sanitized)) return false;
+  
+  // Extract domain
+  const domain = sanitized.split('@')[1]?.toLowerCase();
+  if (!domain) return false;
+  
+  // Check against disposable email domains
+  if (DISPOSABLE_EMAIL_DOMAINS.has(domain)) return false;
+  
+  return true;
+}
+
+// Get email typo suggestion for better UX
+export function getEmailTypoSuggestion(email: string): string | null {
+  if (typeof email !== 'string') return null;
+  
+  const domain = email.split('@')[1]?.toLowerCase();
+  if (!domain) return null;
+  
+  return EMAIL_TYPO_SUGGESTIONS[domain] || null;
 }
 
 // Validate phone number with security checks

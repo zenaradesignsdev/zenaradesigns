@@ -1,5 +1,6 @@
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
 import type { PerformanceMetrics, MemoryUsage, PerformanceMonitoringHook } from '@/lib/types';
+import { logger } from '@/lib/logger';
 
 // Performance monitoring utilities
 export const performanceMetrics = {
@@ -28,9 +29,7 @@ export const performanceMetrics = {
       const renderTime = endTime - startTime;
       
       // Log performance metrics in development
-      if (process.env.NODE_ENV === 'development') {
-        console.log(`🚀 ${componentName} render time: ${renderTime.toFixed(2)}ms`);
-      }
+      logger.debug(`🚀 ${componentName} render time: ${renderTime.toFixed(2)}ms`);
       
       return renderTime;
     }
@@ -44,9 +43,7 @@ export const performanceMetrics = {
       const loadTime = endTime - startTime;
       
       // Log performance metrics in development
-      if (process.env.NODE_ENV === 'development') {
-        console.log(`🖼️ Image ${imageSrc} load time: ${loadTime.toFixed(2)}ms`);
-      }
+      logger.debug(`🖼️ Image ${imageSrc} load time: ${loadTime.toFixed(2)}ms`);
       
       return loadTime;
     }
@@ -116,9 +113,7 @@ export const performanceMetrics = {
         return total + ((resource as any).transferSize || 0);
       }, 0);
       
-      if (process.env.NODE_ENV === 'development') {
-        console.log(`📦 Bundle size: ${(totalSize / 1024).toFixed(2)}KB`);
-      }
+      logger.debug(`📦 Bundle size: ${(totalSize / 1024).toFixed(2)}KB`);
       
       return totalSize;
     }

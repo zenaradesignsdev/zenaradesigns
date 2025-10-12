@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { FORM_LIMITS, PERFORMANCE_THRESHOLDS } from './constants';
-import { sanitizeForXSS, validateEmail, validatePhone, generateSecureToken } from './security';
+import { sanitizeForXSS, validateEmail, validatePhone, generateSecureToken, getEmailTypoSuggestion } from './security';
 import type { ContactFormData, EmailResponse, RateLimitEntry } from './types';
 
 // Validation schema for contact form with enhanced security
@@ -12,7 +12,13 @@ export const contactFormSchema = z.object({
   email: z.string()
     .email('Invalid email address')
     .max(FORM_LIMITS.EMAIL_MAX, `Email must be less than ${FORM_LIMITS.EMAIL_MAX} characters`)
-    .refine((val) => validateEmail(val), 'Email contains invalid characters or format'),
+    .refine((val) => validateEmail(val), (val) => {
+      const typoSuggestion = getEmailTypoSuggestion(val);
+      if (typoSuggestion) {
+        return `Did you mean ${val.replace(/@.*/, '@' + typoSuggestion)}?`;
+      }
+      return 'Email contains invalid characters, format, or is from a disposable email service';
+    }),
   phone: z.string()
     .optional()
     .refine((val) => !val || validatePhone(val), 'Invalid phone number format or contains dangerous characters'),
@@ -39,8 +45,28 @@ export type { ContactFormData, EmailResponse };
 // Rate limiting to prevent spam (simple in-memory store for demo)
 const rateLimit = new Map<string, RateLimitEntry>();
 
+// Cleanup expired entries every 5 minutes to prevent memory leaks
+const CLEANUP_INTERVAL = 5 * 60 * 1000; // 5 minutes
+let lastCleanup = Date.now();
+
+function cleanupExpiredEntries() {
+  const now = Date.now();
+  for (const [key, value] of rateLimit.entries()) {
+    if (now - value.lastReset > PERFORMANCE_THRESHOLDS.RATE_LIMIT_WINDOW) {
+      rateLimit.delete(key);
+    }
+  }
+  lastCleanup = now;
+}
+
 const checkRateLimit = (email: string): boolean => {
   const now = Date.now();
+  
+  // Cleanup expired entries periodically
+  if (now - lastCleanup > CLEANUP_INTERVAL) {
+    cleanupExpiredEntries();
+  }
+  
   const key = email.toLowerCase();
   const userLimit = rateLimit.get(key);
 

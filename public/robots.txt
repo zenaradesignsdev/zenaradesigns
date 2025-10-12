@@ -1,5 +1,23 @@
 User-agent: *
 Allow: /
 
+# Disallow API routes and serverless functions
+Disallow: /api/
+
+# Disallow any potential admin or private areas
+Disallow: /admin/
+Disallow: /private/
+Disallow: /staging/
+Disallow: /test/
+
+# Disallow common sensitive files
+Disallow: /*.json$
+Disallow: /*.env$
+Disallow: /*.log$
+
+# Crawl-delay for respectful crawling
+Crawl-delay: 1
+
+# Sitemaps
 Sitemap: https://zenaradesigns.com/sitemap.xml
 Sitemap: https://zenaradesigns.com/image-sitemap.xml

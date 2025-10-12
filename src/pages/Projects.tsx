@@ -1,10 +1,17 @@
 import { Rocket } from 'lucide-react';
-import { useScrollToTop } from '@/hooks/use-scroll-to-top';
+import { useScrollToTop, useSEO } from '@/hooks';
 import { memo } from 'react';
 
 const Projects = () => {
   // Scroll to top when component mounts
   useScrollToTop();
+  
+  // SEO meta tags
+  useSEO({
+    title: "Web Design Portfolio Toronto | Custom Websites & Projects | Zenara",
+    description: "View our portfolio of custom web design projects in Toronto & GTA. See real examples of business websites, e-commerce solutions, and digital campaigns. Get inspired for your project!",
+    canonical: "https://zenaradesigns.com/projects"
+  });
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-indigo-900 to-purple-900">
@@ -79,7 +86,7 @@ const Projects = () => {
             <div className="mb-6 sm:mb-8">
               <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-bold mb-6 sm:mb-8 text-white leading-tight">
                 <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                  Projects
+                  Web Design Portfolio Toronto
                 </span>
               </h1>
               <div className="flex items-center justify-center space-x-2 mb-4 sm:mb-6">
@@ -109,6 +116,9 @@ const Projects = () => {
                 </h2>
                 <p className="text-lg sm:text-xl text-slate-300 leading-relaxed">
                   Thanks for your patience!
+                </p>
+                <p className="text-sm text-slate-400 mt-4">
+                  Last updated: December 2024
                 </p>
               </div>
             </div>

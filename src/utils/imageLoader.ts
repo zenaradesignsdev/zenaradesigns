@@ -5,6 +5,8 @@ export const preloadImage = (src: string): Promise<HTMLImageElement> => {
     img.onload = () => resolve(img);
     img.onerror = reject;
     img.src = src;
+    // Add decoding attribute for better performance
+    img.decoding = 'async';
   });
 };
 

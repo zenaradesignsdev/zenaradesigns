@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Mail, Phone } from 'lucide-react';
 import { scrollToTop } from '@/hooks';
-import { BUSINESS_EMAIL, BUSINESS_PHONE, NAVIGATION_LINKS } from '@/lib/constants';
+import { BUSINESS_EMAIL, BUSINESS_PHONE, NAVIGATION_LINKS, FOOTER_ADDITIONAL_LINKS } from '@/lib/constants';
 import logo from '@/assets/zenaralogo-transparentbg.png';
 
 const Footer = () => {
@@ -99,26 +99,26 @@ const Footer = () => {
 
         {/* Footer Content */}
         <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-[8fr_5fr_5fr_7fr] gap-8 md:gap-16 lg:gap-20">
             {/* Brand */}
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <img src={logo} alt="Zenara Designs" className="h-8 w-auto" loading="lazy" decoding="async" />
+                <img src={logo} alt="Zenara Designs - Professional Web Design Agency Toronto" className="h-8 w-auto" width="32" height="32" loading="lazy" decoding="async" />
                 <span className="font-normal text-lg text-white">Zenara Designs</span>
               </div>
-              <p className="text-slate-300 max-w-xs">
+              <p className="text-slate-300 max-w-md">
                 Creating high-performing websites for small businesses and professionals using modern development workflows.
               </p>
               <div className="space-y-3">
                 <div className="flex items-start space-x-2 text-slate-300">
                   <Mail className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                  <a href={`mailto:${BUSINESS_EMAIL}`} className="hover:text-cyan-400 transition-colors break-all">
+                  <a href={`mailto:${BUSINESS_EMAIL}`} className="hover:text-cyan-400 transition-colors break-all" rel="noopener noreferrer">
                     {BUSINESS_EMAIL}
                   </a>
                 </div>
                 <div className="flex items-start space-x-2 text-slate-300">
                   <Phone className="h-4 w-4 mt-0.5 flex-shrink-0" />
-                  <a href={`tel:${BUSINESS_PHONE}`} className="hover:text-cyan-400 transition-colors">
+                  <a href={`tel:${BUSINESS_PHONE}`} className="hover:text-cyan-400 transition-colors" rel="noopener noreferrer">
                     {BUSINESS_PHONE}
                   </a>
                 </div>
@@ -128,8 +128,25 @@ const Footer = () => {
             {/* Quick Links */}
             <div>
               <h3 className="font-semibold mb-4 text-white">Quick Links</h3>
-              <div className="grid grid-cols-2 gap-x-1 gap-y-2">
+              <div className="grid grid-cols-1 gap-x-1 gap-y-2">
                 {quickLinks.map((link) => (
+                  <Link
+                    key={link.href}
+                    to={link.href}
+                    onClick={scrollToTop}
+                    className="text-slate-300 hover:text-cyan-400 transition-colors"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Additional Links */}
+            <div>
+              <h3 className="font-semibold mb-4 text-white">Resources</h3>
+              <div className="grid grid-cols-1 gap-x-1 gap-y-2">
+                {FOOTER_ADDITIONAL_LINKS.map((link) => (
                   <Link
                     key={link.href}
                     to={link.href}

@@ -3,12 +3,20 @@ import { Check, ArrowRight, Star, Award, Globe, Plus, Minus } from 'lucide-react
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { useScrollToTop } from '@/hooks/use-scroll-to-top';
+import { useScrollToTop, useSEO } from '@/hooks';
 import { useState, memo, useMemo, useCallback } from 'react';
+import StructuredData from '@/components/StructuredData';
 
 const Pricing = () => {
   // Scroll to top when component mounts
   useScrollToTop();
+  
+  // SEO meta tags
+  useSEO({
+    title: "Pricing Plans | Web Design Toronto | Zenara Designs",
+    description: "Transparent web design pricing in Toronto & GTA. Get detailed costs for small business websites, e-commerce, and enterprise solutions. Request your free quote today!",
+    canonical: "https://zenaradesigns.com/pricing"
+  });
   
   const [openItems, setOpenItems] = useState<string[]>([]);
 
@@ -84,43 +92,112 @@ const Pricing = () => {
     }
   ], []);
 
+  // Additional services pricing for comprehensive coverage
+  const additionalServices = useMemo(() => [
+    {
+      category: "Business Card Design - Tailored for Toronto & GTA",
+      services: [
+        {
+          name: "Professional Business Cards",
+          price: "$149 - $399",
+          description: "High-quality business card design and printing",
+          features: ["Custom design", "Premium printing", "Digital files", "2-3 day turnaround"],
+          idealFor: "Professionals, consultants, service providers, small business owners"
+        },
+        {
+          name: "Executive Business Cards", 
+          price: "$299 - $599",
+          description: "Premium business cards with special finishes",
+          features: ["Luxury design", "Foil stamping", "Spot UV", "Embossing options"],
+          idealFor: "Executives, lawyers, doctors, financial advisors, luxury brands"
+        }
+      ]
+    },
+    {
+      category: "Logo Design & Brand Identity",
+      services: [
+        {
+          name: "Basic Logo Design",
+          price: "$99 - $199", 
+          description: "Simple logo design for small businesses",
+          features: ["3 initial concepts", "2 revisions", "Vector files", "1 week delivery"],
+          idealFor: "Startups, freelancers, small businesses, entrepreneurs"
+        },
+        {
+          name: "Complete Brand Identity",
+          price: "Quote",
+          description: "Full brand identity package", 
+          features: ["Logo design", "Business cards", "Letterhead", "Brand guidelines"],
+          idealFor: "Established businesses, franchises, growing companies, rebranding projects"
+        }
+      ]
+    },
+    {
+      category: "E-commerce Development - Custom Solutions",
+      services: [
+        {
+          name: "Small E-commerce Store",
+          price: "$2,999 - $4,999",
+          description: "Basic online store for small businesses",
+          features: ["Up to 50 products", "Payment integration", "Inventory management", "Mobile optimization"],
+          idealFor: "Small retailers, artisans, local shops, online boutiques"
+        },
+        {
+          name: "Enterprise E-commerce",
+          price: "Quote",
+          description: "Advanced e-commerce platform",
+          features: ["Unlimited products", "Advanced features", "Custom integrations", "Multi-language support"],
+          idealFor: "Large retailers, manufacturers, distributors, multi-brand companies"
+        }
+      ]
+    }
+  ], []);
+
   const faqs = useMemo(() => [
     {
-      question: "What's the typical timeline for a project?",
-      answer: "Starter projects typically take 1 week, Small Business projects 2-3 weeks, and Pro projects 3-4 weeks. Timeline depends on complexity and how quickly you provide feedback and content."
-    },
-    {
-      question: "What do I need to provide to get started?",
-      answer: "We'll need your branding assets (logo, colors), content (text, images), and any specific functionality requirements. Don't worry if you don't have everything ready - we can help guide you through the process."
-    },
-    {
-      question: "Do you handle hosting and domain setup?",
-      answer: "Yes! We do everything for setup if you want an external provider, or we can handle hosting internally for $10-$30/month (SSL included). We can also help with domain registration and DNS setup."
-    },
-    {
-      question: "How many revisions are included?",
-      answer: "Starter includes 1 round, Small Business includes 2 rounds, and Pro includes unlimited revisions. Additional revision rounds can be purchased if needed."
-    },
-    {
-      question: "What if I need changes after launch?",
-      answer: "All plans include post-launch support (30-60 days). After that, we offer maintenance packages for ongoing updates, security, and support at a price depending on your needs."
-    },
-    {
-      question: "Can you work with my existing brand?",
-      answer: "Absolutely! We can work with your existing brand guidelines, or if needed, we can help refresh and modernize your brand as part of our Brand & Collateral service."
+      question: "What are your web design packages and pricing?",
+      answer: "We offer three main packages: Starter ($999) for individuals with 1-3 pages and 1 week turnaround, Small Business ($1,999) for businesses with up to 6 pages and 2-3 weeks turnaround, and Pro ($4,999+) for advanced functionality with unlimited pages and 3-4 weeks turnaround."
     },
     {
       question: "Do you offer payment plans?",
-      answer: "Yes, we offer 50% upfront and 50% on completion for all projects. For Pro projects over $10k, we can discuss custom payment schedules."
+      answer: "Yes! We offer 50% upfront and 50% on completion for all projects. For Pro projects over $10k, we can discuss custom payment schedules. We accept e-transfers, cheques, and credit cards."
     },
     {
-      question: "Do you offer bundling services like business cards, menus, etc.?",
-      answer: "Yes! We offer additional design services including business cards, menus, flyers, and other marketing materials. These are custom quoted based on your specific needs and requirements."
+      question: "How long does it take to build a website?",
+      answer: "Our timelines are: Starter (1 week), Small Business (2-3 weeks), and Pro (3-4 weeks). These timelines include design, development, testing, and launch. We work efficiently while ensuring quality results."
+    },
+    {
+      question: "What's included in each pricing plan?",
+      answer: "Starter includes 1-3 pages and basic features. Small Business includes up to 6 pages with custom sections and 2 revisions. Pro includes unlimited pages, advanced integrations, and priority support. All plans include mobile optimization, SEO basics, SSL security, and hosting."
+    },
+    {
+      question: "Do you provide business card design services?",
+      answer: "Yes! We offer professional business card design services across the GTA. Our packages range from $149-$399 for professional cards and $299-$599 for executive cards with premium finishes like foil stamping and embossing."
+    },
+    {
+      question: "Can you help with e-commerce development?",
+      answer: "Yes! We specialize in e-commerce development using platforms like Shopify, WooCommerce, and custom solutions. Small e-commerce stores start at $2,999-$4,999, with enterprise solutions available by quote."
+    },
+    {
+      question: "Are there any hidden costs?",
+      answer: "No hidden costs! Our pricing is transparent and includes everything listed. The only additional costs would be if you request features beyond what's included in your chosen plan, and we'll always discuss these upfront."
+    },
+    {
+      question: "Do you handle hosting and domain setup?",
+      answer: "Yes! We can handle hosting internally for $10-$30/month (SSL included) or help you set up with external providers. We also assist with domain registration and DNS setup."
+    },
+    {
+      question: "What happens if I'm not satisfied with the design?",
+      answer: "We work closely with you throughout the process to ensure you love the result. If you're not satisfied, we'll work with you to make it right. Our goal is your success and satisfaction."
+    },
+    {
+      question: "Can I upgrade my plan during the project?",
+      answer: "Absolutely! You can upgrade from Starter to Small Business or Pro at any time. We'll adjust the pricing accordingly and add the new features to your project."
     }
   ], []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" role="main" aria-label="Pricing page">
 
       {/* Pricing Cards - Space Theme */}
       <section className="pricing-hero py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -143,11 +220,11 @@ const Pricing = () => {
               <Award className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400 animate-pulse" />
               <span className="text-xs sm:text-sm font-medium text-cyan-300">Simple, Transparent Pricing</span>
             </div>
-            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-white">
-              Pricing <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Plans</span>
-            </h2>
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-white">
+              Simple <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Pricing Plans</span>
+            </h1>
             <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed px-4">
-              Choose the plan that fits your needs.
+              Choose the plan that fits your needs. Professional web design services for Toronto & GTA businesses.
             </p>
           </div>
           
@@ -221,6 +298,87 @@ const Pricing = () => {
                     <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                   </Link>
                 </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Additional Services Pricing */}
+      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-white">
+              Additional Services Pricing
+            </h2>
+            <p className="text-xl text-slate-300 max-w-4xl mx-auto">
+              Complete pricing for all our web design, business card, and logo design services in Toronto & GTA
+            </p>
+          </div>
+
+          <div className="space-y-12">
+            {additionalServices.map((category, categoryIndex) => (
+              <div key={categoryIndex} className="bg-white/10 backdrop-blur-md rounded-lg p-8 border border-white/20">
+                <h3 className="text-2xl font-semibold text-white mb-4">
+                  {category.category}
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {category.services.map((service, serviceIndex) => (
+                    <div key={serviceIndex} className="bg-white/5 rounded-lg p-6 border border-white/10">
+                      <h4 className="text-xl font-semibold text-white mb-2">
+                        {service.name}
+                      </h4>
+                      <p className="text-2xl font-bold text-cyan-400 mb-3">
+                        {service.price}
+                      </p>
+                      <p className="text-slate-300 mb-4">
+                        {service.description}
+                      </p>
+                      <ul className="space-y-2 mb-4">
+                        {service.features.map((feature, featureIndex) => (
+                          <li key={featureIndex} className="flex items-center text-slate-300 text-sm">
+                            <Check className="h-4 w-4 text-cyan-400 mr-2 flex-shrink-0" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                      {service.idealFor && (
+                        <div>
+                          <h5 className="text-sm font-semibold text-cyan-300 mb-2">Ideal for:</h5>
+                          <p className="text-slate-300 text-sm">
+                            {service.idealFor}
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <div className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-lg p-8 border border-cyan-500/30">
+              <h3 className="text-2xl font-semibold text-white mb-4">
+                Why Choose Zenara Designs for Your Toronto Project?
+              </h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-cyan-400 mb-2">40%</div>
+                  <div className="text-slate-300">Average Conversion Increase</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-cyan-400 mb-2">2-4</div>
+                  <div className="text-slate-300">Weeks to Launch</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-cyan-400 mb-2">98%</div>
+                  <div className="text-slate-300">Client Satisfaction</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-cyan-400 mb-2">100%</div>
+                  <div className="text-slate-300">Mobile Optimized</div>
+                </div>
               </div>
             </div>
           </div>
@@ -304,20 +462,37 @@ const Pricing = () => {
                     Still have questions? We're here to help!
                   </span>
                 </div>
-                <div className="flex justify-center">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <Button asChild className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-2xl font-semibold text-sm sm:text-base shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105">
                     <Link to="/contact">
                       Contact Us
                       <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                     </Link>
                   </Button>
+                  <Button asChild className="border-2 border-cyan-400 text-cyan-300 bg-cyan-500/10 px-6 py-3 sm:px-8 sm:py-4 rounded-2xl font-semibold text-sm sm:text-base backdrop-blur-sm hover:bg-cyan-500/20 transition-all duration-300">
+                    <Link to="/faq">
+                      More FAQ
+                    </Link>
+                  </Button>
                 </div>
               </div>
             </div>
           </div>
+          
+          {/* Last Updated Date */}
+          <div className="text-center mt-8">
+            <p className="text-slate-400 text-sm">
+              Last updated: January 2025
+            </p>
+          </div>
         </div>
       </section>
 
+      {/* Structured Data */}
+      <StructuredData 
+        type="product" 
+        products={pricingPlans}
+      />
     </div>
   );
 };

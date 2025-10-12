@@ -15,9 +15,8 @@ const About = () => {
   
   // SEO meta tags
   useSEO({
-    title: "About Zenara Designs - Web Design & Development Team Toronto | Zenara Designs",
-    description: "Meet the Zenara Designs team - Toronto's leading web design and development agency. Learn about our expertise, process, and commitment to creating exceptional digital experiences for GTA businesses.",
-    keywords: "about zenara designs, web design team toronto, web development team gta, toronto web agency, web design company toronto",
+    title: "About Zenara Designs | Web Design Team Toronto | Zenara",
+    description: "Meet Toronto's leading web design team at Zenara Designs. Learn about our expertise, process, and commitment to creating exceptional digital experiences for GTA businesses. Contact us today!",
     canonical: "https://zenaradesigns.com/about"
   });
   
@@ -31,17 +30,17 @@ const About = () => {
 
   const team = useMemo((): TeamMember[] => [
     {
-      name: "Alex Johnson",
+      name: "Pratik Mistry",
       role: "Lead Developer", 
       bio: "4-5 years of experience in software engineering with a strong foundation in computer science. Passionate about building scalable and efficient web applications."
     },
     {
-      name: "Sarah Chen",
+      name: "Kavin Mural",
       role: "Lead Developer",
       bio: "4-5 years of experience in software engineering with a computer science background. Specializes in modern web technologies and full-stack development."
     },
     {
-      name: "Marcus Rodriguez", 
+      name: "Ryan Honeybone", 
       role: "UX/UI Designer",
       bio: "3 years of experience in design with a strong educational background in design principles. Creates intuitive and beautiful user experiences that drive engagement."
     }
@@ -206,7 +205,7 @@ const About = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" role="main" aria-label="About page">
       {/* Space-Themed Hero Section */}
       <section ref={heroSectionRef} className="about-hero py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-black via-indigo-900 to-purple-900">
         {/* Saturn in top right */}
@@ -219,9 +218,11 @@ const About = () => {
         >
           <img 
             src={saturnImage} 
-            alt="Saturn"
+            alt="Decorative Saturn planet illustration for web design agency background" 
             className="w-full h-full object-contain"
-            loading="eager"
+            width="200"
+            height="200"
+            loading="lazy"
             decoding="async"
           />
         </div>
@@ -286,7 +287,7 @@ const About = () => {
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed mb-8 sm:mb-12 px-4">
               Every business deserves a digital presence that not only looks amazing but drives real results. 
-              We bridge the gap between cutting-edge technology and thoughtful design strategy.
+              We bridge the gap between cutting-edge technology and thoughtful design strategy. Based in Toronto and serving the GTA.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-12 sm:mb-16">
@@ -297,7 +298,7 @@ const About = () => {
                 </Link>
               </Button>
               <Button asChild size="lg" className="border-2 border-cyan-400 text-cyan-300 bg-cyan-500/10 px-6 py-4 sm:px-8 sm:py-5 md:px-10 md:py-6 rounded-2xl font-semibold text-base sm:text-lg backdrop-blur-sm hover:text-white w-full sm:w-auto">
-                <Link to="/projects">See Our Work</Link>
+                <Link to="/projects">See Our Web Design Projects</Link>
               </Button>
             </div>
           </div>
@@ -317,9 +318,11 @@ const About = () => {
         >
           <img 
             src={moonImage} 
-            alt="Moon"
+            alt="Decorative moon illustration for web design agency background" 
             className="w-full h-full object-contain"
-            loading="eager"
+            width="150"
+            height="150"
+            loading="lazy"
             decoding="async"
           />
         </div>
@@ -406,7 +409,9 @@ const About = () => {
               <div className="mx-6 sm:mx-8 w-24 h-24 sm:w-32 sm:h-32 bg-gradient-to-br from-cyan-500/20 to-purple-500/20 rounded-full flex items-center justify-center border-2 border-cyan-500/30 backdrop-blur-md shadow-2xl">
                 <img 
                   src={logo} 
-                  alt="Zenara Designs Logo" 
+                  alt="Zenara Designs - Professional Web Design Agency Toronto Logo" 
+                  width="60"
+                  height="16"
                   className="w-16 h-16 sm:w-24 sm:h-24 object-contain"
                   loading="eager"
                   decoding="async"
@@ -648,8 +653,56 @@ const About = () => {
               </div>
             </div>
           </div>
+          
+          {/* CTA Button */}
+          <div className="text-center mt-12 sm:mt-16">
+            <div className="relative max-w-3xl mx-auto">
+              {/* Enhanced Background with Gradient Border */}
+              <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-teal-500/20 rounded-3xl blur-sm"></div>
+              <div className="relative bg-gradient-to-br from-slate-800/90 via-slate-900/90 to-black/90 backdrop-blur-xl rounded-3xl p-8 sm:p-10 border border-white/10 shadow-2xl">
+                {/* Decorative Elements */}
+                <div className="absolute top-4 right-4 w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+                <div className="absolute bottom-4 left-4 w-1 h-1 bg-purple-400 rounded-full animate-pulse delay-1000"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center justify-center mb-4">
+                    <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-2xl flex items-center justify-center mr-4">
+                      <Code2 className="h-6 w-6 text-white" />
+                    </div>
+                    <h3 className="text-2xl sm:text-3xl font-bold text-white">
+                      Ready to See Our Process?
+                    </h3>
+                  </div>
+                  <p className="text-slate-300 mb-8 text-base sm:text-lg max-w-2xl mx-auto">
+                    Discover our detailed 6-step methodology, from discovery to launch and beyond. See exactly how we transform your vision into digital reality.
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <Button asChild className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white px-8 py-4 rounded-2xl font-semibold text-base shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105">
+                      <Link to="/process">
+                        Explore Our Process
+                        <ArrowRight className="ml-2 h-5 w-5" />
+                      </Link>
+                    </Button>
+                    <Button asChild className="border-2 border-cyan-400 text-cyan-300 bg-cyan-500/10 px-8 py-4 rounded-2xl font-semibold text-base backdrop-blur-sm hover:bg-cyan-500/20 hover:border-cyan-300 hover:text-white transition-all duration-300">
+                      <Link to="/contact">
+                        Start Your Project
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Last Updated Date */}
+          <div className="text-center mt-8">
+            <p className="text-slate-400 text-sm">
+              Last updated: January 2025
+            </p>
+          </div>
         </div>
       </section>
+
 
     </div>
   );

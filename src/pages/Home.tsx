@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight, Zap, Target, Shield, Code2, Users, Rocket, CheckCircle, Star, TrendingUp, Clock, Award, Sparkles, Heart, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useScrollToTop } from '@/hooks';
+import { useScrollToTop, useSEO } from '@/hooks';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
 import type { Capability, Differentiator, SuccessMetric, AnimatedNumbers } from '@/lib/types';
 import logo from '@/assets/zenaralogo-transparentbg.png';
@@ -14,6 +14,16 @@ import { useState, useEffect, useRef, memo, useCallback, useMemo } from 'react';
 const Home = () => {
   // Scroll to top when component mounts
   useScrollToTop();
+  
+  // SEO meta tags
+  useSEO({
+    title: "Web Design Toronto | Business Cards & Logo Design GTA | Zenara",
+    description: "Toronto's leading web design agency. Professional websites, business cards, and logo design for GTA businesses. Modern, fast, secure solutions. Get your free consultation today!",
+    canonical: "https://zenaradesigns.com",
+    structuredData: {
+      type: 'localBusiness'
+    }
+  });
   
   const [currentSlogan, setCurrentSlogan] = useState(0);
   const slogans = useMemo(() => ['Modern', 'Fast', 'Secure'], []);
@@ -173,7 +183,7 @@ const Home = () => {
     {
       icon: <Rocket className="h-8 w-8" />,
       title: "Speed Without Compromise",
-      description: "We deliver in 1-2 weeks what others take months to build, without cutting corners on quality or attention to detail.",
+      description: "We deliver in 2-4 weeks what others take months to build, without cutting corners on quality or attention to detail.",
       highlight: "Fast & Quality"
     },
     {
@@ -211,7 +221,7 @@ const Home = () => {
     },
     {
       icon: <Clock className="h-8 w-8" />,
-      number: "1-2",
+      number: "2-4",
       label: "Weeks to Launch",
       description: "From concept to live website in record time"
     },
@@ -230,9 +240,9 @@ const Home = () => {
   ];
 
   return (
-    <div className="m-0 p-0">
+    <div className="m-0 p-0" role="main" aria-label="Home page">
       {/* Space-Themed Hero Section */}
-      <section className="hero-section min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-black via-teal-900 to-purple-900 cursor-glow pt-0 mt-0 z-10">
+      <section className="hero-section min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-black via-teal-900 to-purple-900 cursor-glow pt-0 mt-0 z-10" role="banner" aria-label="Hero section">
         {/* Animated Background Elements */}
         <div className="absolute inset-0">
           {/* Shooting Stars */}
@@ -295,11 +305,11 @@ const Home = () => {
                 </span>
               </div>
               <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight text-white">
-                Design. Build. Launch
+                Web Design. Build. Launch
                 <span className="gradient-text"> — <span key={currentSlogan} className="cool-text-animation">{slogans[currentSlogan]}</span></span>
               </h1>
               <p className="text-lg sm:text-xl text-white/90 mb-8 leading-relaxed">
-                Zenara Designs creates high-performing websites for small businesses and professionals using modern development workflows.
+                Zenara Designs creates high-performing websites for Toronto & GTA businesses and professionals using modern development workflows.
               </p>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start">
                 <Button asChild className="btn-hero bg-gradient-to-r from-cyan-500 to-violet-600 hover:from-cyan-600 hover:to-violet-700 border-0 text-white shadow-lg hover:shadow-xl transition-all duration-300 w-full sm:w-auto">
@@ -309,7 +319,7 @@ const Home = () => {
                   </Link>
                 </Button>
                 <Button asChild variant="outline" className="btn-ghost border-cyan-400/70 text-white bg-cyan-500/20 hover:bg-cyan-500/30 hover:border-cyan-300/80 w-full sm:w-auto">
-                  <Link to="/projects">Learn More</Link>
+                  <Link to="/projects">View Our Web Design Portfolio</Link>
                 </Button>
               </div>
             </div>
@@ -329,8 +339,10 @@ const Home = () => {
                 <div className="relative z-10 group">
                   <img 
                     src={logo} 
-                    alt="Zenara Designs Logo" 
+                    alt="Zenara Designs - Professional Web Design Agency Toronto Logo" 
                     className="w-full max-w-[450px] h-auto object-contain animate-float"
+                    width="450"
+                    height="120"
                     loading="eager"
                     decoding="async"
                   />
@@ -352,7 +364,7 @@ const Home = () => {
       </section>
 
       {/* Tech Stack & Capabilities Carousel */}
-      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900" aria-label="Performance metrics">
         {/* Background Stars */}
         <div className="absolute inset-0">
           {/* Small stars */}
@@ -471,7 +483,7 @@ const Home = () => {
       </section>
 
       {/* Bring Your Ideas to Life - Gamma Inspired */}
-      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-cyan-900 to-slate-900">
+      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-cyan-900 to-slate-900" aria-label="Portfolio showcase">
         {/* Space Background Elements */}
         <div className="absolute inset-0">
           {/* Background Stars */}
@@ -576,7 +588,9 @@ const Home = () => {
                           src={realEstateWebImage} 
                           alt="Real Estate Website Design Toronto - Professional Property Showcase Platform" 
                           className="w-full h-full object-cover"
-                          loading="eager"
+                          width="400"
+                          height="225"
+                          loading="lazy"
                           decoding="async"
                         />
                       </div>
@@ -597,6 +611,10 @@ const Home = () => {
                           src={rocketWebImage} 
                           alt="Rocket Launch Website Design Toronto - Modern Tech Startup Platform" 
                           className="w-full h-full object-cover"
+                          width="400"
+                          height="225"
+                          loading="lazy"
+                          decoding="async"
                         />
                       </div>
                     </div>
@@ -616,6 +634,10 @@ const Home = () => {
                           src={gardenWebImage} 
                           alt="Garden & Landscaping Website Design GTA - Professional Horticulture Business Platform" 
                           className="w-full h-full object-cover"
+                          width="400"
+                          height="225"
+                          loading="lazy"
+                          decoding="async"
                         />
                       </div>
                     </div>
@@ -635,6 +657,10 @@ const Home = () => {
                           src={travelWebImage} 
                           alt="Travel & Tourism Website Design Toronto - Adventure Booking Platform" 
                           className="w-full h-full object-cover"
+                          width="400"
+                          height="225"
+                          loading="lazy"
+                          decoding="async"
                         />
                       </div>
                     </div>
@@ -655,6 +681,8 @@ const Home = () => {
                           src={realEstateWebImage} 
                           alt="Real Estate Website Design Toronto - Property Showcase Platform" 
                           className="w-full h-full object-cover"
+                          width="400"
+                          height="225"
                           loading="eager"
                           decoding="async"
                         />
@@ -676,6 +704,10 @@ const Home = () => {
                           src={rocketWebImage} 
                           alt="Rocket Launch Website Design Toronto - Modern Tech Startup Platform" 
                           className="w-full h-full object-cover"
+                          width="400"
+                          height="225"
+                          loading="lazy"
+                          decoding="async"
                         />
                       </div>
                     </div>
@@ -695,6 +727,10 @@ const Home = () => {
                           src={gardenWebImage} 
                           alt="Garden & Landscaping Website Design GTA - Professional Horticulture Business Platform" 
                           className="w-full h-full object-cover"
+                          width="400"
+                          height="225"
+                          loading="lazy"
+                          decoding="async"
                         />
                       </div>
                     </div>
@@ -714,6 +750,10 @@ const Home = () => {
                           src={travelWebImage} 
                           alt="Travel & Tourism Website Design Toronto - Adventure Booking Platform" 
                           className="w-full h-full object-cover"
+                          width="400"
+                          height="225"
+                          loading="lazy"
+                          decoding="async"
                         />
                       </div>
                     </div>
@@ -833,8 +873,8 @@ const Home = () => {
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
-                <Button asChild size="lg" className="border-2 border-cyan-400 text-cyan-300 bg-cyan-500/10 px-8 sm:px-10 py-4 sm:py-6 rounded-2xl font-semibold text-base sm:text-lg backdrop-blur-sm hover:bg-cyan-500/10 hover:border-cyan-400 w-full sm:w-auto">
-                  <Link to="/projects">View Our Work</Link>
+                <Button asChild size="lg" className="border-2 border-cyan-400 text-cyan-300 bg-cyan-500/10 px-6 sm:px-8 py-4 sm:py-6 rounded-2xl font-semibold text-base sm:text-lg backdrop-blur-sm hover:bg-cyan-500/20 hover:border-cyan-300 hover:text-white transition-all duration-300 hover:scale-105 w-full sm:w-auto">
+                  <Link to="/projects">Browse Our Web Design Portfolio</Link>
                 </Button>
               </div>
               <div className="mt-10 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 md:space-x-8 text-slate-400">
@@ -854,7 +894,15 @@ const Home = () => {
             </div>
           </div>
         </div>
+        
+        {/* Content Updated Date - Outside main content box */}
+        <div className="text-center py-4">
+          <p className="text-slate-400 text-sm">
+            Content updated: January 2025
+          </p>
+        </div>
       </section>
+
     </div>
   );
 };

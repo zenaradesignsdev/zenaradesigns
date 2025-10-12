@@ -1,14 +1,19 @@
 import { useEffect } from 'react';
+import { generateLocalBusinessSchema, generateOrganizationSchema, generateWebSiteSchema, generateServiceSchema, injectMultipleSchemas } from '@/lib/structured-data';
 
 interface SEOProps {
   title: string;
   description: string;
-  keywords?: string;
   canonical?: string;
   noindex?: boolean;
+  structuredData?: {
+    type: 'localBusiness' | 'organization' | 'website' | 'service';
+    serviceName?: string;
+    serviceDescription?: string;
+  };
 }
 
-export const useSEO = ({ title, description, keywords, canonical, noindex = false }: SEOProps) => {
+export const useSEO = ({ title, description, canonical, noindex = false, structuredData }: SEOProps) => {
   useEffect(() => {
     // Update document title
     document.title = title;
@@ -24,18 +29,8 @@ export const useSEO = ({ title, description, keywords, canonical, noindex = fals
       document.head.appendChild(metaDescription);
     }
 
-    // Update or create meta keywords
-    if (keywords) {
-      let metaKeywords = document.querySelector('meta[name="keywords"]');
-      if (metaKeywords) {
-        metaKeywords.setAttribute('content', keywords);
-      } else {
-        metaKeywords = document.createElement('meta');
-        metaKeywords.setAttribute('name', 'keywords');
-        metaKeywords.setAttribute('content', keywords);
-        document.head.appendChild(metaKeywords);
-      }
-    }
+    // Note: Meta keywords are not used by search engines and are considered outdated
+    // Keywords are now handled through natural content and semantic HTML
 
     // Update or create canonical URL
     if (canonical) {
@@ -105,5 +100,31 @@ export const useSEO = ({ title, description, keywords, canonical, noindex = fals
       document.head.appendChild(twitterDescription);
     }
 
-  }, [title, description, keywords, canonical, noindex]);
+    // Inject structured data if specified
+    if (structuredData) {
+      const schemas = [];
+      
+      // Always include Organization and WebSite schemas
+      schemas.push(generateOrganizationSchema());
+      schemas.push(generateWebSiteSchema());
+      
+      // Add specific schema based on type
+      switch (structuredData.type) {
+        case 'localBusiness':
+          schemas.push(generateLocalBusinessSchema());
+          break;
+        case 'service':
+          if (structuredData.serviceName && structuredData.serviceDescription) {
+            schemas.push(generateServiceSchema(structuredData.serviceName, structuredData.serviceDescription));
+          }
+          break;
+        default:
+          break;
+      }
+      
+      // Inject all schemas
+      injectMultipleSchemas(schemas);
+    }
+
+  }, [title, description, canonical, noindex, structuredData]);
 };

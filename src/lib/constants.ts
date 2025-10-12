@@ -21,6 +21,15 @@ export const NAVIGATION_LINKS = [
   { href: '/contact', label: 'Contact' },
 ] as const;
 
+// Footer additional links
+export const FOOTER_ADDITIONAL_LINKS = [
+  { href: '/faq', label: 'FAQ' },
+  { href: '/locations', label: 'Service Areas' },
+  { href: '/process', label: 'Our Process' },
+  { href: '/security', label: 'Security' },
+  { href: '/mobile', label: 'Mobile' },
+] as const;
+
 // Animation constants
 export const ANIMATION_DURATIONS = {
   FAST: 200,

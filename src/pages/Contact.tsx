@@ -18,10 +18,12 @@ const Contact = () => {
   
   // SEO meta tags
   useSEO({
-    title: "Contact Zenara Designs - Web Design & Development Toronto | Get Quote | Zenara Designs",
+    title: "Contact Us | Web Design Toronto | Zenara Designs",
     description: "Contact Zenara Designs for professional web design, development, and digital marketing services in Toronto & GTA. Get a free quote for your project today.",
-    keywords: "contact zenara designs, web design quote toronto, web development consultation gta, toronto web agency contact, get website quote",
-    canonical: "https://zenaradesigns.com/contact"
+    canonical: "https://zenaradesigns.com/contact",
+    structuredData: {
+      type: 'localBusiness'
+    }
   });
   
   const [formData, setFormData] = useState<ContactFormData>({
@@ -131,7 +133,7 @@ const Contact = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" role="main" aria-label="Contact page">
 
       {/* Contact Form & Info - Space Theme */}
       <section id="contact-form" className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -213,11 +215,11 @@ const Contact = () => {
               <Globe className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400 animate-pulse" />
               <span className="text-xs sm:text-sm font-medium text-cyan-300">Get In Touch</span>
             </div>
-            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-white leading-tight">
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-white leading-tight">
               Ready to Transform Your <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Digital Presence?</span>
-            </h2>
+            </h1>
             <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed px-4">
-              Whether you're a startup looking to make a splash or an established business ready to modernize, we're here to help.
+              Whether you're a startup looking to make a splash or an established business ready to modernize, we're here to help. Professional web design services in Toronto & GTA.
             </p>
           </div>
           
@@ -244,6 +246,7 @@ const Contact = () => {
                         <a 
                           href={`mailto:${BUSINESS_EMAIL}`}
                           className="text-cyan-300 hover:text-cyan-200 transition-colors text-sm sm:text-base break-all"
+                          rel="noopener noreferrer"
                         >
                           {BUSINESS_EMAIL}
                         </a>
@@ -259,6 +262,7 @@ const Contact = () => {
                         <a 
                           href={`tel:${BUSINESS_PHONE}`} 
                           className="text-cyan-300 hover:text-cyan-200 transition-colors text-sm sm:text-base"
+                          rel="noopener noreferrer"
                         >
                           {BUSINESS_PHONE}
                         </a>
@@ -308,7 +312,7 @@ const Contact = () => {
               
               <div className="relative z-10">
                 <h3 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-white">Send us a message</h3>
-                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
+                <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6" role="form" aria-label="Contact form">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <Label htmlFor="name" className="text-white font-semibold text-sm sm:text-base">Name *</Label>
@@ -320,9 +324,11 @@ const Contact = () => {
                         className={`bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus:border-cyan-400 focus:ring-cyan-400/20 h-10 sm:h-11 text-sm sm:text-base ${errors.name ? 'border-red-400' : ''}`}
                         sanitizeMode="none"
                         maxLength={100}
+                        aria-describedby={errors.name ? 'name-error' : undefined}
+                        aria-invalid={!!errors.name}
                       />
                       {errors.name && (
-                        <p className="text-red-400 text-xs sm:text-sm mt-1">{errors.name}</p>
+                        <p id="name-error" className="text-red-400 text-xs sm:text-sm mt-1" role="alert">{errors.name}</p>
                       )}
                     </div>
                     <div>
@@ -336,9 +342,11 @@ const Contact = () => {
                         className={`bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus:border-cyan-400 focus:ring-cyan-400/20 h-10 sm:h-11 text-sm sm:text-base ${errors.email ? 'border-red-400' : ''}`}
                         sanitizeMode="basic"
                         maxLength={254}
+                        aria-describedby={errors.email ? 'email-error' : undefined}
+                        aria-invalid={!!errors.email}
                       />
                       {errors.email && (
-                        <p className="text-red-400 text-xs sm:text-sm mt-1">{errors.email}</p>
+                        <p id="email-error" className="text-red-400 text-xs sm:text-sm mt-1" role="alert">{errors.email}</p>
                       )}
                     </div>
                   </div>
@@ -454,6 +462,7 @@ const Contact = () => {
                     style={{ display: 'none' }} 
                     tabIndex={-1}
                     autoComplete="off"
+                    aria-label="Leave this field empty"
                   />
 
                   <Button 

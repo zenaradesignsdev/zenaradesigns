@@ -1,6 +1,17 @@
 import { Resend } from 'resend';
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
+// Validate required environment variables at module load
+if (!process.env.RESEND_API_KEY) {
+  console.error('FATAL: RESEND_API_KEY environment variable is required');
+  throw new Error('RESEND_API_KEY environment variable is required');
+}
+
+if (!process.env.ALLOWED_ORIGIN) {
+  console.error('FATAL: ALLOWED_ORIGIN environment variable is required');
+  throw new Error('ALLOWED_ORIGIN environment variable is required');
+}
+
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Security headers
@@ -21,8 +32,28 @@ const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_WINDOW = 15 * 60 * 1000; // 15 minutes
 const MAX_REQUESTS = 3;
 
+// Cleanup expired entries every 5 minutes to prevent memory leaks
+const CLEANUP_INTERVAL = 5 * 60 * 1000; // 5 minutes
+let lastCleanup = Date.now();
+
+function cleanupExpiredEntries() {
+  const now = Date.now();
+  for (const [key, value] of rateLimitStore.entries()) {
+    if (now > value.resetTime) {
+      rateLimitStore.delete(key);
+    }
+  }
+  lastCleanup = now;
+}
+
 function checkRateLimit(ip: string): boolean {
   const now = Date.now();
+  
+  // Cleanup expired entries periodically
+  if (now - lastCleanup > CLEANUP_INTERVAL) {
+    cleanupExpiredEntries();
+  }
+  
   const key = ip;
   const userLimit = rateLimitStore.get(key);
 
@@ -97,9 +128,31 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   });
 
   // Set CORS headers (more restrictive)
+  const allowedOrigin = process.env.ALLOWED_ORIGIN;
+  
+  // Fail securely - require environment variable
+  if (!allowedOrigin) {
+    console.error('ALLOWED_ORIGIN environment variable is not set');
+    return res.status(500).json({ 
+      error: 'Server configuration error',
+      success: false 
+    });
+  }
+  
+  // Validate origin against whitelist
+  const allowedOrigins = [
+    'https://zenaradesigns.com',
+    'https://www.zenaradesigns.com',
+    // Add other allowed origins here if needed
+  ];
+  
+  const origin = req.headers.origin;
+  const isAllowedOrigin = origin && allowedOrigins.includes(origin);
+  
   res.setHeader('Access-Control-Allow-Credentials', 'true');
-  res.setHeader('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN || 'https://zenaradesigns.com');
+  res.setHeader('Access-Control-Allow-Origin', isAllowedOrigin ? origin : allowedOrigin);
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Max-Age', '86400'); // Cache preflight for 24 hours
   res.setHeader(
     'Access-Control-Allow-Headers',
     'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
@@ -214,8 +267,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     return res.status(200).json({ 
       success: true, 
-      message: 'Email sent successfully! We\'ll get back to you within 24-48 hours.',
-      id: data?.id
+      message: 'Email sent successfully! We\'ll get back to you within 24-48 hours.'
     });
 
   } catch (error) {

@@ -1,4 +1,23 @@
 {
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "http://zenaradesigns.com",
+      "destination": "https://zenaradesigns.com",
+      "permanent": true
+    },
+    {
+      "source": "http://www.zenaradesigns.com",
+      "destination": "https://zenaradesigns.com",
+      "permanent": true
+    },
+    {
+      "source": "https://www.zenaradesigns.com",
+      "destination": "https://zenaradesigns.com",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/((?!api/).*)",
@@ -69,6 +88,18 @@
         {
           "key": "Strict-Transport-Security",
           "value": "max-age=31536000; includeSubDomains; preload"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate, proxy-revalidate"
+        },
+        {
+          "key": "Pragma",
+          "value": "no-cache"
+        },
+        {
+          "key": "Expires",
+          "value": "0"
         }
       ]
     }

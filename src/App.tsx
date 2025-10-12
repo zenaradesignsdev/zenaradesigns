@@ -8,22 +8,25 @@ import Layout from "./components/Layout/Layout";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { SecurityProvider } from "./components/SecurityProvider";
 import { initLazyLoading } from "./utils/imageLoader";
+import PerformanceMonitor from "./components/PerformanceMonitor";
 import { performanceMetrics } from "./utils/performance";
+import { logger } from "./lib/logger";
 
-// Lazy load page components
-const Home = lazy(() => import("./pages/Home"));
-const About = lazy(() => import("./pages/About"));
-const Services = lazy(() => import("./pages/Services"));
-const Projects = lazy(() => import("./pages/Projects"));
-const Pricing = lazy(() => import("./pages/Pricing"));
-const Contact = lazy(() => import("./pages/Contact"));
-const NotFound = lazy(() => import("./pages/NotFound"));
+// Import critical pages directly for SSR/prerendering
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Services from "./pages/Services";
+import Projects from "./pages/Projects";
+import Pricing from "./pages/Pricing";
+import Contact from "./pages/Contact";
+import NotFound from "./pages/NotFound";
 
-// Hidden SEO pages
+// Lazy load secondary SEO pages
 const FAQ = lazy(() => import("./pages/FAQ"));
-const ServicesDirectory = lazy(() => import("./pages/ServicesDirectory"));
-const PricingGuide = lazy(() => import("./pages/PricingGuide"));
 const Locations = lazy(() => import("./pages/Locations"));
+const Process = lazy(() => import("./pages/Process"));
+const Security = lazy(() => import("./pages/Security"));
+const Mobile = lazy(() => import("./pages/Mobile"));
 
 const queryClient = new QueryClient();
 
@@ -37,7 +40,7 @@ const App = () => {
       // Measure page load performance
       const pageMetrics = performanceMetrics.measurePageLoad();
       if (pageMetrics) {
-        console.log('🚀 Page Load Performance:', pageMetrics);
+        logger.debug('🚀 Page Load Performance:', pageMetrics);
       }
       
       // Measure bundle size
@@ -46,7 +49,7 @@ const App = () => {
       // Monitor memory usage
       const memoryUsage = performanceMetrics.getMemoryUsage();
       if (memoryUsage) {
-        console.log('💾 Memory Usage:', memoryUsage);
+        logger.debug('💾 Memory Usage:', memoryUsage);
       }
       
       // Monitor scroll performance
@@ -83,11 +86,12 @@ const App = () => {
                   <Route path="/pricing" element={<ErrorBoundary><Pricing /></ErrorBoundary>} />
                   <Route path="/contact" element={<ErrorBoundary><Contact /></ErrorBoundary>} />
                   
-                  {/* Hidden SEO Pages - Not in main navigation */}
-                  <Route path="/faq" element={<ErrorBoundary><FAQ /></ErrorBoundary>} />
-                  <Route path="/services-directory" element={<ErrorBoundary><ServicesDirectory /></ErrorBoundary>} />
-                  <Route path="/pricing-guide" element={<ErrorBoundary><PricingGuide /></ErrorBoundary>} />
-                  <Route path="/locations" element={<ErrorBoundary><Locations /></ErrorBoundary>} />
+                      {/* Hidden SEO Pages - Not in main navigation */}
+                      <Route path="/faq" element={<ErrorBoundary><FAQ /></ErrorBoundary>} />
+                      <Route path="/locations" element={<ErrorBoundary><Locations /></ErrorBoundary>} />
+                      <Route path="/process" element={<ErrorBoundary><Process /></ErrorBoundary>} />
+                      <Route path="/security" element={<ErrorBoundary><Security /></ErrorBoundary>} />
+                      <Route path="/mobile" element={<ErrorBoundary><Mobile /></ErrorBoundary>} />
                   
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
@@ -98,6 +102,7 @@ const App = () => {
           </TooltipProvider>
         </QueryClientProvider>
       </SecurityProvider>
+      {process.env.NODE_ENV === 'development' && <PerformanceMonitor />}
     </ErrorBoundary>
   );
 };
