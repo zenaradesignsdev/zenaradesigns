@@ -187,48 +187,6 @@ const Services = () => {
     }
   ], []);
 
-  const caseStudies = useMemo(() => [
-    {
-      title: "Dundas West Restaurant - 150% Online Order Increase",
-      industry: "Restaurant",
-      location: "Dundas West, Toronto",
-      challenge: "Low online visibility and outdated website affecting takeout orders",
-      solution: "Modern responsive design with integrated online ordering system",
-      results: "150% increase in online orders, 40% more website traffic, 25% higher average order value",
-      timeframe: "2 weeks",
-      features: ["Online ordering integration", "Mobile optimization", "Local SEO", "Menu management system"]
-    },
-    {
-      title: "Mississauga Real Estate Agent - 200% Lead Generation Boost",
-      industry: "Real Estate",
-      location: "Mississauga, GTA",
-      challenge: "Competitive market with low online presence and poor lead capture",
-      solution: "Property showcase platform with virtual tours and lead generation forms",
-      results: "200% increase in qualified leads, 60% more property inquiries, 35% higher conversion rate",
-      timeframe: "3 weeks",
-      features: ["Property listings", "Virtual tours", "Lead capture forms", "Client portal"]
-    },
-    {
-      title: "Brampton Healthcare Clinic - 300% Appointment Bookings",
-      industry: "Healthcare",
-      location: "Brampton, GTA",
-      challenge: "Manual appointment booking system causing missed opportunities",
-      solution: "Online booking system with patient portal and automated reminders",
-      results: "300% increase in online bookings, 50% reduction in no-shows, 80% patient satisfaction",
-      timeframe: "2.5 weeks",
-      features: ["Online booking", "Patient portal", "Automated reminders", "PHIPA compliance"]
-    },
-    {
-      title: "Vaughan E-commerce Store - 400% Sales Growth",
-      industry: "E-commerce",
-      location: "Vaughan, GTA",
-      challenge: "Outdated online store with poor mobile experience and low conversions",
-      solution: "Complete e-commerce redesign with Canadian payment integration and mobile optimization",
-      results: "400% increase in online sales, 70% mobile traffic growth, 45% higher conversion rate",
-      timeframe: "4 weeks",
-      features: ["Mobile optimization", "Canadian payments", "Inventory management", "Order tracking"]
-    }
-  ], []);
 
   const nextTestimonial = useCallback(() => {
     setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
@@ -376,8 +334,8 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Toronto Case Studies - Space Theme */}
-      <section className="services-case-studies py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-cyan-900 to-slate-900">
+      {/* FAQ Preview - Space Theme */}
+      <section className="services-faq-preview py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-cyan-900 to-slate-900">
         {/* Space Background Elements */}
         <div className="absolute inset-0">
           {/* Subtle Stars */}
@@ -395,18 +353,35 @@ const Services = () => {
           <div className="text-center mb-12 sm:mb-16">
             <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full px-4 py-2 sm:px-6 sm:py-3 mb-6 sm:mb-8 border border-cyan-500/30">
               <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400 animate-pulse" />
-              <span className="text-xs sm:text-sm font-medium text-cyan-300">Real Results</span>
+              <span className="text-xs sm:text-sm font-medium text-cyan-300">Common Questions</span>
             </div>
             <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-white">
-              Toronto <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Success Stories</span>
+              Frequently Asked <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Questions</span>
             </h2>
             <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed px-4">
-              Real businesses across the GTA achieving remarkable growth with our web solutions
+              Get quick answers to the most common questions about our web design services
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {caseStudies.map((study, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            {[
+              {
+                question: "How long does it take to build a website?",
+                answer: "Most websites are completed within 2-4 weeks, depending on complexity and requirements."
+              },
+              {
+                question: "Do you provide hosting and maintenance?",
+                answer: "Yes! We offer comprehensive hosting solutions with 99.9% uptime and ongoing maintenance support."
+              },
+              {
+                question: "What's included in your web design package?",
+                answer: "Custom design, responsive development, SEO optimization, security setup, and 3 months of free support."
+              },
+              {
+                question: "Can you help with existing websites?",
+                answer: "Absolutely! We specialize in website redesigns, updates, and performance improvements."
+              }
+            ].map((faq, index) => (
               <div key={index} className="group">
                 <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 h-full relative overflow-hidden">
                   {/* Glassmorphism Effect */}
@@ -416,49 +391,12 @@ const Services = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   <div className="relative z-10">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-3 h-3 bg-cyan-400 rounded-full"></div>
-                        <span className="text-cyan-300 text-sm font-semibold">{study.industry}</span>
-                      </div>
-                      <span className="text-slate-400 text-sm">{study.timeframe}</span>
-                    </div>
-                    
-                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors">
-                      {study.title}
+                    <h3 className="text-lg sm:text-xl font-bold text-white mb-4 group-hover:text-cyan-300 transition-colors">
+                      {faq.question}
                     </h3>
-                    
-                    <p className="text-slate-400 text-sm mb-4">
-                      📍 {study.location}
+                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                      {faq.answer}
                     </p>
-                    
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="text-sm font-semibold text-cyan-300 mb-2">Challenge:</h4>
-                        <p className="text-slate-300 text-sm">{study.challenge}</p>
-                      </div>
-                      
-                      <div>
-                        <h4 className="text-sm font-semibold text-cyan-300 mb-2">Solution:</h4>
-                        <p className="text-slate-300 text-sm">{study.solution}</p>
-                      </div>
-                      
-                      <div>
-                        <h4 className="text-sm font-semibold text-cyan-300 mb-2">Results:</h4>
-                        <p className="text-slate-300 text-sm font-medium">{study.results}</p>
-                      </div>
-                      
-                      <div>
-                        <h4 className="text-sm font-semibold text-cyan-300 mb-2">Key Features:</h4>
-                        <div className="flex flex-wrap gap-2">
-                          {study.features.map((feature, featureIndex) => (
-                            <span key={featureIndex} className="text-xs bg-cyan-500/20 text-cyan-300 px-2 py-1 rounded">
-                              {feature}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
                   </div>
                   
                   {/* Decorative Elements */}
@@ -466,6 +404,16 @@ const Services = () => {
                 </div>
               </div>
             ))}
+          </div>
+          
+          {/* CTA Button */}
+          <div className="text-center mt-12">
+            <Button asChild className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white px-8 py-4 sm:px-10 sm:py-5 rounded-2xl font-semibold text-base sm:text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105">
+              <Link to="/faq">
+                View All FAQ
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
