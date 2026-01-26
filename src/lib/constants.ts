@@ -2,7 +2,7 @@
 export const BUSINESS_EMAIL = 'zenaradesigns.co@gmail.com';
 export const BUSINESS_DOMAIN = 'mail.zenaradesigns.com';
 export const BUSINESS_NAME = 'Zenara Designs';
-export const BUSINESS_PHONE = '(555) 123-4567';
+export const BUSINESS_PHONE = '(647) 835-1077';
 
 // Email configuration
 export const EMAIL_CONFIG = {

@@ -405,7 +405,7 @@ const loadAnalytics = () => import('./analytics');
   "name": "Business Name",
   "description": "Business description",
   "url": "https://example.com",
-  "telephone": "+1-555-123-4567",
+  "telephone": "+1-647-835-1077",
   "email": "zenaradesigns.co@gmail.com",
   "address": {
     "@type": "PostalAddress",
@@ -435,7 +435,7 @@ const loadAnalytics = () => import('./analytics');
   "logo": "https://example.com/logo.png",
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "+1-555-123-4567",
+    "telephone": "+1-647-835-1077",
     "contactType": "customer service"
   },
   "sameAs": [
