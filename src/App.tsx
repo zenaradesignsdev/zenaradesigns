@@ -27,6 +27,7 @@ const Locations = lazy(() => import("./pages/Locations"));
 const Process = lazy(() => import("./pages/Process"));
 const Security = lazy(() => import("./pages/Security"));
 const Mobile = lazy(() => import("./pages/Mobile"));
+const Payment = lazy(() => import("./pages/Payment"));
 
 const queryClient = new QueryClient();
 
@@ -92,6 +93,7 @@ const App = () => {
                       <Route path="/process" element={<ErrorBoundary><Process /></ErrorBoundary>} />
                       <Route path="/security" element={<ErrorBoundary><Security /></ErrorBoundary>} />
                       <Route path="/mobile" element={<ErrorBoundary><Mobile /></ErrorBoundary>} />
+                      <Route path="/payment" element={<ErrorBoundary><Payment /></ErrorBoundary>} />
                   
                   {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                   <Route path="*" element={<NotFound />} />
