@@ -111,8 +111,8 @@ const Pricing = () => {
       id: 'core',
       name: 'Zenara Core',
       emoji: '🌱',
-      monthlyPrice: 25,
-      annualPrice: 270,
+      monthlyPrice: 45,
+      annualPrice: 486, // 10% discount: $45 * 12 * 0.9 = $486
       features: [
         'High-performance managed hosting (non-WordPress)',
         'SSL security + uptime monitoring',
@@ -127,8 +127,8 @@ const Pricing = () => {
       id: 'grow',
       name: 'Zenara Grow',
       emoji: '⚡',
-      monthlyPrice: 45,
-      annualPrice: 486,
+      monthlyPrice: 70,
+      annualPrice: 756, // 10% discount: $70 * 12 * 0.9 = $756
       features: [
         'Everything in Core, plus:',
         'Performance audits and more traffic',
@@ -144,8 +144,8 @@ const Pricing = () => {
       id: 'prime',
       name: 'Zenara Prime',
       emoji: '👑',
-      monthlyPrice: 80,
-      annualPrice: 864,
+      monthlyPrice: 150,
+      annualPrice: 1620, // 10% discount: $150 * 12 * 0.9 = $1620
       features: [
         'Everything in Grow, plus:',
         'Advanced speed & performance tuning',
@@ -344,7 +344,7 @@ const Pricing = () => {
           </div>
 
           {/* Subscription Plans */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto items-stretch">
             {subscriptionPlans.map((plan) => {
               return (
                 <div key={plan.id} className={`group relative ${plan.popular ? 'lg:scale-105' : ''}`}>
@@ -357,7 +357,7 @@ const Pricing = () => {
                     </div>
                   )}
                   
-                  <div className={`bg-white rounded-3xl p-6 sm:p-8 border shadow-lg transition-all duration-500 min-h-[500px] sm:min-h-[550px] flex flex-col relative overflow-hidden ${
+                  <div className={`bg-white rounded-3xl p-6 sm:p-8 border shadow-lg transition-all duration-500 h-full flex flex-col relative overflow-hidden ${
                     plan.popular 
                       ? 'border-2 shadow-xl' 
                       : 'border border-purple-200'

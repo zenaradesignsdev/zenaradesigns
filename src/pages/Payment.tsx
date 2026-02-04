@@ -62,8 +62,8 @@ const Payment = () => {
       id: 'core',
       name: 'Zenara Core',
       emoji: '🌱',
-      monthlyPrice: 25,
-      annualPrice: 270, // 10% discount: $25 * 12 * 0.9 = $270
+      monthlyPrice: 45,
+      annualPrice: 486, // 10% discount: $45 * 12 * 0.9 = $486
       features: [
         'High-performance managed hosting (non-WordPress)',
         'SSL security + uptime monitoring',
@@ -78,8 +78,8 @@ const Payment = () => {
       id: 'grow',
       name: 'Zenara Grow',
       emoji: '⚡',
-      monthlyPrice: 45,
-      annualPrice: 486, // 10% discount: $45 * 12 * 0.9 = $486
+      monthlyPrice: 70,
+      annualPrice: 756, // 10% discount: $70 * 12 * 0.9 = $756
       features: [
         'Everything in Core, plus:',
         'Performance audits and more traffic',
@@ -95,8 +95,8 @@ const Payment = () => {
       id: 'prime',
       name: 'Zenara Prime',
       emoji: '👑',
-      monthlyPrice: 80,
-      annualPrice: 864, // 10% discount: $80 * 12 * 0.9 = $864
+      monthlyPrice: 150,
+      annualPrice: 1620, // 10% discount: $150 * 12 * 0.9 = $1620
       features: [
         'Everything in Grow, plus:',
         'Advanced speed & performance tuning',
