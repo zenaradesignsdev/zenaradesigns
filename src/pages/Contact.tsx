@@ -1,5 +1,5 @@
 import { useState, memo, useEffect, useRef } from 'react';
-import { Mail, Clock, CheckCircle, ArrowRight, Phone, Globe } from 'lucide-react';
+import { Mail, Clock, CheckCircle, ArrowRight, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { SecureInput, SecureTextarea } from '@/components/ui/secure-input';
@@ -226,7 +226,7 @@ const Contact = () => {
     <div className="min-h-screen" role="main" aria-label="Contact page">
 
       {/* Contact Form & Info - Space Theme */}
-      <section id="contact-form" className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      <section id="contact-form" className="pt-24 sm:pt-28 md:pt-32 lg:pt-40 pb-16 sm:pb-20 md:pb-24 relative overflow-hidden bg-gradient-to-br from-black via-indigo-900 to-purple-900">
         {/* Space Background Elements */}
         <div className="absolute inset-0">
           {/* Shooting Stars */}
@@ -295,16 +295,12 @@ const Contact = () => {
           </div>
           
           {/* Nebula Effects */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/10 to-teal-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-16">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full px-4 py-2 sm:px-6 sm:py-3 mb-6 sm:mb-8 border border-cyan-500/30">
-              <Globe className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400 animate-pulse" />
-              <span className="text-xs sm:text-sm font-medium text-cyan-300">Get In Touch</span>
-            </div>
             <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-white leading-tight">
               Ready to Transform Your <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Digital Presence?</span>
             </h1>
