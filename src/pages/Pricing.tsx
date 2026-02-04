@@ -70,7 +70,7 @@ const Pricing = () => {
         "Everything in Starter and Small Business",
         "Unlimited pages and sections",
         "Custom design system and animations",
-        "Advanced integrations (CRM, CMS, etc.)",
+        "Integrations like Calendly, Email Newsletter, Blog, etc.",
         "Custom components and functionality",
         "Headless CMS or e-commerce setup",
         "Priority support and maintenance",
