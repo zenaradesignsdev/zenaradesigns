@@ -296,7 +296,7 @@ const Home = () => {
           <div className="absolute top-2/3 right-1/6 w-48 h-48 bg-gradient-to-r from-purple-500/18 to-indigo-500/18 rounded-full blur-3xl animate-pulse delay-2500"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 h-full flex items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 h-full flex items-center pt-16 sm:pt-20 md:pt-24">
           <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 sm:gap-10 lg:gap-12 items-center w-full">
             <div className="fade-in order-2 lg:order-1 text-center lg:text-left">
               <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-6 leading-[1.1] sm:leading-[1.15] text-white tracking-[-0.02em] sm:tracking-[-0.03em]">
