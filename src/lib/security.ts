@@ -245,6 +245,7 @@ export const CSP_CONFIG: CSPConfig = {
     "'self'",
     "'unsafe-inline'", // Note: This should be removed in production with nonces
     'https://fonts.googleapis.com',
+    'https://www.googletagmanager.com',
     'https://assets.calendly.com',
   ],
   'style-src': [
@@ -264,6 +265,8 @@ export const CSP_CONFIG: CSPConfig = {
   'connect-src': [
     "'self'",
     'https://api.resend.com',
+    'https://www.google-analytics.com',
+    'https://analytics.google.com',
     'https://calendly.com',
   ],
   'frame-src': [
@@ -308,7 +311,7 @@ export const SECURITY_HEADERS: SecurityHeaders = {
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
-  'Cross-Origin-Embedder-Policy': 'require-corp',
+  'Cross-Origin-Embedder-Policy': 'unsafe-none',
   'Cross-Origin-Opener-Policy': 'same-origin',
   'Cross-Origin-Resource-Policy': 'same-origin',
 } as const;
