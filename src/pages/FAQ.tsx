@@ -223,8 +223,8 @@ const FAQ = () => {
           <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed px-4">
             Get answers to common questions about our web design, business card, and logo design services in Toronto & GTA
           </p>
-          <p className="text-sm text-slate-400 mt-6">
-            Last updated: January 2025
+          <p className="text-sm text-transparent mt-6">
+            Last updated: January 2026
           </p>
         </div>
 

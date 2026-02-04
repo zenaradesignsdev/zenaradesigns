@@ -972,69 +972,76 @@ const Home = () => {
       </section>
 
       {/* CTA Band */}
-      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-black via-purple-900 to-slate-900">
-        {/* Space Background Elements */}
+      <section className="py-20 sm:py-28 md:py-32 relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-black">
+        {/* Animated Background Elements */}
         <div className="absolute inset-0">
-          {/* Shooting Stars */}
-          <div className="absolute top-20 left-20 w-2 h-2 bg-cyan-400 rounded-full animate-twinkle"></div>
-          <div className="absolute top-40 right-32 w-1 h-1 bg-purple-400 rounded-full animate-twinkle delay-1000"></div>
-          <div className="absolute top-60 left-1/3 w-1 h-1 bg-teal-400 rounded-full animate-twinkle delay-2000"></div>
-          <div className="absolute top-32 right-1/4 w-1 h-1 bg-violet-400 rounded-full animate-twinkle delay-500"></div>
+          {/* Floating Orbs */}
+          <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-violet-500/10 rounded-full blur-3xl"></div>
           
-          {/* Nebula Effects */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/20 to-teal-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          {/* Grid Pattern Overlay */}
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
         </div>
         
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center relative z-10">
-          <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 sm:p-8 md:p-12 border border-white/20 shadow-2xl relative overflow-hidden">
-            {/* Glassmorphism Effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl"></div>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="text-center">
+            {/* Main Heading */}
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+              Let's Build Something
+              <br />
+              <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Amazing
+              </span>
+            </h2>
             
-            <div className="relative z-10">
-              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full px-6 py-3 mb-8 border border-cyan-500/30">
-                <Rocket className="h-5 w-5 text-cyan-400 animate-pulse" />
-                <span className="text-sm font-medium text-cyan-300">Ready to Launch?</span>
-              </div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8">
-                Let's Build Something <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Amazing</span>
-          </h2>
-              <p className="text-lg sm:text-xl text-slate-300 mb-10 max-w-4xl mx-auto leading-relaxed">
-                Your digital transformation starts with a single conversation. Let's create a website that not only looks incredible but drives real business growth.
-          </p>
-              <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
-                <Button asChild size="lg" className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white px-8 sm:px-10 py-4 sm:py-6 rounded-2xl font-semibold text-base sm:text-lg shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105 w-full sm:w-auto">
-            <Link to="/contact">
+            {/* Subheading */}
+            <p className="text-lg sm:text-xl md:text-2xl text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed">
+              Your digital transformation starts here. Let's create something that not only looks incredible but drives real results.
+            </p>
+            
+            {/* CTA Button */}
+            <div className="mb-12">
+              <div 
+                className={`relative inline-block rounded-full p-[4px] transition-all duration-300 group ${
+                  isButtonHovered 
+                    ? 'bg-purple-500' 
+                    : 'bg-gradient-to-r from-cyan-400 via-purple-500 to-violet-500'
+                }`}
+                onMouseEnter={() => setIsButtonHovered(true)}
+                onMouseLeave={() => setIsButtonHovered(false)}
+              >
+                <Button asChild className="bg-black hover:bg-purple-500 rounded-full text-white shadow-lg hover:shadow-xl transition-all duration-300 px-10 py-6 sm:px-12 sm:py-7 text-lg sm:text-xl font-semibold">
+                  <Link to="/contact" className="flex items-center justify-center">
                     Start Your Project
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Link>
-          </Button>
-                <Button asChild size="lg" className="border-2 border-cyan-400 text-cyan-300 bg-cyan-500/10 px-6 sm:px-8 py-4 sm:py-6 rounded-2xl font-semibold text-base sm:text-lg backdrop-blur-sm hover:bg-cyan-500/20 hover:border-cyan-300 hover:text-white transition-all duration-300 hover:scale-105 w-full sm:w-auto">
-                  <Link to="/projects">Browse Our Web Design Portfolio</Link>
+                    <Rocket className="ml-3 h-6 w-6 transition-all duration-300 group-hover:text-cyan-400 group-hover:scale-125" />
+                  </Link>
                 </Button>
               </div>
-              <div className="mt-10 flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6 md:space-x-8 text-slate-400">
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="h-5 w-5 text-cyan-400" />
-                  <span className="text-sm">Free Consultation</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="h-5 w-5 text-cyan-400" />
-                  <span className="text-sm">24h Response</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <CheckCircle className="h-5 w-5 text-cyan-400" />
-                  <span className="text-sm">No Obligation</span>
-                </div>
+            </div>
+            
+            {/* Trust Indicators */}
+            <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 text-slate-400">
+              <div className="flex items-center space-x-2 group">
+                <div className="w-2 h-2 bg-cyan-400 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
+                <span className="text-sm sm:text-base">Free Consultation</span>
+              </div>
+              <div className="flex items-center space-x-2 group">
+                <div className="w-2 h-2 bg-purple-400 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
+                <span className="text-sm sm:text-base">24h Response</span>
+              </div>
+              <div className="flex items-center space-x-2 group">
+                <div className="w-2 h-2 bg-pink-400 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
+                <span className="text-sm sm:text-base">No Obligation</span>
               </div>
             </div>
           </div>
         </div>
         
         {/* Content Updated Date - Outside main content box */}
-        <div className="text-center py-4">
-          <p className="text-slate-400 text-sm">
-            Content updated: January 2025
+        <div className="text-center py-4 relative z-10">
+          <p className="text-transparent text-sm">
+            Content updated: January 2026
           </p>
         </div>
       </section>

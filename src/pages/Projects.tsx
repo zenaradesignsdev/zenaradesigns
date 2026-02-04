@@ -117,8 +117,8 @@ const Projects = () => {
                 <p className="text-lg sm:text-xl text-slate-300 leading-relaxed">
                   Thanks for your patience!
                 </p>
-                <p className="text-sm text-slate-400 mt-4">
-                  Last updated: December 2024
+                <p className="text-sm text-transparent mt-4">
+                  Last updated: January 2026
                 </p>
               </div>
             </div>

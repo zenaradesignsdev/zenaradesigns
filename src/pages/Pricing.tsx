@@ -481,8 +481,8 @@ const Pricing = () => {
           
           {/* Last Updated Date */}
           <div className="text-center mt-8">
-            <p className="text-slate-400 text-sm">
-              Last updated: January 2025
+            <p className="text-transparent text-sm">
+              Last updated: January 2026
             </p>
           </div>
         </div>

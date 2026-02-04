@@ -244,8 +244,8 @@ const Locations = () => {
 
         {/* Last Updated Date */}
         <div className="text-center mt-12">
-          <p className="text-slate-400 text-sm">
-            Last updated: January 2025
+          <p className="text-transparent text-sm">
+            Last updated: January 2026
           </p>
         </div>
       </div>
