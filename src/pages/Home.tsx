@@ -364,10 +364,10 @@ const Home = () => {
                 >
                   <Button asChild className="bg-black hover:bg-purple-500 rounded-full text-white shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-6 sm:px-10 sm:py-7 text-lg sm:text-xl font-semibold w-full">
                     <Link to="/contact" className="flex items-center justify-center">
-                      Launch Your Project
+                    Launch Your Project
                       <Rocket className="ml-2 h-6 w-6 transition-all duration-300 group-hover:text-cyan-400 group-hover:scale-125" />
-                    </Link>
-                  </Button>
+                  </Link>
+                </Button>
                 </div>
               </div>
             </div>
@@ -445,8 +445,8 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="h-[1px] bg-gradient-to-r from-transparent via-cyan-500/60 via-purple-500/60 to-transparent"></div>
         </div>
-      </div>
-
+        </div>
+        
       {/* Our Trusted Partners */}
       <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden" style={{ backgroundColor: '#e5e7eb' }} aria-label="Our Trusted Partners">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
@@ -523,8 +523,8 @@ const Home = () => {
                       {partner}
                     </div>
                   </div>
-                </div>
-              ))}
+              </div>
+            ))}
             </div>
           </div>
         </div>
@@ -615,8 +615,8 @@ const Home = () => {
                     <Link to="/services" className="flex items-center justify-center">
                       Our Services
                       <Rocket className="ml-2 h-6 w-6 transition-all duration-300 group-hover:text-cyan-400 group-hover:scale-125" />
-                    </Link>
-                  </Button>
+                  </Link>
+                </Button>
                 </div>
               </div>
             </div>
@@ -848,10 +848,10 @@ const Home = () => {
                   scrollContainerRef.current.scrollBy({ left: -400, behavior: 'smooth' });
                 }
               }}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-gradient-to-r from-cyan-500 to-purple-600 border-2 border-transparent rounded-full p-4 hover:from-cyan-600 hover:to-purple-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-110"
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full w-14 h-14 flex items-center justify-center hover:from-cyan-600 hover:to-purple-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-110"
               aria-label="Scroll left"
             >
-              <ArrowLeft className="h-6 w-6 text-white" />
+              <ArrowLeft className="h-6 w-6 text-white" strokeWidth={3} fill="white" />
             </button>
             <button
               onClick={() => {
@@ -859,10 +859,10 @@ const Home = () => {
                   scrollContainerRef.current.scrollBy({ left: 400, behavior: 'smooth' });
                 }
               }}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-gradient-to-r from-cyan-500 to-purple-600 border-2 border-transparent rounded-full p-4 hover:from-cyan-600 hover:to-purple-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-110"
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full w-14 h-14 flex items-center justify-center hover:from-cyan-600 hover:to-purple-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-110"
               aria-label="Scroll right"
             >
-              <ArrowRight className="h-6 w-6 text-white" />
+              <ArrowRight className="h-6 w-6 text-white" strokeWidth={3} fill="white" />
             </button>
 
             {/* Scrollable Content */}
@@ -885,8 +885,8 @@ const Home = () => {
                     </p>
                   </div>
                 </div>
-              </div>
-
+        </div>
+        
               {/* Feature 2 */}
               <div className="flex-shrink-0 w-[280px] sm:w-[320px] group">
                 <div className="relative bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 hover:border-purple-500/50 transition-all duration-300 h-full shadow-sm hover:shadow-md">
@@ -894,12 +894,12 @@ const Home = () => {
                     <div className="w-16 h-16 sm:w-20 sm:h-20 border-2 border-cyan-500 rounded-2xl flex items-center justify-center mb-4 relative bg-purple-50">
                       <div className="absolute inset-0 border-2 border-pink-500 rounded-2xl transform rotate-12 opacity-60"></div>
                       <Users className="h-8 w-8 text-cyan-600 relative z-10" />
-                    </div>
+            </div>
                     <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3">Direct Communication</h3>
                     <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
                       Talk directly to the team building your site. No account managers, no runaround—just real conversations.
-                    </p>
-                  </div>
+            </p>
+          </div>
                 </div>
               </div>
 
@@ -942,14 +942,14 @@ const Home = () => {
                     <div className="w-16 h-16 sm:w-20 sm:h-20 border-2 border-cyan-500 rounded-2xl flex items-center justify-center mb-4 relative bg-cyan-50">
                       <div className="absolute inset-0 border-2 border-pink-500 rounded-2xl transform rotate-12 opacity-60"></div>
                       <Shield className="h-8 w-8 text-cyan-600 relative z-10" />
-                    </div>
+                      </div>
                     <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3">Secure & Reliable</h3>
                     <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
                       Enterprise-grade security and 99.9% uptime. Your site stays online, your data stays safe.
                     </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
 
               {/* Feature 6 */}
               <div className="flex-shrink-0 w-[280px] sm:w-[320px] group">
@@ -958,7 +958,7 @@ const Home = () => {
                     <div className="w-16 h-16 sm:w-20 sm:h-20 border-2 border-cyan-500 rounded-2xl flex items-center justify-center mb-4 relative bg-purple-50">
                       <div className="absolute inset-0 border-2 border-pink-500 rounded-2xl transform rotate-12 opacity-60"></div>
                       <Star className="h-8 w-8 text-cyan-600 relative z-10" />
-                    </div>
+                </div>
                     <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3">Toronto Focused</h3>
                     <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
                       Local expertise for GTA businesses. We understand your market, your customers, and your goals.
@@ -993,7 +993,7 @@ const Home = () => {
               <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
                 Amazing
               </span>
-            </h2>
+          </h2>
             
             {/* Subheading */}
             <p className="text-lg sm:text-xl md:text-2xl text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed">
@@ -1015,21 +1015,21 @@ const Home = () => {
                   <Link to="/contact" className="flex items-center justify-center">
                     Start Your Project
                     <Rocket className="ml-3 h-6 w-6 transition-all duration-300 group-hover:text-cyan-400 group-hover:scale-125" />
-                  </Link>
+            </Link>
                 </Button>
               </div>
-            </div>
+                </div>
             
             {/* Trust Indicators */}
             <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 text-slate-400">
               <div className="flex items-center space-x-2 group">
                 <div className="w-2 h-2 bg-cyan-400 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
                 <span className="text-sm sm:text-base">Free Consultation</span>
-              </div>
+                </div>
               <div className="flex items-center space-x-2 group">
                 <div className="w-2 h-2 bg-purple-400 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
                 <span className="text-sm sm:text-base">24h Response</span>
-              </div>
+                </div>
               <div className="flex items-center space-x-2 group">
                 <div className="w-2 h-2 bg-pink-400 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
                 <span className="text-sm sm:text-base">No Obligation</span>
