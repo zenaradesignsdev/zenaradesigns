@@ -245,6 +245,7 @@ export const CSP_CONFIG: CSPConfig = {
     "'self'",
     "'unsafe-inline'", // Note: This should be removed in production with nonces
     'https://fonts.googleapis.com',
+    'https://assets.calendly.com',
   ],
   'style-src': [
     "'self'",
@@ -263,6 +264,11 @@ export const CSP_CONFIG: CSPConfig = {
   'connect-src': [
     "'self'",
     'https://api.resend.com',
+    'https://calendly.com',
+  ],
+  'frame-src': [
+    "'self'",
+    'https://calendly.com',
   ],
   'frame-ancestors': ["'none'"],
   'base-uri': ["'self'"],

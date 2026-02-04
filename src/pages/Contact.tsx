@@ -1,4 +1,4 @@
-import { useState, memo } from 'react';
+import { useState, memo, useEffect, useRef } from 'react';
 import { Mail, Clock, CheckCircle, ArrowRight, Phone, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -40,6 +40,7 @@ const Contact = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   const { toast } = useToast();
+  const calendlyWidgetRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -114,6 +115,74 @@ const Contact = () => {
       [field]: value === '' && (field === 'phone' || field === 'company') ? undefined : value 
     }));
   };
+
+  // Load Calendly script - widget will auto-initialize when script loads
+  useEffect(() => {
+    // Check if Calendly is already loaded
+    if ((window as any).Calendly) {
+      return;
+    }
+
+    // Check if script is already being loaded
+    const existingScript = document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]');
+    
+    if (!existingScript) {
+      const script = document.createElement('script');
+      script.src = 'https://assets.calendly.com/assets/external/widget.js';
+      script.async = true;
+      script.type = 'text/javascript';
+      
+      script.onload = () => {
+        // Script loaded successfully
+        // Calendly automatically initializes widgets with class 'calendly-inline-widget'
+        // Give it a moment to initialize
+        setTimeout(() => {
+          if (!calendlyWidgetRef.current?.querySelector('iframe')) {
+            // If widget didn't auto-initialize, try manual initialization
+            if ((window as any).Calendly && calendlyWidgetRef.current) {
+              try {
+                (window as any).Calendly.initInlineWidget({
+                  url: 'https://calendly.com/zenaradesigns-co/30min?primary_color=23b8ff',
+                  parentElement: calendlyWidgetRef.current
+                });
+              } catch (e) {
+                console.error('Calendly initialization error:', e);
+              }
+            }
+          }
+        }, 100);
+      };
+      
+      script.onerror = () => {
+        console.error('Failed to load Calendly widget script');
+      };
+      
+      document.head.appendChild(script);
+    } else {
+      // Script exists, wait a bit and check if Calendly is available
+      const checkCalendly = setInterval(() => {
+        if ((window as any).Calendly && calendlyWidgetRef.current) {
+          clearInterval(checkCalendly);
+          // Widget should auto-initialize, but check if it did
+          setTimeout(() => {
+            if (!calendlyWidgetRef.current?.querySelector('iframe')) {
+              try {
+                (window as any).Calendly.initInlineWidget({
+                  url: 'https://calendly.com/zenaradesigns-co/30min?primary_color=23b8ff',
+                  parentElement: calendlyWidgetRef.current
+                });
+              } catch (e) {
+                console.error('Calendly initialization error:', e);
+              }
+            }
+          }, 100);
+        }
+      }, 100);
+      
+      // Stop checking after 5 seconds
+      setTimeout(() => clearInterval(checkCalendly), 5000);
+    }
+  }, []);
 
   const processSteps: ProcessStepInfo[] = [
     {
@@ -505,6 +574,30 @@ const Contact = () => {
                   </p>
                 </form>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Calendly Widget Section */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 mt-12 sm:mt-16">
+          <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl relative overflow-hidden">
+            {/* Glassmorphism Effect */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl"></div>
+            
+            <div className="relative z-10">
+              <div className="text-center mb-6 sm:mb-8">
+                <h3 className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-4 text-white">Schedule a Meeting</h3>
+                <p className="text-slate-300 text-base sm:text-lg">
+                  Prefer to chat? Book a time that works for you.
+                </p>
+              </div>
+              <div 
+                ref={calendlyWidgetRef}
+                className="calendly-inline-widget" 
+                data-url="https://calendly.com/zenaradesigns-co/30min?primary_color=23b8ff" 
+                style={{ minWidth: '320px', height: '700px', width: '100%' }}
+                aria-label="Calendly scheduling widget"
+              ></div>
             </div>
           </div>
         </div>

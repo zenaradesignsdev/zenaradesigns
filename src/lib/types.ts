@@ -136,6 +136,7 @@ export interface CSPConfig {
   'img-src': string[];
   'font-src': string[];
   'connect-src': string[];
+  'frame-src': string[];
   'frame-ancestors': string[];
   'base-uri': string[];
   'form-action': string[];
