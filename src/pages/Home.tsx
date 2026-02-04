@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, Zap, Target, Shield, Code2, Users, Rocket, CheckCircle, Star, TrendingUp, Clock, Award, Sparkles, Heart, Globe } from 'lucide-react';
+import { ArrowRight, Zap, Target, Shield, Code2, Users, Rocket, CheckCircle, Star, TrendingUp, Clock, Award, Sparkles, Heart, Globe, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useScrollToTop, useSEO } from '@/hooks';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
@@ -40,6 +40,7 @@ const Home = () => {
   const metricsRef = useRef<HTMLDivElement>(null);
   const yearsRef = useRef<HTMLDivElement>(null);
   const yearsAnimatedRef = useRef(false);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -818,64 +819,177 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Success Metrics */}
-      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-teal-900 to-indigo-900">
+      {/* What Sets Us Apart */}
+      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-cyan-900 to-slate-900">
         {/* Space Background Elements */}
         <div className="absolute inset-0">
-          {/* Subtle Stars */}
-          <div className="absolute top-16 left-16 w-1 h-1 bg-cyan-300 rounded-full animate-twinkle"></div>
-          <div className="absolute top-32 right-24 w-1 h-1 bg-purple-300 rounded-full animate-twinkle delay-1000"></div>
-          <div className="absolute top-48 left-1/3 w-1 h-1 bg-teal-300 rounded-full animate-twinkle delay-2000"></div>
-          <div className="absolute top-24 right-1/3 w-1 h-1 bg-violet-300 rounded-full animate-twinkle delay-500"></div>
+          {/* Background Stars */}
+          <div className="bg-star" style={{ top: '10%', left: '5%' }}></div>
+          <div className="bg-star" style={{ top: '15%', left: '20%' }}></div>
+          <div className="bg-star" style={{ top: '25%', left: '40%' }}></div>
+          <div className="bg-star" style={{ top: '20%', left: '60%' }}></div>
+          <div className="bg-star" style={{ top: '12%', left: '80%' }}></div>
+          <div className="bg-star" style={{ top: '35%', left: '10%' }}></div>
+          <div className="bg-star" style={{ top: '45%', left: '30%' }}></div>
+          <div className="bg-star" style={{ top: '40%', left: '70%' }}></div>
+          <div className="bg-star" style={{ top: '55%', left: '15%' }}></div>
+          <div className="bg-star" style={{ top: '60%', left: '50%' }}></div>
+          <div className="bg-star" style={{ top: '65%', left: '85%' }}></div>
+          <div className="bg-star" style={{ top: '75%', left: '25%' }}></div>
+          <div className="bg-star" style={{ top: '80%', left: '65%' }}></div>
+          <div className="bg-star" style={{ top: '90%', left: '45%' }}></div>
           
           {/* Nebula Effects */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/10 to-teal-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/15 to-purple-500/15 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/15 to-teal-500/15 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="text-center mb-16">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full px-6 py-3 mb-8 border border-cyan-500/30">
-              <TrendingUp className="h-5 w-5 text-cyan-400 animate-pulse" />
-              <span className="text-sm font-medium text-cyan-300">Proven Results</span>
+          {/* Header Section */}
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 sm:mb-16 gap-6">
+            <div className="flex-1">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-white">
+                What Sets Us <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Apart</span>
+              </h2>
+              <p className="text-lg sm:text-xl text-slate-300 max-w-2xl leading-relaxed">
+                We don't just build websites. We craft digital experiences that grow with your business.
+              </p>
             </div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-8 text-white">
-              Numbers That <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Speak Volumes</span>
-            </h2>
-            <p className="text-lg sm:text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
-              Our track record speaks for itself. Here's what our clients achieve with our solutions.
-            </p>
+            <Button asChild variant="outline" className="border-pink-500/50 text-white hover:bg-pink-500/10 px-6 py-3 rounded-full font-medium transition-all duration-300 w-full lg:w-auto">
+              <Link to="/services" className="flex items-center justify-center">
+                Everything we do <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
           </div>
-          <div ref={metricsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            {successMetrics.map((metric, index) => {
-              let displayNumber = metric.number;
-              
-              // Map the animated numbers to the correct metrics
-              if (index === 0) displayNumber = `${animatedNumbers.conversion}%`;
-              else if (index === 1) displayNumber = `${animatedNumbers.weeks}`;
-              else if (index === 2) displayNumber = `${animatedNumbers.satisfaction}%`;
-              else if (index === 3) displayNumber = `${animatedNumbers.mobile}%`;
-              
-              return (
-                <div key={index} className="text-center h-full">
-                  <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 border border-white/20 shadow-2xl h-full flex flex-col relative overflow-hidden">
-                    {/* Glassmorphism Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl"></div>
-                    
-                    <div className="relative z-10">
-                      <div className="w-16 h-16 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-2xl mx-auto mb-6 flex items-center justify-center text-white flex-shrink-0 shadow-lg">
-                        {metric.icon}
-                      </div>
-                      <div className="text-5xl font-bold text-white mb-3 flex-shrink-0">
-                        {displayNumber}
-                      </div>
-                      <div className="text-lg font-semibold text-cyan-300 mb-4 flex-shrink-0">{metric.label}</div>
-                      <p className="text-slate-300 text-sm leading-relaxed flex-grow">{metric.description}</p>
+          
+          {/* Horizontal Scroll Container */}
+          <div className="relative">
+            {/* Navigation Buttons */}
+            <button
+              onClick={() => {
+                if (scrollContainerRef.current) {
+                  scrollContainerRef.current.scrollBy({ left: -400, behavior: 'smooth' });
+                }
+              }}
+              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-full p-3 hover:bg-white/20 transition-all duration-300 hover:border-cyan-400/50"
+              aria-label="Scroll left"
+            >
+              <ChevronLeft className="h-5 w-5 text-white" />
+            </button>
+            <button
+              onClick={() => {
+                if (scrollContainerRef.current) {
+                  scrollContainerRef.current.scrollBy({ left: 400, behavior: 'smooth' });
+                }
+              }}
+              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-white/10 backdrop-blur-md border border-white/20 rounded-full p-3 hover:bg-white/20 transition-all duration-300 hover:border-cyan-400/50"
+              aria-label="Scroll right"
+            >
+              <ChevronRight className="h-5 w-5 text-white" />
+            </button>
+
+            {/* Scrollable Content */}
+            <div 
+              ref={scrollContainerRef}
+              className="flex gap-6 sm:gap-8 overflow-x-auto scrollbar-hide pb-4 scroll-smooth"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            >
+              {/* Feature 1 */}
+              <div className="flex-shrink-0 w-[280px] sm:w-[320px] group">
+                <div className="relative bg-white/5 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/10 hover:border-cyan-400/30 transition-all duration-300 h-full">
+                  <div className="mb-6">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 border-2 border-cyan-400 rounded-2xl flex items-center justify-center mb-4 relative">
+                      <div className="absolute inset-0 border-2 border-pink-500 rounded-2xl transform rotate-12"></div>
+                      <Rocket className="h-8 w-8 text-cyan-400 relative z-10" />
                     </div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Fast Launch</h3>
+                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                      From concept to live site in 1-2 weeks. No endless revisions, no months of waiting—just results.
+                    </p>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+
+              {/* Feature 2 */}
+              <div className="flex-shrink-0 w-[280px] sm:w-[320px] group">
+                <div className="relative bg-white/5 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/10 hover:border-purple-400/30 transition-all duration-300 h-full">
+                  <div className="mb-6">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 border-2 border-cyan-400 rounded-2xl flex items-center justify-center mb-4 relative">
+                      <div className="absolute inset-0 border-2 border-pink-500 rounded-2xl transform rotate-12"></div>
+                      <Users className="h-8 w-8 text-cyan-400 relative z-10" />
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Direct Communication</h3>
+                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                      Talk directly to the team building your site. No account managers, no runaround—just real conversations.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Feature 3 */}
+              <div className="flex-shrink-0 w-[280px] sm:w-[320px] group">
+                <div className="relative bg-white/5 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/10 hover:border-cyan-400/30 transition-all duration-300 h-full">
+                  <div className="mb-6">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 border-2 border-cyan-400 rounded-2xl flex items-center justify-center mb-4 relative">
+                      <div className="absolute inset-0 border-2 border-pink-500 rounded-2xl transform rotate-12"></div>
+                      <Zap className="h-8 w-8 text-cyan-400 relative z-10" />
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Modern Stack</h3>
+                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                      Built with cutting-edge technology that's fast, secure, and scales with your business needs.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Feature 4 */}
+              <div className="flex-shrink-0 w-[280px] sm:w-[320px] group">
+                <div className="relative bg-white/5 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/10 hover:border-purple-400/30 transition-all duration-300 h-full">
+                  <div className="mb-6">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 border-2 border-cyan-400 rounded-2xl flex items-center justify-center mb-4 relative">
+                      <div className="absolute inset-0 border-2 border-pink-500 rounded-2xl transform rotate-12"></div>
+                      <Heart className="h-8 w-8 text-cyan-400 relative z-10" />
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Ongoing Support</h3>
+                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                      Your site launches, but our relationship doesn't end. We're here for updates, improvements, and growth.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Feature 5 */}
+              <div className="flex-shrink-0 w-[280px] sm:w-[320px] group">
+                <div className="relative bg-white/5 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/10 hover:border-cyan-400/30 transition-all duration-300 h-full">
+                  <div className="mb-6">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 border-2 border-cyan-400 rounded-2xl flex items-center justify-center mb-4 relative">
+                      <div className="absolute inset-0 border-2 border-pink-500 rounded-2xl transform rotate-12"></div>
+                      <Shield className="h-8 w-8 text-cyan-400 relative z-10" />
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Secure & Reliable</h3>
+                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                      Enterprise-grade security and 99.9% uptime. Your site stays online, your data stays safe.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Feature 6 */}
+              <div className="flex-shrink-0 w-[280px] sm:w-[320px] group">
+                <div className="relative bg-white/5 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/10 hover:border-violet-400/30 transition-all duration-300 h-full">
+                  <div className="mb-6">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 border-2 border-cyan-400 rounded-2xl flex items-center justify-center mb-4 relative">
+                      <div className="absolute inset-0 border-2 border-pink-500 rounded-2xl transform rotate-12"></div>
+                      <Star className="h-8 w-8 text-cyan-400 relative z-10" />
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-bold text-white mb-3">Toronto Focused</h3>
+                    <p className="text-slate-300 text-sm sm:text-base leading-relaxed">
+                      Local expertise for GTA businesses. We understand your market, your customers, and your goals.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>

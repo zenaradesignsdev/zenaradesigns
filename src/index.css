@@ -112,6 +112,16 @@
     -webkit-overflow-scrolling: touch;
   }
 
+  /* Hide scrollbar for horizontal scroll */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
   /* Image optimization */
   img {
     max-width: 100%;
