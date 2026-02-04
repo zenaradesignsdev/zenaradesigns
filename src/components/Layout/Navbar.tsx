@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { scrollToTop } from '@/hooks';
 import { NAVIGATION_LINKS, BREAKPOINTS } from '@/lib/constants';
@@ -8,17 +8,7 @@ import logo from '@/assets/zenaralogo-transparentbg.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 90);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Prevent body scroll when mobile menu is open and manage focus
   useEffect(() => {
@@ -46,28 +36,27 @@ const Navbar = () => {
   return (
     <nav 
       id="navigation"
-      className="fixed top-0 left-0 right-0 z-50 navbar-glass" 
-      style={{ background: 'transparent' }}
+      className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-[92%] md:w-[88%] lg:w-[85%] xl:w-[82%] max-w-[1400px]" 
       role="navigation"
       aria-label="Main navigation"
     >
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex items-center justify-between h-20">
+      <div className="bg-white/10 backdrop-blur-xl rounded-full border border-white/20 shadow-2xl px-4 sm:px-6 lg:px-8 xl:px-10 py-2 sm:py-2.5">
+        <div className="flex items-center justify-between h-11 sm:h-12">
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2" onClick={scrollToTop}>
-            <img src={logo} alt="Zenara Designs - Professional Web Design Agency Toronto" className="h-12 w-auto" width="48" height="48" loading="eager" decoding="async" />
-            <span className={`font-normal text-xl transition-colors ${isScrolled ? 'text-white' : 'text-foreground'}`}>Zenara Designs</span>
+            <img src={logo} alt="Zenara Designs - Professional Web Design Agency Toronto" className="h-5 sm:h-6 w-auto" width="24" height="24" loading="eager" decoding="async" />
+            <span className="font-semibold text-sm sm:text-base text-white">Zenara Designs</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8 flex-1 justify-center">
+          <div className="hidden lg:flex items-center space-x-6 xl:space-x-8 flex-1 justify-center">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 to={link.href}
                 onClick={scrollToTop}
-                className={`font-medium transition-colors hover:text-primary ${
-                  isActive(link.href) ? 'text-primary' : isScrolled ? 'text-white' : 'text-muted-foreground'
+                className={`font-medium text-sm xl:text-base transition-colors hover:text-cyan-300 ${
+                  isActive(link.href) ? 'text-cyan-300' : 'text-white'
                 }`}
               >
                 {link.label}
@@ -77,26 +66,26 @@ const Navbar = () => {
 
           {/* CTA Button */}
           <div className="hidden lg:block">
-            <Button asChild className="btn-hero">
-              <Link to="/contact" onClick={scrollToTop}>Get Started</Link>
+            <Button asChild className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:from-pink-600 hover:via-purple-600 hover:to-blue-600 text-white border-0 rounded-full px-5 xl:px-6 py-1.5 xl:py-2 text-xs xl:text-sm font-semibold shadow-lg hover:shadow-xl transition-all duration-300">
+              <Link to="/contact" onClick={scrollToTop} className="flex items-center gap-1.5 xl:gap-2">
+                Let's Talk
+                <ArrowRight className="h-3.5 w-3.5 xl:h-4 xl:w-4" />
+              </Link>
             </Button>
           </div>
 
           {/* Mobile Menu Button */}
           <button
-            className="lg:hidden relative w-10 h-10 flex flex-col items-center justify-center space-y-1 group"
+            className="lg:hidden relative w-9 h-9 flex flex-col items-center justify-center space-y-1.5 group"
             onClick={() => setIsOpen(!isOpen)}
             aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
           >
             {/* Animated Hamburger Lines */}
-            <div className={`w-6 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-400 transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-1.5' : ''}`}></div>
-            <div className={`w-6 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-400 transition-all duration-300 ${isOpen ? 'opacity-0' : ''}`}></div>
-            <div className={`w-6 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-400 transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></div>
-            
-            {/* Glow effect */}
-            <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-cyan-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <div className={`w-5 h-0.5 bg-white transition-all duration-300 ${isOpen ? 'rotate-45 translate-y-1.5' : ''}`}></div>
+            <div className={`w-5 h-0.5 bg-white transition-all duration-300 ${isOpen ? 'opacity-0' : ''}`}></div>
+            <div className={`w-5 h-0.5 bg-white transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></div>
           </button>
         </div>
 
@@ -109,98 +98,75 @@ const Navbar = () => {
             aria-modal="true"
             aria-labelledby="mobile-menu-title"
           >
-            {/* Header - Keep existing navbar structure */}
-            <div className="bg-white/95 backdrop-blur-md border-b border-slate-200/50">
-              <div className="max-w-7xl mx-auto px-6">
-                <div className="flex items-center justify-between h-20">
-                  {/* Logo */}
-                  <Link 
-                    to="/" 
-                    className="flex items-center space-x-2" 
-                    onClick={() => {
-                      setIsOpen(false);
-                      scrollToTop();
-                    }}
-                  >
-                    <img src={logo} alt="Zenara Designs - Professional Web Design Agency Toronto" className="h-12 w-auto" width="48" height="48" loading="eager" decoding="async" />
-                    <span className="font-normal text-xl text-slate-800">Zenara Designs</span>
-                  </Link>
+            {/* Backdrop */}
+            <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setIsOpen(false)}></div>
+            
+            {/* Mobile Menu Panel */}
+            <div className="absolute top-4 right-4 w-[90%] max-w-sm bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 shadow-2xl p-6">
+              {/* Header */}
+              <div className="flex items-center justify-between mb-6">
+                <Link 
+                  to="/" 
+                  className="flex items-center space-x-2" 
+                  onClick={() => {
+                    setIsOpen(false);
+                    scrollToTop();
+                  }}
+                >
+                  <img src={logo} alt="Zenara Designs - Professional Web Design Agency Toronto" className="h-8 w-auto" width="32" height="32" loading="eager" decoding="async" />
+                  <span className="font-semibold text-lg text-white">Zenara Designs</span>
+                </Link>
 
-                  {/* Close Button */}
-                  <button
-                    onClick={() => setIsOpen(false)}
-                    className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-100 hover:bg-slate-200 transition-colors duration-200"
-                    aria-label="Close navigation menu"
-                  >
-                    <X className="w-6 h-6 text-slate-600" />
-                  </button>
-                </div>
+                {/* Close Button */}
+                <button
+                  onClick={() => setIsOpen(false)}
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200"
+                  aria-label="Close navigation menu"
+                >
+                  <X className="w-6 h-6 text-white" />
+                </button>
               </div>
-            </div>
 
-            {/* Full Screen Content Area */}
-            <div className="min-h-[calc(100vh-80px)] bg-gradient-to-br from-white via-slate-50 to-cyan-50 overflow-y-auto">
-              {/* Navigation Content */}
-              <div className="flex flex-col items-center justify-start min-h-full px-6 py-8">
-                <div className="w-full max-w-sm space-y-4">
-                  {/* Navigation Links */}
-                  <div className="space-y-3">
-                    {navLinks.map((link, index) => (
-                      <Link
-                        key={link.href}
-                        to={link.href}
-                        className={`block text-center py-3 px-4 rounded-xl font-semibold text-base transition-all duration-300 ${
-                          isActive(link.href) 
-                            ? 'bg-gradient-to-r from-cyan-500 to-purple-500 text-white shadow-lg shadow-cyan-500/25' 
-                            : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
-                        }`}
-                        onClick={() => {
-                          setIsOpen(false);
-                          scrollToTop();
-                        }}
-                        style={{
-                          animationDelay: `${index * 100}ms`,
-                          animation: 'fadeInUp 0.6s ease-out forwards',
-                          opacity: 0,
-                          transform: 'translateY(20px)'
-                        }}
-                      >
-                        {link.label}
-                      </Link>
-                    ))}
-                  </div>
-
-                  {/* CTA Button */}
-                  <div 
-                    className="pt-4"
-                    style={{
-                      animationDelay: '600ms',
-                      animation: 'fadeInUp 0.6s ease-out forwards',
-                      opacity: 0,
-                      transform: 'translateY(20px)'
-                    }}
-                  >
-                    <Button 
-                      asChild 
-                      className="w-full bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-cyan-500/25 transition-all duration-300 hover:shadow-xl hover:shadow-cyan-500/30"
+              {/* Full Screen Content Area */}
+              <div className="overflow-y-auto max-h-[calc(100vh-120px)]">
+                {/* Navigation Links */}
+                <div className="space-y-2">
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.href}
+                      to={link.href}
+                      className={`block py-3 px-4 rounded-xl font-medium text-sm transition-all duration-300 ${
+                        isActive(link.href) 
+                          ? 'bg-white/20 text-cyan-300' 
+                          : 'text-white hover:bg-white/10 hover:text-cyan-300'
+                      }`}
+                      onClick={() => {
+                        setIsOpen(false);
+                        scrollToTop();
+                      }}
                     >
-                      <Link 
-                        to="/contact" 
-                        onClick={() => {
-                          setIsOpen(false);
-                          scrollToTop();
-                        }}
-                      >
-                        Get Started
-                      </Link>
-                    </Button>
-                  </div>
+                      {link.label}
+                    </Link>
+                  ))}
                 </div>
 
-                {/* Background Pattern */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                  <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-100/30 to-purple-100/30 rounded-full blur-3xl"></div>
-                  <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-100/30 to-cyan-100/30 rounded-full blur-3xl"></div>
+                {/* CTA Button */}
+                <div className="pt-4">
+                  <Button 
+                    asChild 
+                    className="w-full bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:from-pink-600 hover:via-purple-600 hover:to-blue-600 text-white font-semibold py-3 px-6 rounded-xl shadow-lg transition-all duration-300 hover:shadow-xl flex items-center justify-center gap-2"
+                  >
+                    <Link 
+                      to="/contact" 
+                      onClick={() => {
+                        setIsOpen(false);
+                        scrollToTop();
+                      }}
+                    >
+                      Let's Talk
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
                 </div>
               </div>
             </div>

@@ -243,7 +243,7 @@ const Home = () => {
   return (
     <div className="m-0 p-0" role="main" aria-label="Home page">
       {/* Space-Themed Hero Section */}
-      <section className="hero-section min-h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-black via-teal-900 to-purple-900 cursor-glow pt-0 mt-0 z-10" role="banner" aria-label="Hero section">
+      <section className="hero-section h-screen flex items-center justify-center relative overflow-hidden bg-gradient-to-br from-black via-teal-900 to-purple-900 cursor-glow z-10" role="banner" aria-label="Hero section">
         {/* Animated Background Elements */}
         <div className="absolute inset-0">
           {/* Shooting Stars */}
@@ -296,8 +296,8 @@ const Home = () => {
           <div className="absolute top-2/3 right-1/6 w-48 h-48 bg-gradient-to-r from-purple-500/18 to-indigo-500/18 rounded-full blur-3xl animate-pulse delay-2500"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20 md:py-24 relative z-10 pt-20 sm:pt-24">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 sm:gap-10 lg:gap-12 items-center min-h-[80vh]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 h-full flex items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 sm:gap-10 lg:gap-12 items-center w-full">
             <div className="fade-in order-2 lg:order-1 text-center lg:text-left">
               <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold mb-4 sm:mb-6 leading-[1.1] sm:leading-[1.15] text-white tracking-[-0.02em] sm:tracking-[-0.03em]">
                 Web Design. Build. Launch
