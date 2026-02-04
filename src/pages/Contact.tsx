@@ -116,72 +116,92 @@ const Contact = () => {
     }));
   };
 
-  // Load Calendly script - widget will auto-initialize when script loads
+  // Load Calendly script and initialize widget
   useEffect(() => {
-    // Check if Calendly is already loaded
-    if ((window as any).Calendly) {
-      return;
-    }
+    let script: HTMLScriptElement | null = null;
+    let initTimeout: NodeJS.Timeout | null = null;
+    let checkInterval: NodeJS.Timeout | null = null;
 
-    // Check if script is already being loaded
-    const existingScript = document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]');
-    
-    if (!existingScript) {
-      const script = document.createElement('script');
-      script.src = 'https://assets.calendly.com/assets/external/widget.js';
-      script.async = true;
-      script.type = 'text/javascript';
+    const initializeWidget = () => {
+      if (!calendlyWidgetRef.current) return;
+
+      // Clear any existing iframe first
+      const existingIframe = calendlyWidgetRef.current.querySelector('iframe');
+      if (existingIframe) {
+        existingIframe.remove();
+      }
+
+      // Initialize the widget
+      if ((window as any).Calendly) {
+        try {
+          (window as any).Calendly.initInlineWidget({
+            url: 'https://calendly.com/zenaradesigns-co/30min?primary_color=23b8ff',
+            parentElement: calendlyWidgetRef.current
+          });
+        } catch (e) {
+          console.error('Calendly initialization error:', e);
+        }
+      }
+    };
+
+    const loadScript = () => {
+      // Check if script already exists
+      const existingScript = document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]');
       
-      script.onload = () => {
-        // Script loaded successfully
-        // Calendly automatically initializes widgets with class 'calendly-inline-widget'
-        // Give it a moment to initialize
-        setTimeout(() => {
-          if (!calendlyWidgetRef.current?.querySelector('iframe')) {
-            // If widget didn't auto-initialize, try manual initialization
-            if ((window as any).Calendly && calendlyWidgetRef.current) {
-              try {
-                (window as any).Calendly.initInlineWidget({
-                  url: 'https://calendly.com/zenaradesigns-co/30min?primary_color=23b8ff',
-                  parentElement: calendlyWidgetRef.current
-                });
-              } catch (e) {
-                console.error('Calendly initialization error:', e);
-              }
-            }
-          }
-        }, 100);
-      };
-      
-      script.onerror = () => {
-        console.error('Failed to load Calendly widget script');
-      };
-      
-      document.head.appendChild(script);
-    } else {
-      // Script exists, wait a bit and check if Calendly is available
-      const checkCalendly = setInterval(() => {
-        if ((window as any).Calendly && calendlyWidgetRef.current) {
-          clearInterval(checkCalendly);
-          // Widget should auto-initialize, but check if it did
-          setTimeout(() => {
-            if (!calendlyWidgetRef.current?.querySelector('iframe')) {
-              try {
-                (window as any).Calendly.initInlineWidget({
-                  url: 'https://calendly.com/zenaradesigns-co/30min?primary_color=23b8ff',
-                  parentElement: calendlyWidgetRef.current
-                });
-              } catch (e) {
-                console.error('Calendly initialization error:', e);
-              }
+      if (existingScript) {
+        // Script already loaded, initialize widget
+        if ((window as any).Calendly) {
+          initTimeout = setTimeout(initializeWidget, 100);
+        } else {
+          // Script exists but Calendly not ready yet, wait for it
+          checkInterval = setInterval(() => {
+            if ((window as any).Calendly) {
+              clearInterval(checkInterval!);
+              initTimeout = setTimeout(initializeWidget, 100);
             }
           }, 100);
+          
+          // Stop checking after 5 seconds
+          setTimeout(() => {
+            if (checkInterval) clearInterval(checkInterval);
+          }, 5000);
         }
-      }, 100);
+      } else {
+        // Load the script
+        script = document.createElement('script');
+        script.src = 'https://assets.calendly.com/assets/external/widget.js';
+        script.async = true;
+        script.type = 'text/javascript';
+        
+        script.onload = () => {
+          // Wait a bit for Calendly to be ready, then initialize
+          initTimeout = setTimeout(initializeWidget, 200);
+        };
+        
+        script.onerror = () => {
+          console.error('Failed to load Calendly widget script');
+        };
+        
+        document.head.appendChild(script);
+      }
+    };
+
+    // Start loading
+    loadScript();
+
+    // Cleanup function
+    return () => {
+      if (initTimeout) clearTimeout(initTimeout);
+      if (checkInterval) clearInterval(checkInterval);
       
-      // Stop checking after 5 seconds
-      setTimeout(() => clearInterval(checkCalendly), 5000);
-    }
+      // Clean up widget iframe when component unmounts
+      if (calendlyWidgetRef.current) {
+        const iframe = calendlyWidgetRef.current.querySelector('iframe');
+        if (iframe) {
+          iframe.remove();
+        }
+      }
+    };
   }, []);
 
   const processSteps: ProcessStepInfo[] = [
