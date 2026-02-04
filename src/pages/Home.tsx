@@ -841,39 +841,41 @@ const Home = () => {
           
           {/* Horizontal Scroll Container */}
           <div className="relative">
-            {/* Navigation Buttons */}
+            {/* Navigation Buttons - Hidden on mobile, shown on larger screens */}
             <button
               onClick={() => {
                 if (scrollContainerRef.current) {
-                  scrollContainerRef.current.scrollBy({ left: -400, behavior: 'smooth' });
+                  const scrollAmount = window.innerWidth < 640 ? -280 : window.innerWidth < 1024 ? -320 : -400;
+                  scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
                 }
               }}
-              className="absolute left-0 top-1/2 -translate-y-1/2 z-20 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full w-14 h-14 flex items-center justify-center hover:from-cyan-600 hover:to-purple-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-110"
+              className="hidden sm:flex absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center hover:from-cyan-600 hover:to-purple-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-110"
               aria-label="Scroll left"
             >
-              <ArrowLeft className="h-6 w-6 text-white" strokeWidth={3} fill="white" />
+              <ArrowLeft className="h-5 w-5 sm:h-6 sm:w-6 text-white" strokeWidth={3} fill="white" />
             </button>
             <button
               onClick={() => {
                 if (scrollContainerRef.current) {
-                  scrollContainerRef.current.scrollBy({ left: 400, behavior: 'smooth' });
+                  const scrollAmount = window.innerWidth < 640 ? 280 : window.innerWidth < 1024 ? 320 : 400;
+                  scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
                 }
               }}
-              className="absolute right-0 top-1/2 -translate-y-1/2 z-20 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full w-14 h-14 flex items-center justify-center hover:from-cyan-600 hover:to-purple-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-110"
+              className="hidden sm:flex absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 bg-gradient-to-r from-cyan-500 to-purple-600 rounded-full w-12 h-12 sm:w-14 sm:h-14 flex items-center justify-center hover:from-cyan-600 hover:to-purple-700 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-110"
               aria-label="Scroll right"
             >
-              <ArrowRight className="h-6 w-6 text-white" strokeWidth={3} fill="white" />
+              <ArrowRight className="h-5 w-5 sm:h-6 sm:w-6 text-white" strokeWidth={3} fill="white" />
             </button>
 
-            {/* Scrollable Content */}
+            {/* Scrollable Content - Added padding on mobile to prevent overlap */}
             <div 
               ref={scrollContainerRef}
-              className="flex gap-6 sm:gap-8 overflow-x-auto scrollbar-hide pb-4 scroll-smooth"
+              className="flex gap-4 sm:gap-6 md:gap-8 overflow-x-auto scrollbar-hide pb-4 scroll-smooth px-2 sm:px-12 md:px-16"
               style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
             >
               {/* Feature 1 */}
-              <div className="flex-shrink-0 w-[280px] sm:w-[320px] group">
-                <div className="relative bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 hover:border-cyan-500/50 transition-all duration-300 h-full shadow-sm hover:shadow-md">
+              <div className="flex-shrink-0 w-[260px] xs:w-[280px] sm:w-[320px] group">
+                <div className="relative bg-white rounded-3xl p-5 sm:p-6 md:p-8 border border-slate-200 hover:border-cyan-500/50 transition-all duration-300 h-full shadow-sm hover:shadow-md">
                   <div className="mb-6">
                     <div className="w-16 h-16 sm:w-20 sm:h-20 border-2 border-cyan-500 rounded-2xl flex items-center justify-center mb-4 relative bg-cyan-50">
                       <div className="absolute inset-0 border-2 border-pink-500 rounded-2xl transform rotate-12 opacity-60"></div>
@@ -888,8 +890,8 @@ const Home = () => {
         </div>
         
               {/* Feature 2 */}
-              <div className="flex-shrink-0 w-[280px] sm:w-[320px] group">
-                <div className="relative bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 hover:border-purple-500/50 transition-all duration-300 h-full shadow-sm hover:shadow-md">
+              <div className="flex-shrink-0 w-[260px] xs:w-[280px] sm:w-[320px] group">
+                <div className="relative bg-white rounded-3xl p-5 sm:p-6 md:p-8 border border-slate-200 hover:border-purple-500/50 transition-all duration-300 h-full shadow-sm hover:shadow-md">
                   <div className="mb-6">
                     <div className="w-16 h-16 sm:w-20 sm:h-20 border-2 border-cyan-500 rounded-2xl flex items-center justify-center mb-4 relative bg-purple-50">
                       <div className="absolute inset-0 border-2 border-pink-500 rounded-2xl transform rotate-12 opacity-60"></div>
@@ -904,8 +906,8 @@ const Home = () => {
               </div>
 
               {/* Feature 3 */}
-              <div className="flex-shrink-0 w-[280px] sm:w-[320px] group">
-                <div className="relative bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 hover:border-cyan-500/50 transition-all duration-300 h-full shadow-sm hover:shadow-md">
+              <div className="flex-shrink-0 w-[260px] xs:w-[280px] sm:w-[320px] group">
+                <div className="relative bg-white rounded-3xl p-5 sm:p-6 md:p-8 border border-slate-200 hover:border-cyan-500/50 transition-all duration-300 h-full shadow-sm hover:shadow-md">
                   <div className="mb-6">
                     <div className="w-16 h-16 sm:w-20 sm:h-20 border-2 border-cyan-500 rounded-2xl flex items-center justify-center mb-4 relative bg-cyan-50">
                       <div className="absolute inset-0 border-2 border-pink-500 rounded-2xl transform rotate-12 opacity-60"></div>
@@ -920,8 +922,8 @@ const Home = () => {
               </div>
 
               {/* Feature 4 */}
-              <div className="flex-shrink-0 w-[280px] sm:w-[320px] group">
-                <div className="relative bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 hover:border-purple-500/50 transition-all duration-300 h-full shadow-sm hover:shadow-md">
+              <div className="flex-shrink-0 w-[260px] xs:w-[280px] sm:w-[320px] group">
+                <div className="relative bg-white rounded-3xl p-5 sm:p-6 md:p-8 border border-slate-200 hover:border-purple-500/50 transition-all duration-300 h-full shadow-sm hover:shadow-md">
                   <div className="mb-6">
                     <div className="w-16 h-16 sm:w-20 sm:h-20 border-2 border-cyan-500 rounded-2xl flex items-center justify-center mb-4 relative bg-pink-50">
                       <div className="absolute inset-0 border-2 border-pink-500 rounded-2xl transform rotate-12 opacity-60"></div>
@@ -936,8 +938,8 @@ const Home = () => {
               </div>
 
               {/* Feature 5 */}
-              <div className="flex-shrink-0 w-[280px] sm:w-[320px] group">
-                <div className="relative bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 hover:border-cyan-500/50 transition-all duration-300 h-full shadow-sm hover:shadow-md">
+              <div className="flex-shrink-0 w-[260px] xs:w-[280px] sm:w-[320px] group">
+                <div className="relative bg-white rounded-3xl p-5 sm:p-6 md:p-8 border border-slate-200 hover:border-cyan-500/50 transition-all duration-300 h-full shadow-sm hover:shadow-md">
                   <div className="mb-6">
                     <div className="w-16 h-16 sm:w-20 sm:h-20 border-2 border-cyan-500 rounded-2xl flex items-center justify-center mb-4 relative bg-cyan-50">
                       <div className="absolute inset-0 border-2 border-pink-500 rounded-2xl transform rotate-12 opacity-60"></div>
@@ -952,8 +954,8 @@ const Home = () => {
                   </div>
 
               {/* Feature 6 */}
-              <div className="flex-shrink-0 w-[280px] sm:w-[320px] group">
-                <div className="relative bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 hover:border-violet-500/50 transition-all duration-300 h-full shadow-sm hover:shadow-md">
+              <div className="flex-shrink-0 w-[260px] xs:w-[280px] sm:w-[320px] group">
+                <div className="relative bg-white rounded-3xl p-5 sm:p-6 md:p-8 border border-slate-200 hover:border-violet-500/50 transition-all duration-300 h-full shadow-sm hover:shadow-md">
                   <div className="mb-6">
                     <div className="w-16 h-16 sm:w-20 sm:h-20 border-2 border-cyan-500 rounded-2xl flex items-center justify-center mb-4 relative bg-purple-50">
                       <div className="absolute inset-0 border-2 border-pink-500 rounded-2xl transform rotate-12 opacity-60"></div>
