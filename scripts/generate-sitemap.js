@@ -20,17 +20,59 @@ const routes = [
   { url: "/locations", priority: 0.7, changefreq: "monthly" },
   { url: "/process", priority: 0.8, changefreq: "monthly" },
   { url: "/security", priority: 0.7, changefreq: "monthly" },
-  { url: "/mobile", priority: 0.7, changefreq: "monthly" }
+  { url: "/mobile", priority: 0.7, changefreq: "monthly" },
+  { url: "/blog", priority: 0.8, changefreq: "weekly" }
 ];
 
 const baseUrl = 'https://zenaradesigns.com';
 const currentDate = new Date().toISOString();
 
+// Function to get blog posts (reads from the built/compiled output)
+function getBlogPosts() {
+  try {
+    // Try to read the blog posts from the source
+    // Since this runs at build time, we'll parse the TypeScript source
+    const blogIndexPath = path.join(__dirname, '../src/content/blog/index.ts');
+    if (fs.existsSync(blogIndexPath)) {
+      const blogIndexContent = fs.readFileSync(blogIndexPath, 'utf-8');
+      
+      // Extract blog post slugs from the source
+      // This is a simple regex approach - in production you might want a more robust solution
+      const slugMatches = blogIndexContent.match(/slug:\s*['"]([^'"]+)['"]/g);
+      if (slugMatches) {
+        return slugMatches.map(match => {
+          const slug = match.match(/['"]([^'"]+)['"]/)[1];
+          return {
+            url: `/blog/${slug}`,
+            priority: 0.7,
+            changefreq: 'monthly'
+          };
+        });
+      }
+    }
+  } catch (error) {
+    console.warn('⚠️  Could not read blog posts for sitemap:', error.message);
+  }
+  return [];
+}
+
 function generateSitemap() {
   let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
   sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n';
   
+  // Add regular routes
   routes.forEach(route => {
+    sitemap += '  <url>\n';
+    sitemap += `    <loc>${baseUrl}${route.url}</loc>\n`;
+    sitemap += `    <lastmod>${currentDate}</lastmod>\n`;
+    sitemap += `    <changefreq>${route.changefreq}</changefreq>\n`;
+    sitemap += `    <priority>${route.priority}</priority>\n`;
+    sitemap += '  </url>\n';
+  });
+  
+  // Add blog post routes
+  const blogPosts = getBlogPosts();
+  blogPosts.forEach(route => {
     sitemap += '  <url>\n';
     sitemap += `    <loc>${baseUrl}${route.url}</loc>\n`;
     sitemap += `    <lastmod>${currentDate}</lastmod>\n`;

@@ -178,3 +178,16 @@ export interface PerformanceMonitoringHook {
   measureRender: () => number;
   measureImageLoad: (imageSrc: string) => number;
 }
+
+// Blog types
+export interface BlogPost {
+  slug: string;
+  title: string;
+  description: string;
+  author: string;
+  publishedAt: Date;
+  updatedAt?: Date;
+  tags?: string[];
+  featuredImage?: string;
+  content: React.ComponentType;
+}

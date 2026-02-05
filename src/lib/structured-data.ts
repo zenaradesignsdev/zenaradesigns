@@ -292,6 +292,53 @@ export const injectStructuredData = (schema: object) => {
   document.head.appendChild(script);
 };
 
+// Generate BlogPosting schema for blog posts
+export const generateBlogPostingSchema = (post: { slug: string; title: string; description: string; author: string; publishedAt: Date; updatedAt?: Date; featuredImage?: string }) => {
+  const baseUrl = 'https://zenaradesigns.com';
+  const postUrl = `${baseUrl}/blog/${post.slug}`;
+  
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${postUrl}#blogpost`,
+    
+    headline: post.title,
+    description: post.description,
+    url: postUrl,
+    
+    author: {
+      '@type': 'Organization',
+      name: post.author,
+      url: BUSINESS_INFO.url
+    },
+    
+    publisher: {
+      '@type': 'Organization',
+      name: BUSINESS_INFO.name,
+      url: BUSINESS_INFO.url,
+      logo: {
+        '@type': 'ImageObject',
+        url: BUSINESS_INFO.logo
+      }
+    },
+    
+    datePublished: post.publishedAt.toISOString(),
+    dateModified: (post.updatedAt || post.publishedAt).toISOString(),
+    
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': postUrl
+    },
+    
+    image: post.featuredImage || BUSINESS_INFO.logo,
+    
+    keywords: post.title.split(' ').join(', '),
+    
+    articleSection: 'Web Design',
+    articleBody: post.description
+  };
+};
+
 // Utility function to inject multiple schemas
 export const injectMultipleSchemas = (schemas: object[]) => {
   // Remove existing structured data scripts
