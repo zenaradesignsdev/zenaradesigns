@@ -275,7 +275,7 @@ export const CSP_CONFIG: CSPConfig = {
   ],
   'frame-ancestors': ["'none'"],
   'base-uri': ["'self'"],
-  'form-action': ["'self'"],
+  'form-action': ["'self'", 'https://b15138b6.sibforms.com', 'https://sibforms.com'],
   'object-src': ["'none'"],
   'media-src': ["'self'"],
   'worker-src': ["'self'"],
