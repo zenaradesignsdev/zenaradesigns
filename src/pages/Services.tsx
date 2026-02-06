@@ -99,13 +99,13 @@ const Services = () => {
       title: "Web Hosting & Security", 
       description: "Enterprise-grade hosting with built-in security and monitoring.",
       features: [
-        "Affordable hosting solutions that fit your budget",
-        "Scalable hosting that grows with your business",
-        "Automated backup deployments for peace of mind",
-        "Global CDNs for lightning-fast loading worldwide",
-        "Uptime monitoring and instant alerts",
-        "Basic WAF and security recommendations",
-        "SSL included with every hosting plan"
+        "Affordable plans that fit your budget",
+        "Scales as your traffic and business grows",
+        "Automated backups + easy restores",
+        "Global CDN for faster load times",
+        "Uptime monitoring with instant alerts",
+        "Security best practices + web firewall protection",
+        "SSL included with every plan"
       ]
     },
     {
@@ -130,6 +130,7 @@ const Services = () => {
         "Custom logo design and comprehensive brand guidelines",
         "Business card design with print-ready files",
         "Social media profile and cover setup",
+        "Branded social media post templates",
         "Complete brand kit handoff with all assets",
         "Google Business setup and optimization",
         "Additional brand-related services available on request"
