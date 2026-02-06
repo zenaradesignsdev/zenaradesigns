@@ -11,6 +11,7 @@ import { useScrollToTop, useSEO } from '@/hooks';
 import { sendContactEmail, contactFormSchema, type ContactFormData } from '@/lib/email-service';
 import { BUSINESS_EMAIL, BUSINESS_PHONE } from '@/lib/constants';
 import type { ProcessStepInfo } from '@/lib/types';
+import StructuredData from '@/components/StructuredData';
 
 const Contact = () => {
   // Scroll to top when component mounts
@@ -618,6 +619,15 @@ const Contact = () => {
           </div>
         </div>
       </section>
+
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Contact', url: '/contact' }
+        ]} 
+      />
 
     </div>
   );

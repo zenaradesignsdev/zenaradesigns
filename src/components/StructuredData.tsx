@@ -4,6 +4,8 @@ import {
   generateOrganizationSchema, 
   generateWebSiteSchema, 
   generateServiceSchema,
+  generateSiteNavigationElementSchema,
+  generateBreadcrumbSchema,
   injectMultipleSchemas 
 } from '@/lib/structured-data';
 
@@ -32,6 +34,16 @@ const generateProductSchema = (product: {
   features: string[];
   popular?: boolean;
 }) => {
+  // Clean price: remove $, commas, and handle + sign by extracting base number
+  // For "$4,999+", extract "4999" as the base price
+  const cleanPrice = product.price
+    .replace(/[$,]/g, '') // Remove $ and commas
+    .replace(/\+.*$/, '') // Remove + and everything after it
+    .trim();
+  
+  // Ensure price is a valid number string (numeric only)
+  const numericPrice = cleanPrice.replace(/[^\d.]/g, '');
+  
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
@@ -39,13 +51,14 @@ const generateProductSchema = (product: {
     name: product.name,
     description: product.description,
     category: 'Web Design Service',
+    image: 'https://zenaradesigns.com/logo-seo.png', // Add required image field
     brand: {
       '@type': 'Brand',
       name: 'Zenara Designs'
     },
     offers: {
       '@type': 'Offer',
-      price: product.price.replace(/[$,]/g, ''),
+      price: numericPrice, // Use cleaned numeric price
       priceCurrency: 'CAD',
       availability: 'https://schema.org/InStock',
       seller: {
@@ -188,7 +201,7 @@ const generateServiceOfferingSchema = (service: {
 
 // Main StructuredData component
 interface StructuredDataProps {
-  type: 'localBusiness' | 'organization' | 'website' | 'service' | 'faq' | 'product' | 'review' | 'aggregateRating' | 'serviceOffering';
+  type: 'localBusiness' | 'organization' | 'website' | 'service' | 'faq' | 'product' | 'review' | 'aggregateRating' | 'serviceOffering' | 'siteNavigation' | 'breadcrumb';
   data?: any;
   faqs?: Array<{question: string, answer: string}>;
   products?: Array<{
@@ -220,6 +233,7 @@ interface StructuredDataProps {
     bestRating: number;
     worstRating: number;
   };
+  breadcrumbs?: Array<{ name: string; url: string }>;
 }
 
 const StructuredData: React.FC<StructuredDataProps> = ({
@@ -231,7 +245,8 @@ const StructuredData: React.FC<StructuredDataProps> = ({
   services,
   serviceName,
   serviceDescription,
-  rating
+  rating,
+  breadcrumbs
 }) => {
   useEffect(() => {
     const schemas = [];
@@ -288,6 +303,16 @@ const StructuredData: React.FC<StructuredDataProps> = ({
         }
         break;
         
+      case 'siteNavigation':
+        schemas.push(generateSiteNavigationElementSchema());
+        break;
+        
+      case 'breadcrumb':
+        if (breadcrumbs && breadcrumbs.length > 0) {
+          schemas.push(generateBreadcrumbSchema(breadcrumbs));
+        }
+        break;
+        
       default:
         break;
     }
@@ -300,7 +325,7 @@ const StructuredData: React.FC<StructuredDataProps> = ({
       const existingScripts = document.querySelectorAll('script[type="application/ld+json"]');
       existingScripts.forEach(script => script.remove());
     };
-  }, [type, data, faqs, products, reviews, services, serviceName, serviceDescription, rating]);
+  }, [type, data, faqs, products, reviews, services, serviceName, serviceDescription, rating, breadcrumbs]);
   
   return null; // This component doesn't render anything
 };

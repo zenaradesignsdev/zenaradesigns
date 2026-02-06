@@ -613,6 +613,13 @@ const Services = () => {
           worstRating: 1
         }}
       />
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Services', url: '/services' }
+        ]} 
+      />
     </div>
   );
 };

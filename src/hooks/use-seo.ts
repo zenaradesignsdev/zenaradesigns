@@ -32,15 +32,34 @@ export const useSEO = ({ title, description, canonical, noindex = false, structu
     // Note: Meta keywords are not used by search engines and are considered outdated
     // Keywords are now handled through natural content and semantic HTML
 
-    // Update or create canonical URL
+    // Normalize and update canonical URL
+    // Always use https://zenaradesigns.com (no www, always HTTPS)
     if (canonical) {
+      let normalizedCanonical = canonical;
+      
+      // Remove www if present
+      normalizedCanonical = normalizedCanonical.replace(/^https?:\/\/(www\.)?/, 'https://');
+      
+      // Ensure it starts with https://zenaradesigns.com
+      if (normalizedCanonical.startsWith('http://zenaradesigns.com')) {
+        normalizedCanonical = normalizedCanonical.replace('http://', 'https://');
+      } else if (!normalizedCanonical.startsWith('https://zenaradesigns.com')) {
+        // If it's a relative URL, prepend the base URL
+        if (normalizedCanonical.startsWith('/')) {
+          normalizedCanonical = `https://zenaradesigns.com${normalizedCanonical}`;
+        } else {
+          // If it's already a full URL but different domain, keep as is but ensure HTTPS
+          normalizedCanonical = normalizedCanonical.replace(/^http:/, 'https:');
+        }
+      }
+      
       let canonicalLink = document.querySelector('link[rel="canonical"]');
       if (canonicalLink) {
-        canonicalLink.setAttribute('href', canonical);
+        canonicalLink.setAttribute('href', normalizedCanonical);
       } else {
         canonicalLink = document.createElement('link');
         canonicalLink.setAttribute('rel', 'canonical');
-        canonicalLink.setAttribute('href', canonical);
+        canonicalLink.setAttribute('href', normalizedCanonical);
         document.head.appendChild(canonicalLink);
       }
     }

@@ -10,6 +10,7 @@ import rocketWebImage from '@/assets/website-example-rocket.png';
 import gardenWebImage from '@/assets/website-example-garden.png';
 import travelWebImage from '@/assets/website-example-travel.png';
 import { useState, useEffect, useRef, memo, useCallback, useMemo } from 'react';
+import StructuredData from '@/components/StructuredData';
 
 const Home = () => {
   // Scroll to top when component mounts
@@ -1047,6 +1048,15 @@ const Home = () => {
           </p>
         </div>
       </section>
+
+      {/* Structured Data for SEO Sitelinks */}
+      <StructuredData type="siteNavigation" />
+      
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[{ name: 'Home', url: '/' }]} 
+      />
 
     </div>
   );

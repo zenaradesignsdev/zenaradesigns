@@ -8,6 +8,7 @@ import type { TeamMember, ProcessStep, Differentiator, Position } from '@/lib/ty
 import logo from '@/assets/zenaralogo-transparentbg.png';
 import saturnImage from '@/assets/saturn.png';
 import moonImage from '@/assets/moon.png';
+import StructuredData from '@/components/StructuredData';
 
 const About = () => {
   // Scroll to top when component mounts
@@ -562,6 +563,14 @@ const About = () => {
         </div>
       </section>
 
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'About', url: '/about' }
+        ]} 
+      />
 
     </div>
   );

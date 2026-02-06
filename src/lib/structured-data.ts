@@ -1,5 +1,5 @@
 // Structured data utilities for JSON-LD schema markup
-import { BUSINESS_NAME, BUSINESS_EMAIL, BUSINESS_PHONE } from './constants';
+import { BUSINESS_NAME, BUSINESS_EMAIL, BUSINESS_PHONE, NAVIGATION_LINKS } from './constants';
 
 // Business information for LocalBusiness schema
 export const BUSINESS_INFO = {
@@ -209,8 +209,41 @@ export const generateOrganizationSchema = () => {
   };
 };
 
+// Generate SiteNavigationElement schema for main navigation
+export const generateSiteNavigationElementSchema = () => {
+  const baseUrl = BUSINESS_INFO.url;
+  
+  // Filter out Home page and only include main navigation pages (About, Services, Projects, Pricing, Contact)
+  const mainNavLinks = NAVIGATION_LINKS.filter(link => link.href !== '/');
+  
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SiteNavigationElement',
+    '@id': 'https://zenaradesigns.com/#main-navigation',
+    name: 'Main Navigation',
+    hasPart: mainNavLinks.map(link => ({
+      '@type': 'SiteNavigationElement',
+      name: link.label,
+      url: `${baseUrl}${link.href}`
+    }))
+  };
+};
+
 // Generate WebSite schema
 export const generateWebSiteSchema = () => {
+  const baseUrl = BUSINESS_INFO.url;
+  
+  // Get main navigation pages (excluding Home)
+  const mainNavLinks = NAVIGATION_LINKS.filter(link => link.href !== '/');
+  
+  // Create hasPart array with WebPage references for main navigation pages
+  const mainPages = mainNavLinks.map(link => ({
+    '@type': 'WebPage',
+    '@id': `${baseUrl}${link.href}`,
+    name: link.label,
+    url: `${baseUrl}${link.href}`
+  }));
+  
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
@@ -237,7 +270,10 @@ export const generateWebSiteSchema = () => {
         urlTemplate: 'https://zenaradesigns.com/search?q={search_term_string}'
       },
       'query-input': 'required name=search_term_string'
-    }
+    },
+    
+    // Add hasPart to indicate main pages in the site structure
+    hasPart: mainPages
   };
 };
 
@@ -336,6 +372,23 @@ export const generateBlogPostingSchema = (post: { slug: string; title: string; d
     
     articleSection: 'Web Design',
     articleBody: post.description
+  };
+};
+
+// Generate BreadcrumbList schema for navigation
+export const generateBreadcrumbSchema = (items: Array<{ name: string; url: string }>) => {
+  const baseUrl = BUSINESS_INFO.url;
+  
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': `${baseUrl}#breadcrumb`,
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url.startsWith('http') ? item.url : `${baseUrl}${item.url}`
+    }))
   };
 };
 

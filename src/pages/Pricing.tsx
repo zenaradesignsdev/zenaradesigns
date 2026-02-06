@@ -563,6 +563,13 @@ const Pricing = () => {
         type="product" 
         products={pricingPlans}
       />
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Pricing', url: '/pricing' }
+        ]} 
+      />
     </div>
   );
 };

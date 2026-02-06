@@ -8,6 +8,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Routes configuration
+// Only include routes that actually exist in App.tsx
 const routes = [
   { url: "/", priority: 1.0, changefreq: "weekly" },
   { url: "/about", priority: 0.8, changefreq: "monthly" },
@@ -16,7 +17,7 @@ const routes = [
   { url: "/pricing", priority: 0.8, changefreq: "monthly" },
   { url: "/contact", priority: 0.9, changefreq: "monthly" },
   { url: "/faq", priority: 0.7, changefreq: "monthly" },
-  { url: "/pricing-guide", priority: 0.8, changefreq: "monthly" },
+  // Removed /pricing-guide - does not exist as a route
   { url: "/locations", priority: 0.7, changefreq: "monthly" },
   { url: "/process", priority: 0.8, changefreq: "monthly" },
   { url: "/security", priority: 0.7, changefreq: "monthly" },

@@ -1,6 +1,7 @@
 import { Rocket } from 'lucide-react';
 import { useScrollToTop, useSEO } from '@/hooks';
 import { memo } from 'react';
+import StructuredData from '@/components/StructuredData';
 
 const Projects = () => {
   // Scroll to top when component mounts
@@ -125,6 +126,15 @@ const Projects = () => {
           </div>
         </div>
       </section>
+      
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Projects', url: '/projects' }
+        ]} 
+      />
     </div>
   );
 };
