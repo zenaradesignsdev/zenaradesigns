@@ -249,7 +249,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     // Send email using Resend with sanitized data
     const { data, error } = await resend.emails.send({
-      from: 'Zenara Designs <noreply@mail.zenaradesigns.com>',
+      from: 'Zenara Designs <noreply@zenaradesigns.com>',
       to: ['info@zenaradesigns.com'],
       replyTo: sanitizedData.email,
       subject: `New Contact Form Submission from ${sanitizedData.name}`,
@@ -258,10 +258,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     });
 
     if (error) {
-      console.error('Resend error:', error);
+      console.error('Resend error:', JSON.stringify(error, null, 2));
       return res.status(500).json({ 
         error: 'Failed to send email',
-        success: false 
+        success: false,
+        details: process.env.NODE_ENV === 'development' ? error : undefined
       });
     }
 
@@ -272,9 +273,13 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   } catch (error) {
     console.error('Email sending error:', error);
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorStack = error instanceof Error ? error.stack : undefined;
+    console.error('Error details:', { message: errorMessage, stack: errorStack });
     return res.status(500).json({ 
       error: 'Internal server error',
-      success: false 
+      success: false,
+      details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
     });
   }
 }
