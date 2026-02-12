@@ -5,7 +5,7 @@ import { useScrollToTop, useSEO } from '@/hooks';
 import { useState, useEffect, useRef, memo, useMemo, useCallback } from 'react';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
 import type { TeamMember, ProcessStep, Differentiator, Position } from '@/lib/types';
-import logo from '@/assets/zenaralogo-transparentbg.png';
+import logo from '@/assets/new-zenara-logo.svg';
 import saturnImage from '@/assets/saturn.png';
 import moonImage from '@/assets/moon.png';
 import StructuredData from '@/components/StructuredData';

@@ -5,7 +5,7 @@ import { X, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { scrollToTop } from '@/hooks';
 import { NAVIGATION_LINKS } from '@/lib/constants';
-import logo from '@/assets/zenaralogo-transparentbg.png';
+import logo from '@/assets/new-zenara-logo.svg';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);

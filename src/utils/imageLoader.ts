@@ -13,7 +13,7 @@ export const preloadImage = (src: string): Promise<HTMLImageElement> => {
 // Preload critical images
 export const preloadCriticalImages = async () => {
   const criticalImages = [
-    '/src/assets/zenaralogo-transparentbg.png',
+    '/src/assets/new-zenara-logo.svg',
     '/src/assets/saturn.png',
     '/src/assets/moon.png'
   ];
