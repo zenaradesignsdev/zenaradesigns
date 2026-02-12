@@ -406,7 +406,7 @@ const loadAnalytics = () => import('./analytics');
   "description": "Business description",
   "url": "https://example.com",
   "telephone": "+1-647-835-1077",
-  "email": "zenaradesigns.co@gmail.com",
+  "email": "info@zenaradesigns.com",
   "address": {
     "@type": "PostalAddress",
     "streetAddress": "123 Main Street",

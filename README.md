@@ -95,7 +95,7 @@ public/                 # Static files
 The contact form uses Resend for secure email delivery:
 
 - **From**: `noreply@mail.zenaradesigns.com`
-- **To**: `zenaradesigns.co@gmail.com`
+- **To**: `info@zenaradesigns.com`
 - **Security**: Input validation, rate limiting, XSS protection
 - **API**: Vercel serverless function (`/api/send-email.ts`)
 
@@ -171,5 +171,5 @@ This project is proprietary to Zenara Designs. All rights reserved.
 ## 📞 Support
 
 For technical support or questions about this website:
-- **Email**: zenaradesigns.co@gmail.com
+- **Email**: info@zenaradesigns.com
 - **Website**: https://zenaradesigns.com
