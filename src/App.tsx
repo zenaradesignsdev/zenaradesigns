@@ -95,7 +95,7 @@ const App = () => {
                       <Route path="/process" element={<ErrorBoundary><Process /></ErrorBoundary>} />
                       <Route path="/security" element={<ErrorBoundary><Security /></ErrorBoundary>} />
                       <Route path="/mobile" element={<ErrorBoundary><Mobile /></ErrorBoundary>} />
-                      <Route path="/payment" element={<ErrorBoundary><Payment /></ErrorBoundary>} />
+                      <Route path="/payments" element={<ErrorBoundary><Payment /></ErrorBoundary>} />
                       
                       {/* Blog Routes */}
                       <Route path="/blog" element={<ErrorBoundary><Blog /></ErrorBoundary>} />

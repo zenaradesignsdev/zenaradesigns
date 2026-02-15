@@ -247,6 +247,7 @@ export const CSP_CONFIG: CSPConfig = {
     'https://fonts.googleapis.com',
     'https://www.googletagmanager.com',
     'https://assets.calendly.com',
+    'https://js.stripe.com',
   ],
   'style-src': [
     "'self'",
@@ -268,10 +269,13 @@ export const CSP_CONFIG: CSPConfig = {
     'https://www.google-analytics.com',
     'https://analytics.google.com',
     'https://calendly.com',
+    'https://api.stripe.com',
   ],
   'frame-src': [
     "'self'",
     'https://calendly.com',
+    'https://checkout.stripe.com',
+    'https://js.stripe.com',
   ],
   'frame-ancestors': ["'none'"],
   'base-uri': ["'self'"],
