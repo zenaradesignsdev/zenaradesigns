@@ -1,4 +1,4 @@
-import { useState, memo, useEffect, useRef } from 'react';
+import { useState, memo, useEffect } from 'react';
 import { Mail, Clock, CheckCircle, ArrowRight, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -41,7 +41,6 @@ const Contact = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   const { toast } = useToast();
-  const calendlyWidgetRef = useRef<HTMLDivElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -117,92 +116,26 @@ const Contact = () => {
     }));
   };
 
-  // Load Calendly script and initialize widget
+  // Load Calendly script
   useEffect(() => {
-    let script: HTMLScriptElement | null = null;
-    let initTimeout: NodeJS.Timeout | null = null;
-    let checkInterval: NodeJS.Timeout | null = null;
+    // Check if script already exists
+    const existingScript = document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]');
+    
+    if (existingScript) {
+      return;
+    }
 
-    const initializeWidget = () => {
-      if (!calendlyWidgetRef.current) return;
-
-      // Clear any existing iframe first
-      const existingIframe = calendlyWidgetRef.current.querySelector('iframe');
-      if (existingIframe) {
-        existingIframe.remove();
-      }
-
-      // Initialize the widget
-      if ((window as any).Calendly) {
-        try {
-          (window as any).Calendly.initInlineWidget({
-            url: 'https://calendly.com/zenaradesigns-co/30min?primary_color=23b8ff',
-            parentElement: calendlyWidgetRef.current
-          });
-        } catch (e) {
-          console.error('Calendly initialization error:', e);
-        }
-      }
+    // Load the script
+    const script = document.createElement('script');
+    script.src = 'https://assets.calendly.com/assets/external/widget.js';
+    script.async = true;
+    script.type = 'text/javascript';
+    
+    script.onerror = () => {
+      console.error('Failed to load Calendly widget script');
     };
-
-    const loadScript = () => {
-      // Check if script already exists
-      const existingScript = document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]');
-      
-      if (existingScript) {
-        // Script already loaded, initialize widget
-        if ((window as any).Calendly) {
-          initTimeout = setTimeout(initializeWidget, 100);
-        } else {
-          // Script exists but Calendly not ready yet, wait for it
-          checkInterval = setInterval(() => {
-            if ((window as any).Calendly) {
-              clearInterval(checkInterval!);
-              initTimeout = setTimeout(initializeWidget, 100);
-            }
-          }, 100);
-          
-          // Stop checking after 5 seconds
-          setTimeout(() => {
-            if (checkInterval) clearInterval(checkInterval);
-          }, 5000);
-        }
-      } else {
-        // Load the script
-        script = document.createElement('script');
-        script.src = 'https://assets.calendly.com/assets/external/widget.js';
-        script.async = true;
-        script.type = 'text/javascript';
-        
-        script.onload = () => {
-          // Wait a bit for Calendly to be ready, then initialize
-          initTimeout = setTimeout(initializeWidget, 200);
-        };
-        
-        script.onerror = () => {
-          console.error('Failed to load Calendly widget script');
-        };
-        
-        document.head.appendChild(script);
-      }
-    };
-
-    // Start loading
-    loadScript();
-
-    // Cleanup function
-    return () => {
-      if (initTimeout) clearTimeout(initTimeout);
-      if (checkInterval) clearInterval(checkInterval);
-      
-      // Clean up widget iframe when component unmounts
-      if (calendlyWidgetRef.current) {
-        const iframe = calendlyWidgetRef.current.querySelector('iframe');
-        if (iframe) {
-          iframe.remove();
-        }
-      }
-    };
+    
+    document.head.appendChild(script);
   }, []);
 
   const processSteps: ProcessStepInfo[] = [
@@ -609,9 +542,8 @@ const Contact = () => {
                 </p>
               </div>
               <div 
-                ref={calendlyWidgetRef}
                 className="calendly-inline-widget" 
-                data-url="https://calendly.com/zenaradesigns-co/30min?primary_color=23b8ff" 
+                data-url="https://calendly.com/admin-zenaradesigns/30min?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=8e00ff" 
                 style={{ minWidth: '320px', height: '700px', width: '100%' }}
                 aria-label="Calendly scheduling widget"
               ></div>
