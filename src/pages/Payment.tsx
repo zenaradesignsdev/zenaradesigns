@@ -92,11 +92,7 @@ const Payment = () => {
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="text-center mb-10 sm:mb-12 md:mb-16">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 md:px-6 md:py-3 mb-5 sm:mb-6 md:mb-8 border border-cyan-500/30">
-              <CreditCard className="h-3.5 w-3.5 sm:h-4 sm:w-4 md:h-5 md:w-5 text-cyan-400 animate-pulse flex-shrink-0" />
-              <span className="text-[10px] xs:text-xs sm:text-sm font-medium text-cyan-300">Hosting & Maintenance</span>
-            </div>
+          <div className="text-center mb-10 sm:mb-12 md:mb-16 pt-8 sm:pt-12 md:pt-16">
             <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 md:mb-8 text-white px-2">
               Choose Your <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Subscription Plan</span>
             </h1>
@@ -178,6 +174,26 @@ const Payment = () => {
               <p className="text-slate-300 text-sm sm:text-base">
                 <em>Complex custom development, e-commerce, and major redesigns are quoted separately.</em>
               </p>
+            </div>
+          </div>
+
+          {/* Hosting Only Option - Simple, Less Prominent */}
+          <div className="mt-8 sm:mt-12 text-center max-w-2xl mx-auto">
+            <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 sm:p-8 border border-white/10">
+              <h3 className="text-lg sm:text-xl font-semibold text-slate-300 mb-3">Hosting Only</h3>
+              <p className="text-slate-400 text-sm sm:text-base mb-4">Basic hosting without maintenance services</p>
+              <div className="flex items-center justify-center gap-4 mb-6">
+                <span className="text-2xl sm:text-3xl font-bold text-white">$20</span>
+                <span className="text-slate-400 text-sm sm:text-base">/month</span>
+              </div>
+              <a
+                href="https://buy.stripe.com/14A3cv5I38Cn1VJdjT9sk03"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block bg-slate-700/50 hover:bg-slate-700/70 text-white rounded-lg px-6 py-2.5 text-sm font-medium transition-colors duration-200"
+              >
+                Subscribe to Hosting
+              </a>
             </div>
           </div>
         </div>
