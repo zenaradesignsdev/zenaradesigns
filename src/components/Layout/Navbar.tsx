@@ -5,7 +5,7 @@ import { X, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { scrollToTop } from '@/hooks';
 import { NAVIGATION_LINKS } from '@/lib/constants';
-import logo from '@/assets/new-zenara-logo.svg';
+import logo from '@/assets/zenaralogov2.svg';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -100,9 +100,9 @@ const Navbar = () => {
             <img 
               src={logo} 
               alt="Zenara Designs - Professional Web Design Agency Toronto" 
-              className="h-8 w-auto" 
-              width="32" 
-              height="32" 
+              className="h-10 w-auto" 
+              width="40" 
+              height="40" 
               loading="eager" 
               decoding="async" 
             />
@@ -189,10 +189,10 @@ const Navbar = () => {
         aria-label="Main navigation"
       >
         <div className="bg-white/10 backdrop-blur-xl rounded-full border border-white/20 shadow-2xl px-4 sm:px-6 lg:px-8 xl:px-10 py-2 sm:py-2.5">
-          <div className="flex items-center justify-between h-11 sm:h-12">
+          <div className="flex items-center justify-between h-12 sm:h-14">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2" onClick={scrollToTop}>
-              <img src={logo} alt="Zenara Designs - Professional Web Design Agency Toronto" className="h-5 sm:h-6 w-auto" width="24" height="24" loading="eager" decoding="async" />
+              <img src={logo} alt="Zenara Designs - Professional Web Design Agency Toronto" className="h-6 sm:h-8 w-auto" width="32" height="32" loading="eager" decoding="async" />
               <span className="font-semibold text-sm sm:text-base text-white">Zenara Designs</span>
             </Link>
 

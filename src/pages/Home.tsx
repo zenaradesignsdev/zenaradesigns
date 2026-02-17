@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useScrollToTop, useSEO } from '@/hooks';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
 import type { Capability, Differentiator, SuccessMetric, AnimatedNumbers } from '@/lib/types';
-import logo from '@/assets/new-zenara-logo.svg';
+import logo from '@/assets/zenaralogov2.svg';
 import realEstateWebImage from '@/assets/website-example-realestate.png';
 import rocketWebImage from '@/assets/website-example-rocket.png';
 import gardenWebImage from '@/assets/website-example-garden.png';
@@ -399,9 +399,9 @@ const Home = () => {
                   <img 
                     src={logo} 
                     alt="Zenara Designs - Professional Web Design Agency Toronto Logo" 
-                    className="w-full max-w-[450px] h-auto object-contain animate-float"
-                    width="450"
-                    height="120"
+                    className="w-full max-w-[250px] sm:max-w-[280px] md:max-w-[320px] lg:max-w-[350px] h-auto object-contain animate-float"
+                    width="350"
+                    height="350"
                     loading="eager"
                     decoding="async"
                   />
