@@ -1,5 +1,6 @@
 import { useState, memo, useEffect } from 'react';
-import { Mail, Clock, CheckCircle, ArrowRight, Phone } from 'lucide-react';
+import { Mail, Clock, CheckCircle, ArrowRight, Phone, Calendar } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { SecureInput, SecureTextarea } from '@/components/ui/secure-input';
@@ -39,7 +40,6 @@ const Contact = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isButtonHovered, setIsButtonHovered] = useState(false);
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -116,27 +116,6 @@ const Contact = () => {
     }));
   };
 
-  // Load Calendly script
-  useEffect(() => {
-    // Check if script already exists
-    const existingScript = document.querySelector('script[src="https://assets.calendly.com/assets/external/widget.js"]');
-    
-    if (existingScript) {
-      return;
-    }
-
-    // Load the script
-    const script = document.createElement('script');
-    script.src = 'https://assets.calendly.com/assets/external/widget.js';
-    script.async = true;
-    script.type = 'text/javascript';
-    
-    script.onerror = () => {
-      console.error('Failed to load Calendly widget script');
-    };
-    
-    document.head.appendChild(script);
-  }, []);
 
   const processSteps: ProcessStepInfo[] = [
     {
@@ -160,85 +139,51 @@ const Contact = () => {
     <div className="min-h-screen" role="main" aria-label="Contact page">
 
       {/* Contact Form & Info - Space Theme */}
-      <section id="contact-form" className="pt-24 sm:pt-28 md:pt-32 lg:pt-40 pb-16 sm:pb-20 md:pb-24 relative overflow-hidden bg-gradient-to-br from-black via-indigo-900 to-purple-900">
+      <section id="contact-form" className="pt-24 sm:pt-28 md:pt-32 lg:pt-40 pb-16 sm:pb-20 md:pb-24 relative overflow-hidden bg-black">
+        {/* Gradient Background Layers */}
+        <div className="absolute inset-0">
+          {/* Base gradient layer */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
+          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
+          {/* Accent gradients with theme colors */}
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/35 to-transparent"></div>
+        </div>
+        
         {/* Space Background Elements */}
         <div className="absolute inset-0">
-          {/* Shooting Stars */}
-          <div className="shooting-star shooting-star-1"></div>
-          <div className="shooting-star shooting-star-2"></div>
-          <div className="shooting-star shooting-star-3"></div>
-          <div className="shooting-star shooting-star-4"></div>
-          <div className="shooting-star shooting-star-5"></div>
-          <div className="shooting-star shooting-star-6"></div>
-          <div className="shooting-star shooting-star-7"></div>
-          <div className="shooting-star shooting-star-8"></div>
-          <div className="shooting-star shooting-star-9"></div>
-          <div className="shooting-star shooting-star-10"></div>
-          <div className="shooting-star shooting-star-11"></div>
-          <div className="shooting-star shooting-star-12"></div>
-          <div className="shooting-star shooting-star-13"></div>
-          <div className="shooting-star shooting-star-14"></div>
-          <div className="shooting-star shooting-star-15"></div>
-          <div className="shooting-star shooting-star-16"></div>
-          <div className="shooting-star shooting-star-17"></div>
-          <div className="shooting-star shooting-star-18"></div>
-          <div className="shooting-star shooting-star-19"></div>
-          <div className="shooting-star shooting-star-20"></div>
-          
           {/* Background Stars */}
-          <div className="bg-star bg-star-1"></div>
-          <div className="bg-star bg-star-2"></div>
-          <div className="bg-star bg-star-3"></div>
-          <div className="bg-star bg-star-4"></div>
-          <div className="bg-star bg-star-5"></div>
-          <div className="bg-star bg-star-6"></div>
-          <div className="bg-star bg-star-7"></div>
-          <div className="bg-star bg-star-8"></div>
-          <div className="bg-star bg-star-9"></div>
-          <div className="bg-star bg-star-10"></div>
-          <div className="bg-star bg-star-11"></div>
-          <div className="bg-star bg-star-12"></div>
-          <div className="bg-star bg-star-13"></div>
-          <div className="bg-star bg-star-14"></div>
-          <div className="bg-star bg-star-15"></div>
-          <div className="bg-star bg-star-16"></div>
-          <div className="bg-star bg-star-17"></div>
-          <div className="bg-star bg-star-18"></div>
-          <div className="bg-star bg-star-19"></div>
-          <div className="bg-star bg-star-20"></div>
-          <div className="bg-star bg-star-21"></div>
-          <div className="bg-star bg-star-22"></div>
-          <div className="bg-star bg-star-23"></div>
-          <div className="bg-star bg-star-24"></div>
-          <div className="bg-star bg-star-25"></div>
-          <div className="bg-star bg-star-26"></div>
-          <div className="bg-star bg-star-27"></div>
-          <div className="bg-star bg-star-28"></div>
-          <div className="bg-star bg-star-29"></div>
-          <div className="bg-star bg-star-30"></div>
-          <div className="bg-star bg-star-31"></div>
-          <div className="bg-star bg-star-32"></div>
-          <div className="bg-star bg-star-33"></div>
-          <div className="bg-star bg-star-34"></div>
-          <div className="bg-star bg-star-35"></div>
-          <div className="bg-star bg-star-36"></div>
-          
-          {/* Rocket Animation */}
-          <div className="rocket-container">
-            <div className="rocket-emoji">🚀</div>
-          </div>
+          <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
+          <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
+          <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
+          <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
+          <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
+          <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
+          <div className="bg-star" style={{ top: '18%', left: '68%' }}></div>
+          <div className="bg-star" style={{ top: '7%', left: '78%' }}></div>
+          <div className="bg-star" style={{ top: '14%', left: '88%' }}></div>
+          <div className="bg-star" style={{ top: '11%', left: '95%' }}></div>
+          <div className="bg-star" style={{ top: '25%', left: '5%' }}></div>
+          <div className="bg-star" style={{ top: '28%', left: '15%' }}></div>
+          <div className="bg-star" style={{ top: '32%', left: '28%' }}></div>
+          <div className="bg-star" style={{ top: '26%', left: '42%' }}></div>
+          <div className="bg-star" style={{ top: '35%', left: '55%' }}></div>
+          <div className="bg-star" style={{ top: '29%', left: '68%' }}></div>
+          <div className="bg-star" style={{ top: '38%', left: '82%' }}></div>
+          <div className="bg-star" style={{ top: '27%', left: '92%' }}></div>
           
           {/* Nebula Effects */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-16">
-            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-white leading-tight">
-              Ready to Transform Your <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Digital Presence?</span>
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
+              <span className="block font-light opacity-90">Ready to Transform Your</span>
+              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Digital Presence?</span>
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed px-4">
+            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-4xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
               Whether you're a startup looking to make a splash or an established business ready to modernize, we're here to help. Professional web design services in Toronto & GTA.
             </p>
           </div>
@@ -246,26 +191,23 @@ const Contact = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
             {/* Contact Info */}
             <div className="space-y-6 sm:space-y-8">
-              <div className="contact-card bg-white/10 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl relative overflow-hidden">
-                {/* Glassmorphism Effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl"></div>
-                
+              <div className="contact-card bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 shadow-2xl relative overflow-hidden">
                 <div className="relative z-10">
-                  <h3 className="text-2xl sm:text-3xl font-bold mb-4 sm:mb-6 text-white">Get in touch</h3>
-                  <p className="text-slate-300 mb-6 sm:mb-8 leading-relaxed text-base sm:text-lg">
+                  <h3 className="text-2xl sm:text-3xl font-semibold mb-4 sm:mb-6 text-white tracking-tight">Get in touch</h3>
+                  <p className="text-white/60 mb-6 sm:mb-8 leading-[1.7] font-light tracking-[0.01em] text-base sm:text-lg">
                     Our team responds to all inquiries personally and promptly. We're here to help you succeed.
                   </p>
                   
                   <div className="space-y-4 sm:space-y-6">
                     <div className="flex items-center space-x-3 sm:space-x-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-2xl flex items-center justify-center text-white shadow-lg flex-shrink-0">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-xl flex items-center justify-center text-white shadow-lg flex-shrink-0">
                         <Mail className="h-5 w-5 sm:h-6 sm:w-6" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="font-semibold text-white text-base sm:text-lg">Email us directly</p>
+                        <p className="font-light text-white text-base sm:text-lg">Email us directly</p>
                         <a 
                           href={`mailto:${BUSINESS_EMAIL}`}
-                          className="text-cyan-300 hover:text-cyan-200 transition-colors text-sm sm:text-base break-all"
+                          className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient hover:opacity-80 transition-opacity text-sm sm:text-base break-all font-light"
                           rel="noopener noreferrer"
                         >
                           {BUSINESS_EMAIL}
@@ -274,14 +216,14 @@ const Contact = () => {
                     </div>
                     
                     <div className="flex items-center space-x-3 sm:space-x-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-2xl flex items-center justify-center text-white shadow-lg flex-shrink-0">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-xl flex items-center justify-center text-white shadow-lg flex-shrink-0">
                         <Phone className="h-5 w-5 sm:h-6 sm:w-6" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="font-semibold text-white text-base sm:text-lg">Call us directly</p>
+                        <p className="font-light text-white text-base sm:text-lg">Call us directly</p>
                         <a 
                           href={`tel:${BUSINESS_PHONE}`} 
-                          className="text-cyan-300 hover:text-cyan-200 transition-colors text-sm sm:text-base"
+                          className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient hover:opacity-80 transition-opacity text-sm sm:text-base font-light"
                           rel="noopener noreferrer"
                         >
                           {BUSINESS_PHONE}
@@ -290,33 +232,30 @@ const Contact = () => {
                     </div>
                     
                     <div className="flex items-center space-x-3 sm:space-x-4">
-                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-2xl flex items-center justify-center text-white shadow-lg flex-shrink-0">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-xl flex items-center justify-center text-white shadow-lg flex-shrink-0">
                         <Clock className="h-5 w-5 sm:h-6 sm:w-6" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="font-semibold text-white text-base sm:text-lg">Business Hours</p>
-                        <p className="text-slate-300 text-sm sm:text-base">Monday - Friday: 9:00 AM - 5:00 PM EST</p>
+                        <p className="font-light text-white text-base sm:text-lg">Business Hours</p>
+                        <p className="text-white/60 text-sm sm:text-base font-light">Monday - Friday: 9:00 AM - 5:00 PM EST</p>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="contact-card bg-white/10 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl relative overflow-hidden">
-                {/* Glassmorphism Effect */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl"></div>
-                
+              <div className="contact-card bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 shadow-2xl relative overflow-hidden">
                 <div className="relative z-10">
-                  <h4 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6 text-white">What to expect:</h4>
+                  <h4 className="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 text-white tracking-tight">What to expect:</h4>
                   <div className="space-y-4 sm:space-y-6">
                     {processSteps.map((step, index) => (
                       <div key={index} className="flex space-x-3 sm:space-x-4">
-                        <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-2xl flex items-center justify-center text-white shadow-lg">
+                        <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-xl flex items-center justify-center text-white shadow-lg">
                           <div className="h-5 w-5 sm:h-6 sm:w-6">{step.icon}</div>
                         </div>
                         <div className="min-w-0 flex-1">
-                          <h5 className="font-semibold mb-1 sm:mb-2 text-white text-base sm:text-lg">{step.title}</h5>
-                          <p className="text-slate-300 text-sm sm:text-base">{step.description}</p>
+                          <h5 className="font-light mb-1 sm:mb-2 text-white text-base sm:text-lg">{step.title}</h5>
+                          <p className="text-white/60 text-sm sm:text-base font-light">{step.description}</p>
                         </div>
                       </div>
                     ))}
@@ -326,22 +265,19 @@ const Contact = () => {
             </div>
 
             {/* Contact Form */}
-            <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl relative overflow-hidden">
-              {/* Glassmorphism Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl"></div>
-              
+            <div className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 shadow-2xl relative overflow-hidden">
               <div className="relative z-10">
-                <h3 className="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-white">Send us a message</h3>
+                <h3 className="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 text-white tracking-tight">Send us a message</h3>
                 <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-6" role="form" aria-label="Contact form">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="name" className="text-white font-semibold text-sm sm:text-base">Name *</Label>
+                      <Label htmlFor="name" className="text-white font-light text-sm sm:text-base">Name *</Label>
                       <SecureInput 
                         id="name"
                         value={formData.name}
                         onChange={(e) => handleChange('name', e.target.value)}
                         required 
-                        className={`bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus:border-cyan-400 focus:ring-cyan-400/20 h-10 sm:h-11 text-sm sm:text-base ${errors.name ? 'border-red-400' : ''}`}
+                        className={`bg-slate-800/50 border-slate-700/50 text-white placeholder:text-white/40 focus:border-cyan-300 focus:ring-cyan-300/20 h-10 sm:h-11 text-sm sm:text-base ${errors.name ? 'border-red-400' : ''}`}
                         sanitizeMode="none"
                         maxLength={100}
                         aria-describedby={errors.name ? 'name-error' : undefined}
@@ -352,14 +288,14 @@ const Contact = () => {
                       )}
                     </div>
                     <div>
-                      <Label htmlFor="email" className="text-white font-semibold text-sm sm:text-base">Email *</Label>
+                      <Label htmlFor="email" className="text-white font-light text-sm sm:text-base">Email *</Label>
                       <SecureInput 
                         id="email"
                         type="email"
                         value={formData.email}
                         onChange={(e) => handleChange('email', e.target.value)}
                         required 
-                        className={`bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus:border-cyan-400 focus:ring-cyan-400/20 h-10 sm:h-11 text-sm sm:text-base ${errors.email ? 'border-red-400' : ''}`}
+                        className={`bg-slate-800/50 border-slate-700/50 text-white placeholder:text-white/40 focus:border-cyan-300 focus:ring-cyan-300/20 h-10 sm:h-11 text-sm sm:text-base ${errors.email ? 'border-red-400' : ''}`}
                         sanitizeMode="basic"
                         maxLength={254}
                         aria-describedby={errors.email ? 'email-error' : undefined}
@@ -373,24 +309,24 @@ const Contact = () => {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="phone" className="text-white font-semibold text-sm sm:text-base">Phone</Label>
+                      <Label htmlFor="phone" className="text-white font-light text-sm sm:text-base">Phone</Label>
                       <SecureInput 
                         id="phone"
                         type="tel"
                         value={formData.phone}
                         onChange={(e) => handleChange('phone', e.target.value)}
-                        className="bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus:border-cyan-400 focus:ring-cyan-400/20 h-10 sm:h-11 text-sm sm:text-base"
+                        className="bg-slate-800/50 border-slate-700/50 text-white placeholder:text-white/40 focus:border-cyan-300 focus:ring-cyan-300/20 h-10 sm:h-11 text-sm sm:text-base"
                         sanitizeMode="xss"
                         maxLength={20}
                       />
                     </div>
                     <div>
-                      <Label htmlFor="company" className="text-white font-semibold text-sm sm:text-base">Company</Label>
+                      <Label htmlFor="company" className="text-white font-light text-sm sm:text-base">Company</Label>
                       <SecureInput 
                         id="company"
                         value={formData.company}
                         onChange={(e) => handleChange('company', e.target.value)}
-                        className="bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus:border-cyan-400 focus:ring-cyan-400/20 h-10 sm:h-11 text-sm sm:text-base"
+                        className="bg-slate-800/50 border-slate-700/50 text-white placeholder:text-white/40 focus:border-cyan-300 focus:ring-cyan-300/20 h-10 sm:h-11 text-sm sm:text-base"
                         sanitizeMode="none"
                         maxLength={100}
                       />
@@ -398,12 +334,12 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <Label htmlFor="projectType" className="text-white font-semibold text-sm sm:text-base">Project Type *</Label>
+                    <Label htmlFor="projectType" className="text-white font-light text-sm sm:text-base">Project Type *</Label>
                     <Select onValueChange={(value) => handleChange('projectType', value)}>
-                      <SelectTrigger className="bg-white/10 border-white/20 text-white focus:border-cyan-400 focus:ring-cyan-400/20 h-10 sm:h-11 text-sm sm:text-base">
+                      <SelectTrigger className="bg-slate-800/50 border-slate-700/50 text-white focus:border-cyan-300 focus:ring-cyan-300/20 h-10 sm:h-11 text-sm sm:text-base">
                         <SelectValue placeholder="What type of project?" />
                       </SelectTrigger>
-                      <SelectContent className="bg-slate-900 border-slate-600 text-white">
+                      <SelectContent className="bg-slate-900 border-slate-800/50 text-white">
                         <SelectItem value="website" className="text-white hover:bg-slate-700 focus:bg-slate-700 text-sm sm:text-base">Website Design & Development</SelectItem>
                         <SelectItem value="ecommerce" className="text-white hover:bg-slate-700 focus:bg-slate-700 text-sm sm:text-base">E-commerce Store</SelectItem>
                         <SelectItem value="webapp" className="text-white hover:bg-slate-700 focus:bg-slate-700 text-sm sm:text-base">Web Application</SelectItem>
@@ -420,12 +356,12 @@ const Contact = () => {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <Label htmlFor="budget" className="text-white font-semibold text-sm sm:text-base">Budget Range *</Label>
+                      <Label htmlFor="budget" className="text-white font-light text-sm sm:text-base">Budget Range *</Label>
                       <Select onValueChange={(value) => handleChange('budget', value)}>
-                        <SelectTrigger className={`bg-white/10 border-white/20 text-white focus:border-cyan-400 focus:ring-cyan-400/20 h-10 sm:h-11 text-sm sm:text-base ${errors.budget ? 'border-red-400' : ''}`}>
+                        <SelectTrigger className={`bg-slate-800/50 border-slate-700/50 text-white focus:border-cyan-300 focus:ring-cyan-300/20 h-10 sm:h-11 text-sm sm:text-base ${errors.budget ? 'border-red-400' : ''}`}>
                           <SelectValue placeholder="Select budget range" />
                         </SelectTrigger>
-                        <SelectContent className="bg-slate-900 border-slate-600 text-white">
+                        <SelectContent className="bg-slate-900 border-slate-800/50 text-white">
                           <SelectItem value="under-1k" className="text-white hover:bg-slate-700 focus:bg-slate-700 text-sm sm:text-base">Under $1,000</SelectItem>
                           <SelectItem value="1k-3k" className="text-white hover:bg-slate-700 focus:bg-slate-700 text-sm sm:text-base">$1,000 - $3,000</SelectItem>
                           <SelectItem value="3k-5k" className="text-white hover:bg-slate-700 focus:bg-slate-700 text-sm sm:text-base">$3,000 - $5,000</SelectItem>
@@ -439,12 +375,12 @@ const Contact = () => {
                       )}
                     </div>
                     <div>
-                      <Label htmlFor="timeline" className="text-white font-semibold text-sm sm:text-base">Timeline *</Label>
+                      <Label htmlFor="timeline" className="text-white font-light text-sm sm:text-base">Timeline *</Label>
                       <Select onValueChange={(value) => handleChange('timeline', value)}>
-                        <SelectTrigger className={`bg-white/10 border-white/20 text-white focus:border-cyan-400 focus:ring-cyan-400/20 h-10 sm:h-11 text-sm sm:text-base ${errors.timeline ? 'border-red-400' : ''}`}>
+                        <SelectTrigger className={`bg-slate-800/50 border-slate-700/50 text-white focus:border-cyan-300 focus:ring-cyan-300/20 h-10 sm:h-11 text-sm sm:text-base ${errors.timeline ? 'border-red-400' : ''}`}>
                           <SelectValue placeholder="When do you need this?" />
                         </SelectTrigger>
-                        <SelectContent className="bg-slate-900 border-slate-600 text-white">
+                        <SelectContent className="bg-slate-900 border-slate-800/50 text-white">
                           <SelectItem value="asap" className="text-white hover:bg-slate-700 focus:bg-slate-700 text-sm sm:text-base">ASAP</SelectItem>
                           <SelectItem value="1-month" className="text-white hover:bg-slate-700 focus:bg-slate-700 text-sm sm:text-base">Within 1 month</SelectItem>
                           <SelectItem value="1-3-months" className="text-white hover:bg-slate-700 focus:bg-slate-700 text-sm sm:text-base">1-3 months</SelectItem>
@@ -458,7 +394,7 @@ const Contact = () => {
                   </div>
 
                   <div>
-                    <Label htmlFor="message" className="text-white font-semibold text-sm sm:text-base">Tell us about your project *</Label>
+                    <Label htmlFor="message" className="text-white font-light text-sm sm:text-base">Tell us about your project *</Label>
                     <SecureTextarea 
                       id="message"
                       rows={4}
@@ -466,7 +402,7 @@ const Contact = () => {
                       value={formData.message}
                       onChange={(e) => handleChange('message', e.target.value)}
                       required
-                      className={`bg-white/10 border-white/20 text-white placeholder:text-slate-400 focus:border-cyan-400 focus:ring-cyan-400/20 text-sm sm:text-base resize-none ${errors.message ? 'border-red-400' : ''}`}
+                      className={`bg-slate-800/50 border-slate-700/50 text-white placeholder:text-white/40 focus:border-cyan-300 focus:ring-cyan-300/20 text-sm sm:text-base resize-none ${errors.message ? 'border-red-400' : ''}`}
                       sanitizeMode="none"
                       maxLength={2000}
                     />
@@ -486,31 +422,22 @@ const Contact = () => {
                   />
 
                   <div className="w-full">
-                    <div 
-                      className={`relative inline-block rounded-full p-[4px] transition-all duration-300 w-full ${
-                        isSubmitting 
-                          ? 'opacity-50 cursor-not-allowed' 
-                          : ''
-                      } ${
-                        isButtonHovered && !isSubmitting
-                          ? 'bg-purple-500' 
-                          : 'bg-gradient-to-r from-cyan-400 via-purple-500 to-violet-500'
-                      }`}
-                      onMouseEnter={() => !isSubmitting && setIsButtonHovered(true)}
-                      onMouseLeave={() => setIsButtonHovered(false)}
-                    >
+                    <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 w-full">
                       <Button 
                         type="submit" 
                         disabled={isSubmitting}
-                        className="w-full bg-black hover:bg-purple-500 rounded-full text-white shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base font-semibold disabled:opacity-100 disabled:cursor-not-allowed min-h-[44px]"
+                        className="relative overflow-hidden w-full bg-black rounded-full text-white shadow-lg transition-all duration-300 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base font-semibold disabled:opacity-100 disabled:cursor-not-allowed min-h-[44px] group"
                       >
+                        {/* Gradient fill animation */}
+                        <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full"></span>
+                        
                         {isSubmitting ? (
-                          <span className="flex items-center justify-center">
+                          <span className="flex items-center justify-center relative z-10">
                             <div className="animate-spin rounded-full h-4 w-4 sm:h-5 sm:h-5 border-b-2 border-white mr-2"></div>
                             Sending Message...
                           </span>
                         ) : (
-                          <span className="flex items-center justify-center">
+                          <span className="flex items-center justify-center relative z-10 group-hover:text-white">
                             Send Message
                             <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                           </span>
@@ -519,7 +446,7 @@ const Contact = () => {
                     </div>
                   </div>
 
-                  <p className="text-xs sm:text-sm text-slate-300 text-center">
+                  <p className="text-xs sm:text-sm text-white/60 text-center font-light">
                     We'll get back to you within 24-48 hours with next steps.
                   </p>
                 </form>
@@ -528,25 +455,35 @@ const Contact = () => {
           </div>
         </div>
 
-        {/* Calendly Widget Section */}
+        {/* CTA Section - Schedule a Meeting */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 mt-12 sm:mt-16">
-          <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl relative overflow-hidden">
-            {/* Glassmorphism Effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl"></div>
+          <div className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-8 sm:p-12 md:p-16 border border-slate-800/50 shadow-2xl relative overflow-hidden">
+            {/* Box glow */}
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
             
-            <div className="relative z-10">
-              <div className="text-center mb-6 sm:mb-8">
-                <h3 className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-4 text-white">Schedule a Meeting</h3>
-                <p className="text-slate-300 text-base sm:text-lg">
-                  Prefer to chat? Book a time that works for you.
-                </p>
+            <div className="relative z-10 text-center">
+              <h3 className="text-3xl sm:text-4xl md:text-5xl font-extralight mb-4 sm:mb-6 text-white leading-[1.1] tracking-[-0.04em]">
+                <span className="block font-light opacity-90">Ready to Get Started?</span>
+                <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Schedule a Meeting</span>
+              </h3>
+              <p className="text-white/60 text-base sm:text-lg md:text-xl mb-8 sm:mb-10 leading-[1.7] font-light tracking-[0.01em] max-w-2xl mx-auto">
+                Prefer to chat? Book a time that works for you and let's discuss your project.
+              </p>
+              <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
+                <Button
+                  asChild
+                  className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-8 py-4 sm:px-10 sm:py-5 text-base sm:text-lg font-semibold group"
+                >
+                  <Link to="/contact/schedule">
+                    <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full"></span>
+                    <span className="flex items-center justify-center relative z-10 group-hover:text-white">
+                      <Calendar className="mr-2 h-5 w-5 sm:h-6 sm:w-6" />
+                      Schedule a Meeting
+                      <ArrowRight className="ml-2 h-5 w-5 sm:h-6 sm:w-6" />
+                    </span>
+                  </Link>
+                </Button>
               </div>
-              <div 
-                className="calendly-inline-widget" 
-                data-url="https://calendly.com/admin-zenaradesigns/30min?hide_event_type_details=1&hide_gdpr_banner=1&primary_color=8e00ff" 
-                style={{ minWidth: '320px', height: '700px', width: '100%' }}
-                aria-label="Calendly scheduling widget"
-              ></div>
             </div>
           </div>
         </div>
