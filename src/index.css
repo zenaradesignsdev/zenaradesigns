@@ -1470,8 +1470,45 @@
   opacity: 0;
   transform: translateY(20px);
   animation: slideInUp 0.4s ease-out forwards;
+  will-change: opacity, transform;
 }
 
-.mobile-menu-item.animate-menu-close {
-  animation: menu-content-close 0.3s ease-in forwards;
+/* Ensure menu items are visible after animation */
+.mobile-menu-item {
+  animation-fill-mode: forwards;
+}
+
+/* Prevent animation on close */
+.animate-menu-close .mobile-menu-item {
+  animation: none;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Touch device optimizations */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent text selection on mobile menu items */
+#mobile-menu nav a {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Ensure proper stacking context */
+#mobile-menu {
+  isolation: isolate;
+}
+
+/* Fix for iOS Safari viewport issues */
+@supports (-webkit-touch-callout: none) {
+  #mobile-menu {
+    position: fixed;
+    height: 100vh;
+    height: -webkit-fill-available;
+  }
 }
