@@ -254,6 +254,7 @@ export const CSP_CONFIG: CSPConfig = {
     "'unsafe-inline'", // Note: This should be removed in production with nonces
     'https://fonts.googleapis.com',
     'https://assets.calendly.com',
+    'https://sibforms.com',
   ],
   'img-src': [
     "'self'",

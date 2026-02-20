@@ -22,18 +22,18 @@ export const BlogCard = ({ post }: BlogCardProps) => {
   return (
     <Link
       to={`/blog/${post.slug}`}
-      className="group block bg-white/10 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/20 hover:border-cyan-400/50 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-500/20 h-full flex flex-col relative overflow-hidden"
+      className="group block bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 hover:border-cyan-400/50 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/20 h-full flex flex-col relative overflow-hidden"
     >
-      {/* Background gradient on hover */}
-      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-purple-500/10 to-teal-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+      {/* Box glow */}
+      <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
       
-      {/* Glow effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/0 via-purple-500/0 to-cyan-500/0 group-hover:from-cyan-500/5 group-hover:via-purple-500/5 group-hover:to-cyan-500/5 transition-all duration-500 rounded-3xl blur-xl"></div>
+      {/* Background gradient on hover */}
+      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl"></div>
 
       <div className="relative z-10 flex flex-col h-full">
         {/* Featured Image Placeholder - can be enhanced later */}
         {post.featuredImage ? (
-          <div className="w-full h-48 sm:h-56 mb-4 rounded-xl overflow-hidden bg-gradient-to-br from-cyan-500/20 to-purple-500/20 relative group/image">
+          <div className="w-full h-48 sm:h-56 mb-4 rounded-lg overflow-hidden bg-gradient-to-br from-cyan-500/20 to-purple-500/20 relative group/image">
             <img
               src={post.featuredImage}
               alt={post.title}
@@ -43,8 +43,9 @@ export const BlogCard = ({ post }: BlogCardProps) => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </div>
         ) : (
-          <div className="w-full h-48 sm:h-56 mb-4 rounded-xl overflow-hidden bg-gradient-to-br from-cyan-500/20 via-purple-500/20 to-teal-500/20 flex items-center justify-center group-hover:from-cyan-500/30 group-hover:via-purple-500/30 group-hover:to-teal-500/30 transition-all duration-500">
-            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/10 rounded-2xl flex items-center justify-center backdrop-blur-sm">
+          <div className="w-full h-48 sm:h-56 mb-4 rounded-lg overflow-hidden bg-gradient-to-br from-cyan-500/20 via-purple-500/20 to-cyan-500/20 flex items-center justify-center relative">
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white/10 rounded-xl flex items-center justify-center backdrop-blur-sm relative z-10">
               <span className="text-3xl sm:text-4xl">📝</span>
             </div>
           </div>
@@ -65,18 +66,18 @@ export const BlogCard = ({ post }: BlogCardProps) => {
         )}
 
         {/* Title */}
-        <h2 className="text-xl sm:text-2xl font-bold text-white mb-3 group-hover:text-cyan-300 transition-colors duration-300 line-clamp-2">
-          {post.title}
+        <h2 className="text-xl sm:text-2xl font-semibold text-white mb-3 group-hover:text-cyan-300 transition-colors duration-300 line-clamp-2 tracking-tight">
+          <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient group-hover:opacity-100">{post.title}</span>
         </h2>
 
         {/* Description */}
-        <p className="text-slate-300 text-sm sm:text-base leading-relaxed mb-6 flex-grow line-clamp-3">
+        <p className="text-white/60 text-sm sm:text-base leading-relaxed mb-6 flex-grow line-clamp-3 font-light">
           {post.description}
         </p>
 
         {/* Metadata */}
-        <div className="flex flex-wrap items-center gap-4 text-sm text-slate-400 border-t border-white/10 pt-4 mt-auto">
-          <div className="flex items-center gap-2 group-hover:text-cyan-400 transition-colors duration-300">
+        <div className="flex flex-wrap items-center gap-4 text-sm text-white/50 border-t border-white/10 pt-4 mt-auto font-light">
+          <div className="flex items-center gap-2 group-hover:text-cyan-300 transition-colors duration-300">
             <User className="h-4 w-4" />
             <span>{post.author}</span>
           </div>
@@ -84,7 +85,7 @@ export const BlogCard = ({ post }: BlogCardProps) => {
             <Calendar className="h-4 w-4" />
             <span>{formattedDate}</span>
           </div>
-          <div className="flex items-center gap-2 group-hover:text-purple-400 transition-colors duration-300">
+          <div className="flex items-center gap-2 group-hover:text-purple-300 transition-colors duration-300">
             <Clock className="h-4 w-4" />
             <span>{readingTime} min read</span>
           </div>

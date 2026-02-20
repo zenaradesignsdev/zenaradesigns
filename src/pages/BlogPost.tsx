@@ -41,30 +41,46 @@ const BlogPost = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      {/* Gradient Background Layers */}
+      <div className="absolute inset-0">
+        {/* Base gradient layer */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
+        <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
+        {/* Accent gradients with theme colors */}
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/35 to-transparent"></div>
+      </div>
+      
       {/* Space Background Elements */}
-      <div className="fixed inset-0 pointer-events-none">
-        {/* Subtle Stars */}
-        <div className="absolute top-16 left-16 w-1 h-1 bg-cyan-300 rounded-full animate-twinkle"></div>
-        <div className="absolute top-32 right-24 w-1 h-1 bg-purple-300 rounded-full animate-twinkle delay-1000"></div>
-        <div className="absolute top-48 left-1/3 w-1 h-1 bg-teal-300 rounded-full animate-twinkle delay-2000"></div>
-        <div className="absolute top-24 right-1/3 w-1 h-1 bg-violet-300 rounded-full animate-twinkle delay-500"></div>
+      <div className="absolute inset-0">
+        {/* Background Stars */}
+        <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
+        <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
+        <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
+        <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
+        <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
+        <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
+        <div className="bg-star" style={{ top: '18%', left: '68%' }}></div>
+        <div className="bg-star" style={{ top: '7%', left: '78%' }}></div>
+        <div className="bg-star" style={{ top: '14%', left: '88%' }}></div>
+        <div className="bg-star" style={{ top: '11%', left: '95%' }}></div>
         
         {/* Nebula Effects */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/10 to-teal-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       {/* Content */}
-      <section className="py-16 sm:py-20 md:py-24 relative z-10">
+      <section className="pt-20 sm:pt-24 md:pt-28 pb-16 sm:pb-20 md:py-24 relative z-10">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
           {/* Back Button */}
           <Link
             to="/blog"
-            className="inline-flex items-center gap-2 text-cyan-400 hover:text-cyan-300 transition-colors mb-8 group"
+            className="inline-flex items-center gap-2 text-cyan-300 hover:text-cyan-200 transition-colors mb-8 sm:mb-12 group font-light"
           >
             <ArrowLeft className="h-5 w-5 group-hover:-translate-x-1 transition-transform" />
-            <span className="font-medium">Back to Blog</span>
+            <span>Back to Blog</span>
           </Link>
 
           {/* Blog Post Content */}
