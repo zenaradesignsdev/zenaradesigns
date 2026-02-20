@@ -9,7 +9,6 @@ import logo from '@/assets/zenaralogov2.svg';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isNavButtonHovered, setIsNavButtonHovered] = useState(false);
   const [isMobileButtonHovered, setIsMobileButtonHovered] = useState(false);
   const location = useLocation();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
@@ -106,7 +105,6 @@ const Navbar = () => {
               loading="eager" 
               decoding="async" 
             />
-            <span className="font-semibold text-lg text-white">Zenara Designs</span>
           </Link>
 
           {/* Close Button */}
@@ -128,7 +126,7 @@ const Navbar = () => {
               <Link
                 key={link.href}
                 to={link.href}
-                className={`block py-4 px-6 rounded-xl font-medium text-lg transition-all duration-300 ${
+                className={`block py-4 px-6 rounded-xl font-light text-lg transition-all duration-300 ${
                   isActive(link.href) 
                     ? 'bg-white/20 text-cyan-300 border-l-4 border-cyan-400' 
                     : 'text-white hover:bg-white/10 hover:text-cyan-300'
@@ -152,7 +150,7 @@ const Navbar = () => {
               className={`relative inline-block rounded-full p-[3px] transition-all duration-300 w-full ${
                 isMobileButtonHovered 
                   ? 'bg-purple-500' 
-                  : 'bg-gradient-to-r from-cyan-400 via-purple-500 to-violet-500'
+                  : 'bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300'
               }`}
               onMouseEnter={() => setIsMobileButtonHovered(true)}
               onMouseLeave={() => setIsMobileButtonHovered(false)}
@@ -191,19 +189,21 @@ const Navbar = () => {
         <div className="bg-white/10 backdrop-blur-xl rounded-full border border-white/20 shadow-2xl px-4 sm:px-6 lg:px-8 xl:px-10 py-2 sm:py-2.5">
           <div className="flex items-center justify-between h-12 sm:h-14">
             {/* Logo */}
-            <Link to="/" className="flex items-center space-x-2" onClick={scrollToTop}>
+            <Link to="/" className="flex items-center" onClick={scrollToTop}>
               <img src={logo} alt="Zenara Designs - Professional Web Design Agency Toronto" className="h-6 sm:h-8 w-auto" width="32" height="32" loading="eager" decoding="async" />
-              <span className="font-semibold text-sm sm:text-base text-white">Zenara Designs</span>
             </Link>
 
+            {/* Vertical Divider */}
+            <div className="hidden lg:block h-8 w-px bg-gradient-to-b from-transparent via-cyan-400/60 via-purple-400/60 to-transparent mx-8 xl:mx-10"></div>
+
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-6 xl:space-x-8 flex-1 justify-center">
+            <div className="hidden lg:flex items-center space-x-6 xl:space-x-8 flex-1 justify-start">
               {navLinks.map((link) => (
                 <Link
                   key={link.href}
                   to={link.href}
                   onClick={scrollToTop}
-                  className={`font-medium text-sm xl:text-base transition-colors hover:text-cyan-300 ${
+                  className={`font-light text-sm xl:text-base transition-colors hover:text-cyan-300 ${
                     isActive(link.href) ? 'text-cyan-300' : 'text-white'
                   }`}
                 >
@@ -214,19 +214,13 @@ const Navbar = () => {
 
             {/* CTA Button */}
             <div className="hidden lg:block">
-              <div 
-                className={`relative inline-block rounded-full p-[2px] transition-all duration-300 ${
-                  isNavButtonHovered 
-                    ? 'bg-purple-500' 
-                    : 'bg-gradient-to-r from-cyan-400 via-purple-500 to-violet-500'
-                }`}
-                onMouseEnter={() => setIsNavButtonHovered(true)}
-                onMouseLeave={() => setIsNavButtonHovered(false)}
-              >
-                <Button asChild className="bg-black hover:bg-purple-500 rounded-full text-white shadow-lg hover:shadow-xl transition-all duration-300 px-5 xl:px-6 py-1.5 xl:py-2 text-xs xl:text-sm font-semibold">
-                  <Link to="/contact" onClick={scrollToTop} className="flex items-center gap-1.5 xl:gap-2">
-                    Let's Talk
-                    <ArrowRight className="h-3.5 w-3.5 xl:h-4 xl:w-4" />
+              <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
+                <Button asChild className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-5 xl:px-6 py-1.5 xl:py-2 text-xs xl:text-sm font-semibold group">
+                  <Link to="/contact" onClick={scrollToTop} className="flex items-center gap-1.5 xl:gap-2 relative z-10 group-hover:text-white">
+                    <span className="relative z-10">Let's Talk</span>
+                    <ArrowRight className="h-3.5 w-3.5 xl:h-4 xl:w-4 relative z-10" />
+                    {/* Hover background animation - left to right */}
+                    <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full"></span>
                   </Link>
                 </Button>
               </div>
