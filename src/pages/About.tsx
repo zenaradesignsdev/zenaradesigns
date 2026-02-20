@@ -8,6 +8,9 @@ import type { TeamMember, ProcessStep, Differentiator, Position } from '@/lib/ty
 import logo from '@/assets/zenaralogov2.svg';
 import saturnImage from '@/assets/saturn.png';
 import moonImage from '@/assets/moon.png';
+import discoveryImage from '@/assets/zenara-discovery.jpg';
+import prototypingImage from '@/assets/zenara-prototyping.jpg';
+import buildImage from '@/assets/zenara-build.jpg';
 import StructuredData from '@/components/StructuredData';
 
 const About = () => {
@@ -208,7 +211,16 @@ const About = () => {
   return (
     <div className="min-h-screen" role="main" aria-label="About page">
       {/* Space-Themed Hero Section */}
-      <section ref={heroSectionRef} className="about-hero py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-black via-indigo-900 to-purple-900">
+      <section ref={heroSectionRef} className="about-hero py-16 sm:py-20 md:py-24 relative overflow-hidden bg-black">
+        {/* Gradient Background Layers */}
+        <div className="absolute inset-0">
+          {/* Base gradient layer */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
+          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
+          {/* Accent gradients with theme colors */}
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/35 to-transparent"></div>
+        </div>
         {/* Saturn in top right */}
         <div 
           className="absolute top-4 right-4 sm:top-8 sm:right-8 w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 transition-all duration-300 ease-out"
@@ -229,77 +241,43 @@ const About = () => {
         </div>
         {/* Animated Background Elements */}
         <div className="absolute inset-0">
-          {/* Shooting Stars */}
-          <div className="shooting-star shooting-star-1"></div>
-          <div className="shooting-star shooting-star-2"></div>
-          <div className="shooting-star shooting-star-3"></div>
-          <div className="shooting-star shooting-star-4"></div>
-          <div className="shooting-star shooting-star-5"></div>
-          <div className="shooting-star shooting-star-6"></div>
-          <div className="shooting-star shooting-star-7"></div>
-          <div className="shooting-star shooting-star-8"></div>
-          
           {/* Background Stars */}
-          <div className="bg-star bg-star-1"></div>
-          <div className="bg-star bg-star-2"></div>
-          <div className="bg-star bg-star-3"></div>
-          <div className="bg-star bg-star-4"></div>
-          <div className="bg-star bg-star-5"></div>
-          <div className="bg-star bg-star-6"></div>
-          <div className="bg-star bg-star-7"></div>
-          <div className="bg-star bg-star-8"></div>
-          <div className="bg-star bg-star-9"></div>
-          <div className="bg-star bg-star-10"></div>
-          <div className="bg-star bg-star-11"></div>
-          <div className="bg-star bg-star-12"></div>
-          <div className="bg-star bg-star-13"></div>
-          <div className="bg-star bg-star-14"></div>
-          <div className="bg-star bg-star-15"></div>
-          <div className="bg-star bg-star-16"></div>
-          <div className="bg-star bg-star-17"></div>
-          <div className="bg-star bg-star-18"></div>
-          <div className="bg-star bg-star-19"></div>
-          <div className="bg-star bg-star-20"></div>
-          <div className="bg-star bg-star-21"></div>
-          <div className="bg-star bg-star-22"></div>
-          <div className="bg-star bg-star-23"></div>
-          <div className="bg-star bg-star-24"></div>
-          <div className="bg-star bg-star-25"></div>
-          <div className="bg-star bg-star-26"></div>
-          <div className="bg-star bg-star-27"></div>
-          <div className="bg-star bg-star-28"></div>
-          <div className="bg-star bg-star-29"></div>
-          <div className="bg-star bg-star-30"></div>
+          <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
+          <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
+          <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
+          <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
+          <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
+          <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
+          <div className="bg-star" style={{ top: '18%', left: '68%' }}></div>
+          <div className="bg-star" style={{ top: '7%', left: '78%' }}></div>
+          <div className="bg-star" style={{ top: '14%', left: '88%' }}></div>
+          <div className="bg-star" style={{ top: '11%', left: '95%' }}></div>
           
           {/* Nebula Effects */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/20 to-teal-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 pt-24 sm:pt-32 md:pt-40 lg:pt-44">
           <div className="text-center mb-12 sm:mb-16 md:mb-20">
-            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-6 sm:mb-8 text-white leading-tight">
-              We're not just developers,<br />
-              <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">we're digital architects</span>
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
+              <span className="block font-light opacity-90">We're not just developers,</span>
+              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">we're digital architects</span>
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed mb-8 sm:mb-12 px-4">
+            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-4xl mx-auto leading-[1.7] font-light tracking-[0.01em] mb-8 sm:mb-12 px-4">
               Every business deserves a digital presence that not only looks amazing but drives real results. 
               We bridge the gap between cutting-edge technology and thoughtful design strategy. Based in Toronto and serving the GTA.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-12 sm:mb-16">
-              <div 
-                className="relative inline-block rounded-full p-[4px] transition-all duration-300 group w-full sm:w-auto"
-                style={{
-                  background: 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247), rgb(139, 92, 246))'
-                }}
-                onMouseEnter={(e) => e.currentTarget.style.background = 'rgb(168, 85, 247)'}
-                onMouseLeave={(e) => e.currentTarget.style.background = 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247), rgb(139, 92, 246))'}
-              >
-                <Button asChild className="bg-black hover:bg-purple-500 rounded-full text-white shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-4 sm:px-8 sm:py-5 md:px-10 md:py-6 text-base sm:text-lg font-semibold w-full sm:w-auto">
-                  <Link to="/contact" className="flex items-center justify-center">
-                    Start Your Project
-                    <Rocket className="ml-2 h-4 w-4 sm:h-5 sm:w-5 transition-all duration-300 group-hover:text-cyan-400 group-hover:scale-125" />
+              <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 w-full sm:w-auto">
+                <Button asChild className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-6 py-4 sm:px-8 sm:py-5 md:px-10 md:py-6 text-base sm:text-lg font-semibold w-full sm:w-auto group">
+                  <Link to="/contact">
+                    <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full"></span>
+                    <span className="flex items-center justify-center relative z-10 group-hover:text-white">
+                      Start Your Project
+                      <Rocket className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                    </span>
                   </Link>
                 </Button>
               </div>
@@ -323,9 +301,9 @@ const About = () => {
                   "Fair Pricing"
                 ].map((title, index) => (
                   <div key={index} className="flex-shrink-0">
-                    <div className="inline-flex items-center space-x-3 bg-white/10 backdrop-blur-md rounded-full px-6 py-3 sm:px-8 sm:py-4 border border-white/20">
-                      <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full"></div>
-                      <span className="text-white text-sm sm:text-base md:text-lg font-medium whitespace-nowrap">
+                    <div className="inline-flex items-center space-x-3 bg-slate-900/90 backdrop-blur-sm rounded-full px-6 py-3 sm:px-8 sm:py-4 border border-slate-800/50">
+                      <div className="w-2 h-2 bg-gradient-to-r from-cyan-300 to-purple-300 rounded-full"></div>
+                      <span className="text-white text-sm sm:text-base md:text-lg font-light whitespace-nowrap">
                         {title}
                       </span>
                     </div>
@@ -341,9 +319,9 @@ const About = () => {
                   "Fair Pricing"
                 ].map((title, index) => (
                   <div key={`duplicate-${index}`} className="flex-shrink-0">
-                    <div className="inline-flex items-center space-x-3 bg-white/10 backdrop-blur-md rounded-full px-6 py-3 sm:px-8 sm:py-4 border border-white/20">
-                      <div className="w-2 h-2 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full"></div>
-                      <span className="text-white text-sm sm:text-base md:text-lg font-medium whitespace-nowrap">
+                    <div className="inline-flex items-center space-x-3 bg-slate-900/90 backdrop-blur-sm rounded-full px-6 py-3 sm:px-8 sm:py-4 border border-slate-800/50">
+                      <div className="w-2 h-2 bg-gradient-to-r from-cyan-300 to-purple-300 rounded-full"></div>
+                      <span className="text-white text-sm sm:text-base md:text-lg font-light whitespace-nowrap">
                         {title}
                       </span>
                     </div>
@@ -357,19 +335,19 @@ const About = () => {
       </section>
 
       {/* The Zenara Difference - Space Theme */}
-      <section ref={zenaraDifferenceRef} className="about-section py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-black via-slate-900 to-purple-900">
+      <section ref={zenaraDifferenceRef} className="about-section py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-cyan-900 to-slate-900">
         {/* Moon in top left */}
         <div 
-          className="absolute top-4 left-4 sm:top-8 sm:left-8 w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 transition-all duration-300 ease-out"
+          className="absolute top-4 left-4 sm:top-8 sm:left-8 w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 transition-all duration-300 ease-out opacity-15"
           style={{
             transform: `scale(${moonPosition.scale}) translate(${moonPosition.x}px, ${moonPosition.y}px)`,
-            opacity: moonPosition.opacity
+            opacity: moonPosition.opacity * 0.15
           }}
         >
           <img 
             src={moonImage} 
             alt="Decorative moon illustration for web design agency background" 
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain animate-levitate"
             width="150"
             height="150"
             loading="lazy"
@@ -378,23 +356,30 @@ const About = () => {
         </div>
         {/* Space Background Elements */}
         <div className="absolute inset-0">
-          {/* Shooting Stars */}
-          <div className="absolute top-20 left-20 w-2 h-2 bg-cyan-400 rounded-full animate-twinkle"></div>
-          <div className="absolute top-40 right-32 w-1 h-1 bg-purple-400 rounded-full animate-twinkle delay-1000"></div>
-          <div className="absolute top-60 left-1/3 w-1 h-1 bg-teal-400 rounded-full animate-twinkle delay-2000"></div>
-          <div className="absolute top-32 right-1/4 w-1 h-1 bg-violet-400 rounded-full animate-twinkle delay-500"></div>
+          {/* Background Stars */}
+          <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
+          <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
+          <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
+          <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
+          <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
+          <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
+          <div className="bg-star" style={{ top: '18%', left: '68%' }}></div>
+          <div className="bg-star" style={{ top: '7%', left: '78%' }}></div>
+          <div className="bg-star" style={{ top: '14%', left: '88%' }}></div>
+          <div className="bg-star" style={{ top: '11%', left: '95%' }}></div>
           
           {/* Nebula Effects */}
-          <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-gradient-to-r from-cyan-500/15 to-purple-500/15 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/3 right-1/3 w-80 h-80 bg-gradient-to-r from-purple-500/15 to-teal-500/15 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/3 right-1/3 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-white">
-              The <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Dream Team</span>
+            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
+              <span className="block font-light opacity-90">The</span>
+              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Dream Team</span>
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed px-4">
+            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
               Passionate professionals dedicated to turning your vision into digital reality
             </p>
           </div>
@@ -402,20 +387,21 @@ const About = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {team.map((member, index) => (
               <div key={index} className="group h-full">
-                <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 h-full flex flex-col relative overflow-hidden">
-                  {/* Glassmorphism Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl"></div>
+                <div className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 h-full flex flex-col relative overflow-hidden">
+                  {/* Box glow */}
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
                   
                   {/* Glow Effect on Hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-cyan-500/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   <div className="relative z-10 text-center flex flex-col h-full">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-2xl mx-auto mb-4 sm:mb-6 flex items-center justify-center text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg flex-shrink-0">
-                      <Users className="h-8 w-8 sm:h-10 sm:w-10" />
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-xl mx-auto mb-4 sm:mb-6 flex items-center justify-center text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg flex-shrink-0 relative">
+                      <div className="absolute -inset-1 bg-gradient-to-br from-cyan-400/30 via-purple-400/30 to-cyan-400/30 blur-md opacity-70 animate-pulse rounded-xl"></div>
+                      <Users className="h-8 w-8 sm:h-10 sm:w-10 relative z-10" />
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-bold mb-2 text-white flex-shrink-0">{member.name}</h3>
-                    <p className="text-cyan-300 font-semibold mb-3 sm:mb-4 text-base sm:text-lg flex-shrink-0">{member.role}</p>
-                    <p className="text-slate-300 leading-relaxed flex-grow text-sm sm:text-base">{member.bio}</p>
+                    <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-white flex-shrink-0 tracking-tight">{member.name}</h3>
+                    <p className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-light mb-3 sm:mb-4 text-base sm:text-lg flex-shrink-0">{member.role}</p>
+                    <p className="text-white/60 leading-relaxed flex-grow text-sm sm:text-base font-light">{member.bio}</p>
                   </div>
                 </div>
               </div>
@@ -424,139 +410,341 @@ const About = () => {
         </div>
       </section>
 
-      {/* How We Bring Ideas to Life - Space Theme */}
-      <section className="about-timeline py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-cyan-900 to-slate-900">
+      {/* How We Bring Ideas to Life - Visual Design */}
+      <section className="about-timeline py-16 sm:py-20 md:py-24 relative overflow-hidden bg-black">
+        {/* Gradient Background Layers */}
+        <div className="absolute inset-0">
+          {/* Base gradient layer */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
+          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
+          {/* Accent gradients with theme colors */}
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/35 to-transparent"></div>
+        </div>
+        
         {/* Space Background Elements */}
         <div className="absolute inset-0">
           {/* Background Stars */}
-          <div className="bg-star bg-star-1"></div>
-          <div className="bg-star bg-star-2"></div>
-          <div className="bg-star bg-star-3"></div>
-          <div className="bg-star bg-star-4"></div>
-          <div className="bg-star bg-star-5"></div>
-          <div className="bg-star bg-star-6"></div>
-          <div className="bg-star bg-star-7"></div>
-          <div className="bg-star bg-star-8"></div>
-          <div className="bg-star bg-star-9"></div>
-          <div className="bg-star bg-star-10"></div>
-          <div className="bg-star bg-star-11"></div>
-          <div className="bg-star bg-star-12"></div>
-          <div className="bg-star bg-star-13"></div>
-          <div className="bg-star bg-star-14"></div>
-          <div className="bg-star bg-star-15"></div>
-          <div className="bg-star bg-star-16"></div>
-          <div className="bg-star bg-star-17"></div>
-          <div className="bg-star bg-star-18"></div>
-          <div className="bg-star bg-star-19"></div>
-          <div className="bg-star bg-star-20"></div>
-          
-          {/* Subtle Stars */}
-          <div className="absolute top-16 left-16 w-1 h-1 bg-cyan-300 rounded-full animate-twinkle"></div>
-          <div className="absolute top-32 right-24 w-1 h-1 bg-purple-300 rounded-full animate-twinkle delay-1000"></div>
-          <div className="absolute top-48 left-1/3 w-1 h-1 bg-teal-300 rounded-full animate-twinkle delay-2000"></div>
-          <div className="absolute top-24 right-1/3 w-1 h-1 bg-violet-300 rounded-full animate-twinkle delay-500"></div>
+          <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
+          <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
+          <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
+          <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
+          <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
+          <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
+          <div className="bg-star" style={{ top: '18%', left: '68%' }}></div>
+          <div className="bg-star" style={{ top: '7%', left: '78%' }}></div>
+          <div className="bg-star" style={{ top: '14%', left: '88%' }}></div>
+          <div className="bg-star" style={{ top: '11%', left: '95%' }}></div>
           
           {/* Nebula Effects */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/10 to-teal-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="text-center mb-12 sm:mb-16">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full px-4 py-2 sm:px-6 sm:py-3 mb-6 sm:mb-8 border border-cyan-500/30">
-              <Code2 className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400 animate-pulse" />
-              <span className="text-xs sm:text-sm font-medium text-cyan-300">Our Process</span>
-            </div>
-            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-white">
-              How We <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Bring Ideas to Life</span>
+          <div className="text-center mb-12 sm:mb-16 md:mb-20">
+            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
+              <span className="block font-light opacity-90">How We</span>
+              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Bring Ideas to Life</span>
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed px-4">
+            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
               A proven methodology that transforms your vision into a digital masterpiece
             </p>
           </div>
           
-          {/* Animated Vertical Timeline */}
-          <div className="max-w-2xl mx-auto">
-            <div className="relative">
-              {/* Timeline Line */}
-              <div className="absolute left-6 sm:left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-cyan-500 via-purple-500 to-teal-500"></div>
-              
-              
-              {/* Timeline Items */}
-              <div className="space-y-8 sm:space-y-12">
-            {process.map((phase, index) => (
+          {/* Creative Process Steps with Unique Layout */}
+          <div className="relative">
+            {/* Step 1: Discovery - Creative split with image bleeding */}
+            <div 
+              ref={(el) => (timelineRefs.current[0] = el)}
+              data-timeline-index={0}
+              className={`relative mb-32 sm:mb-40 transition-all duration-1000 ${
+                visibleTimelineItems.includes(0) 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-8'
+              }`}
+            >
+              <div className="relative flex flex-col lg:flex-row items-start gap-0">
+                {/* Image - Creative positioning with clip-path */}
+                <div className="w-full lg:w-[55%] relative lg:sticky lg:top-24 h-[400px] sm:h-[500px] lg:h-[600px] order-1 group/image">
+                  <div className="absolute inset-0 overflow-hidden">
+                    {/* Gradient border wrapper */}
+                    <div 
+                      className="absolute inset-0 p-[2px]"
+                      style={{
+                        background: 'linear-gradient(135deg, rgb(103, 232, 249), rgb(196, 181, 253), rgb(103, 232, 249))',
+                        clipPath: 'polygon(0 0, 100% 0, 85% 100%, 0% 100%)'
+                      }}
+                    >
+                      <div 
+                        className="absolute inset-[2px] overflow-hidden"
+                        style={{
+                          clipPath: 'polygon(0 0, 100% 0, 85% 100%, 0% 100%)'
+                        }}
+                      >
+                        <img 
+                          src={discoveryImage} 
+                          alt="Modern office workspace for web design discovery phase" 
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover/image:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-transparent to-purple-500/20 transition-opacity duration-500 group-hover/image:opacity-0"></div>
+                        {/* Subtle inner glow */}
+                        <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/10 via-transparent to-purple-400/10 pointer-events-none"></div>
+                      </div>
+                    </div>
+                    {/* Outer glow effect */}
+                    <div 
+                      className="absolute -inset-1 bg-gradient-to-br from-cyan-500/20 via-purple-500/20 to-cyan-500/20 blur-xl opacity-0 group-hover/image:opacity-100 transition-opacity duration-500"
+                      style={{
+                        clipPath: 'polygon(0 0, 100% 0, 85% 100%, 0% 100%)'
+                      }}
+                    ></div>
+                  </div>
+                  {/* Floating number badge */}
+                  <div className="absolute -left-4 top-8 sm:top-12 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center shadow-2xl relative z-20 group/badge">
+                    {/* Gradient border */}
+                    <div className="absolute inset-0 p-[2px] rounded-2xl" style={{ background: 'linear-gradient(135deg, rgb(103, 232, 249), rgb(196, 181, 253), rgb(103, 232, 249))' }}>
+                      <div className="absolute inset-[2px] bg-black rounded-2xl flex items-center justify-center">
+                        <span className="text-white font-bold text-2xl sm:text-3xl relative z-10">1</span>
+                      </div>
+                    </div>
+                    {/* Glow effect */}
+                    <div className="absolute -inset-2 bg-gradient-to-br from-cyan-400/40 via-purple-400/40 to-cyan-400/40 blur-xl animate-pulse rounded-2xl opacity-70 group-hover/badge:opacity-100 transition-opacity"></div>
+                  </div>
+                </div>
+                
+                {/* Content - Overlapping with image */}
+                <div className="w-full lg:w-[50%] lg:-ml-[5%] relative z-10 order-2 mt-8 lg:mt-24">
+                  <div className="bg-slate-900/95 backdrop-blur-xl p-8 sm:p-10 md:p-12 border border-slate-800/50 shadow-2xl relative overflow-hidden">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 blur-3xl"></div>
+                    <div className="relative z-10">
+                      <h3 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white mb-6 tracking-tight">
+                        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">{process[0].phase}</span>
+                      </h3>
+                      <ul className="space-y-4">
+                        {process[0].details.map((detail, idx) => (
+                          <li key={idx} className="flex items-start space-x-3 text-white/70 group/item">
+                            <div className="mt-1 w-1.5 h-1.5 rounded-full bg-gradient-to-r from-cyan-300 to-purple-300 flex-shrink-0 group-hover/item:scale-150 transition-transform"></div>
+                            <span className="text-base sm:text-lg leading-relaxed font-light">{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 2: Prototyping - Asymmetric layout */}
+            <div 
+              ref={(el) => (timelineRefs.current[1] = el)}
+              data-timeline-index={1}
+              className={`relative mb-32 sm:mb-40 transition-all duration-1000 ${
+                visibleTimelineItems.includes(1) 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: '200ms' }}
+            >
+              <div className="relative flex flex-col lg:flex-row-reverse items-start gap-0">
+                {/* Image - Right side with creative shape */}
+                <div className="w-full lg:w-[60%] relative h-[400px] sm:h-[500px] lg:h-[600px] order-1 group/image">
+                  <div className="absolute inset-0 overflow-hidden">
+                    {/* Gradient border wrapper */}
+                    <div 
+                      className="absolute inset-0 p-[2px]"
+                      style={{
+                        background: 'linear-gradient(135deg, rgb(196, 181, 253), rgb(103, 232, 249), rgb(196, 181, 253))',
+                        clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)'
+                      }}
+                    >
+                      <div 
+                        className="absolute inset-[2px] overflow-hidden"
+                        style={{
+                          clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)'
+                        }}
+                      >
+                        <img 
+                          src={prototypingImage} 
+                          alt="Design desk workspace for prototyping phase" 
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover/image:scale-105"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-bl from-purple-500/20 via-transparent to-cyan-500/20 transition-opacity duration-500 group-hover/image:opacity-0"></div>
+                        {/* Subtle inner glow */}
+                        <div className="absolute inset-0 bg-gradient-to-bl from-purple-400/10 via-transparent to-cyan-400/10 pointer-events-none"></div>
+                      </div>
+                    </div>
+                    {/* Outer glow effect */}
+                    <div 
+                      className="absolute -inset-1 bg-gradient-to-bl from-purple-500/20 via-cyan-500/20 to-purple-500/20 blur-xl opacity-0 group-hover/image:opacity-100 transition-opacity duration-500"
+                      style={{
+                        clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)'
+                      }}
+                    ></div>
+                  </div>
+                  {/* Floating number badge */}
+                  <div className="absolute -right-4 top-8 sm:top-12 w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center shadow-2xl relative z-20 group/badge">
+                    {/* Gradient border */}
+                    <div className="absolute inset-0 p-[2px] rounded-2xl" style={{ background: 'linear-gradient(135deg, rgb(196, 181, 253), rgb(103, 232, 249), rgb(196, 181, 253))' }}>
+                      <div className="absolute inset-[2px] bg-black rounded-2xl flex items-center justify-center">
+                        <span className="text-white font-bold text-2xl sm:text-3xl relative z-10">2</span>
+                      </div>
+                    </div>
+                    {/* Glow effect */}
+                    <div className="absolute -inset-2 bg-gradient-to-br from-purple-400/40 via-cyan-400/40 to-purple-400/40 blur-xl animate-pulse rounded-2xl opacity-70 group-hover/badge:opacity-100 transition-opacity"></div>
+                  </div>
+                </div>
+                
+                {/* Content - Left side overlapping */}
+                <div className="w-full lg:w-[55%] lg:-mr-[5%] relative z-10 order-2 mt-8 lg:mt-32">
+                  <div className="bg-slate-900/95 backdrop-blur-xl p-8 sm:p-10 md:p-12 border border-slate-800/50 shadow-2xl relative overflow-hidden">
+                    <div className="absolute bottom-0 left-0 w-40 h-40 bg-gradient-to-tr from-purple-500/10 to-cyan-500/10 blur-3xl"></div>
+                    <div className="relative z-10">
+                      <h3 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white mb-6 tracking-tight">
+                        <span className="bg-gradient-to-r from-purple-300 via-cyan-300 to-purple-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">{process[1].phase}</span>
+                      </h3>
+                      <ul className="space-y-4">
+                        {process[1].details.map((detail, idx) => (
+                          <li key={idx} className="flex items-start space-x-3 text-white/70 group/item">
+                            <div className="mt-1 w-1.5 h-1.5 rounded-full bg-gradient-to-r from-purple-300 to-cyan-300 flex-shrink-0 group-hover/item:scale-150 transition-transform"></div>
+                            <span className="text-base sm:text-lg leading-relaxed font-light">{detail}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Step 3: Build - Full width with image background */}
+            <div 
+              ref={(el) => (timelineRefs.current[2] = el)}
+              data-timeline-index={2}
+              className={`relative mb-32 sm:mb-40 transition-all duration-1000 ${
+                visibleTimelineItems.includes(2) 
+                  ? 'opacity-100 translate-y-0' 
+                  : 'opacity-0 translate-y-8'
+              }`}
+              style={{ transitionDelay: '400ms' }}
+            >
+              <div className="relative min-h-[500px] sm:min-h-[600px] rounded-3xl overflow-hidden group/image">
+                {/* Gradient border */}
+                <div className="absolute inset-0 p-[2px] rounded-3xl" style={{ background: 'linear-gradient(135deg, rgb(103, 232, 249), rgb(196, 181, 253), rgb(103, 232, 249))' }}>
+                  <div className="absolute inset-[2px] rounded-3xl overflow-hidden">
+                    {/* Image background */}
+                    <div className="absolute inset-0">
+                      <img 
+                        src={buildImage} 
+                        alt="Development workspace for build phase" 
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover/image:scale-105"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-black/80 transition-opacity duration-500 group-hover/image:opacity-90"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-purple-500/10"></div>
+                      {/* Subtle inner glow */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/5 via-transparent to-purple-400/5 pointer-events-none"></div>
+                    </div>
+                  </div>
+                </div>
+                {/* Outer glow effect */}
+                <div className="absolute -inset-1 bg-gradient-to-br from-cyan-500/20 via-purple-500/20 to-cyan-500/20 blur-2xl opacity-0 group-hover/image:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+                
+                {/* Content overlay */}
+                <div className="relative z-10 p-8 sm:p-12 md:p-16 lg:p-20 flex flex-col justify-center min-h-[500px] sm:min-h-[600px]">
+                  <div className="max-w-2xl">
+                    {/* Floating number badge */}
+                    <div className="inline-flex items-center justify-center w-20 h-20 sm:w-24 sm:h-24 rounded-2xl mb-8 shadow-2xl relative group/badge">
+                      {/* Gradient border */}
+                      <div className="absolute inset-0 p-[2px] rounded-2xl" style={{ background: 'linear-gradient(135deg, rgb(103, 232, 249), rgb(196, 181, 253), rgb(103, 232, 249))' }}>
+                        <div className="absolute inset-[2px] bg-black rounded-2xl flex items-center justify-center">
+                          <span className="text-white font-bold text-3xl sm:text-4xl relative z-10">3</span>
+                        </div>
+                      </div>
+                      {/* Glow effect */}
+                      <div className="absolute -inset-3 bg-gradient-to-br from-cyan-400/40 via-purple-400/40 to-cyan-400/40 blur-xl animate-pulse rounded-2xl opacity-70 group-hover/badge:opacity-100 transition-opacity"></div>
+                    </div>
+                    
+                    <h3 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-white mb-8 tracking-tight">
+                      <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">{process[2].phase}</span>
+                    </h3>
+                    <ul className="space-y-4">
+                      {process[2].details.map((detail, idx) => (
+                        <li key={idx} className="flex items-start space-x-4 text-white/80 group/item">
+                          <div className="mt-2 w-2 h-2 rounded-full bg-gradient-to-r from-cyan-300 to-purple-300 flex-shrink-0 group-hover/item:scale-150 transition-transform"></div>
+                          <span className="text-lg sm:text-xl leading-relaxed font-light">{detail}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Steps 4-6: Creative stacked cards */}
+            <div className="space-y-8 sm:space-y-12">
+              {process.slice(3).map((phase, index) => {
+                const globalIndex = index + 3;
+                return (
                   <div 
-                    key={index} 
-                    ref={(el) => (timelineRefs.current[index] = el)}
-                    data-timeline-index={index}
-                    className={`relative group transition-all duration-1000 ${
-                      visibleTimelineItems.includes(index) 
+                    key={globalIndex}
+                    ref={(el) => (timelineRefs.current[globalIndex] = el)}
+                    data-timeline-index={globalIndex}
+                    className={`relative transition-all duration-1000 ${
+                      visibleTimelineItems.includes(globalIndex) 
                         ? 'opacity-100 translate-x-0' 
                         : 'opacity-0 translate-x-8'
                     }`}
-                    style={{
-                      transitionDelay: `${index * 200}ms`
-                    }}
+                    style={{ transitionDelay: `${(globalIndex) * 200}ms` }}
                   >
-                    {/* Timeline Node with Number */}
-                    <div className={`absolute left-4 sm:left-6 w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-full border-2 border-slate-900 shadow-lg z-10 group-hover:scale-125 transition-all duration-1000 ${
-                      visibleTimelineItems.includes(index) 
-                        ? 'opacity-100' 
-                        : 'opacity-0 -translate-x-8'
-                    }`}
-                    style={{
-                      top: index === 0 ? '0rem' : '0.5rem', // First dot at very top
-                      left: 'calc(1.5rem - 1rem)', // Center on timeline line
-                      transitionDelay: `${index * 200}ms`
-                    }}>
-                      <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-purple-500 rounded-full animate-pulse"></div>
-                      <div className="absolute inset-0 flex items-center justify-center text-white font-bold text-xs sm:text-sm">
-                    {index + 1}
-                  </div>
-                    </div>
-                    
-                    {/* Content Card */}
-                    <div className="timeline-card ml-12 sm:ml-16 bg-white/10 backdrop-blur-md rounded-3xl p-4 sm:p-6 border border-white/20 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 relative overflow-hidden">
-                      {/* Glassmorphism Effect */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl"></div>
-                      
-                      {/* Glow Effect on Hover */}
-                      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                      
-                      <div className="relative z-10">
-                        {/* Phase Header */}
-                        <div className="mb-3 sm:mb-4">
-                          <h3 className="text-xl sm:text-2xl font-bold text-white">{phase.phase}</h3>
-                </div>
-                        
-                        {/* Phase Details */}
-                        <ul className="space-y-2 sm:space-y-3">
-                  {phase.details.map((detail, detailIndex) => (
-                            <li key={detailIndex} className="flex items-start space-x-2 sm:space-x-3 text-slate-300">
-                              <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400 mt-0.5 flex-shrink-0" />
-                              <span className="text-xs sm:text-sm leading-relaxed">{detail}</span>
-                    </li>
-                  ))}
-                </ul>
+                    <div className="flex items-start gap-6 sm:gap-8">
+                      {/* Number indicator - vertical */}
+                      <div className="flex-shrink-0">
+                        <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl flex items-center justify-center shadow-xl relative group/badge">
+                          {/* Gradient border */}
+                          <div className="absolute inset-0 p-[2px] rounded-xl" style={{ background: 'linear-gradient(135deg, rgb(103, 232, 249), rgb(196, 181, 253), rgb(103, 232, 249))' }}>
+                            <div className="absolute inset-[2px] bg-black rounded-xl flex items-center justify-center">
+                              <span className="text-white font-bold text-xl sm:text-2xl relative z-10">{globalIndex + 1}</span>
+                            </div>
+                          </div>
+                          {/* Glow effect */}
+                          <div className="absolute -inset-2 bg-gradient-to-br from-cyan-400/30 via-purple-400/30 to-cyan-400/30 blur-lg animate-pulse rounded-xl opacity-60 group-hover/badge:opacity-100 transition-opacity"></div>
+                        </div>
+                        {/* Connecting line */}
+                        {index < process.slice(3).length - 1 && (
+                          <div className="w-0.5 h-12 sm:h-16 bg-gradient-to-b from-cyan-300/50 to-purple-300/50 mx-auto mt-4"></div>
+                        )}
                       </div>
                       
-                      {/* Decorative Elements */}
-                      <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/30 to-purple-500/30 rounded-lg blur opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
+                      {/* Content card */}
+                      <div className="flex-1 bg-slate-900/90 backdrop-blur-sm p-6 sm:p-8 rounded-xl border border-slate-800/50 shadow-xl relative overflow-hidden group">
+                        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-cyan-500/10 to-purple-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <div className="relative z-10">
+                          <h3 className="text-2xl sm:text-3xl font-semibold text-white mb-4 tracking-tight">
+                            <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">{phase.phase}</span>
+                          </h3>
+                          <ul className="space-y-3">
+                            {phase.details.map((detail, idx) => (
+                              <li key={idx} className="flex items-start space-x-3 text-white/60 group/item">
+                                <div className="mt-1 w-1 h-1 rounded-full bg-gradient-to-r from-cyan-300 to-purple-300 flex-shrink-0 group-hover/item:scale-150 transition-transform"></div>
+                                <span className="text-sm sm:text-base leading-relaxed font-light">{detail}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
                     </div>
-                    
-                    {/* Connecting Arrow (except for last item) */}
-                    {index < process.length - 1 && (
-                      <div className="absolute left-5 sm:left-7 top-16 sm:top-20 w-0 h-0 border-l-3 border-r-3 border-t-6 sm:border-l-4 sm:border-r-4 sm:border-t-8 border-l-transparent border-r-transparent border-t-cyan-500/50"></div>
-                    )}
-              </div>
-            ))}
-              </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
           
           {/* Last Updated Date */}
-          <div className="text-center mt-8">
-            <p className="text-transparent text-sm">
+          <div className="text-center mt-12 sm:mt-16">
+            <p className="text-white/40 text-sm font-light">
               Last updated: January 2026
             </p>
           </div>
