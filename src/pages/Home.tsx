@@ -995,67 +995,74 @@ const Home = () => {
       <GoogleReviews />
 
       {/* CTA Band */}
-      <section className="py-20 sm:py-28 md:py-32 relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-black">
-        {/* Animated Background Elements */}
+      <section className="py-20 sm:py-28 md:py-32 relative overflow-hidden bg-black">
+        {/* Background Effects - Dark with Subtle Theme Colors */}
         <div className="absolute inset-0">
-          {/* Floating Orbs */}
-          <div className="absolute top-20 left-10 w-72 h-72 bg-cyan-500/20 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-violet-500/10 rounded-full blur-3xl"></div>
+          {/* Dark gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-slate-900/80 to-purple-900/40"></div>
           
-          {/* Grid Pattern Overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+          {/* Scattered Stars - More dots like screenshot */}
+          <div className="absolute top-20 left-20 w-1.5 h-1.5 bg-cyan-400 rounded-full animate-twinkle"></div>
+          <div className="absolute top-40 right-32 w-1 h-1 bg-purple-400 rounded-full animate-twinkle delay-1000"></div>
+          <div className="absolute top-60 left-1/3 w-1 h-1 bg-cyan-300 rounded-full animate-twinkle delay-2000"></div>
+          <div className="absolute top-32 right-1/4 w-1 h-1 bg-purple-300 rounded-full animate-twinkle delay-500"></div>
+          <div className="absolute top-80 left-1/4 w-1 h-1 bg-cyan-400 rounded-full animate-twinkle delay-3000"></div>
+          <div className="absolute top-100 right-1/3 w-1 h-1 bg-purple-400 rounded-full animate-twinkle delay-1500"></div>
+          <div className="absolute top-120 left-2/3 w-1 h-1 bg-cyan-300 rounded-full animate-twinkle delay-2500"></div>
+          <div className="absolute top-140 right-1/5 w-1 h-1 bg-purple-300 rounded-full animate-twinkle delay-700"></div>
+          <div className="absolute top-160 left-1/2 w-1 h-1 bg-cyan-400 rounded-full animate-twinkle delay-3500"></div>
+          <div className="absolute top-180 right-2/5 w-1 h-1 bg-purple-400 rounded-full animate-twinkle delay-1200"></div>
+          
+          {/* Subtle Nebula Effects with Slow Pulse */}
+          <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse" style={{ animationDuration: '6s' }}></div>
+          <div className="absolute bottom-1/3 right-1/3 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000" style={{ animationDuration: '6s' }}></div>
+          <div className="absolute top-1/2 left-1/4 w-72 h-72 bg-gradient-to-r from-cyan-500/6 to-purple-500/6 rounded-full blur-3xl animate-pulse delay-2000" style={{ animationDuration: '7s' }}></div>
         </div>
         
         <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="text-center">
-            {/* Main Heading */}
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-              Let's Build Something
-              <br />
-              <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                Amazing
-              </span>
-          </h2>
+          {/* Banner Card - Black with Highlight Glow */}
+          <div className="relative rounded-[2rem] overflow-hidden border border-white/20">
+            {/* Black Background */}
+            <div className="absolute inset-0 bg-black/80 backdrop-blur-sm"></div>
             
-            {/* Subheading */}
-            <p className="text-lg sm:text-xl md:text-2xl text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed">
-              Your digital transformation starts here. Let's create something that not only looks incredible but drives real results.
-            </p>
+            {/* Main Highlight Glow - Abstract Element with Slow Pulse */}
+            <div className="absolute inset-0">
+              {/* Left side - Cyan/Blue glow */}
+              <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-gradient-to-br from-cyan-500/25 via-cyan-400/20 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDuration: '5s' }}></div>
+              {/* Right side - Purple glow */}
+              <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-tl from-purple-500/25 via-purple-400/20 to-transparent rounded-full blur-3xl animate-pulse delay-1000" style={{ animationDuration: '5s' }}></div>
+              {/* Center accent */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gradient-to-r from-cyan-500/15 to-purple-500/15 rounded-full blur-3xl animate-pulse delay-500" style={{ animationDuration: '6s' }}></div>
+            </div>
             
-            {/* CTA Button */}
-            <div className="mb-12">
-              <div 
-                className={`relative inline-block rounded-full p-[4px] transition-all duration-300 group ${
-                  isButtonHovered 
-                    ? 'bg-purple-500' 
-                    : 'bg-gradient-to-r from-cyan-400 via-purple-500 to-violet-500'
-                }`}
-                onMouseEnter={() => setIsButtonHovered(true)}
-                onMouseLeave={() => setIsButtonHovered(false)}
-              >
-                <Button asChild className="bg-black hover:bg-purple-500 rounded-full text-white shadow-lg hover:shadow-xl transition-all duration-300 px-10 py-6 sm:px-12 sm:py-7 text-lg sm:text-xl font-semibold">
-                  <Link to="/contact" className="flex items-center justify-center">
+            {/* Content */}
+            <div className="relative z-10 px-6 sm:px-8 md:px-12 lg:px-16 py-12 sm:py-16 md:py-20 text-center">
+              {/* Main Heading - One Line, Smaller */}
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                Let's Build Something <span className="text-white">Amazing</span>
+              </h2>
+              
+              {/* Subheading - Smaller */}
+              <p className="text-base sm:text-lg md:text-xl text-white/90 mb-10 sm:mb-12 max-w-3xl mx-auto leading-relaxed">
+                Our team is ready to provide tailored solutions that drive growth and revenue.
+              </p>
+              
+              {/* CTA Button - Modern & Clean */}
+              <div>
+                <Link 
+                  to="/contact"
+                  className="relative inline-block group"
+                  onMouseEnter={() => setIsButtonHovered(true)}
+                  onMouseLeave={() => setIsButtonHovered(false)}
+                >
+                  {/* Subtle Glow Effect */}
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-xl blur opacity-50 group-hover:opacity-70 transition-opacity duration-300"></div>
+                  
+                  {/* Button - Clean Modern Style */}
+                  <div className="relative bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-400 hover:to-purple-500 text-white rounded-xl px-10 sm:px-12 md:px-14 py-4 sm:py-5 text-lg sm:text-xl font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">
                     Start Your Project
-                    <Rocket className="ml-3 h-6 w-6 transition-all duration-300 group-hover:text-cyan-400 group-hover:scale-125" />
-            </Link>
-                </Button>
-              </div>
-                </div>
-            
-            {/* Trust Indicators */}
-            <div className="flex flex-wrap justify-center items-center gap-6 sm:gap-8 text-slate-400">
-              <div className="flex items-center space-x-2 group">
-                <div className="w-2 h-2 bg-cyan-400 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
-                <span className="text-sm sm:text-base">Free Consultation</span>
-                </div>
-              <div className="flex items-center space-x-2 group">
-                <div className="w-2 h-2 bg-purple-400 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
-                <span className="text-sm sm:text-base">24h Response</span>
-                </div>
-              <div className="flex items-center space-x-2 group">
-                <div className="w-2 h-2 bg-pink-400 rounded-full group-hover:scale-150 transition-transform duration-300"></div>
-                <span className="text-sm sm:text-base">No Obligation</span>
+                  </div>
+                </Link>
               </div>
             </div>
           </div>
