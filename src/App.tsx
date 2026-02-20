@@ -19,6 +19,7 @@ import Services from "./pages/Services";
 import Projects from "./pages/Projects";
 import Pricing from "./pages/Pricing";
 import Contact from "./pages/Contact";
+import Schedule from "./pages/Schedule";
 import NotFound from "./pages/NotFound";
 
 // Lazy load secondary SEO pages
@@ -88,6 +89,7 @@ const App = () => {
                   <Route path="/projects" element={<ErrorBoundary><Projects /></ErrorBoundary>} />
                   <Route path="/pricing" element={<ErrorBoundary><Pricing /></ErrorBoundary>} />
                   <Route path="/contact" element={<ErrorBoundary><Contact /></ErrorBoundary>} />
+                  <Route path="/contact/schedule" element={<ErrorBoundary><Schedule /></ErrorBoundary>} />
                   
                       {/* Hidden SEO Pages - Not in main navigation */}
                       <Route path="/faq" element={<ErrorBoundary><FAQ /></ErrorBoundary>} />

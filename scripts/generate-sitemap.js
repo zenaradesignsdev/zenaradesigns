@@ -16,6 +16,7 @@ const routes = [
   { url: "/projects", priority: 0.8, changefreq: "weekly" },
   { url: "/pricing", priority: 0.8, changefreq: "monthly" },
   { url: "/contact", priority: 0.9, changefreq: "monthly" },
+  { url: "/contact/schedule", priority: 0.8, changefreq: "monthly" },
   { url: "/faq", priority: 0.7, changefreq: "monthly" },
   // Removed /pricing-guide - does not exist as a route
   { url: "/locations", priority: 0.7, changefreq: "monthly" },
