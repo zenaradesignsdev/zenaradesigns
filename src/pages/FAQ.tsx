@@ -1,58 +1,39 @@
 import { useScrollToTop, useSEO } from '@/hooks';
-import { memo, useState, useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { 
-  HelpCircle, 
-  ChevronDown, 
-  ChevronUp, 
-  ArrowRight, 
-  Star, 
-  Clock, 
-  DollarSign, 
-  Users, 
-  Shield, 
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
+import { 
+  ChevronDown,
+  ArrowRight,
+  DollarSign,
+  Clock,
   Zap,
-  Globe,
-  Smartphone,
-  Mail,
-  Phone,
-  MapPin,
-  CheckCircle,
-  Rocket,
-  Award,
-  Target,
-  Lightbulb,
-  Sun
+  Shield,
+  Rocket
 } from 'lucide-react';
 import StructuredData from '@/components/StructuredData';
 
 const FAQ = () => {
   useScrollToTop();
   
-  // SEO meta tags - Indexed for long-tail keywords
+  // SEO meta tags
   useSEO({
     title: "FAQ | Web Design Toronto | Pricing & Process | Zenara",
     description: "Get answers to web design questions in Toronto & GTA. Learn about pricing, timelines, and our proven process. Find solutions to your website needs today!",
     canonical: "https://zenaradesigns.com/faq"
   });
 
-  const [openItems, setOpenItems] = useState<string[]>([]);
-
-  const toggleItem = (itemValue: string) => {
-    setOpenItems(prev => 
-      prev.includes(itemValue) 
-        ? prev.filter(item => item !== itemValue)
-        : [...prev, itemValue]
-    );
-  };
-
-  // Organized FAQ sections with actual pricing and services
+  // Compiled FAQs from all pages
   const faqSections = useMemo(() => [
     {
       title: "Pricing & Packages",
       icon: DollarSign,
-      color: "from-green-500 to-emerald-500",
       faqs: [
         {
           question: "What are your web design packages and pricing?",
@@ -73,21 +54,24 @@ const FAQ = () => {
         {
           question: "Can I upgrade my plan during the project?",
           answer: "Absolutely! You can upgrade from Starter to Small Business or Pro at any time. We'll adjust the pricing accordingly and add the new features to your project."
+        },
+        {
+          question: "Do you provide business card design services?",
+          answer: "Yes! We offer professional business card design services across the GTA. Our packages range from $149-$399 for professional cards and $299-$599 for executive cards with premium finishes like foil stamping and embossing."
         }
       ]
     },
     {
       title: "Process & Timeline",
       icon: Clock,
-      color: "from-blue-500 to-cyan-500",
       faqs: [
         {
           question: "How long does it take to build a website?",
-          answer: "Our timelines are: Starter (1 week), Small Business (2-3 weeks), and Pro (3-4 weeks). These timelines include design, development, testing, and launch. We work efficiently while ensuring quality results."
+          answer: "Most websites are completed within 2-4 weeks, depending on complexity and requirements. Simple sites can be ready in 1-2 weeks, while more complex projects with custom features may take 3-4 weeks. Our specific timelines are: Starter (1 week), Small Business (2-3 weeks), and Pro (3-4 weeks). We work efficiently while ensuring quality results."
         },
         {
           question: "What's your design process?",
-          answer: "We follow a proven 6-step process: Discovery & Planning, Design & Wireframes, Development & Coding, Content Integration, Testing & Optimization, and Launch & Support. We keep you involved throughout each step."
+          answer: "We follow a proven 6-step process: Discovery & Planning, Design & Wireframes, Development & Coding, Content Integration, Testing & Optimization, and Launch & Support. We keep you involved throughout each step to ensure the final product meets your vision."
         },
         {
           question: "How many revisions are included?",
@@ -98,27 +82,22 @@ const FAQ = () => {
           answer: "All plans include post-launch support (14-60 days depending on plan). After that, we offer maintenance packages for ongoing updates, security, and support."
         },
         {
-          question: "Do you handle hosting and domain setup?",
-          answer: "Yes! We can handle hosting internally for $10-$30/month (SSL included) or help you set up with external providers. We also assist with domain registration and DNS setup."
+          question: "What's included in your web design package?",
+          answer: "Our packages include custom design, fully responsive development, SEO optimization, SSL security setup, performance optimization, and post-launch support. We also provide brand guidelines, logo design options, and business card design as part of our comprehensive service."
         }
       ]
     },
     {
       title: "Services & Features",
       icon: Zap,
-      color: "from-purple-500 to-violet-500",
       faqs: [
         {
-          question: "Do you provide business card design services?",
-          answer: "Yes! We offer professional business card design services across the GTA. Our packages range from $149-$399 for professional cards and $299-$599 for executive cards with premium finishes like foil stamping and embossing."
+          question: "Can you help with e-commerce development?",
+          answer: "Yes! We specialize in e-commerce development using platforms like Shopify, WooCommerce, and custom solutions. Small e-commerce stores start at $2,999-$4,999, with enterprise solutions available by quote."
         },
         {
           question: "What's included in logo design services?",
           answer: "Our logo design services include 3 initial concepts, unlimited revisions, vector and raster formats, brand guidelines, and usage rights. Basic logo design starts at $99-$199, with complete brand identity available by quote."
-        },
-        {
-          question: "Can you help with e-commerce development?",
-          answer: "Yes! We specialize in e-commerce development using platforms like Shopify, WooCommerce, and custom solutions. Small e-commerce stores start at $2,999-$4,999, with enterprise solutions available by quote."
         },
         {
           question: "Do you offer SEO services?",
@@ -127,14 +106,25 @@ const FAQ = () => {
         {
           question: "What industries do you serve?",
           answer: "We serve all industries across the GTA including restaurants, real estate, healthcare, legal services, retail, professional services, nonprofits, and startups. Our experience spans Toronto, Mississauga, Brampton, Vaughan, Markham, Richmond Hill, Oakville, and Burlington."
+        },
+        {
+          question: "What makes your websites different?",
+          answer: "We focus on business results, not just aesthetics. Every design decision is made with conversion optimization in mind. We use modern, fast-loading technologies, ensure mobile-first responsive design, and build with SEO best practices from day one. Plus, you get direct access to our team throughout the project."
         }
       ]
     },
     {
       title: "Technical & Support",
       icon: Shield,
-      color: "from-orange-500 to-red-500",
       faqs: [
+        {
+          question: "Do you provide hosting and maintenance?",
+          answer: "Yes! We offer comprehensive hosting solutions with 99.9% uptime guarantee, automated backups, and ongoing maintenance support. Our hosting plans include SSL certificates, CDN integration, and 24/7 monitoring. We also provide monthly maintenance packages for updates and support. Hosting can be handled internally for $10-$30/month (SSL included) or we can help you set up with external providers."
+        },
+        {
+          question: "Do you handle hosting and domain setup?",
+          answer: "Yes! We can handle hosting internally for $10-$30/month (SSL included) or help you set up with external providers. We also assist with domain registration and DNS setup."
+        },
         {
           question: "What happens if I'm not satisfied with the design?",
           answer: "We work closely with you throughout the process to ensure you love the result. If you're not satisfied, we'll work with you to make it right. Our goal is your success and satisfaction."
@@ -144,12 +134,12 @@ const FAQ = () => {
           answer: "Yes! We offer ongoing website maintenance services including security updates, content updates, performance optimization, backup management, and technical support. Our maintenance plans start at $99/month."
         },
         {
-          question: "What are CASL compliance requirements?",
-          answer: "Canada's Anti-Spam Legislation (CASL) requires explicit consent for commercial emails. We ensure all contact forms and email marketing integrations comply with CASL, including proper consent mechanisms, unsubscribe options, and sender identification."
+          question: "Can you help with existing websites?",
+          answer: "We can assist with existing websites if they use a similar technology stack to our preferred modern frameworks. If your current site uses a different technology stack, we typically recommend building a new site with our modern approach for optimal performance and maintainability."
         },
         {
-          question: "Do you offer in-person meetings in Toronto?",
-          answer: "Yes! We offer in-person consultations at your Toronto office or convenient downtown locations. We can meet at coffee shops in the Financial District, Yorkville, or other central locations. For GTA businesses, we can arrange meetings at local co-working spaces."
+          question: "What are CASL compliance requirements?",
+          answer: "Canada's Anti-Spam Legislation (CASL) requires explicit consent for commercial emails. We ensure all contact forms and email marketing integrations comply with CASL, including proper consent mechanisms, unsubscribe options, and sender identification."
         },
         {
           question: "What hosting locations work best for Toronto traffic?",
@@ -159,12 +149,15 @@ const FAQ = () => {
     },
     {
       title: "Toronto & GTA Specific",
-      icon: MapPin,
-      color: "from-indigo-500 to-blue-500",
+      icon: Rocket,
       faqs: [
         {
           question: "What makes your agency different in Toronto?",
           answer: "As a Toronto-based web design agency, we understand local business needs. We offer personalized service, competitive pricing, fast turnaround times, and comprehensive support for businesses across the GTA."
+        },
+        {
+          question: "Do you offer in-person meetings in Toronto?",
+          answer: "Yes! We offer in-person consultations at your Toronto office or convenient downtown locations. We can meet at coffee shops in the Financial District, Yorkville, or other central locations. For GTA businesses, we can arrange meetings at local co-working spaces."
         },
         {
           question: "What do Toronto customers expect from local business websites?",
@@ -193,264 +186,122 @@ const FAQ = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Enhanced Background Elements */}
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      {/* Gradient Background Layers */}
       <div className="absolute inset-0">
-        {/* Animated Stars */}
-        <div className="absolute top-16 left-16 w-1 h-1 bg-cyan-300 rounded-full animate-twinkle"></div>
-        <div className="absolute top-32 right-24 w-1 h-1 bg-purple-300 rounded-full animate-twinkle delay-1000"></div>
-        <div className="absolute top-48 left-1/3 w-1 h-1 bg-teal-300 rounded-full animate-twinkle delay-2000"></div>
-        <div className="absolute top-24 right-1/3 w-1 h-1 bg-violet-300 rounded-full animate-twinkle delay-500"></div>
-        <div className="absolute bottom-32 left-1/4 w-1 h-1 bg-emerald-300 rounded-full animate-twinkle delay-1500"></div>
-        <div className="absolute bottom-48 right-1/4 w-1 h-1 bg-orange-300 rounded-full animate-twinkle delay-3000"></div>
+        {/* Base gradient layer */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
+        <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
+        {/* Accent gradients with theme colors */}
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/35 to-transparent"></div>
+      </div>
+      
+      {/* Space Background Elements */}
+      <div className="absolute inset-0">
+        {/* Background Stars */}
+        <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
+        <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
+        <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
+        <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
+        <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
+        <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
+        <div className="bg-star" style={{ top: '18%', left: '68%' }}></div>
+        <div className="bg-star" style={{ top: '7%', left: '78%' }}></div>
+        <div className="bg-star" style={{ top: '14%', left: '88%' }}></div>
+        <div className="bg-star" style={{ top: '11%', left: '95%' }}></div>
         
         {/* Nebula Effects */}
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/10 to-teal-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-r from-emerald-500/10 to-blue-500/10 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 relative z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-20 sm:pt-24 md:pt-28 pb-16 sm:pb-20 md:pb-24 relative z-10">
         {/* Hero Section */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full px-4 py-2 sm:px-6 sm:py-3 mb-6 sm:mb-8 border border-cyan-500/30">
-            <HelpCircle className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400 animate-pulse" />
-            <span className="text-xs sm:text-sm font-medium text-cyan-300">Frequently Asked Questions</span>
-          </div>
-          <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-white">
-            Everything You Need to <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Know</span>
+        <div className="text-center mb-12 sm:mb-16 md:mb-20">
+          <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
+            <span className="block font-light opacity-90">Everything You Need to</span>
+            <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Know</span>
           </h1>
-          <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed px-4">
+          <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-4xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
             Get answers to common questions about our web design, business card, and logo design services in Toronto & GTA
-          </p>
-          <p className="text-sm text-transparent mt-6">
-            Last updated: January 2026
           </p>
         </div>
 
         {/* FAQ Sections */}
-        <div className="space-y-12">
+        <div className="space-y-12 sm:space-y-16">
           {faqSections.map((section, sectionIndex) => {
             const IconComponent = section.icon;
             return (
-              <div key={sectionIndex} className="group">
+              <div key={sectionIndex} className="space-y-6">
                 {/* Section Header */}
-                <div className="flex items-center space-x-4 mb-8">
-                  <div className={`p-3 rounded-2xl bg-gradient-to-r ${section.color} shadow-lg group-hover:shadow-xl transition-all duration-300`}>
-                    <IconComponent className="h-6 w-6 text-white" />
+                <div className="flex items-center space-x-4 mb-6">
+                  <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-xl flex items-center justify-center shadow-lg">
+                    <div className="absolute -inset-1 bg-gradient-to-br from-cyan-400/30 via-purple-400/30 to-cyan-400/30 blur-md opacity-70 animate-pulse rounded-xl"></div>
+                    <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 text-white relative z-10" />
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-white group-hover:text-cyan-300 transition-colors">
-                    {section.title}
+                  <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white tracking-tight">
+                    <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">{section.title}</span>
                   </h2>
                 </div>
 
-                {/* FAQ Items */}
-                <div className="space-y-4">
+                {/* FAQ Accordion */}
+                <Accordion type="single" collapsible className="w-full space-y-4 sm:space-y-6">
                   {section.faqs.map((faq, faqIndex) => {
                     const itemValue = `${sectionIndex}-${faqIndex}`;
-                    const isOpen = openItems.includes(itemValue);
-                    
                     return (
-                      <div key={faqIndex} className="group/faq">
-                        <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300 group-hover/faq:bg-white/15">
-                          <button
-                            onClick={() => toggleItem(itemValue)}
-                            className="w-full flex items-center justify-between text-left p-6 sm:p-8"
-                          >
-                            <span className="text-white group-hover/faq:text-cyan-300 transition-colors text-sm sm:text-base font-medium pr-4">
-                {faq.question}
-                            </span>
-                            <div className="flex-shrink-0 ml-2">
-                              {isOpen ? (
-                                <ChevronUp className="h-5 w-5 text-cyan-400 transition-transform duration-200" />
-                              ) : (
-                                <ChevronDown className="h-5 w-5 text-cyan-400 transition-transform duration-200" />
-                              )}
-                            </div>
-                          </button>
-                          {isOpen && (
-                            <div className="px-6 sm:px-8 pb-6 sm:pb-8 pt-0">
-                              <div className="border-t border-white/20 pt-4 sm:pt-6">
-                                <p className="text-slate-300 leading-relaxed text-sm sm:text-base">
-                                  {faq.answer}
-                                </p>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </div>
+                      <AccordionItem 
+                        key={faqIndex} 
+                        value={itemValue}
+                        className="border border-slate-800/50 rounded-xl bg-slate-900/90 backdrop-blur-sm data-[state=open]:bg-gradient-to-r data-[state=open]:from-cyan-500/20 data-[state=open]:via-purple-500/20 data-[state=open]:to-cyan-500/20 data-[state=open]:border-cyan-500/50 transition-all duration-200 relative overflow-hidden min-h-[80px] sm:min-h-[90px] flex flex-col"
+                      >
+                        {/* Gradient vertical bar on the left */}
+                        <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-300 via-purple-300 to-cyan-300 rounded-l-xl z-10"></div>
+                        <AccordionTrigger 
+                          className="px-4 sm:px-6 py-4 sm:py-5 hover:no-underline text-left data-[state=open]:text-white data-[state=closed]:text-white/80 relative overflow-hidden group w-full min-h-[80px] sm:min-h-[90px] flex items-center pl-5 sm:pl-7"
+                        >
+                          {/* Hover background animation - left to right */}
+                          <div className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-xl"></div>
+                          <span className="font-light text-base sm:text-lg pr-4 flex-1 relative z-10 group-hover:text-white transition-colors duration-300">{faq.question}</span>
+                          <ChevronDown className="h-5 w-5 shrink-0 data-[state=closed]:text-white/60 data-[state=open]:text-white group-hover:text-white transition-all duration-200 relative z-10" />
+                        </AccordionTrigger>
+                        <AccordionContent className="px-4 sm:px-6 pb-4 sm:pb-5 text-white/60 text-sm sm:text-base leading-[1.7] font-light tracking-[0.01em]">
+                          {faq.answer}
+                        </AccordionContent>
+                      </AccordionItem>
                     );
                   })}
-                </div>
+                </Accordion>
               </div>
             );
           })}
         </div>
 
-        {/* Toronto Seasonal Content Section */}
-        <div className="mt-20 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-3xl p-8 sm:p-12 border border-cyan-500/20 shadow-2xl relative overflow-hidden">
-          {/* Glassmorphism Effect */}
-          <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl"></div>
-          
-          <div className="relative z-10">
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-full px-4 py-2 sm:px-6 sm:py-3 mb-6 border border-cyan-500/30">
-                <Globe className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400 animate-pulse" />
-                <span className="text-xs sm:text-sm font-medium text-cyan-300">Toronto Business Tips</span>
-              </div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4">
-                Seasonal Website Tips for <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Toronto Businesses</span>
-              </h2>
-              <p className="text-slate-300 max-w-2xl mx-auto">
-                Make the most of Toronto's unique business seasons with these strategic website tips
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              <div className="space-y-6">
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-                  <div className="flex items-center space-x-3 mb-4">
-                    <div className="p-2 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500">
-                      <Clock className="h-5 w-5 text-white" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-cyan-300">Winter Considerations (Dec-Mar)</h3>
-                  </div>
-                  <ul className="space-y-3 text-slate-300">
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">Holiday traffic spikes - ensure your site can handle increased load</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">Mobile optimization for commuters browsing on phones</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">Winter-themed content and promotions</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">Weather-related service updates (delivery delays, closures)</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-                  <div className="flex items-center space-x-3 mb-4">
-                    <div className="p-2 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500">
-                      <Target className="h-5 w-5 text-white" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-cyan-300">Tax Season (Mar-Apr)</h3>
-                  </div>
-                  <ul className="space-y-3 text-slate-300">
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">Financial service website optimization</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">Tax deadline countdown features</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">Document upload and secure forms</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">Appointment booking systems</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              
-              <div className="space-y-6">
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-                  <div className="flex items-center space-x-3 mb-4">
-                    <div className="p-2 rounded-xl bg-gradient-to-r from-yellow-500 to-orange-500">
-                      <Sun className="h-5 w-5 text-white" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-cyan-300">Summer Planning (Jun-Aug)</h3>
-                  </div>
-                  <ul className="space-y-3 text-slate-300">
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">Vacation mode features for business owners</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">Summer festival and event integrations</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">Patio and outdoor service highlights</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">Tourism-focused content for visitors</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
-                  <div className="flex items-center space-x-3 mb-4">
-                    <div className="p-2 rounded-xl bg-gradient-to-r from-purple-500 to-violet-500">
-                      <Lightbulb className="h-5 w-5 text-white" />
-                    </div>
-                    <h3 className="text-xl font-semibold text-cyan-300">Year-Round GTA Tips</h3>
-                  </div>
-                  <ul className="space-y-3 text-slate-300">
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">Local event calendar integration</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">TTC route planning features</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">Weather API integration</span>
-                    </li>
-                    <li className="flex items-start space-x-2">
-                      <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0 mt-0.5" />
-                      <span className="text-sm">Multi-language support for diverse communities</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
         {/* CTA Section */}
-        <div className="text-center mt-16">
-          <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 sm:p-12 border border-white/20 shadow-2xl relative overflow-hidden max-w-4xl mx-auto">
-            {/* Glassmorphism Effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl"></div>
+        <div className="mt-16 sm:mt-20 md:mt-24">
+          <div className="bg-slate-900/90 backdrop-blur-sm rounded-2xl p-8 sm:p-10 md:p-12 border border-slate-800/50 shadow-2xl relative overflow-hidden max-w-4xl mx-auto">
+            {/* Box glow */}
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
             
-            <div className="relative z-10">
-              <div className="flex items-center justify-center space-x-2 mb-6">
-                <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
-                <span className="text-cyan-300 font-medium text-lg">
+            <div className="relative z-10 text-center">
+              <div className="inline-flex items-center justify-center space-x-2 mb-6">
+                <div className="w-2 h-2 bg-gradient-to-r from-cyan-300 to-purple-300 rounded-full animate-pulse"></div>
+                <span className="text-cyan-300 font-light text-lg sm:text-xl">
                   Still have questions? We're here to help!
                 </span>
               </div>
-              <p className="text-slate-300 mb-8 text-base sm:text-lg max-w-2xl mx-auto">
+              <p className="text-white/60 mb-8 text-base sm:text-lg max-w-2xl mx-auto leading-[1.7] font-light tracking-[0.01em]">
                 Can't find the answer you're looking for? Our team is ready to help you with your web design needs.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <div 
-                  className="relative inline-block rounded-full p-[4px] transition-all duration-300 group"
-                  style={{
-                    background: 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247), rgb(139, 92, 246))'
-                  }}
-                  onMouseEnter={(e) => e.currentTarget.style.background = 'rgb(168, 85, 247)'}
-                  onMouseLeave={(e) => e.currentTarget.style.background = 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247), rgb(139, 92, 246))'}
-                >
-                  <Button asChild className="bg-black hover:bg-purple-500 rounded-full text-white shadow-lg hover:shadow-xl transition-all duration-300 px-8 py-4 text-base font-semibold">
+              <div className="flex justify-center">
+                <div className="relative w-full sm:w-auto rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
+                  <Button asChild className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold w-full sm:w-auto group">
                     <Link to="/contact" className="flex items-center justify-center">
-                      Contact Us Today
-                      <ArrowRight className="ml-2 h-5 w-5" />
+                      <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full"></span>
+                      <span className="flex items-center justify-center relative z-10 group-hover:text-white whitespace-nowrap">
+                        Contact Us Today
+                        <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                      </span>
                     </Link>
                   </Button>
                 </div>
