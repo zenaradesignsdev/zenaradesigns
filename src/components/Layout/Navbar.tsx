@@ -9,14 +9,19 @@ import logo from '@/assets/zenaralogov2.svg';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isMobileButtonHovered, setIsMobileButtonHovered] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
   const location = useLocation();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const menuContentRef = useRef<HTMLDivElement>(null);
 
   // Close menu handler
   const closeMenu = () => {
-    setIsOpen(false);
+    setIsAnimating(true);
+    setTimeout(() => {
+      setIsOpen(false);
+      setIsAnimating(false);
+    }, 300); // Match animation duration
   };
 
   // Prevent body scroll when mobile menu is open and manage focus
@@ -61,31 +66,52 @@ const Navbar = () => {
     <div 
       ref={mobileMenuRef}
       id="mobile-menu"
-      className="lg:hidden fixed inset-0 z-[9999]"
+      className={`lg:hidden fixed inset-0 z-[9999] ${
+        isAnimating ? 'animate-menu-close' : 'animate-menu-open'
+      }`}
       role="dialog"
       aria-modal="true"
       aria-labelledby="mobile-menu-title"
     >
       {/* Full Screen Background */}
       <div 
-        className="absolute inset-0 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+        className="absolute inset-0 bg-black"
         onClick={closeMenu}
       >
+        {/* Gradient Background Layers */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
+          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20"></div>
+        </div>
+        
         {/* Space Background Elements */}
         <div className="absolute inset-0">
-          <div className="absolute top-16 left-16 w-1 h-1 bg-cyan-300 rounded-full animate-twinkle"></div>
-          <div className="absolute top-32 right-24 w-1 h-1 bg-purple-300 rounded-full animate-twinkle delay-1000"></div>
-          <div className="absolute top-48 left-1/3 w-1 h-1 bg-teal-300 rounded-full animate-twinkle delay-2000"></div>
-          <div className="absolute top-24 right-1/3 w-1 h-1 bg-violet-300 rounded-full animate-twinkle delay-500"></div>
+          {/* Background Stars */}
+          <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
+          <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
+          <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
+          <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
+          <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
+          <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
+          <div className="bg-star" style={{ top: '18%', left: '68%' }}></div>
+          <div className="bg-star" style={{ top: '7%', left: '78%' }}></div>
+          <div className="bg-star" style={{ top: '14%', left: '88%' }}></div>
+          <div className="bg-star" style={{ top: '11%', left: '95%' }}></div>
           
           {/* Nebula Effects */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/10 to-teal-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
       </div>
       
       {/* Mobile Menu Content */}
-      <div className="relative h-full flex flex-col z-10">
+      <div 
+        ref={menuContentRef}
+        className={`relative h-full flex flex-col z-10 ${
+          isAnimating ? 'animate-menu-content-close' : 'animate-menu-content-open'
+        }`}
+      >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-white/10">
           <Link 
@@ -111,53 +137,53 @@ const Navbar = () => {
           <button
             ref={closeButtonRef}
             onClick={closeMenu}
-            className="w-10 h-10 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-transparent"
+            className="w-10 h-10 flex items-center justify-center rounded-full bg-slate-900/90 backdrop-blur-sm border border-slate-800/50 hover:border-cyan-400/50 hover:bg-slate-800/90 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:ring-offset-2 focus:ring-offset-transparent relative overflow-hidden group"
             aria-label="Close navigation menu"
           >
-            <X className="w-6 h-6 text-white" />
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            <X className="w-6 h-6 text-white relative z-10 group-hover:text-cyan-300 transition-colors duration-300" />
           </button>
         </div>
 
         {/* Navigation Content - Centered */}
         <div className="flex-1 flex flex-col justify-center px-6 py-8 overflow-y-auto">
           {/* Navigation Links */}
-          <nav className="space-y-3 mb-8" aria-label="Mobile navigation">
+          <nav className="space-y-2 mb-8" aria-label="Mobile navigation">
             {navLinks.map((link, index) => (
               <Link
                 key={link.href}
                 to={link.href}
-                className={`block py-4 px-6 rounded-xl font-light text-lg transition-all duration-300 ${
+                className={`block py-4 px-6 rounded-xl font-light text-lg transition-all duration-300 relative overflow-hidden group mobile-menu-item ${
                   isActive(link.href) 
-                    ? 'bg-white/20 text-cyan-300 border-l-4 border-cyan-400' 
-                    : 'text-white hover:bg-white/10 hover:text-cyan-300'
+                    ? 'bg-slate-900/90 backdrop-blur-sm border border-cyan-400/50 text-cyan-300' 
+                    : 'text-white/90 hover:text-white hover:bg-slate-900/50 border border-transparent hover:border-slate-800/50'
                 }`}
                 onClick={() => {
                   closeMenu();
                   scrollToTop();
                 }}
                 style={{
-                  animationDelay: `${index * 50}ms`
+                  animationDelay: `${index * 50}ms`,
                 }}
               >
-                {link.label}
+                {/* Background glow on hover */}
+                <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl"></div>
+                <span className="relative z-10 flex items-center justify-between">
+                  <span>{link.label}</span>
+                  {isActive(link.href) && (
+                    <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></div>
+                  )}
+                </span>
               </Link>
             ))}
           </nav>
 
           {/* CTA Button */}
           <div className="pt-4">
-            <div 
-              className={`relative inline-block rounded-full p-[3px] transition-all duration-300 w-full ${
-                isMobileButtonHovered 
-                  ? 'bg-purple-500' 
-                  : 'bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300'
-              }`}
-              onMouseEnter={() => setIsMobileButtonHovered(true)}
-              onMouseLeave={() => setIsMobileButtonHovered(false)}
-            >
+            <div className="relative w-full rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
               <Button 
                 asChild 
-                className="w-full bg-black hover:bg-purple-500 rounded-full text-white font-semibold py-4 px-6 shadow-lg transition-all duration-300 hover:shadow-xl"
+                className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 w-full py-4 px-6 text-base font-semibold group"
               >
                 <Link 
                   to="/contact" 
@@ -165,10 +191,13 @@ const Navbar = () => {
                     closeMenu();
                     scrollToTop();
                   }}
-                  className="flex items-center justify-center gap-2"
+                  className="flex items-center justify-center gap-2 relative z-10 group-hover:text-white"
                 >
-                  Let's Talk
-                  <ArrowRight className="h-5 w-5" />
+                  <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full"></span>
+                  <span className="relative z-10 flex items-center gap-2">
+                    Let's Talk
+                    <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                  </span>
                 </Link>
               </Button>
             </div>
@@ -229,16 +258,16 @@ const Navbar = () => {
             {/* Mobile Menu Button - Only visible when menu is closed */}
             {!isOpen && (
               <button
-                className="lg:hidden relative w-9 h-9 flex flex-col items-center justify-center space-y-1.5 z-50"
+                className="lg:hidden relative w-9 h-9 flex flex-col items-center justify-center space-y-1.5 z-50 group"
                 onClick={() => setIsOpen(true)}
                 aria-label="Open navigation menu"
                 aria-expanded={false}
                 aria-controls="mobile-menu"
               >
                 {/* Hamburger Lines */}
-                <div className="w-5 h-0.5 bg-white transition-all duration-300"></div>
-                <div className="w-5 h-0.5 bg-white transition-all duration-300"></div>
-                <div className="w-5 h-0.5 bg-white transition-all duration-300"></div>
+                <div className="w-5 h-0.5 bg-white transition-all duration-300 group-hover:bg-cyan-300"></div>
+                <div className="w-5 h-0.5 bg-white transition-all duration-300 group-hover:bg-cyan-300"></div>
+                <div className="w-5 h-0.5 bg-white transition-all duration-300 group-hover:bg-cyan-300"></div>
               </button>
             )}
           </div>
