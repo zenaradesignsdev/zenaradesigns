@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Check, ArrowRight, Star, ChevronDown } from 'lucide-react';
+import { Check, ArrowRight, Star, ChevronDown, Layers, Rocket, Gem } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -109,7 +109,7 @@ const Pricing = () => {
     {
       id: 'core',
       name: 'Zenara Core',
-      emoji: '🌱',
+      icon: Layers,
       monthlyPrice: 45,
       annualPrice: 486, // 10% discount: $45 * 12 * 0.9 = $486
       features: [
@@ -124,7 +124,7 @@ const Pricing = () => {
     {
       id: 'grow',
       name: 'Zenara Grow',
-      emoji: '⚡',
+      icon: Rocket,
       monthlyPrice: 70,
       annualPrice: 756, // 10% discount: $70 * 12 * 0.9 = $756
       features: [
@@ -141,7 +141,7 @@ const Pricing = () => {
     {
       id: 'prime',
       name: 'Zenara Prime',
-      emoji: '👑',
+      icon: Gem,
       monthlyPrice: 150,
       annualPrice: 1620, // 10% discount: $150 * 12 * 0.9 = $1620
       features: [
@@ -203,26 +203,42 @@ const Pricing = () => {
     <div className="min-h-screen" role="main" aria-label="Pricing page">
 
       {/* Pricing Cards - Space Theme */}
-      <section className="pricing-hero py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      <section className="pricing-hero py-16 sm:py-20 md:py-24 relative overflow-hidden bg-black">
+        {/* Gradient Background Layers */}
+        <div className="absolute inset-0">
+          {/* Base gradient layer */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
+          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
+          {/* Accent gradients with theme colors */}
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/35 to-transparent"></div>
+        </div>
+        
         {/* Space Background Elements */}
         <div className="absolute inset-0">
-          {/* Subtle Stars */}
-          <div className="absolute top-16 left-16 w-1 h-1 bg-cyan-300 rounded-full animate-twinkle"></div>
-          <div className="absolute top-32 right-24 w-1 h-1 bg-purple-300 rounded-full animate-twinkle delay-1000"></div>
-          <div className="absolute top-48 left-1/3 w-1 h-1 bg-teal-300 rounded-full animate-twinkle delay-2000"></div>
-          <div className="absolute top-24 right-1/3 w-1 h-1 bg-violet-300 rounded-full animate-twinkle delay-500"></div>
+          {/* Background Stars */}
+          <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
+          <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
+          <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
+          <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
+          <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
+          <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
+          <div className="bg-star" style={{ top: '18%', left: '68%' }}></div>
+          <div className="bg-star" style={{ top: '7%', left: '78%' }}></div>
+          <div className="bg-star" style={{ top: '14%', left: '88%' }}></div>
+          <div className="bg-star" style={{ top: '11%', left: '95%' }}></div>
           
           {/* Nebula Effects */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/10 to-teal-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 pt-16 sm:pt-20 md:pt-24">
           <div className="text-center mb-12 sm:mb-16">
-            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-white">
-              Simple <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">Pricing Plans</span>
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
+              <span className="block bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Simple Pricing Plans</span>
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed px-4">
+            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-4xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
               Choose the plan that fits your needs. Professional web design services for Toronto & GTA businesses.
             </p>
           </div>
@@ -239,65 +255,44 @@ const Pricing = () => {
                   </div>
                 )}
                 
-                <div className={`pricing-card pricing-card-container bg-white/10 backdrop-blur-md rounded-3xl p-6 sm:p-8 border shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 min-h-[600px] flex flex-col relative overflow-hidden group-hover:-translate-y-2 ${plan.popular ? 'border-2 border-cyan-400 shadow-cyan-500/30' : 'border border-white/20'}`}>
-                  {/* Glassmorphism Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl"></div>
+                <div className={`pricing-card pricing-card-container bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border shadow-2xl transition-all duration-500 min-h-[600px] flex flex-col relative overflow-hidden group-hover:-translate-y-2 ${plan.popular ? 'border-cyan-500/50 shadow-cyan-500/20' : 'border-slate-800/50'}`}>
+                  {/* Box glow */}
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
                   
                   {/* Glow Effect on Hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-cyan-500/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                   
                   <div className="relative z-10 flex flex-col h-full">
                     <div className="text-center mb-6 sm:mb-8 flex-shrink-0">
-                      <h3 className="text-2xl sm:text-3xl font-bold mb-2 text-white">{plan.name}</h3>
-                      <p className="text-cyan-300 font-medium mb-3 sm:mb-4 text-sm sm:text-base">{plan.subtitle}</p>
-                      <div className="text-4xl sm:text-5xl font-bold mb-3 sm:mb-4 text-white">{plan.price}</div>
-                      <p className="text-slate-300 text-base sm:text-lg">{plan.description}</p>
+                      <h3 className="text-2xl sm:text-3xl font-semibold mb-2 text-white tracking-tight">{plan.name}</h3>
+                      <p className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-light mb-3 sm:mb-4 text-sm sm:text-base">{plan.subtitle}</p>
+                      <div className="text-4xl sm:text-5xl font-light mb-3 sm:mb-4 text-white">{plan.price}</div>
+                      <p className="text-white/60 text-base sm:text-lg font-light">{plan.description}</p>
                     </div>
 
                     <ul className="space-y-3 sm:space-y-4 mb-6 sm:mb-8 flex-grow">
                       {plan.features.map((feature, featureIndex) => (
                         <li key={featureIndex} className="flex items-start space-x-2 sm:space-x-3">
                           <Check className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400 flex-shrink-0 mt-0.5" />
-                          <span className="text-slate-300 text-xs sm:text-sm leading-relaxed">{feature}</span>
+                          <span className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">{feature}</span>
                         </li>
                       ))}
                     </ul>
 
                     <div className="flex-shrink-0">
-                      <div 
-                        className="relative inline-block rounded-full p-[4px] transition-all duration-300 group w-full"
-                        style={{
-                          background: plan.popular
-                            ? 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247), rgb(139, 92, 246))'
-                            : 'linear-gradient(to right, rgb(71, 85, 105), rgb(100, 116, 139))'
-                        }}
-                        onMouseEnter={(e) => {
-                          if (plan.popular) {
-                            e.currentTarget.style.background = 'rgb(168, 85, 247)';
-                          } else {
-                            e.currentTarget.style.background = 'linear-gradient(to right, rgb(100, 116, 139), rgb(148, 163, 184))';
-                          }
-                        }}
-                        onMouseLeave={(e) => {
-                          if (plan.popular) {
-                            e.currentTarget.style.background = 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247), rgb(139, 92, 246))';
-                          } else {
-                            e.currentTarget.style.background = 'linear-gradient(to right, rgb(71, 85, 105), rgb(100, 116, 139))';
-                          }
-                        }}
-                      >
+                      <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 w-full">
                         <Button 
                           asChild 
-                          className={`w-full ${
-                            plan.popular 
-                              ? 'bg-black hover:bg-purple-500 text-white' 
-                              : 'bg-slate-800/80 hover:bg-slate-700/80 text-slate-200'
-                          } rounded-full shadow-lg hover:shadow-xl transition-all duration-300 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base font-semibold`}
+                          className="relative overflow-hidden w-full bg-black rounded-full text-white shadow-lg transition-all duration-300 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base font-semibold group"
                         >
-                          <Link to="/contact" className="flex items-center justify-center">
-                          {plan.cta}
-                        </Link>
-                      </Button>
+                          <Link to="/contact">
+                            <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full"></span>
+                            <span className="flex items-center justify-center relative z-10 group-hover:text-white">
+                              {plan.cta}
+                              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                            </span>
+                          </Link>
+                        </Button>
                       </div>
                     </div>
                   </div>
@@ -307,20 +302,22 @@ const Pricing = () => {
           </div>
           
           <div className="text-center mt-12 sm:mt-16">
-            <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl relative overflow-hidden max-w-2xl mx-auto">
-              {/* Glassmorphism Effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl"></div>
-              
+            <div className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 shadow-2xl relative overflow-hidden max-w-2xl mx-auto">
               <div className="relative z-10">
-                <p className="text-slate-300 mb-4 sm:mb-6 text-base sm:text-lg">
+                <p className="text-white/60 mb-4 sm:mb-6 text-base sm:text-lg font-light">
                   Have a custom request? We'll scope it and send a quote within 24 hours.
                 </p>
-                <Button asChild className="bg-gradient-to-r from-cyan-500 to-purple-600 hover:from-cyan-600 hover:to-purple-700 text-white px-6 py-3 sm:px-8 sm:py-4 rounded-2xl font-semibold text-sm sm:text-base shadow-2xl hover:shadow-cyan-500/25 transition-all duration-300 hover:scale-105">
-                  <Link to="/contact">
-                    Get Custom Quote
-                    <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-                  </Link>
-                </Button>
+                <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
+                  <Button asChild className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base font-semibold group">
+                    <Link to="/contact">
+                      <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full"></span>
+                      <span className="flex items-center justify-center relative z-10 group-hover:text-white">
+                        Get Custom Quote
+                        <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                      </span>
+                    </Link>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -328,13 +325,32 @@ const Pricing = () => {
       </section>
 
       {/* Hosting & Maintenance */}
-      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden" style={{ backgroundColor: '#e5e7eb' }}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-cyan-900 to-slate-900">
+        {/* Background Stars */}
+        <div className="absolute inset-0">
+          <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
+          <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
+          <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
+          <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
+          <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
+          <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
+          <div className="bg-star" style={{ top: '18%', left: '68%' }}></div>
+          <div className="bg-star" style={{ top: '7%', left: '78%' }}></div>
+          <div className="bg-star" style={{ top: '14%', left: '88%' }}></div>
+          <div className="bg-star" style={{ top: '11%', left: '95%' }}></div>
+          
+          {/* Nebula Effects */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8" style={{ color: '#6b21a8' }}>
-              Hosting & Maintenance
+            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
+              <span className="block font-light opacity-90">Hosting &</span>
+              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Maintenance</span>
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-slate-700 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-4xl mx-auto leading-[1.7] font-light tracking-[0.01em]">
               Keep your website secure, fast, and up-to-date with our managed hosting and maintenance plans
             </p>
           </div>
@@ -342,6 +358,7 @@ const Pricing = () => {
           {/* Subscription Plans */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto items-stretch">
             {subscriptionPlans.map((plan) => {
+              const IconComponent = plan.icon;
               return (
                 <div key={plan.id} className={`group relative ${plan.popular ? 'lg:scale-105' : ''}`}>
                   {plan.popular && (
@@ -353,31 +370,37 @@ const Pricing = () => {
                     </div>
                   )}
                   
-                  <div className={`bg-white rounded-3xl p-6 sm:p-8 border shadow-lg transition-all duration-500 h-full flex flex-col relative overflow-hidden ${
+                  <div className={`bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border shadow-lg transition-all duration-500 h-full flex flex-col relative overflow-hidden ${
                     plan.popular 
-                      ? 'border-2 shadow-xl' 
-                      : 'border border-purple-200'
-                  }`}
-                  style={plan.popular ? { borderColor: '#6b21a8' } : {}}
-                  >
-                    <div className="flex flex-col h-full">
+                      ? 'border-cyan-500/50 shadow-cyan-500/20' 
+                      : 'border-slate-800/50'
+                  }`}>
+                    {/* Box glow */}
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
+                    
+                    <div className="relative z-10 flex flex-col h-full">
                       <div className="text-center mb-6 sm:mb-8 flex-shrink-0">
-                        <div className="text-4xl mb-3">{plan.emoji}</div>
-                        <h3 className="text-2xl sm:text-3xl font-bold mb-2" style={{ color: '#6b21a8' }}>{plan.name}</h3>
-                        <div className="text-4xl sm:text-5xl font-bold mb-3 sm:mb-4" style={{ color: '#6b21a8' }}>
+                        <div className="flex justify-center mb-3">
+                          <div className="relative w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-xl flex items-center justify-center">
+                            <div className="absolute -inset-1 bg-gradient-to-br from-cyan-400/30 via-purple-400/30 to-cyan-400/30 blur-md opacity-70 animate-pulse rounded-xl"></div>
+                            <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 text-white relative z-10" strokeWidth={2} />
+                          </div>
+                        </div>
+                        <h3 className="text-2xl sm:text-3xl font-semibold mb-2 text-white tracking-tight">{plan.name}</h3>
+                        <div className="text-4xl sm:text-5xl font-light mb-3 sm:mb-4 text-white">
                           ${plan.monthlyPrice}
-                          <span className="text-lg sm:text-xl text-slate-500">
+                          <span className="text-lg sm:text-xl text-white/60 font-light">
                             /month
                           </span>
                         </div>
-                        <p className="text-slate-600 text-sm sm:text-base mt-3">{plan.bestFor}</p>
+                        <p className="text-white/60 text-sm sm:text-base mt-3 font-light">{plan.bestFor}</p>
                       </div>
 
                       <ul className="space-y-3 sm:space-y-4 flex-grow">
                         {plan.features.map((feature, featureIndex) => (
                           <li key={featureIndex} className="flex items-start space-x-2 sm:space-x-3">
-                            <Check className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0 mt-0.5" style={{ color: '#6b21a8' }} />
-                            <span className="text-slate-700 text-xs sm:text-sm leading-relaxed">{feature}</span>
+                            <Check className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0 mt-0.5 text-cyan-400" />
+                            <span className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">{feature}</span>
                           </li>
                         ))}
                       </ul>
@@ -390,7 +413,7 @@ const Pricing = () => {
           
           {/* Optional Note */}
           <div className="mt-8 sm:mt-12 text-center">
-            <p className="text-slate-600 text-sm sm:text-base max-w-3xl mx-auto">
+            <p className="text-white/60 text-sm sm:text-base max-w-3xl mx-auto font-light">
               <em>Complex custom development, e-commerce, and major redesigns are quoted separately.</em>
             </p>
           </div>
@@ -398,92 +421,119 @@ const Pricing = () => {
       </section>
 
       {/* Additional Services Pricing */}
-      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-black">
+        {/* Gradient Background Layers */}
+        <div className="absolute inset-0">
+          {/* Base gradient layer */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
+          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
+          {/* Accent gradients with theme colors */}
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/35 to-transparent"></div>
+        </div>
+        
         {/* Space Background Elements */}
         <div className="absolute inset-0">
-          {/* Subtle Stars */}
-          <div className="absolute top-16 left-16 w-1 h-1 bg-cyan-300 rounded-full animate-twinkle"></div>
-          <div className="absolute top-32 right-24 w-1 h-1 bg-purple-300 rounded-full animate-twinkle delay-1000"></div>
-          <div className="absolute top-48 left-1/3 w-1 h-1 bg-teal-300 rounded-full animate-twinkle delay-2000"></div>
-          <div className="absolute top-24 right-1/3 w-1 h-1 bg-violet-300 rounded-full animate-twinkle delay-500"></div>
+          {/* Background Stars */}
+          <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
+          <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
+          <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
+          <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
+          <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
+          <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
+          <div className="bg-star" style={{ top: '18%', left: '68%' }}></div>
+          <div className="bg-star" style={{ top: '7%', left: '78%' }}></div>
+          <div className="bg-star" style={{ top: '14%', left: '88%' }}></div>
+          <div className="bg-star" style={{ top: '11%', left: '95%' }}></div>
           
           {/* Nebula Effects */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/10 to-teal-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
         </div>
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-white">
-              Additional Services Pricing
+            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
+              <span className="block font-light opacity-90">Additional Services</span>
+              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Pricing</span>
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-4xl mx-auto leading-[1.7] font-light tracking-[0.01em]">
               Complete pricing for all our web design, business card, and logo design services in Toronto & GTA
             </p>
           </div>
 
           <div className="space-y-12">
             {additionalServices.map((category, categoryIndex) => (
-              <div key={categoryIndex} className="bg-white/10 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl">
-                <h3 className="text-2xl sm:text-3xl font-semibold mb-6 text-white">
-                  {category.category}
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {category.services.map((service, serviceIndex) => (
-                    <div key={serviceIndex} className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-                      <h4 className="text-xl sm:text-2xl font-semibold text-white mb-2">
-                        {service.name}
-                      </h4>
-                      <p className="text-2xl sm:text-3xl font-bold mb-3 text-cyan-400">
-                        {service.price}
-                      </p>
-                      <p className="text-slate-300 mb-4 text-sm sm:text-base">
-                        {service.description}
-                      </p>
-                      <ul className="space-y-2 mb-4">
-                        {service.features.map((feature, featureIndex) => (
-                          <li key={featureIndex} className="flex items-center text-slate-300 text-sm">
-                            <Check className="h-4 w-4 mr-2 flex-shrink-0 text-cyan-400" />
-                            {feature}
-                          </li>
-                        ))}
-                      </ul>
-                      {service.idealFor && (
-                        <div>
-                          <h5 className="text-sm font-semibold mb-2 text-cyan-300">Ideal for:</h5>
-                          <p className="text-slate-300 text-sm">
-                            {service.idealFor}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  ))}
+              <div key={categoryIndex} className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 shadow-2xl relative overflow-hidden">
+                {/* Box glow */}
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
+                
+                <div className="relative z-10">
+                  <h3 className="text-2xl sm:text-3xl font-semibold mb-6 text-white tracking-tight">
+                    {category.category}
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {category.services.map((service, serviceIndex) => (
+                      <div key={serviceIndex} className="bg-slate-800/50 backdrop-blur-sm rounded-xl p-6 border border-slate-700/50">
+                        <h4 className="text-xl sm:text-2xl font-semibold text-white mb-2 tracking-tight">
+                          {service.name}
+                        </h4>
+                        <p className="text-2xl sm:text-3xl font-light mb-3 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
+                          {service.price}
+                        </p>
+                        <p className="text-white/60 mb-4 text-sm sm:text-base font-light">
+                          {service.description}
+                        </p>
+                        <ul className="space-y-2 mb-4">
+                          {service.features.map((feature, featureIndex) => (
+                            <li key={featureIndex} className="flex items-center text-white/60 text-sm font-light">
+                              <Check className="h-4 w-4 mr-2 flex-shrink-0 text-cyan-400" />
+                              {feature}
+                            </li>
+                          ))}
+                        </ul>
+                        {service.idealFor && (
+                          <div>
+                            <h5 className="text-sm font-light mb-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent">Ideal for:</h5>
+                            <p className="text-white/60 text-sm font-light">
+                              {service.idealFor}
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             ))}
           </div>
 
           <div className="text-center mt-12 sm:mt-16">
-            <div className="bg-white/10 backdrop-blur-md rounded-3xl p-8 sm:p-10 border border-white/20 shadow-2xl">
-              <h3 className="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 text-white">
-                Why Choose Zenara Designs for Your Toronto Project?
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="text-center">
-                  <div className="text-3xl sm:text-4xl font-bold mb-2 text-cyan-400">40%</div>
-                  <div className="text-slate-300 text-sm sm:text-base">Average Conversion Increase</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl sm:text-4xl font-bold mb-2 text-cyan-400">2-4</div>
-                  <div className="text-slate-300 text-sm sm:text-base">Weeks to Launch</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl sm:text-4xl font-bold mb-2 text-cyan-400">98%</div>
-                  <div className="text-slate-300 text-sm sm:text-base">Client Satisfaction</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl sm:text-4xl font-bold mb-2 text-cyan-400">100%</div>
-                  <div className="text-slate-300 text-sm sm:text-base">Mobile Optimized</div>
+            <div className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-8 sm:p-10 border border-slate-800/50 shadow-2xl relative overflow-hidden">
+              {/* Box glow */}
+              <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
+              
+              <div className="relative z-10">
+                <h3 className="text-2xl sm:text-3xl font-semibold mb-6 sm:mb-8 text-white tracking-tight">
+                  Why Choose Zenara Designs for Your Toronto Project?
+                </h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                  <div className="text-center">
+                    <div className="text-3xl sm:text-4xl font-light mb-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">40%</div>
+                    <div className="text-white/60 text-sm sm:text-base font-light">Average Conversion Increase</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl sm:text-4xl font-light mb-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">2-4</div>
+                    <div className="text-white/60 text-sm sm:text-base font-light">Weeks to Launch</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl sm:text-4xl font-light mb-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">98%</div>
+                    <div className="text-white/60 text-sm sm:text-base font-light">Client Satisfaction</div>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-3xl sm:text-4xl font-light mb-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">100%</div>
+                    <div className="text-white/60 text-sm sm:text-base font-light">Mobile Optimized</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -491,12 +541,21 @@ const Pricing = () => {
         </div>
       </section>
 
-      {/* FAQ Section - White Background */}
-      <section className="pricing-faq py-16 sm:py-20 md:py-24 relative overflow-hidden" style={{ backgroundColor: '#e5e7eb' }}>
+      {/* FAQ Section - Dark Theme */}
+      <section className="pricing-faq py-16 sm:py-20 md:py-24 relative overflow-hidden bg-black">
+        {/* Gradient Background Layers */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-slate-900/50 to-black"></div>
+        </div>
+        
+        {/* Decorative gradient panels */}
+        <div className="absolute left-0 top-0 bottom-0 w-1/4 bg-gradient-to-r from-cyan-500/5 via-transparent to-transparent"></div>
+        <div className="absolute right-0 top-0 bottom-0 w-1/4 bg-gradient-to-l from-purple-500/5 via-transparent to-transparent"></div>
+        
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8" style={{ color: '#6b21a8' }}>
-              FAQ
+            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
+              <span className="block bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">FAQ</span>
             </h2>
           </div>
           
@@ -507,19 +566,19 @@ const Pricing = () => {
                 <AccordionItem 
                   key={`left-item-${index + 1}`} 
                   value={`left-item-${index + 1}`}
-                  className="border border-purple-200 rounded-xl bg-white data-[state=open]:bg-purple-600 data-[state=open]:border-purple-600 transition-all duration-200 relative overflow-hidden min-h-[80px] sm:min-h-[90px] flex flex-col"
+                  className="border border-slate-800/50 rounded-xl bg-slate-900/90 backdrop-blur-sm data-[state=open]:bg-gradient-to-r data-[state=open]:from-cyan-500/20 data-[state=open]:via-purple-500/20 data-[state=open]:to-cyan-500/20 data-[state=open]:border-cyan-500/50 transition-all duration-200 relative overflow-hidden min-h-[80px] sm:min-h-[90px] flex flex-col"
                 >
-                  {/* Purple vertical bar on the left */}
-                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-purple-600 rounded-l-xl z-10"></div>
+                  {/* Vertical bar */}
+                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-300 via-purple-300 to-cyan-300 rounded-l-xl z-10"></div>
                   <AccordionTrigger 
-                    className="px-4 sm:px-6 py-4 sm:py-5 hover:no-underline text-left data-[state=open]:text-white data-[state=closed]:text-purple-800 relative overflow-hidden group w-full min-h-[80px] sm:min-h-[90px] flex items-center pl-5 sm:pl-7"
+                    className="px-4 sm:px-6 py-4 sm:py-5 hover:no-underline text-left data-[state=closed]:text-white/80 data-[state=open]:text-white relative overflow-hidden group w-full min-h-[80px] sm:min-h-[90px] flex items-center pl-5 sm:pl-7"
                   >
                     {/* Hover background animation - left to right */}
-                    <div className="absolute inset-0 bg-purple-600 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-xl"></div>
-                    <span className="font-semibold text-base sm:text-lg pr-4 flex-1 relative z-10 group-hover:text-white transition-colors duration-300">{faq.question}</span>
-                    <ChevronDown className="h-5 w-5 shrink-0 data-[state=closed]:text-purple-600 data-[state=open]:text-white group-hover:text-white transition-all duration-200 relative z-10" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-cyan-500/20 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-xl"></div>
+                    <span className="font-light text-base sm:text-lg pr-4 flex-1 relative z-10 group-hover:text-white transition-colors duration-300">{faq.question}</span>
+                    <ChevronDown className="h-5 w-5 shrink-0 data-[state=closed]:text-white/60 data-[state=open]:text-white group-hover:text-white transition-all duration-200 relative z-10" />
                   </AccordionTrigger>
-                  <AccordionContent className="px-4 sm:px-6 pb-4 sm:pb-5 text-white text-sm sm:text-base leading-relaxed">
+                  <AccordionContent className="px-4 sm:px-6 pb-4 sm:pb-5 text-white/60 text-sm sm:text-base leading-relaxed font-light">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -532,20 +591,20 @@ const Pricing = () => {
                 <AccordionItem 
                   key={`right-item-${index + 1}`} 
                   value={`right-item-${index + 1}`}
-                  className="border border-purple-200 rounded-xl bg-white data-[state=open]:bg-purple-600 data-[state=open]:border-purple-600 transition-all duration-200 relative overflow-hidden min-h-[80px] sm:min-h-[90px] flex flex-col"
+                  className="border border-slate-800/50 rounded-xl bg-slate-900/90 backdrop-blur-sm data-[state=open]:bg-gradient-to-r data-[state=open]:from-cyan-500/20 data-[state=open]:via-purple-500/20 data-[state=open]:to-cyan-500/20 data-[state=open]:border-cyan-500/50 transition-all duration-200 relative overflow-hidden min-h-[80px] sm:min-h-[90px] flex flex-col"
                 >
-                  {/* Purple vertical bar on the left */}
-                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-purple-600 rounded-l-xl z-10"></div>
+                  {/* Vertical bar */}
+                  <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-300 via-purple-300 to-cyan-300 rounded-l-xl z-10"></div>
                   <AccordionTrigger 
-                    className="px-4 sm:px-6 py-4 sm:py-5 hover:no-underline text-left data-[state=open]:text-white data-[state=closed]:text-purple-800 relative overflow-hidden group w-full min-h-[80px] sm:min-h-[90px] flex items-center pl-5 sm:pl-7"
+                    className="px-4 sm:px-6 py-4 sm:py-5 hover:no-underline text-left data-[state=closed]:text-white/80 data-[state=open]:text-white relative overflow-hidden group w-full min-h-[80px] sm:min-h-[90px] flex items-center pl-5 sm:pl-7"
                   >
                     {/* Hover background animation - left to right */}
-                    <div className="absolute inset-0 bg-purple-600 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-xl"></div>
-                    <span className="font-semibold text-base sm:text-lg pr-4 flex-1 relative z-10 group-hover:text-white transition-colors duration-300">{faq.question}</span>
-                    <ChevronDown className="h-5 w-5 shrink-0 data-[state=closed]:text-purple-600 data-[state=open]:text-white group-hover:text-white transition-all duration-200 relative z-10" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-cyan-500/20 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-xl"></div>
+                    <span className="font-light text-base sm:text-lg pr-4 flex-1 relative z-10 group-hover:text-white transition-colors duration-300">{faq.question}</span>
+                    <ChevronDown className="h-5 w-5 shrink-0 data-[state=closed]:text-white/60 data-[state=open]:text-white group-hover:text-white transition-all duration-200 relative z-10" />
                   </AccordionTrigger>
-                  <AccordionContent className="px-4 sm:px-6 pb-4 sm:pb-5 text-white text-sm sm:text-base leading-relaxed">
-                          {faq.answer}
+                  <AccordionContent className="px-4 sm:px-6 pb-4 sm:pb-5 text-white/60 text-sm sm:text-base leading-relaxed font-light">
+                    {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
               ))}
@@ -554,7 +613,7 @@ const Pricing = () => {
           
           {/* Last Updated Date */}
           <div className="text-center mt-12">
-            <p className="text-transparent text-sm">
+            <p className="text-white/40 text-sm font-light">
               Last updated: January 2026
             </p>
           </div>
