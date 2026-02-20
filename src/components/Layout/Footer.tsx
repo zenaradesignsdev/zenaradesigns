@@ -78,7 +78,17 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative overflow-hidden bg-gradient-to-br from-black via-indigo-900 to-purple-900">
+    <footer className="relative overflow-hidden bg-black">
+      {/* Gradient Background Layers - Matching Hero Section */}
+      <div className="absolute inset-0">
+        {/* Base gradient layer */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
+        <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
+        {/* Accent gradients with theme colors */}
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/35 to-transparent"></div>
+      </div>
+      
       {/* Background Stars */}
       <div className="absolute inset-0 opacity-30">
         {/* Small stars */}
@@ -172,9 +182,9 @@ const Footer = () => {
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <img src={logo} alt="Zenara Designs - Professional Web Design Agency Toronto" className="h-8 w-auto" width="32" height="32" loading="lazy" decoding="async" />
-                <span className="font-normal text-lg text-white">Zenara Designs</span>
+                <span className="font-light text-lg text-white">Zenara Designs</span>
               </div>
-              <p className="text-slate-300 max-w-md">
+              <p className="text-slate-300 max-w-md font-light">
                 Creating high-performing websites for small businesses and professionals using modern development workflows.
               </p>
               <div className="space-y-3">
@@ -195,7 +205,7 @@ const Footer = () => {
 
             {/* Quick Links */}
             <div>
-              <h3 className="font-semibold mb-4 text-white">Quick Links</h3>
+              <h3 className="font-light mb-4 text-white">Quick Links</h3>
               <div className="grid grid-cols-1 gap-x-1 gap-y-2">
                 {quickLinks.map((link) => (
                   <Link
@@ -212,7 +222,7 @@ const Footer = () => {
 
             {/* Additional Links */}
             <div>
-              <h3 className="font-semibold mb-4 text-white">Resources</h3>
+              <h3 className="font-light mb-4 text-white">Resources</h3>
               <div className="grid grid-cols-1 gap-x-1 gap-y-2">
                 {FOOTER_ADDITIONAL_LINKS.map((link) => (
                   <Link
@@ -229,8 +239,8 @@ const Footer = () => {
 
             {/* Newsletter Subscription */}
             <div className="flex flex-col">
-              <h3 className="font-semibold mb-4 text-white">Newsletter</h3>
-              <p className="text-slate-300 mb-4 text-sm">
+              <h3 className="font-light mb-4 text-white">Newsletter</h3>
+              <p className="text-slate-300 mb-4 text-sm font-light">
                 Subscribe to our newsletter and stay updated.
               </p>
               <div className="brevo-newsletter-form flex justify-start">
@@ -242,8 +252,8 @@ const Footer = () => {
                     }}
                   >
                     <CheckCircle className="h-12 w-12 text-cyan-400 mx-auto mb-3" />
-                    <p className="text-white font-semibold mb-2">Successfully subscribed!</p>
-                    <p className="text-slate-300 text-sm">Thank you for subscribing to our newsletter.</p>
+                    <p className="text-white font-normal mb-2">Successfully subscribed!</p>
+                    <p className="text-slate-300 text-sm font-light">Thank you for subscribing to our newsletter.</p>
                   </div>
                 ) : (
                   <div className="sib-form w-full" style={{ textAlign: 'center', backgroundColor: 'transparent' }}>
@@ -370,7 +380,8 @@ const Footer = () => {
                           <input 
                             type="text" 
                             name="email_address_check" 
-                            value="" 
+                            defaultValue="" 
+                            readOnly
                             className="input--hidden" 
                             style={{ display: 'none', visibility: 'hidden', position: 'absolute', left: '-9999px' }}
                             tabIndex={-1}
@@ -388,7 +399,7 @@ const Footer = () => {
           </div>
 
           <div className="border-t border-cyan-400/20 mt-8 pt-8 text-center">
-            <p className="text-slate-400">
+            <p className="text-slate-400 font-light">
               © {currentYear} Zenara Designs. All rights reserved.
             </p>
           </div>
