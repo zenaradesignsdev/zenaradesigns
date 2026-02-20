@@ -1,4 +1,4 @@
-import { Shield, Lock, Eye, Server, Clock, CheckCircle, AlertTriangle, ArrowRight, Zap, Globe, Database, Users } from 'lucide-react';
+import { Shield, Lock, Eye, Server, Clock, CheckCircle, AlertTriangle, ArrowRight, Zap, Database } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useScrollToTop, useSEO } from '@/hooks';
@@ -13,12 +13,7 @@ const Security = () => {
   useSEO({
     title: "Website Security Best Practices | SSL, Uptime & Protection | Zenara",
     description: "Learn about essential website security measures including SSL certificates, uptime monitoring, anti-spam protection, and maintenance. Keep your Toronto business website secure.",
-    canonical: "https://zenaradesigns.com/security",
-    structuredData: {
-      type: 'service',
-      serviceName: 'Website Security Services',
-      serviceDescription: 'Comprehensive website security solutions including SSL certificates, uptime monitoring, anti-spam protection, and regular security maintenance for businesses in Toronto and GTA.'
-    }
+    canonical: "https://zenaradesigns.com/security"
   });
   
   const [visibleItems, setVisibleItems] = useState<number[]>([]);
@@ -37,7 +32,7 @@ const Security = () => {
   }, []);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(handleItemIntersection, { threshold: 0.2 });
+    const observer = new IntersectionObserver(handleItemIntersection, { threshold: PERFORMANCE_THRESHOLDS.INTERSECTION_OBSERVER });
 
     itemRefs.current.forEach((ref) => {
       if (ref) observer.observe(ref);
@@ -139,32 +134,45 @@ const Security = () => {
   ], []);
 
   return (
-    <div className="min-h-screen" role="main" aria-label="Security page">
-      {/* Hero Section */}
-      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-black via-red-900 to-purple-900">
-        {/* Background Elements */}
-        <div className="absolute inset-0">
-          {/* Security-themed Stars */}
-          <div className="absolute top-16 left-16 w-1 h-1 bg-red-300 rounded-full animate-twinkle"></div>
-          <div className="absolute top-32 right-24 w-1 h-1 bg-orange-300 rounded-full animate-twinkle delay-1000"></div>
-          <div className="absolute top-48 left-1/3 w-1 h-1 bg-yellow-300 rounded-full animate-twinkle delay-2000"></div>
-          <div className="absolute top-24 right-1/3 w-1 h-1 bg-red-300 rounded-full animate-twinkle delay-500"></div>
-          
-          {/* Nebula Effects */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-red-500/10 to-orange-500/10 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-orange-500/10 to-red-500/10 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        </div>
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      {/* Gradient Background Layers */}
+      <div className="absolute inset-0">
+        {/* Base gradient layer */}
+        <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
+        <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
+        {/* Accent gradients with theme colors */}
+        <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/35 to-transparent"></div>
+      </div>
+      
+      {/* Space Background Elements */}
+      <div className="absolute inset-0">
+        {/* Background Stars */}
+        <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
+        <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
+        <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
+        <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
+        <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
+        <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
+        <div className="bg-star" style={{ top: '18%', left: '68%' }}></div>
+        <div className="bg-star" style={{ top: '7%', left: '78%' }}></div>
+        <div className="bg-star" style={{ top: '14%', left: '88%' }}></div>
+        <div className="bg-star" style={{ top: '11%', left: '95%' }}></div>
         
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        {/* Nebula Effects */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
+      </div>
+
+      {/* Hero Section */}
+      <section className="pt-20 sm:pt-24 md:pt-28 pb-16 sm:pb-20 md:pb-24 relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12 sm:mb-16 md:mb-20">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-full px-4 py-2 sm:px-6 sm:py-3 mb-6 sm:mb-8 border border-red-500/30">
-              <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-red-400 animate-pulse" />
-              <span className="text-xs sm:text-sm font-medium text-red-300">Website Security</span>
-            </div>
-            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-white leading-tight">
-              Website Security <span className="bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">Best Practices</span>
+            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
+              <span className="block font-light opacity-90">Website Security</span>
+              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Best Practices</span>
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed px-4">
+            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-4xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
               Protect your Toronto business with enterprise-grade security measures. Learn why SSL certificates, uptime monitoring, and anti-spam protection are essential for your website's success.
             </p>
           </div>
@@ -172,126 +180,175 @@ const Security = () => {
       </section>
 
       {/* Security Statistics */}
-      <section className="py-16 bg-gradient-to-br from-slate-900 via-red-900 to-slate-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-              Why Website Security <span className="bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">Matters</span>
+      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-black">
+        {/* Gradient Background Layers */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
+          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
+              <span className="block font-light opacity-90">Why Website Security</span>
+              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Matters</span>
             </h2>
-            <p className="text-slate-300 max-w-3xl mx-auto">
+            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
               The digital landscape is constantly evolving, and so are the threats. Here's why security should be your top priority.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {securityStats.map((stat, index) => (
-              <div key={index} className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 shadow-2xl hover:shadow-red-500/20 transition-all duration-300 text-center">
-                <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-600 rounded-xl mx-auto mb-4 flex items-center justify-center text-white">
-                  <stat.icon className="h-6 w-6" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+            {securityStats.map((stat, index) => {
+              const IconComponent = stat.icon;
+              return (
+                <div key={index} className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 border border-slate-800/50 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300 text-center relative overflow-hidden group">
+                  {/* Box glow */}
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
+                  <div className="relative w-12 h-12 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-xl mx-auto mb-4 flex items-center justify-center shadow-lg relative z-10">
+                    <div className="absolute -inset-1 bg-gradient-to-br from-cyan-400/30 via-purple-400/30 to-cyan-400/30 blur-md opacity-70 animate-pulse rounded-xl"></div>
+                    <IconComponent className="h-6 w-6 text-white relative z-10" />
+                  </div>
+                  <div className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient mb-2 relative z-10">
+                    {stat.value}
+                  </div>
+                  <div className="text-white/60 text-sm sm:text-base font-light relative z-10">{stat.label}</div>
                 </div>
-                <div className="text-2xl font-bold text-white mb-2">{stat.value}</div>
-                <div className="text-slate-300 text-sm">{stat.label}</div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* Security Features */}
-      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-orange-900 to-slate-900">
+      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-black">
+        {/* Gradient Background Layers */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
+          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
+        </div>
+        
+        {/* Space Background Elements */}
+        <div className="absolute inset-0">
+          {/* Background Stars */}
+          <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
+          <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
+          <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
+          <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
+          <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
+          <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
+          
+          {/* Nebula Effects */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-16">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-full px-4 py-2 sm:px-6 sm:py-3 mb-6 sm:mb-8 border border-orange-500/30">
-              <Lock className="h-4 w-4 sm:h-5 sm:w-5 text-orange-400 animate-pulse" />
-              <span className="text-xs sm:text-sm font-medium text-orange-300">Security Features</span>
-            </div>
-            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-white">
-              Essential Security <span className="bg-gradient-to-r from-orange-400 to-red-400 bg-clip-text text-transparent">Measures</span>
+            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
+              <span className="block font-light opacity-90">Essential Security</span>
+              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Measures</span>
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed px-4">
+            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
               Comprehensive security solutions to protect your website and business data
             </p>
           </div>
           
           <div className="space-y-8 sm:space-y-12">
-            {securityFeatures.map((feature, index) => (
-              <div 
-                key={index} 
-                ref={(el) => (itemRefs.current[index] = el)}
-                data-index={index}
-                className={`group transition-all duration-1000 ${
-                  visibleItems.includes(index) 
-                    ? 'opacity-100 translate-y-0' 
-                    : 'opacity-0 translate-y-12'
-                }`}
-              >
-                <div className="bg-white/10 backdrop-blur-md rounded-3xl p-6 sm:p-8 border border-white/20 shadow-2xl hover:shadow-orange-500/20 transition-all duration-500 relative overflow-hidden">
-                  {/* Glassmorphism Effect */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent rounded-3xl"></div>
-                  
-                  {/* Glow Effect on Hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-orange-500/20 to-red-500/20 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
-                  <div className="relative z-10">
-                    <div className="flex items-start space-x-4 sm:space-x-6">
-                      <div className="w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-2xl flex items-center justify-center text-white flex-shrink-0 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg">
-                        <feature.icon className="h-6 w-6 sm:h-8 sm:w-8" />
-                      </div>
-                      
-                      <div className="flex-1">
-                        <h3 className="text-xl sm:text-2xl font-bold text-white mb-3 group-hover:text-orange-300 transition-colors">
-                          {feature.title}
-                        </h3>
-                        <p className="text-slate-300 mb-4 text-base sm:text-lg leading-relaxed">
-                          {feature.description}
-                        </p>
-                        
-                        <div className="mb-4">
-                          <h4 className="text-sm font-semibold text-orange-300 mb-2">Why It's Important:</h4>
-                          <p className="text-slate-300 text-sm">{feature.importance}</p>
+            {securityFeatures.map((feature, index) => {
+              const IconComponent = feature.icon;
+              return (
+                <div 
+                  key={index} 
+                  ref={(el) => (itemRefs.current[index] = el)}
+                  data-index={index}
+                  className={`group transition-all duration-1000 ${
+                    visibleItems.includes(index) 
+                      ? 'opacity-100 translate-y-0' 
+                      : 'opacity-0 translate-y-12'
+                  }`}
+                >
+                  <div className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 relative overflow-hidden">
+                    {/* Box glow */}
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
+                    
+                    {/* Glow Effect on Hover */}
+                    <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-cyan-500/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    
+                    <div className="relative z-10">
+                      <div className="flex items-start space-x-4 sm:space-x-6">
+                        <div className="relative w-12 h-12 sm:w-16 sm:h-16 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-xl flex items-center justify-center text-white flex-shrink-0 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg">
+                          <div className="absolute -inset-1 bg-gradient-to-br from-cyan-400/30 via-purple-400/30 to-cyan-400/30 blur-md opacity-70 animate-pulse rounded-xl"></div>
+                          <IconComponent className="h-6 w-6 sm:h-8 sm:w-8 relative z-10" />
                         </div>
                         
-                        <div>
-                          <h4 className="text-sm font-semibold text-orange-300 mb-3">Key Benefits:</h4>
-                          <ul className="space-y-2">
-                            {feature.benefits.map((benefit, benefitIndex) => (
-                              <li key={benefitIndex} className="flex items-start space-x-2 text-slate-300">
-                                <CheckCircle className="h-4 w-4 text-orange-400 mt-0.5 flex-shrink-0" />
-                                <span className="text-sm leading-relaxed">{benefit}</span>
-                              </li>
-                            ))}
-                          </ul>
+                        <div className="flex-1">
+                          <h3 className="text-xl sm:text-2xl font-semibold text-white mb-3 tracking-tight">
+                            <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">{feature.title}</span>
+                          </h3>
+                          <p className="text-white/60 mb-4 text-base sm:text-lg leading-relaxed font-light">
+                            {feature.description}
+                          </p>
+                          
+                          <div className="mb-4">
+                            <h4 className="text-sm font-semibold text-cyan-300 mb-2">Why It's Important:</h4>
+                            <p className="text-white/60 text-sm font-light">{feature.importance}</p>
+                          </div>
+                          
+                          <div>
+                            <h4 className="text-sm font-semibold text-cyan-300 mb-3">Key Benefits:</h4>
+                            <ul className="space-y-2">
+                              {feature.benefits.map((benefit, benefitIndex) => (
+                                <li key={benefitIndex} className="flex items-start space-x-2 text-white/60">
+                                  <CheckCircle className="h-4 w-4 text-cyan-400 mt-0.5 flex-shrink-0" />
+                                  <span className="text-sm leading-relaxed font-light">{benefit}</span>
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
                         </div>
                       </div>
                     </div>
+                    
+                    {/* Decorative Elements */}
+                    <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500/30 to-purple-500/30 rounded-lg blur opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
                   </div>
-                  
-                  {/* Decorative Elements */}
-                  <div className="absolute -inset-1 bg-gradient-to-r from-orange-500/30 to-red-500/30 rounded-lg blur opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10"></div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* Maintenance & Updates */}
-      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-black via-slate-900 to-red-900">
+      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-cyan-900 to-slate-900">
+        {/* Space Background Elements */}
+        <div className="absolute inset-0">
+          {/* Background Stars */}
+          <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
+          <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
+          <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
+          <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
+          <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
+          <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
+          
+          {/* Nebula Effects */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-16">
-            <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-red-500/20 to-orange-500/20 rounded-full px-4 py-2 sm:px-6 sm:py-3 mb-6 sm:mb-8 border border-red-500/30">
-              <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-red-400 animate-pulse" />
-              <span className="text-xs sm:text-sm font-medium text-red-300">Ongoing Protection</span>
-            </div>
-            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-bold mb-6 sm:mb-8 text-white">
-              Regular <span className="bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">Maintenance</span>
+            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
+              <span className="block font-light opacity-90">Regular</span>
+              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Maintenance</span>
             </h2>
-            <p className="text-base sm:text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed px-4">
+            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
               Security is not a one-time setup. It requires ongoing attention and updates to stay effective.
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
               {
                 title: "Monthly Security Updates",
@@ -311,29 +368,35 @@ const Security = () => {
                 icon: Database,
                 frequency: "Weekly"
               }
-            ].map((item, index) => (
-              <div key={index} className="group">
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20 shadow-2xl hover:shadow-red-500/20 transition-all duration-300 h-full">
-                  <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-orange-600 rounded-xl mb-4 flex items-center justify-center text-white group-hover:scale-110 transition-all duration-300">
-                    <item.icon className="h-6 w-6" />
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-3 group-hover:text-red-300 transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-slate-300 mb-4 text-sm leading-relaxed">
-                    {item.description}
-                  </p>
-                  <div className="text-red-300 text-sm font-semibold">
-                    Frequency: {item.frequency}
+            ].map((item, index) => {
+              const IconComponent = item.icon;
+              return (
+                <div key={index} className="group">
+                  <div className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 border border-slate-800/50 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-300 h-full relative overflow-hidden">
+                    {/* Box glow */}
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
+                    <div className="relative w-12 h-12 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-xl mb-4 flex items-center justify-center text-white group-hover:scale-110 transition-all duration-300 relative z-10">
+                      <div className="absolute -inset-1 bg-gradient-to-br from-cyan-400/30 via-purple-400/30 to-cyan-400/30 blur-md opacity-70 animate-pulse rounded-xl"></div>
+                      <IconComponent className="h-6 w-6 relative z-10" />
+                    </div>
+                    <h3 className="text-xl font-semibold text-white mb-3 relative z-10 tracking-tight">
+                      <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">{item.title}</span>
+                    </h3>
+                    <p className="text-white/60 mb-4 text-sm leading-relaxed font-light relative z-10">
+                      {item.description}
+                    </p>
+                    <div className="text-cyan-300 text-sm font-semibold relative z-10">
+                      Frequency: {item.frequency}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
           
           {/* Last Updated Date */}
           <div className="text-center mt-12">
-            <p className="text-transparent text-sm">
+            <p className="text-white/40 text-sm font-light">
               Last updated: January 2026
             </p>
           </div>
