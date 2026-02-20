@@ -23,6 +23,7 @@ const routes = [
   { url: "/process", priority: 0.8, changefreq: "monthly" },
   { url: "/security", priority: 0.7, changefreq: "monthly" },
   { url: "/mobile", priority: 0.7, changefreq: "monthly" },
+  { url: "/payments", priority: 0.7, changefreq: "monthly" },
   { url: "/blog", priority: 0.8, changefreq: "weekly" }
 ];
 
@@ -33,25 +34,37 @@ const currentDate = new Date().toISOString();
 function getBlogPosts() {
   try {
     // Try to read the blog posts from the source
-    // Since this runs at build time, we'll parse the TypeScript source
-    const blogIndexPath = path.join(__dirname, '../src/content/blog/index.ts');
-    if (fs.existsSync(blogIndexPath)) {
-      const blogIndexContent = fs.readFileSync(blogIndexPath, 'utf-8');
+    // Since this runs at build time, we'll parse the TypeScript source files
+    const blogDir = path.join(__dirname, '../src/content/blog');
+    
+    if (!fs.existsSync(blogDir)) {
+      return [];
+    }
+    
+    const blogFiles = fs.readdirSync(blogDir).filter(file => 
+      file.endsWith('.tsx') && file !== 'index.ts'
+    );
+    
+    const blogPosts = [];
+    
+    for (const file of blogFiles) {
+      const filePath = path.join(blogDir, file);
+      const fileContent = fs.readFileSync(filePath, 'utf-8');
       
-      // Extract blog post slugs from the source
-      // This is a simple regex approach - in production you might want a more robust solution
-      const slugMatches = blogIndexContent.match(/slug:\s*['"]([^'"]+)['"]/g);
-      if (slugMatches) {
-        return slugMatches.map(match => {
-          const slug = match.match(/['"]([^'"]+)['"]/)[1];
-          return {
-            url: `/blog/${slug}`,
-            priority: 0.7,
-            changefreq: 'monthly'
-          };
+      // Extract blog post slug from the file
+      // Look for slug: '...' or slug: "..."
+      const slugMatch = fileContent.match(/slug:\s*['"]([^'"]+)['"]/);
+      if (slugMatch) {
+        const slug = slugMatch[1];
+        blogPosts.push({
+          url: `/blog/${slug}`,
+          priority: 0.7,
+          changefreq: 'monthly'
         });
       }
     }
+    
+    return blogPosts;
   } catch (error) {
     console.warn('⚠️  Could not read blog posts for sitemap:', error.message);
   }
