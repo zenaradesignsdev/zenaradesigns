@@ -838,6 +838,12 @@
   100% { transform: translateX(-33.333%); }
 }
 
+/* Infinite smooth scroll - no flicker */
+.animate-scroll-smooth {
+  animation: scroll-smooth 40s linear infinite;
+  will-change: transform;
+}
+
 .animate-scroll-smooth {
   animation: scroll-smooth 20s linear infinite;
 }
@@ -1197,11 +1203,12 @@
 }
 
 .cool-text-animation {
-  background: linear-gradient(45deg, #06b6d4, #8b5cf6);
+  background: linear-gradient(to right, rgb(103, 232, 249), rgb(196, 181, 253), rgb(103, 232, 249));
+  background-size: 200% auto;
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: text-enter 0.6s ease-out;
+  animation: text-enter 0.6s ease-out, gradient 3s ease infinite;
   display: inline-block;
 }
 
@@ -1296,6 +1303,17 @@
   }
 }
 
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scaleY(1.1);
+  }
+}
+
 @keyframes levitate {
   0% {
     transform: translateX(0px) translateY(0px);
@@ -1364,4 +1382,18 @@
 
 .cursor-glow:hover::after {
   opacity: 1;
+}
+
+/* Animated gradient text */
+@keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-gradient {
+  animation: gradient 8s ease infinite;
 }
