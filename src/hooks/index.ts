@@ -1,4 +1,5 @@
 // Centralized exports for all custom hooks
+export { useTypingAnimation } from './useTypingAnimation';
 export { useScrollToTop } from './use-scroll-to-top';
 export { useIsMobile } from './use-mobile';
 export { useToast } from './use-toast';

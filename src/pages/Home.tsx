@@ -21,6 +21,207 @@ import instagramLogo from '@/assets/instagram.svg';
 import { useState, useEffect, useRef, memo, useCallback, useMemo } from 'react';
 import StructuredData from '@/components/StructuredData';
 import GoogleReviews from '@/components/GoogleReviews';
+import { useTypingAnimation } from '@/hooks/useTypingAnimation';
+
+// Simple component for typing animation (single line)
+const TypingTextSection = ({ text, className = '' }: { text: string; className?: string }) => {
+  const { displayedText, isTyping, containerRef } = useTypingAnimation(text, 25);
+  
+  return (
+    <span ref={containerRef} className={className}>
+      {displayedText}
+      {isTyping && <span className="animate-pulse">|</span>}
+    </span>
+  );
+};
+
+// Component for multi-line typing animation (sequential)
+const TypingTextLines = ({ lines, className = '', lineClassName = '', customLineRender }: { 
+  lines: string[]; 
+  className?: string; 
+  lineClassName?: string | ((index: number, totalLines: number) => string);
+  customLineRender?: (line: string, index: number) => React.ReactNode;
+}) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [currentLineIndex, setCurrentLineIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const [completedLines, setCompletedLines] = useState<number[]>([]);
+
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isVisible) {
+            setIsVisible(true);
+          }
+        });
+      },
+      {
+        threshold: 0.2,
+        rootMargin: '0px'
+      }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [isVisible]);
+
+  const handleLineComplete = (index: number) => {
+    setCompletedLines(prev => [...prev, index]);
+    if (index < lines.length - 1) {
+      setTimeout(() => setCurrentLineIndex(index + 1), 200);
+    }
+  };
+
+  return (
+    <div ref={containerRef} className={`w-full ${className}`}>
+      {lines.map((line, index) => {
+        const shouldStart = isVisible && index === currentLineIndex && !completedLines.includes(index);
+        
+        if (customLineRender) {
+          return (
+            <div key={index} className={`${lineClassName} relative w-full`} style={{ minHeight: 'clamp(1.2em, 4vw, 1.5em)' }}>
+              {/* Invisible placeholder to reserve space */}
+              <span className="invisible block w-full break-words" aria-hidden="true">{line}</span>
+              {/* Typing text overlay */}
+              <span className="absolute left-0 top-0 block w-full break-words">
+                {customLineRender(line, index)}
+              </span>
+            </div>
+          );
+        }
+        
+        // Apply lineClassName to the span wrapper for styling
+        const spanClasses = typeof lineClassName === 'function' ? lineClassName(index, lines.length) : (lineClassName || '');
+        
+        return (
+          <div key={index} className="relative w-full" style={{ minHeight: 'clamp(1.2em, 4vw, 1.5em)' }}>
+            {/* Invisible placeholder to reserve space */}
+            <span className="invisible block w-full break-words" aria-hidden="true">{line}</span>
+            {/* Typing text overlay */}
+            <span className={`absolute left-0 top-0 block w-full break-words ${spanClasses}`}>
+              <TypingTextLine
+                text={line}
+                startTyping={shouldStart}
+                onComplete={() => handleLineComplete(index)}
+                className=""
+              />
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+// Single line component that can be controlled externally
+const TypingTextLine = ({ text, startTyping, onComplete, className = '' }: { 
+  text: string; 
+  startTyping: boolean; 
+  onComplete: () => void;
+  className?: string;
+}) => {
+  const [displayedText, setDisplayedText] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const [hasCompleted, setHasCompleted] = useState(false);
+
+  useEffect(() => {
+    if (startTyping && !isTyping && !hasCompleted) {
+      setIsTyping(true);
+      setDisplayedText('');
+    }
+  }, [startTyping, isTyping, hasCompleted]);
+
+  useEffect(() => {
+    if (isTyping && displayedText.length < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(text.slice(0, displayedText.length + 1));
+      }, 25);
+
+      return () => clearTimeout(timeout);
+    } else if (isTyping && displayedText.length === text.length) {
+      setIsTyping(false);
+      setHasCompleted(true);
+      onComplete();
+    }
+  }, [isTyping, displayedText, text, onComplete]);
+
+  return (
+    <span className={className}>
+      {hasCompleted ? text : displayedText}
+      {isTyping && <span className="animate-pulse">|</span>}
+    </span>
+  );
+};
+
+// Sequential typing for "Bring your" then "ideas to life" with gradient on "ideas"
+const BringIdeasToLifeTyping = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const [line1Complete, setLine1Complete] = useState(false);
+  const [line2Start, setLine2Start] = useState(false);
+
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isVisible) {
+            setIsVisible(true);
+          }
+        });
+      },
+      { threshold: 0.2, rootMargin: '0px' }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [isVisible]);
+
+  return (
+    <div ref={containerRef} className="w-full">
+      {/* Line 1: "Bring your" */}
+      <div className="relative block font-light opacity-90 w-full" style={{ minHeight: 'clamp(1.2em, 4vw, 1.5em)' }}>
+        <span className="invisible block w-full break-words" aria-hidden="true">Bring your</span>
+        <span className="absolute left-0 top-0 block w-full break-words">
+          <TypingTextLine
+            text="Bring your"
+            startTyping={isVisible}
+            onComplete={() => {
+              setTimeout(() => setLine2Start(true), 200);
+            }}
+            className=""
+          />
+        </span>
+      </div>
+      {/* Line 2: "ideas to life" */}
+      <div className="relative block mt-1 sm:mt-1.5 w-full" style={{ minHeight: 'clamp(1.2em, 4vw, 1.5em)' }}>
+        <span className="invisible block w-full break-words" aria-hidden="true">
+          <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">ideas</span> <span className="font-light">to life</span>
+        </span>
+        <span className="absolute left-0 top-0 block w-full break-words">
+          <TypingTextLine
+            text="ideas"
+            startTyping={line2Start}
+            onComplete={() => {}}
+            className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal"
+          />{' '}
+          <TypingTextLine
+            text="to life"
+            startTyping={line2Start}
+            onComplete={() => {}}
+            className="font-light"
+          />
+        </span>
+      </div>
+    </div>
+  );
+};
 
 const Home = () => {
   // Scroll to top when component mounts
@@ -364,7 +565,7 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 h-full flex items-center pt-16 sm:pt-20 md:pt-24">
           <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 sm:gap-10 lg:gap-12 items-center w-full">
             <div className="fade-in order-2 lg:order-1 text-center lg:text-left">
-              <h1 className="text-5xl xs:text-6xl sm:text-7xl md:text-7xl lg:text-8xl xl:text-8xl font-light mb-4 sm:mb-6 leading-[1.1] text-white tracking-[-0.02em]">
+              <h1 className="text-5xl xs:text-6xl sm:text-7xl md:text-7xl lg:text-8xl xl:text-8xl font-light mb-4 sm:mb-6 leading-[1.1] text-white tracking-[-0.02em] hero-text-fade">
                 <span className="block pb-1">
                   Modern Web Design. <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
                     <span key={currentSlogan} className="cool-text-animation">{slogans[currentSlogan]}</span>
@@ -374,7 +575,7 @@ const Home = () => {
               <p className="text-base sm:text-lg md:text-xl text-white/70 mb-8 leading-[1.7] font-light tracking-[0.01em] max-w-2xl mx-auto lg:mx-0">
                 Zenara Designs creates high-performing websites for Toronto & GTA businesses and professionals using modern development workflows.
               </p>
-              <div className="flex justify-center lg:justify-start">
+              <div className="flex justify-center lg:justify-start hero-button-slide">
                 <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
                   <Button asChild className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-8 py-6 sm:px-10 sm:py-7 text-lg sm:text-xl font-semibold group">
                     <Link to="/contact" className="flex items-center justify-center">
@@ -401,7 +602,7 @@ const Home = () => {
                 <div className="absolute inset-4 bg-gradient-to-r from-purple-500/20 to-violet-500/20 rounded-full blur-xl animate-pulse delay-1000"></div>
                 
                 {/* Logo with Space Effects */}
-                <div className="relative z-10 group">
+                <div className="relative z-10 group hero-logo-zoom">
                   <img 
                     src={logo} 
                     alt="Zenara Designs - Professional Web Design Agency Toronto Logo" 
@@ -521,8 +722,10 @@ const Home = () => {
             {/* Left Side - Text Content */}
             <div className="text-center lg:text-left space-y-4 sm:space-y-6">
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-[-0.02em]">
-                <span className="block">So much more than</span>
-                <span className="block mt-1 whitespace-nowrap">a web design agency.</span>
+                <TypingTextLines 
+                  lines={['So much more than', 'a web design agency.']} 
+                  className="[&>div:first-child]:block [&>div:last-child]:block [&>div:last-child]:mt-1"
+                />
               </h2>
               <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white/90 leading-[1.1] tracking-[-0.02em] mt-4">
                 <span>We are your </span>
@@ -706,10 +909,7 @@ const Home = () => {
             {/* Left Side - Text Content */}
             <div className="space-y-6 text-center lg:text-left">
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white leading-[0.95] tracking-[-0.04em]">
-                <span className="block font-light opacity-90">Bring your</span>
-                <span className="block mt-1">
-                  <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">ideas</span> <span className="font-light">to life</span>
-                </span>
+                <BringIdeasToLifeTyping />
               </h2>
               
               <p className="text-base sm:text-lg md:text-xl text-white/60 leading-[1.7] max-w-lg mx-auto lg:mx-0 font-light tracking-[0.01em]">
@@ -990,11 +1190,16 @@ const Home = () => {
           {/* Upper Section - Headline */}
           <div className="text-center mb-12 sm:mb-16 relative z-20">
             {/* Modern Typography with Elegant Spacing */}
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-white mb-8 sm:mb-10 leading-[0.95] tracking-[-0.04em]">
-              <span className="block font-light opacity-90">Where Innovation</span>
-              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">
-                Meets Excellence
-              </span>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-white mb-8 sm:mb-10 leading-[0.95] tracking-[-0.04em] text-center">
+              <TypingTextLines 
+                lines={['Where Innovation', 'Meets Excellence']}
+                className="inline-block w-full max-w-full [&>div:first-child]:block [&>div:first-child]:font-light [&>div:first-child]:opacity-90 [&>div:last-child]:block [&>div:last-child]:mt-2 sm:[&>div:last-child]:mt-2.5"
+                lineClassName={(index) => {
+                  if (index === 0) return "block font-light opacity-90";
+                  if (index === 1) return "block bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal";
+                  return "";
+                }}
+              />
             </h2>
             
             {/* Refined Description */}
@@ -1099,10 +1304,13 @@ const Home = () => {
           {/* Header Section */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 sm:mb-16 gap-6">
             <div className="flex-1">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight mb-4 text-white leading-[0.95] tracking-[-0.04em]">
-                <span className="font-light">What Sets Us </span>
-                <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Apart</span>
-              </h2>
+                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight mb-4 text-white leading-[0.95] tracking-[-0.04em]">
+                  <TypingTextSection text="What Sets Us " className="font-light" />
+                  <TypingTextSection 
+                    text="Apart" 
+                    className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal"
+                  />
+                </h2>
               <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-2xl leading-[1.7] font-light tracking-[0.01em]">
                 We don't just build websites. We craft digital experiences that grow with your business.
               </p>
@@ -1324,7 +1532,7 @@ const Home = () => {
                   <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 rounded-full blur opacity-50 group-hover:opacity-70 transition-opacity duration-300"></div>
                   
                   {/* Button - Clean Modern Style */}
-                  <div className="relative bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 hover:from-cyan-400 hover:via-purple-400 hover:to-cyan-400 text-white rounded-full px-10 sm:px-12 md:px-14 py-4 sm:py-5 text-lg sm:text-xl font-semibold shadow-lg transition-all duration-300 transform hover:scale-105">
+                  <div className="relative bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 hover:from-cyan-400 hover:via-purple-400 hover:to-cyan-400 text-white rounded-full px-10 sm:px-12 md:px-14 py-4 sm:py-5 text-lg sm:text-xl font-semibold shadow-lg transition-all duration-300 transform hover:scale-105 animate-jiggle">
                     Start Your Project
                   </div>
             </Link>
