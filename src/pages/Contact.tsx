@@ -1,4 +1,4 @@
-import { useState, memo, useEffect } from 'react';
+import { useState, memo, useEffect, useRef } from 'react';
 import { Mail, Clock, CheckCircle, ArrowRight, Phone, Calendar } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -13,6 +13,115 @@ import { sendContactEmail, contactFormSchema, type ContactFormData } from '@/lib
 import { BUSINESS_EMAIL, BUSINESS_PHONE } from '@/lib/constants';
 import type { ProcessStepInfo } from '@/lib/types';
 import StructuredData from '@/components/StructuredData';
+import { useTypingAnimation } from '@/hooks/useTypingAnimation';
+
+// Single line component that can be controlled externally
+const TypingTextLine = ({ text, startTyping, onComplete, className = '' }: { 
+  text: string; 
+  startTyping: boolean; 
+  onComplete: () => void;
+  className?: string;
+}) => {
+  const [displayedText, setDisplayedText] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const [hasCompleted, setHasCompleted] = useState(false);
+
+  useEffect(() => {
+    if (startTyping && !isTyping && !hasCompleted) {
+      setIsTyping(true);
+      setDisplayedText('');
+    }
+  }, [startTyping, isTyping, hasCompleted]);
+
+  useEffect(() => {
+    if (isTyping && displayedText.length < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayedText(text.slice(0, displayedText.length + 1));
+      }, 25);
+
+      return () => clearTimeout(timeout);
+    } else if (isTyping && displayedText.length === text.length) {
+      setIsTyping(false);
+      setHasCompleted(true);
+      onComplete();
+    }
+  }, [isTyping, displayedText, text, onComplete]);
+
+  return (
+    <span className={className}>
+      {hasCompleted ? text : displayedText}
+      {isTyping && <span className="animate-pulse">|</span>}
+    </span>
+  );
+};
+
+// Component for multi-line typing animation (sequential)
+const TypingTextLines = ({ lines, className = '', lineClassName = '' }: { 
+  lines: string[]; 
+  className?: string; 
+  lineClassName?: string | ((index: number, totalLines: number) => string);
+}) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [currentLineIndex, setCurrentLineIndex] = useState(0);
+  const [isVisible, setIsVisible] = useState(false);
+  const [completedLines, setCompletedLines] = useState<number[]>([]);
+
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !isVisible) {
+            setIsVisible(true);
+          }
+        });
+      },
+      {
+        threshold: 0.2,
+        rootMargin: '0px'
+      }
+    );
+
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [isVisible]);
+
+  const handleLineComplete = (index: number) => {
+    setCompletedLines(prev => [...prev, index]);
+    if (index < lines.length - 1) {
+      setTimeout(() => setCurrentLineIndex(index + 1), 200);
+    }
+  };
+
+  return (
+    <div ref={containerRef} className={`w-full ${className}`}>
+      {lines.map((line, index) => {
+        const shouldStart = isVisible && index === currentLineIndex && !completedLines.includes(index);
+        
+        // Apply lineClassName to the span wrapper for styling
+        const spanClasses = typeof lineClassName === 'function' ? lineClassName(index, lines.length) : (lineClassName || '');
+        
+        return (
+          <div key={index} className="relative w-full" style={{ minHeight: 'clamp(1.2em, 4vw, 1.5em)' }}>
+            {/* Invisible placeholder to reserve space */}
+            <span className="invisible block w-full break-words" aria-hidden="true">{line}</span>
+            {/* Typing text overlay */}
+            <span className={`absolute left-0 top-0 block w-full break-words ${spanClasses}`}>
+              <TypingTextLine
+                text={line}
+                startTyping={shouldStart}
+                onComplete={() => handleLineComplete(index)}
+                className=""
+              />
+            </span>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
 
 const Contact = () => {
   // Scroll to top when component mounts
@@ -180,8 +289,15 @@ const Contact = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-16">
             <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
-              <span className="block font-light opacity-90">Ready to Transform Your</span>
-              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Digital Presence?</span>
+              <TypingTextLines
+                lines={['Ready to Transform Your', 'Digital Presence?']}
+                className="[&>div:first-child]:block [&>div:last-child]:block [&>div:last-child]:mt-2"
+                lineClassName={(index) => {
+                  if (index === 0) return "block font-light opacity-90";
+                  if (index === 1) return "block bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1";
+                  return "";
+                }}
+              />
             </h1>
             <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-4xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
               Whether you're a startup looking to make a splash or an established business ready to modernize, we're here to help. Professional web design services in Toronto & GTA.
@@ -472,7 +588,7 @@ const Contact = () => {
               <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
                 <Button
                   asChild
-                  className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-8 py-4 sm:px-10 sm:py-5 text-base sm:text-lg font-semibold group"
+                  className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-8 py-4 sm:px-10 sm:py-5 text-base sm:text-lg font-semibold group animate-jiggle"
                 >
                   <Link to="/contact/schedule">
                     <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full"></span>
