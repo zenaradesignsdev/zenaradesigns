@@ -591,7 +591,7 @@ const Home = () => {
             </div>
 
             <div className="relative order-1 lg:order-2 flex justify-center lg:justify-end">
-              <div className="w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[350px] md:max-w-[400px] lg:max-w-[450px] xl:max-w-[500px] h-[220px] xs:h-[250px] sm:h-[300px] md:h-[350px] lg:h-[400px] mx-auto relative flex items-center justify-center">
+              <div className="w-full max-w-[200px] xs:max-w-[240px] sm:max-w-[350px] md:max-w-[400px] lg:max-w-[450px] xl:max-w-[500px] h-[180px] xs:h-[200px] sm:h-[300px] md:h-[350px] lg:h-[400px] mx-auto relative flex items-center justify-center">
                 {/* Orbital Rings */}
                 <div className="absolute inset-0 border border-teal-500/20 rounded-full animate-spin-slow"></div>
                 <div className="absolute inset-4 border border-purple-500/20 rounded-full animate-spin-slow-reverse"></div>
@@ -606,7 +606,7 @@ const Home = () => {
                   <img 
                     src={logo} 
                     alt="Zenara Designs - Professional Web Design Agency Toronto Logo" 
-                    className="w-full max-w-[250px] sm:max-w-[280px] md:max-w-[320px] lg:max-w-[350px] h-auto object-contain animate-float"
+                    className="w-full max-w-[180px] xs:max-w-[200px] sm:max-w-[280px] md:max-w-[320px] lg:max-w-[350px] h-auto object-contain animate-float"
                     width="350"
                     height="350"
                     loading="eager"
