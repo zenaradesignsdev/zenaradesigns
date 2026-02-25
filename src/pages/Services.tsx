@@ -5,7 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { useScrollToTop, useSEO } from '@/hooks';
 import { useState, useEffect, useRef, memo, useCallback, useMemo } from 'react';
 import StructuredData from '@/components/StructuredData';
-import logo from '@/assets/zenaralogov2.svg';
+import logo from '@/assets/zenara-logo-v5.svg';
 import realEstateWebImage from '@/assets/website-example-realestate.png';
 import rocketWebImage from '@/assets/website-example-rocket.png';
 import gardenWebImage from '@/assets/website-example-garden.png';

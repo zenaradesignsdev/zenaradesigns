@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { Mail, Phone, CheckCircle } from 'lucide-react';
 import { scrollToTop } from '@/hooks';
 import { BUSINESS_EMAIL, BUSINESS_PHONE, NAVIGATION_LINKS, FOOTER_ADDITIONAL_LINKS } from '@/lib/constants';
-import logo from '@/assets/zenaralogov2.svg';
+import logo from '@/assets/zenara-logo-v5.svg';
 import { useState, FormEvent, useEffect } from 'react';
 
 const Footer = () => {

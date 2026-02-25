@@ -5,7 +5,7 @@ import { X, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { scrollToTop } from '@/hooks';
 import { NAVIGATION_LINKS } from '@/lib/constants';
-import logo from '@/assets/zenaralogov2.svg';
+import logo from '@/assets/zenara-logo-v5.svg';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

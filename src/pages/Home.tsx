@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 import { useScrollToTop, useSEO } from '@/hooks';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
 import type { Capability, Differentiator, SuccessMetric, AnimatedNumbers } from '@/lib/types';
-import logo from '@/assets/zenaralogov2.svg';
+import logo from '@/assets/zenara-logo-v5.svg';
 import realEstateWebImage from '@/assets/website-example-realestate.png';
 import rocketWebImage from '@/assets/website-example-rocket.png';
 import gardenWebImage from '@/assets/website-example-garden.png';
@@ -247,11 +247,31 @@ const Home = () => {
   });
   const [isVisible, setIsVisible] = useState(false);
   const [yearsExperience, setYearsExperience] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isFadingOut, setIsFadingOut] = useState(false);
   const metricsRef = useRef<HTMLDivElement>(null);
   const yearsRef = useRef<HTMLDivElement>(null);
   const yearsAnimatedRef = useRef(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   
+  // Loading screen animation
+  useEffect(() => {
+    // Start fade out after 2 seconds
+    const fadeTimer = setTimeout(() => {
+      setIsFadingOut(true);
+    }, 2000);
+    
+    // Hide completely after fade out completes
+    const hideTimer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3000);
+    
+    return () => {
+      clearTimeout(fadeTimer);
+      clearTimeout(hideTimer);
+    };
+  }, []);
+
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentSlogan((prev) => {
@@ -498,6 +518,40 @@ const Home = () => {
 
   return (
     <div className="m-0 p-0" role="main" aria-label="Home page">
+      {/* Full-Screen Loading Animation */}
+      {isLoading && (
+        <div className={`fixed inset-0 z-[9999] bg-black flex items-center justify-center transition-opacity duration-1000 ${isFadingOut ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
+          {/* Background gradient */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/40 to-black"></div>
+          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/30 to-black"></div>
+          
+          {/* Animated stars in background */}
+          <div className="absolute inset-0">
+            <div className="bg-star" style={{ top: '20%', left: '15%', animationDelay: '0s' }}></div>
+            <div className="bg-star" style={{ top: '40%', left: '25%', animationDelay: '0.5s' }}></div>
+            <div className="bg-star" style={{ top: '60%', left: '10%', animationDelay: '1s' }}></div>
+            <div className="bg-star" style={{ top: '30%', left: '70%', animationDelay: '0.3s' }}></div>
+            <div className="bg-star" style={{ top: '70%', left: '80%', animationDelay: '0.8s' }}></div>
+          </div>
+          
+          {/* Logo with entrance animation */}
+          <div className="relative z-10 loading-logo-entrance">
+            <img 
+              src={logo} 
+              alt="Zenara Designs Logo" 
+              className="w-48 sm:w-64 md:w-80 lg:w-96 h-auto object-contain"
+              style={{ filter: 'drop-shadow(0 0 30px rgba(0, 0, 0, 0.8)) drop-shadow(0 0 60px rgba(0, 0, 0, 0.5))' }}
+              width="384"
+              height="384"
+              loading="eager"
+              decoding="async"
+            />
+            {/* Glow effect around logo */}
+            <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-cyan-500/20 rounded-full blur-3xl -z-10 loading-glow"></div>
+          </div>
+        </div>
+      )}
+      
       {/* Space-Themed Hero Section */}
       <section className="hero-section h-screen flex items-center justify-center relative overflow-hidden bg-black cursor-glow z-10" role="banner" aria-label="Hero section">
         {/* Gradient Background Layers */}
@@ -606,7 +660,8 @@ const Home = () => {
                   <img 
                     src={logo} 
                     alt="Zenara Designs - Professional Web Design Agency Toronto Logo" 
-                    className="w-full max-w-[180px] xs:max-w-[200px] sm:max-w-[280px] md:max-w-[320px] lg:max-w-[350px] h-auto object-contain animate-float"
+                    className="w-full max-w-[180px] xs:max-w-[200px] sm:max-w-[280px] md:max-w-[320px] lg:max-w-[350px] h-auto object-contain animate-float animate-spin-slow"
+                    style={{ filter: 'drop-shadow(0 0 20px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 40px rgba(0, 0, 0, 0.3))' }}
                     width="350"
                     height="350"
                     loading="eager"
