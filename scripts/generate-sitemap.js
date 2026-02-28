@@ -109,7 +109,7 @@ function generateImageSitemap() {
   sitemap += '  <url>\n';
   sitemap += `    <loc>${baseUrl}/</loc>\n`;
   sitemap += '    <image:image>\n';
-  sitemap += `      <image:loc>${baseUrl}/logo-seo.png</image:loc>\n`;
+      sitemap += `      <image:loc>${baseUrl}/logo-seo.svg</image:loc>\n`;
   sitemap += '      <image:title>Zenara Designs Logo - Web Design Toronto</image:title>\n';
   sitemap += '      <image:caption>Professional web design and development agency logo serving Toronto and GTA</image:caption>\n';
   sitemap += '    </image:image>\n';

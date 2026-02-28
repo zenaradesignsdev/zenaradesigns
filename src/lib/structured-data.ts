@@ -7,7 +7,7 @@ export const BUSINESS_INFO = {
   email: BUSINESS_EMAIL,
   phone: BUSINESS_PHONE,
   url: 'https://zenaradesigns.com',
-  logo: 'https://zenaradesigns.com/logo-seo.png',
+  logo: 'https://zenaradesigns.com/logo-seo.svg',
   description: 'Professional web design and development agency serving Toronto and the Greater Toronto Area. We create modern, fast, and secure websites for small businesses and professionals.',
   
   // Address information (using Toronto as primary location)

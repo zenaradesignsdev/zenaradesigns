@@ -51,7 +51,7 @@ const generateProductSchema = (product: {
     name: product.name,
     description: product.description,
     category: 'Web Design Service',
-    image: 'https://zenaradesigns.com/logo-seo.png', // Add required image field
+    image: 'https://zenaradesigns.com/logo-seo.svg', // Add required image field
     brand: {
       '@type': 'Brand',
       name: 'Zenara Designs'

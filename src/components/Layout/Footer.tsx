@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Mail, Phone, CheckCircle } from 'lucide-react';
+import { Mail, Phone, CheckCircle, Instagram } from 'lucide-react';
 import { scrollToTop } from '@/hooks';
 import { BUSINESS_EMAIL, BUSINESS_PHONE, NAVIGATION_LINKS, FOOTER_ADDITIONAL_LINKS } from '@/lib/constants';
 import logo from '@/assets/zenara-logo-v5.svg';
@@ -188,16 +188,28 @@ const Footer = () => {
                 Creating high-performing websites for small businesses and professionals using modern development workflows.
               </p>
               <div className="space-y-3">
-                <div className="flex items-start space-x-2 text-slate-300">
-                  <Mail className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                <div className="flex items-baseline space-x-2 text-slate-300">
+                  <Mail className="h-4 w-4 flex-shrink-0 mt-0.5" />
                   <a href={`mailto:${BUSINESS_EMAIL}`} className="hover:text-cyan-400 transition-colors break-all" rel="noopener noreferrer">
                     {BUSINESS_EMAIL}
                   </a>
                 </div>
-                <div className="flex items-start space-x-2 text-slate-300">
-                  <Phone className="h-4 w-4 mt-0.5 flex-shrink-0" />
+                <div className="flex items-baseline space-x-2 text-slate-300">
+                  <Phone className="h-4 w-4 flex-shrink-0 mt-0.5" />
                   <a href={`tel:${BUSINESS_PHONE}`} className="hover:text-cyan-400 transition-colors" rel="noopener noreferrer">
                     {BUSINESS_PHONE}
+                  </a>
+                </div>
+                <div className="flex items-baseline space-x-2 text-slate-300">
+                  <Instagram className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                  <a 
+                    href="https://www.instagram.com/zenaradesignsinc/" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="hover:text-cyan-400 transition-colors"
+                    aria-label="Follow us on Instagram @zenaradesignsinc"
+                  >
+                    @zenaradesignsinc
                   </a>
                 </div>
               </div>
