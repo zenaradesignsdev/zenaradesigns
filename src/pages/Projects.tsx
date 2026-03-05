@@ -1,7 +1,10 @@
-import { Rocket } from 'lucide-react';
+import { Rocket, ExternalLink } from 'lucide-react';
 import { useScrollToTop, useSEO } from '@/hooks';
 import { memo } from 'react';
 import StructuredData from '@/components/StructuredData';
+import renoProjectImage from '@/assets/reno-project.png';
+import ashcamSiteImage from '@/assets/ashcam-site.png';
+import jbloansImage from '@/assets/jbloans.png';
 
 const Projects = () => {
   // Scroll to top when component mounts
@@ -16,8 +19,8 @@ const Projects = () => {
   
   return (
     <div className="min-h-screen bg-black">
-      {/* Hero Section */}
-      <section className="projects-hero min-h-screen py-16 sm:py-20 md:py-24 relative overflow-hidden bg-black">
+      {/* Combined Hero & Projects Section */}
+      <section className="min-h-screen pt-24 sm:pt-28 md:pt-32 lg:pt-40 pb-16 sm:pb-20 md:pb-24 lg:pb-32 relative overflow-hidden bg-black">
         {/* Gradient Background Layers */}
         <div className="absolute inset-0">
           {/* Base gradient layer */}
@@ -49,54 +52,246 @@ const Projects = () => {
           <div className="bg-star" style={{ top: '29%', left: '68%' }}></div>
           <div className="bg-star" style={{ top: '38%', left: '82%' }}></div>
           <div className="bg-star" style={{ top: '27%', left: '92%' }}></div>
+          <div className="bg-star" style={{ top: '45%', left: '8%' }}></div>
+          <div className="bg-star" style={{ top: '48%', left: '22%' }}></div>
+          <div className="bg-star" style={{ top: '52%', left: '35%' }}></div>
+          <div className="bg-star" style={{ top: '55%', left: '48%' }}></div>
+          <div className="bg-star" style={{ top: '58%', left: '62%' }}></div>
+          <div className="bg-star" style={{ top: '62%', left: '75%' }}></div>
+          <div className="bg-star" style={{ top: '65%', left: '88%' }}></div>
+          <div className="bg-star" style={{ top: '75%', left: '12%' }}></div>
+          <div className="bg-star" style={{ top: '78%', left: '28%' }}></div>
+          <div className="bg-star" style={{ top: '82%', left: '45%' }}></div>
+          <div className="bg-star" style={{ top: '85%', left: '62%' }}></div>
+          <div className="bg-star" style={{ top: '88%', left: '78%' }}></div>
+          <div className="bg-star" style={{ top: '92%', left: '92%' }}></div>
           
           {/* Nebula Effects */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/15 to-purple-500/15 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/15 to-cyan-500/15 rounded-full blur-3xl animate-pulse delay-1000"></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-cyan-500/8 via-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-500"></div>
         </div>
 
-        <div className="container mx-auto px-4 sm:px-6 relative z-10 flex items-center justify-center min-h-screen">
-          <div className="text-center max-w-4xl mx-auto">
-            {/* Main Title */}
-            <div className="mb-6 sm:mb-8">
-              <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extralight mb-6 sm:mb-8 text-white leading-[0.95] tracking-[-0.04em]">
-                <span className="block font-light opacity-90">Web Design</span>
-                <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Portfolio Toronto</span>
-              </h1>
-              <div className="flex items-center justify-center space-x-2 mb-4 sm:mb-6">
-                <div className="w-2 h-2 sm:w-3 sm:h-3 bg-cyan-400 rounded-full animate-pulse"></div>
-                <span className="text-cyan-300 font-light text-base sm:text-lg">
-                  Something amazing is coming soon
-                </span>
-              </div>
-            </div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+          {/* Hero Header */}
+          <div className="text-center mb-12 sm:mb-16 md:mb-20 lg:mb-24">
+            <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extralight mb-4 sm:mb-6 text-white leading-[0.95] tracking-[-0.04em]">
+              <span className="font-light opacity-90">Web Design </span>
+              <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Portfolio</span>
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl text-white/60 leading-[1.7] max-w-2xl mx-auto font-light tracking-[0.01em] mt-6">
+              Explore our portfolio of custom web design projects for businesses across Toronto and the GTA.
+            </p>
+          </div>
 
-            {/* Coming Soon Card */}
-            <div className="coming-soon-card bg-slate-900/90 backdrop-blur-sm rounded-3xl p-6 sm:p-8 md:p-12 border border-slate-800/50 shadow-2xl relative overflow-hidden max-w-2xl mx-auto">
-              {/* Box glow */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
+          {/* Projects Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 max-w-7xl mx-auto">
+            {/* Renovation Company Project */}
+            <a
+              href="https://projectone.zenaradesigns.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-800/50 hover:border-cyan-400/70 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/30 overflow-hidden relative hover:-translate-y-2 flex flex-col h-full"
+            >
+              {/* Animated gradient border */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/0 via-purple-500/0 to-cyan-500/0 group-hover:from-cyan-500/30 group-hover:via-purple-500/30 group-hover:to-cyan-500/30 transition-all duration-500 blur-xl"></div>
               
+              {/* Box glow */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              {/* Background gradient on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+
               <div className="relative z-10">
-                {/* Rocket Icon */}
-                <div className="flex justify-center mb-4 sm:mb-6">
-                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-full flex items-center justify-center shadow-2xl">
-                    <div className="absolute -inset-1 bg-gradient-to-br from-cyan-400/30 via-purple-400/30 to-cyan-400/30 blur-md opacity-70 animate-pulse rounded-full"></div>
-                    <Rocket className="w-8 h-8 sm:w-10 sm:h-10 text-white relative z-10" />
-                  </div>
+                {/* Project Preview */}
+                <div className="aspect-video relative overflow-hidden">
+                  {/* Shine effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
+                  
+                  {/* Project Image */}
+                  <img 
+                    src={renoProjectImage} 
+                    alt="Luxury Renovation Website - Professional luxury renovation and construction services" 
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
+                    width="800"
+                    height="450"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
                 
-                {/* Coming Soon Text */}
-                <h2 className="text-3xl sm:text-4xl md:text-5xl font-extralight text-white mb-3 sm:mb-4 leading-[0.95] tracking-[-0.04em]">
-                  <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Coming Soon</span>
-                </h2>
-                <p className="text-lg sm:text-xl text-white/60 leading-[1.7] font-light tracking-[0.01em]">
-                  Thanks for your patience!
-                </p>
-                <p className="text-sm text-white/40 mt-4 font-light">
-                  Last updated: January 2026
-                </p>
+                {/* Project Info */}
+                <div className="p-6 sm:p-8 flex flex-col flex-1">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <h3 className="text-white font-semibold text-xl sm:text-2xl mb-1 group-hover:text-cyan-300 transition-colors">
+                        Luxury Renovation
+                      </h3>
+                      <div className="flex items-center gap-2 mt-2">
+                        <span className="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-medium rounded-full border border-cyan-500/30">
+                          Web Design
+                        </span>
+                        <span className="px-2.5 py-1 bg-purple-500/20 text-purple-300 text-xs font-medium rounded-full border border-purple-500/30">
+                          Toronto
+                        </span>
+                      </div>
+                    </div>
+                    <ExternalLink className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 group-hover:text-cyan-400 transition-all duration-300 flex-shrink-0 ml-3 group-hover:scale-110" />
+                  </div>
+                  
+                  <p className="text-slate-300 text-sm sm:text-base mb-6 font-light leading-relaxed flex-1">
+                    Luxury renovation and construction services website designed for Toronto businesses. Modern, responsive design with seamless user experience. Showcasing premium craftsmanship and attention to detail.
+                  </p>
+                  
+                  <div className="flex items-center justify-between pt-4 border-t border-slate-800/50 group-hover:border-cyan-500/30 transition-colors mt-auto">
+                    <span className="text-cyan-400 text-sm font-medium group-hover:text-purple-400 transition-colors">
+                      View Live Site
+                    </span>
+                    <div className="flex items-center text-slate-400 group-hover:text-cyan-400 transition-colors">
+                      <ExternalLink className="h-4 w-4" />
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
+            </a>
+
+            {/* AshCam Cutting Solutions Project */}
+            <a
+              href="https://ashcamcuttingsolution.ca/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-800/50 hover:border-cyan-400/70 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/30 overflow-hidden relative hover:-translate-y-2 flex flex-col h-full"
+            >
+              {/* Animated gradient border */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/0 via-purple-500/0 to-cyan-500/0 group-hover:from-cyan-500/30 group-hover:via-purple-500/30 group-hover:to-cyan-500/30 transition-all duration-500 blur-xl"></div>
+              
+              {/* Box glow */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              {/* Background gradient on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+
+              <div className="relative z-10">
+                {/* Project Preview */}
+                <div className="aspect-video relative overflow-hidden">
+                  {/* Shine effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
+                  
+                  {/* Project Image */}
+                  <img 
+                    src={ashcamSiteImage} 
+                    alt="AshCam Cutting Solutions Website - Construction blades and equipment e-commerce platform" 
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
+                    width="800"
+                    height="450"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                
+                {/* Project Info */}
+                <div className="p-6 sm:p-8 flex flex-col flex-1">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <h3 className="text-white font-semibold text-xl sm:text-2xl mb-1 group-hover:text-cyan-300 transition-colors">
+                        AshCam Cutting Solutions
+                      </h3>
+                      <div className="flex items-center gap-2 mt-2">
+                        <span className="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-medium rounded-full border border-cyan-500/30">
+                          E-commerce
+                        </span>
+                        <span className="px-2.5 py-1 bg-purple-500/20 text-purple-300 text-xs font-medium rounded-full border border-purple-500/30">
+                          Construction
+                        </span>
+                      </div>
+                    </div>
+                    <ExternalLink className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 group-hover:text-cyan-400 transition-all duration-300 flex-shrink-0 ml-3 group-hover:scale-110" />
+                  </div>
+                  
+                  <p className="text-slate-300 text-sm sm:text-base mb-6 font-light leading-relaxed flex-1">
+                    Construction company specializing in cutting blades and equipment. Modern e-commerce platform designed for industrial customers with seamless product browsing and ordering.
+                  </p>
+                  
+                  <div className="flex items-center justify-between pt-4 border-t border-slate-800/50 group-hover:border-cyan-500/30 transition-colors mt-auto">
+                    <span className="text-cyan-400 text-sm font-medium group-hover:text-purple-400 transition-colors">
+                      View Live Site
+                    </span>
+                    <div className="flex items-center text-slate-400 group-hover:text-cyan-400 transition-colors">
+                      <ExternalLink className="h-4 w-4" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            {/* JB Loans Mortgage Broker Project */}
+            <a
+              href="https://jbloans.ca/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-800/50 hover:border-cyan-400/70 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/30 overflow-hidden relative hover:-translate-y-2 flex flex-col h-full"
+            >
+              {/* Animated gradient border */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/0 via-purple-500/0 to-cyan-500/0 group-hover:from-cyan-500/30 group-hover:via-purple-500/30 group-hover:to-cyan-500/30 transition-all duration-500 blur-xl"></div>
+              
+              {/* Box glow */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              {/* Background gradient on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+
+              <div className="relative z-10">
+                {/* Project Preview */}
+                <div className="aspect-video relative overflow-hidden">
+                  {/* Shine effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
+                  
+                  {/* Project Image */}
+                  <img 
+                    src={jbloansImage} 
+                    alt="JB Loans Mortgage Broker Website - Professional mortgage services platform" 
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
+                    width="800"
+                    height="450"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                
+                {/* Project Info */}
+                <div className="p-6 sm:p-8 flex flex-col flex-1">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <h3 className="text-white font-semibold text-xl sm:text-2xl mb-1 group-hover:text-cyan-300 transition-colors">
+                        JB Loans
+                      </h3>
+                      <div className="flex items-center gap-2 mt-2">
+                        <span className="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-medium rounded-full border border-cyan-500/30">
+                          Web Design
+                        </span>
+                        <span className="px-2.5 py-1 bg-purple-500/20 text-purple-300 text-xs font-medium rounded-full border border-purple-500/30">
+                          Mortgage Broker
+                        </span>
+                      </div>
+                    </div>
+                    <ExternalLink className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 group-hover:text-cyan-400 transition-all duration-300 flex-shrink-0 ml-3 group-hover:scale-110" />
+                  </div>
+                  
+                  <p className="text-slate-300 text-sm sm:text-base mb-6 font-light leading-relaxed flex-1">
+                    Professional mortgage broker website designed to help clients find the best loan solutions. Modern, user-friendly platform with seamless application process and expert guidance.
+                  </p>
+                  
+                  <div className="flex items-center justify-between pt-4 border-t border-slate-800/50 group-hover:border-cyan-500/30 transition-colors mt-auto">
+                    <span className="text-cyan-400 text-sm font-medium group-hover:text-purple-400 transition-colors">
+                      View Live Site
+                    </span>
+                    <div className="flex items-center text-slate-400 group-hover:text-cyan-400 transition-colors">
+                      <ExternalLink className="h-4 w-4" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
           </div>
         </div>
       </section>
