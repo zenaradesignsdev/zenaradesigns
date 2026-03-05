@@ -15,6 +15,16 @@ interface SEOProps {
 
 export const useSEO = ({ title, description, canonical, noindex = false, structuredData }: SEOProps) => {
   useEffect(() => {
+    // SEO validation warnings (development only)
+    if (process.env.NODE_ENV === 'development') {
+      if (title.length > 75) {
+        console.warn(`[SEO] Page title exceeds recommended 75 characters (${title.length} chars): "${title}"`);
+      }
+      if (description.length > 160) {
+        console.warn(`[SEO] Meta description exceeds recommended 160 characters (${description.length} chars): "${description}"`);
+      }
+    }
+
     // Update document title
     document.title = title;
 

@@ -229,8 +229,8 @@ const Home = () => {
   
   // SEO meta tags
   useSEO({
-    title: "Web Design Toronto | Business Cards & Logo Design GTA | Zenara",
-    description: "Toronto's leading web design agency. Professional websites, business cards, and logo design for GTA businesses. Modern, fast, secure solutions. Get your free consultation today!",
+    title: "Web Design Toronto | Business Cards & Logo Design | Zenara",
+    description: "Toronto's leading web design agency. Professional websites, business cards & logo design for GTA businesses. Modern, fast, secure solutions.",
     canonical: "https://zenaradesigns.com",
     structuredData: {
       type: 'localBusiness'

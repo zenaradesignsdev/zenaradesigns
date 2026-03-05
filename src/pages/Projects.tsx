@@ -1,4 +1,4 @@
-import { Rocket, ExternalLink } from 'lucide-react';
+import { Rocket, ExternalLink, Scale } from 'lucide-react';
 import { useScrollToTop, useSEO } from '@/hooks';
 import { memo } from 'react';
 import StructuredData from '@/components/StructuredData';
@@ -78,11 +78,13 @@ const Projects = () => {
             <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extralight mb-4 sm:mb-6 text-white leading-[0.95] tracking-[-0.04em]">
               <span className="font-light opacity-90">Web Design </span>
               <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Portfolio</span>
-            </h1>
+              </h1>
             <p className="text-base sm:text-lg md:text-xl text-white/60 leading-[1.7] max-w-2xl mx-auto font-light tracking-[0.01em] mt-6">
               Explore our portfolio of custom web design projects for businesses across Toronto and the GTA.
             </p>
           </div>
+
+          <h2 className="sr-only">Featured Projects</h2>
 
           {/* Projects Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 max-w-7xl mx-auto">
@@ -133,6 +135,82 @@ const Projects = () => {
                         </span>
                         <span className="px-2.5 py-1 bg-purple-500/20 text-purple-300 text-xs font-medium rounded-full border border-purple-500/30">
                           Toronto
+                </span>
+              </div>
+            </div>
+                    <ExternalLink className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 group-hover:text-cyan-400 transition-all duration-300 flex-shrink-0 ml-3 group-hover:scale-110" />
+                  </div>
+                  
+                  <p className="text-slate-300 text-sm sm:text-base mb-6 font-light leading-relaxed flex-1">
+                    Luxury renovation and construction services website designed for Toronto businesses. Modern, responsive design with seamless user experience. Showcasing premium craftsmanship and attention to detail.
+                  </p>
+                  
+                  <div className="flex items-center justify-between pt-4 border-t border-slate-800/50 group-hover:border-cyan-500/30 transition-colors mt-auto">
+                    <span className="text-cyan-400 text-sm font-medium group-hover:text-purple-400 transition-colors">
+                      View Live Site
+                    </span>
+                    <div className="flex items-center text-slate-400 group-hover:text-cyan-400 transition-colors">
+                      <ExternalLink className="h-4 w-4" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            {/* Pickering Law Firm Project */}
+            <a
+              href="https://projecttwo.zenaradesigns.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-800/50 hover:border-cyan-400/70 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/30 overflow-hidden relative hover:-translate-y-2 flex flex-col h-full"
+            >
+              {/* Animated gradient border */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/0 via-purple-500/0 to-cyan-500/0 group-hover:from-cyan-500/30 group-hover:via-purple-500/30 group-hover:to-cyan-500/30 transition-all duration-500 blur-xl"></div>
+              
+              {/* Box glow */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              {/* Background gradient on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+              
+              <div className="relative z-10">
+                {/* Project Preview */}
+                <div className="aspect-video relative overflow-hidden bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800">
+                  {/* Animated background pattern */}
+                  <div className="absolute inset-0 opacity-30">
+                    <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(103,232,249,0.2),transparent_50%)]"></div>
+                    <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(192,132,252,0.2),transparent_50%)]"></div>
+                  </div>
+                  
+                  {/* Shine effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
+                  
+                  {/* Placeholder content */}
+                  <div className="h-full flex items-center justify-center relative z-10">
+                    <div className="text-center p-8">
+                      <div className="relative inline-block mb-4">
+                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity"></div>
+                        <Scale className="w-16 h-16 sm:w-20 sm:h-20 mx-auto text-cyan-400 group-hover:text-purple-400 transition-all duration-300 relative z-10 group-hover:scale-110" />
+                      </div>
+                      <p className="text-white font-semibold text-lg sm:text-xl">Pickering Law Firm</p>
+                      <p className="text-slate-400 text-sm mt-2 font-light">Legal Services</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Project Info */}
+                <div className="p-6 sm:p-8 flex flex-col flex-1">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <h3 className="text-white font-semibold text-xl sm:text-2xl mb-1 group-hover:text-cyan-300 transition-colors">
+                        Pickering Law Firm
+                      </h3>
+                      <div className="flex items-center gap-2 mt-2">
+                        <span className="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-medium rounded-full border border-cyan-500/30">
+                          Web Design
+                        </span>
+                        <span className="px-2.5 py-1 bg-purple-500/20 text-purple-300 text-xs font-medium rounded-full border border-purple-500/30">
+                          Legal
                         </span>
                       </div>
                     </div>
@@ -140,7 +218,7 @@ const Projects = () => {
                   </div>
                   
                   <p className="text-slate-300 text-sm sm:text-base mb-6 font-light leading-relaxed flex-1">
-                    Luxury renovation and construction services website designed for Toronto businesses. Modern, responsive design with seamless user experience. Showcasing premium craftsmanship and attention to detail.
+                    Professional law firm website designed to showcase legal expertise and build client trust. Modern, authoritative design with clear navigation and comprehensive service information.
                   </p>
                   
                   <div className="flex items-center justify-between pt-4 border-t border-slate-800/50 group-hover:border-cyan-500/30 transition-colors mt-auto">
@@ -289,9 +367,10 @@ const Projects = () => {
                       <ExternalLink className="h-4 w-4" />
                     </div>
                   </div>
-                </div>
               </div>
+            </div>
             </a>
+
           </div>
         </div>
       </section>

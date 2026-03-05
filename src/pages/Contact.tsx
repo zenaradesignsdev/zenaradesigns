@@ -304,6 +304,8 @@ const Contact = () => {
             </p>
           </div>
           
+          <h2 className="sr-only">Contact Information and Form</h2>
+          
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12">
             {/* Contact Info */}
             <div className="space-y-6 sm:space-y-8">
