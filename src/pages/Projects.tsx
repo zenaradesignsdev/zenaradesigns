@@ -5,6 +5,7 @@ import StructuredData from '@/components/StructuredData';
 import renoProjectImage from '@/assets/reno-project.png';
 import ashcamSiteImage from '@/assets/ashcam-site.png';
 import jbloansImage from '@/assets/jbloans.png';
+import pickeringLawImage from '@/assets/project2.png';
 
 const Projects = () => {
   // Scroll to top when component mounts
@@ -178,27 +179,23 @@ const Projects = () => {
               
               <div className="relative z-10">
                 {/* Project Preview */}
-                <div className="aspect-video relative overflow-hidden bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800">
-                  {/* Animated background pattern */}
-                  <div className="absolute inset-0 opacity-30">
-                    <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(103,232,249,0.2),transparent_50%)]"></div>
-                    <div className="absolute top-0 right-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(192,132,252,0.2),transparent_50%)]"></div>
-                  </div>
-                  
+                <div className="aspect-video relative overflow-hidden">
                   {/* Shine effect */}
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
                   
-                  {/* Placeholder content */}
-                  <div className="h-full flex items-center justify-center relative z-10">
-                    <div className="text-center p-8">
-                      <div className="relative inline-block mb-4">
-                        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full blur-lg opacity-50 group-hover:opacity-75 transition-opacity"></div>
-                        <Scale className="w-16 h-16 sm:w-20 sm:h-20 mx-auto text-cyan-400 group-hover:text-purple-400 transition-all duration-300 relative z-10 group-hover:scale-110" />
-                      </div>
-                      <p className="text-white font-semibold text-lg sm:text-xl">Pickering Law Firm</p>
-                      <p className="text-slate-400 text-sm mt-2 font-light">Legal Services</p>
-                    </div>
-                  </div>
+                  {/* Project Image */}
+                  <img 
+                    src={pickeringLawImage} 
+                    alt="Pickering Law Firm Website - Professional legal services website design" 
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
+                    style={{
+                      willChange: 'transform'
+                    }}
+                    width="800"
+                    height="450"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </div>
                 
                 {/* Project Info */}

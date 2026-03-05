@@ -24,6 +24,7 @@ const routes = [
   { url: "/security", priority: 0.7, changefreq: "monthly" },
   { url: "/mobile", priority: 0.7, changefreq: "monthly" },
   { url: "/payments", priority: 0.7, changefreq: "monthly" },
+  { url: "/lawyers", priority: 0.8, changefreq: "monthly" },
   { url: "/blog", priority: 0.8, changefreq: "weekly" }
 ];
 
