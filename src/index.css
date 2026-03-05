@@ -748,6 +748,20 @@
 }
 
 @layer components {
+  /* High-quality image rendering for project images */
+  .project-image {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: auto;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Ensure images render at full quality */
+    image-rendering: high-quality;
+    /* Prevent blurring during transforms */
+    transform: translateZ(0);
+  }
   /* Hero Button Variants */
   .btn-hero {
     @apply bg-gradient-to-r from-accent to-secondary text-accent-foreground px-8 py-4 rounded-2xl font-semibold transition-all duration-300 hover:shadow-glow hover:scale-105;

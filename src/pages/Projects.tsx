@@ -114,7 +114,10 @@ const Projects = () => {
                   <img 
                     src={renoProjectImage} 
                     alt="Luxury Renovation Website - Professional luxury renovation and construction services" 
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
+                    style={{
+                      willChange: 'transform'
+                    }}
                     width="800"
                     height="450"
                     loading="lazy"
@@ -259,7 +262,10 @@ const Projects = () => {
                   <img 
                     src={ashcamSiteImage} 
                     alt="AshCam Cutting Solutions Website - Construction blades and equipment e-commerce platform" 
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
+                    style={{
+                      willChange: 'transform'
+                    }}
                     width="800"
                     height="450"
                     loading="lazy"
@@ -328,7 +334,10 @@ const Projects = () => {
                   <img 
                     src={jbloansImage} 
                     alt="JB Loans Mortgage Broker Website - Professional mortgage services platform" 
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
+                    style={{
+                      willChange: 'transform'
+                    }}
                     width="800"
                     height="450"
                     loading="lazy"
