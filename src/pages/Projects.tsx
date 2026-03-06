@@ -381,7 +381,7 @@ const Projects = () => {
 
             {/* Nova Motion Physio Project */}
             <a
-              href="#"
+              href="https://projectthree.zenaradesigns.com"
               target="_blank"
               rel="noopener noreferrer"
               className="group bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-800/50 hover:border-cyan-400/70 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/30 overflow-hidden relative hover:-translate-y-2 flex flex-col h-full"
@@ -453,7 +453,7 @@ const Projects = () => {
 
             {/* Accounting Firm Project */}
             <a
-              href="#"
+              href="https://projectfour.zenaradesigns.com"
               target="_blank"
               rel="noopener noreferrer"
               className="group bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-800/50 hover:border-cyan-400/70 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/30 overflow-hidden relative hover:-translate-y-2 flex flex-col h-full"
