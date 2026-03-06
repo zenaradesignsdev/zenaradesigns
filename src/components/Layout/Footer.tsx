@@ -177,36 +177,36 @@ const Footer = () => {
 
         {/* Footer Content */}
         <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 lg:gap-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10 mb-8">
             {/* Brand */}
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
                 <img src={logo} alt="Zenara Designs - Professional Web Design Agency Toronto" className="h-8 w-auto" width="32" height="32" loading="lazy" decoding="async" />
-                <span className="font-light text-lg text-white">Zenara Designs</span>
+                <span className="font-light text-base sm:text-lg text-white">Zenara Designs</span>
               </div>
-              <p className="text-slate-300 max-w-md font-light">
+              <p className="text-slate-300 max-w-md font-light text-xs sm:text-sm">
                 Creating high-performing websites for small businesses and professionals using modern development workflows.
               </p>
               <div className="space-y-3">
                 <div className="flex items-baseline space-x-2 text-slate-300">
-                  <Mail className="h-4 w-4 flex-shrink-0 mt-0.5" />
-                  <a href={`mailto:${BUSINESS_EMAIL}`} className="hover:text-cyan-400 transition-colors break-all" rel="noopener noreferrer">
+                  <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5" />
+                  <a href={`mailto:${BUSINESS_EMAIL}`} className="hover:text-cyan-400 transition-colors break-all text-xs sm:text-sm" rel="noopener noreferrer">
                     {BUSINESS_EMAIL}
                   </a>
                 </div>
                 <div className="flex items-baseline space-x-2 text-slate-300">
-                  <Phone className="h-4 w-4 flex-shrink-0 mt-0.5" />
-                  <a href={`tel:${BUSINESS_PHONE}`} className="hover:text-cyan-400 transition-colors" rel="noopener noreferrer">
+                  <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5" />
+                  <a href={`tel:${BUSINESS_PHONE}`} className="hover:text-cyan-400 transition-colors text-xs sm:text-sm" rel="noopener noreferrer">
                     {BUSINESS_PHONE}
                   </a>
                 </div>
                 <div className="flex items-baseline space-x-2 text-slate-300">
-                  <Instagram className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                  <Instagram className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5" />
                   <a 
                     href="https://www.instagram.com/zenaradesignsinc/" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="hover:text-cyan-400 transition-colors"
+                    className="hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                     aria-label="Follow us on Instagram @zenaradesignsinc"
                   >
                     @zenaradesignsinc
@@ -217,14 +217,14 @@ const Footer = () => {
 
             {/* Quick Links */}
             <div>
-              <h3 className="font-light mb-4 text-white">Quick Links</h3>
+              <h3 className="font-light mb-4 text-white text-sm sm:text-base">Quick Links</h3>
               <div className="grid grid-cols-1 gap-x-1 gap-y-2">
                 {quickLinks.map((link) => (
                   <Link
                     key={link.href}
                     to={link.href}
                     onClick={scrollToTop}
-                    className="text-slate-300 hover:text-cyan-400 transition-colors"
+                    className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                   >
                     {link.label}
                   </Link>
@@ -232,30 +232,62 @@ const Footer = () => {
               </div>
             </div>
 
+            {/* Industries */}
+            <div>
+              <h3 className="font-light mb-4 text-white text-sm sm:text-base">Industries</h3>
+              <div className="grid grid-cols-1 gap-x-1 gap-y-2">
+                <Link
+                  to="/lawyers"
+                  onClick={scrollToTop}
+                  className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
+                >
+                  Law Firms
+                </Link>
+                <Link
+                  to="/accountants"
+                  onClick={scrollToTop}
+                  className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
+                >
+                  Accounting Agencies
+                </Link>
+                <Link
+                  to="/renovations"
+                  onClick={scrollToTop}
+                  className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
+                >
+                  Renovation Companies
+                </Link>
+              </div>
+            </div>
+
             {/* Additional Links */}
             <div>
-              <h3 className="font-light mb-4 text-white">Resources</h3>
+              <h3 className="font-light mb-4 text-white text-sm sm:text-base">Resources</h3>
               <div className="grid grid-cols-1 gap-x-1 gap-y-2">
                 {FOOTER_ADDITIONAL_LINKS.map((link) => (
                   <Link
                     key={link.href}
                     to={link.href}
                     onClick={scrollToTop}
-                    className="text-slate-300 hover:text-cyan-400 transition-colors"
+                    className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                   >
                     {link.label}
                   </Link>
                 ))}
               </div>
             </div>
+          </div>
 
-            {/* Newsletter Subscription */}
-            <div className="flex flex-col">
-              <h3 className="font-light mb-4 text-white">Newsletter</h3>
-              <p className="text-slate-300 mb-4 text-sm font-light">
-                Subscribe to our newsletter and stay updated.
-              </p>
-              <div className="brevo-newsletter-form flex justify-start">
+          {/* Newsletter Subscription - Full Width Below */}
+          <div className="border-t border-cyan-400/20 pt-8">
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+              <div className="flex-shrink-0">
+                <h3 className="font-light mb-2 text-white text-sm sm:text-base">Newsletter</h3>
+                <p className="text-slate-300 text-xs sm:text-sm font-light">
+                  Subscribe to our newsletter and stay updated.
+                </p>
+              </div>
+              <div className="brevo-newsletter-form flex-1 max-w-md md:max-w-lg">
                 {showSuccess ? (
                   <div 
                     className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 backdrop-blur-md rounded-2xl p-6 border border-cyan-400/30 text-center w-full max-w-md"
@@ -272,7 +304,7 @@ const Footer = () => {
                     <div id="sib-form-container" className="sib-form-container w-full">
                       <div 
                         id="sib-container" 
-                        className="sib-container--medium sib-container--vertical" 
+                        className="sib-container--medium sib-container--horizontal" 
                         style={{
                           textAlign: 'center',
                           backgroundColor: 'rgba(255, 255, 255, 0.05)',
@@ -282,113 +314,104 @@ const Footer = () => {
                           borderWidth: '1px',
                           borderColor: 'rgba(139, 92, 246, 0.3)',
                           borderStyle: 'solid',
-                          padding: '20px',
+                          padding: '16px',
                           backdropFilter: 'blur(10px)'
                         }}
                       >
-                        <form 
-                          id="sib-form" 
-                          onSubmit={handleNewsletterSubmit}
-                          className="w-full"
-                        >
-                        <div style={{ padding: '8px 0' }}>
-                          <div className="sib-form-block" style={{ fontSize: '13px', textAlign: 'left', fontFamily: 'Helvetica, sans-serif', color: '#e2e8f0', backgroundColor: 'transparent' }}>
-                            <div className="sib-text-form-block">
-                              <p style={{ margin: 0, color: '#cbd5e1', lineHeight: '1.5' }}>Get the latest insights delivered to your inbox.</p>
-                            </div>
-                          </div>
-                        </div>
-                        <div style={{ padding: '8px 0' }}>
-                          <div className="sib-input sib-form-block">
-                            <div className="form__entry entry_block">
-                              <div className="form__label-row">
-                                <div className="entry__field">
-                                  <input 
-                                    className="input" 
-                                    type="email" 
-                                    id="EMAIL" 
-                                    name="EMAIL" 
-                                    autoComplete="off" 
-                                    placeholder="Enter your email" 
-                                    data-required="true" 
-                                    required
-                                    value={email}
-                                    onChange={(e) => setEmail(e.target.value)}
-                                    disabled={isSubmitting}
-                                    style={{
-                                      width: '100%',
-                                      padding: '12px 16px',
-                                      borderRadius: '8px',
-                                      border: '1px solid rgba(139, 92, 246, 0.3)',
-                                      backgroundColor: 'rgba(15, 23, 42, 0.8)',
-                                      color: '#ffffff',
-                                      fontSize: '14px',
-                                      fontFamily: 'inherit',
-                                      outline: 'none',
-                                      transition: 'all 0.3s ease',
-                                      opacity: isSubmitting ? 0.6 : 1
-                                    }}
-                                    onFocus={(e) => {
-                                      e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.6)';
-                                      e.currentTarget.style.backgroundColor = 'rgba(15, 23, 42, 0.95)';
-                                    }}
-                                    onBlur={(e) => {
-                                      e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
-                                      e.currentTarget.style.backgroundColor = 'rgba(15, 23, 42, 0.8)';
-                                    }}
-                                  />
+                            <form 
+                              id="sib-form" 
+                              onSubmit={handleNewsletterSubmit}
+                              className="w-full flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
+                              style={{ width: '100%' }}
+                            >
+                              <div className="flex-1">
+                                <div className="sib-input sib-form-block">
+                                  <div className="form__entry entry_block">
+                                    <div className="form__label-row">
+                                      <div className="entry__field">
+                                        <input 
+                                          className="input" 
+                                          type="email" 
+                                          id="EMAIL" 
+                                          name="EMAIL" 
+                                          autoComplete="off" 
+                                          placeholder="Enter your email" 
+                                          data-required="true" 
+                                          required
+                                          value={email}
+                                          onChange={(e) => setEmail(e.target.value)}
+                                          disabled={isSubmitting}
+                                          style={{
+                                            width: '100%',
+                                            padding: '10px 16px',
+                                            borderRadius: '8px',
+                                            border: '1px solid rgba(139, 92, 246, 0.3)',
+                                            backgroundColor: 'rgba(15, 23, 42, 0.8)',
+                                            color: '#ffffff',
+                                            fontSize: '14px',
+                                            fontFamily: 'inherit',
+                                            outline: 'none',
+                                            transition: 'all 0.3s ease',
+                                            opacity: isSubmitting ? 0.6 : 1
+                                          }}
+                                          onFocus={(e) => {
+                                            e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.6)';
+                                            e.currentTarget.style.backgroundColor = 'rgba(15, 23, 42, 0.95)';
+                                          }}
+                                          onBlur={(e) => {
+                                            e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
+                                            e.currentTarget.style.backgroundColor = 'rgba(15, 23, 42, 0.8)';
+                                          }}
+                                        />
+                                      </div>
+                                    </div>
+                                    <label className="entry__error entry__error--primary" style={{ fontSize: '12px', textAlign: 'left', fontFamily: 'Helvetica, sans-serif', color: '#fca5a5', backgroundColor: 'rgba(239, 68, 68, 0.1)', borderRadius: '3px', borderColor: '#ef4444', padding: '4px 8px', marginTop: '4px', display: 'block' }}></label>
+                                  </div>
                                 </div>
                               </div>
-                              <label className="entry__error entry__error--primary" style={{ fontSize: '12px', textAlign: 'left', fontFamily: 'Helvetica, sans-serif', color: '#fca5a5', backgroundColor: 'rgba(239, 68, 68, 0.1)', borderRadius: '3px', borderColor: '#ef4444', padding: '4px 8px', marginTop: '4px', display: 'block' }}></label>
-                              <label className="entry__specification" style={{ fontSize: '11px', textAlign: 'left', fontFamily: 'Helvetica, sans-serif', color: '#94a3b8', marginTop: '6px', display: 'block', lineHeight: '1.4' }}>
-                                We'll never share your email. Unsubscribe anytime.
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                        <div style={{ padding: '8px 0' }}>
-                          <div className="sib-form-block" style={{ textAlign: 'left' }}>
-                            <button 
-                              className="sib-form-block__button sib-form-block__button-with-loader" 
-                              type="submit"
-                              disabled={isSubmitting}
-                              style={{
-                                fontSize: '14px',
-                                textAlign: 'center',
-                                fontWeight: '600',
-                                fontFamily: 'Helvetica, sans-serif',
-                                color: '#FFFFFF',
-                                background: isSubmitting 
-                                  ? 'linear-gradient(to right, rgb(100, 116, 139), rgb(148, 163, 184))'
-                                  : 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247))',
-                                borderRadius: '8px',
-                                borderWidth: '0px',
-                                padding: '12px 24px',
-                                width: '100%',
-                                cursor: isSubmitting ? 'not-allowed' : 'pointer',
-                                transition: 'all 0.3s ease',
-                                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                                opacity: isSubmitting ? 0.7 : 1
-                              }}
-                              onMouseEnter={(e) => {
-                                if (!isSubmitting) {
-                                  e.currentTarget.style.background = 'linear-gradient(to right, rgb(34, 211, 238), rgb(147, 51, 234))';
-                                  e.currentTarget.style.transform = 'translateY(-1px)';
-                                  e.currentTarget.style.boxShadow = '0 6px 8px -1px rgba(0, 0, 0, 0.15)';
-                                }
-                              }}
-                              onMouseLeave={(e) => {
-                                if (!isSubmitting) {
-                                  e.currentTarget.style.background = 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247))';
-                                  e.currentTarget.style.transform = 'translateY(0)';
-                                  e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-                                }
-                              }}
-                            >
-                              {isSubmitting ? 'SUBSCRIBING...' : 'SUBSCRIBE'}
-                            </button>
-                          </div>
-                        </div>
+                              <div className="flex-shrink-0">
+                                <div className="sib-form-block">
+                                  <button 
+                                    className="sib-form-block__button sib-form-block__button-with-loader" 
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    style={{
+                                      fontSize: '13px',
+                                      textAlign: 'center',
+                                      fontWeight: '600',
+                                      fontFamily: 'Helvetica, sans-serif',
+                                      color: '#FFFFFF',
+                                      background: isSubmitting 
+                                        ? 'linear-gradient(to right, rgb(100, 116, 139), rgb(148, 163, 184))'
+                                        : 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247))',
+                                      borderRadius: '8px',
+                                      borderWidth: '0px',
+                                      padding: '10px 24px',
+                                      whiteSpace: 'nowrap',
+                                      cursor: isSubmitting ? 'not-allowed' : 'pointer',
+                                      transition: 'all 0.3s ease',
+                                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                                      opacity: isSubmitting ? 0.7 : 1
+                                    }}
+                                    onMouseEnter={(e) => {
+                                      if (!isSubmitting) {
+                                        e.currentTarget.style.background = 'linear-gradient(to right, rgb(34, 211, 238), rgb(147, 51, 234))';
+                                        e.currentTarget.style.transform = 'translateY(-1px)';
+                                        e.currentTarget.style.boxShadow = '0 6px 8px -1px rgba(0, 0, 0, 0.15)';
+                                      }
+                                    }}
+                                    onMouseLeave={(e) => {
+                                      if (!isSubmitting) {
+                                        e.currentTarget.style.background = 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247))';
+                                        e.currentTarget.style.transform = 'translateY(0)';
+                                        e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
+                                      }
+                                    }}
+                                  >
+                                    {isSubmitting ? 'SUBSCRIBING...' : 'SUBSCRIBE'}
+                                  </button>
+                                </div>
+                              </div>
                           <input 
                             type="text" 
                             name="email_address_check" 
