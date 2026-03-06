@@ -1,11 +1,11 @@
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowRight, Scale, CheckCircle } from 'lucide-react';
+import { useParams, Link } from 'react-router-dom';
+import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useScrollToTop, useSEO } from '@/hooks';
-import { memo, useEffect, useMemo } from 'react';
+import { useScrollToTop, useSEO, scrollToTop } from '@/hooks';
+import { memo, useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import StructuredData from '@/components/StructuredData';
 import { generateLocalBusinessSchema } from '@/lib/structured-data';
-import lawyerGavelOffice from '@/assets/lawyer-gavel-office.png';
+import lawyerProfessionalMeeting from '@/assets/lawyer-professional-meeting.png';
 import NotFound from './NotFound';
 
 // GTA Locations data - matches Lawyers.tsx
@@ -74,7 +74,6 @@ const locations = [
 
 const LawyerLocation = () => {
   const { location: locationSlug } = useParams<{ location: string }>();
-  const navigate = useNavigate();
   useScrollToTop();
 
   // Find the location data
@@ -88,6 +87,63 @@ const LawyerLocation = () => {
   }
 
   const { city, description, keywords } = locationData;
+
+  // Entrance animations state
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set());
+  const [visibleItems, setVisibleItems] = useState<number[]>([]);
+  const sectionRefs = useRef<Map<string, HTMLDivElement>>(new Map());
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Intersection Observer for sections
+  const handleSectionIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
+    entries.forEach((entry) => {
+      const sectionId = entry.target.getAttribute('data-section-id');
+      if (sectionId) {
+        if (entry.isIntersecting) {
+          setVisibleSections(prev => new Set(prev).add(sectionId));
+        }
+      }
+    });
+  }, []);
+
+  // Intersection Observer for grid items
+  const handleItemIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const index = parseInt(entry.target.getAttribute('data-item-index') || '0');
+        setVisibleItems(prev => [...prev, index]);
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    const sectionObserver = new IntersectionObserver(handleSectionIntersection, { 
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    });
+    const itemObserver = new IntersectionObserver(handleItemIntersection, { 
+      threshold: 0.2 
+    });
+
+    // Observe sections
+    sectionRefs.current.forEach((ref) => {
+      if (ref) sectionObserver.observe(ref);
+    });
+
+    // Observe grid items
+    itemRefs.current.forEach((ref) => {
+      if (ref) itemObserver.observe(ref);
+    });
+
+    return () => {
+      sectionRefs.current.forEach((ref) => {
+        if (ref) sectionObserver.unobserve(ref);
+      });
+      itemRefs.current.forEach((ref) => {
+        if (ref) itemObserver.unobserve(ref);
+      });
+    };
+  }, [handleSectionIntersection, handleItemIntersection]);
 
   // SEO meta tags
   useSEO({
@@ -140,39 +196,66 @@ const LawyerLocation = () => {
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 md:pt-32 lg:pt-40 pb-16 sm:pb-20 md:pb-24 relative z-10">
-        {/* Hero Section */}
-        <div className="text-center mb-12 sm:mb-16 md:mb-20">
-          <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
-            <span className="block font-light opacity-90">Law Firm Web Design</span>
-            <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">{city}</span>
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-4xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4 mb-4">
-            Professional web design services for {city} law firms. Build trust, establish credibility, and convert visitors into consultations with a modern, high-performing website.
-          </p>
-          <p className="text-base sm:text-lg text-white/50 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4 mb-8">
-            {description}
-          </p>
-        </div>
-
-        {/* Image Section */}
-        <div className="mb-16 sm:mb-20 md:mb-24">
-          <div className="relative rounded-2xl overflow-hidden">
-            <div className="aspect-[16/9] bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+        {/* Hero Section - Split Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px] lg:min-h-[700px] mb-16 sm:mb-20 md:mb-24">
+          {/* Left Section - Text Content */}
+          <div className="bg-slate-900/95 backdrop-blur-sm flex items-center py-12 sm:py-16 md:py-20 lg:py-24 px-6 sm:px-8 md:px-12 lg:px-16 border-r border-slate-800/50 pt-24 sm:pt-28 md:pt-32 lg:pt-40">
+            <div className="w-full max-w-2xl mx-auto lg:mx-0">
+              {/* Accent line */}
+              <div className="w-12 h-0.5 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 mb-6"></div>
+              
+              {/* Main Heading */}
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-4 text-white leading-[1.1] tracking-[-0.04em]">
+                <span className="font-light opacity-90">Law Firm Web Design</span>
+              </h1>
+              
+              {/* Subheading */}
+              <p className="text-lg sm:text-xl md:text-2xl mb-6 font-light">
+                <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">{city}</span>
+              </p>
+              
+              {/* Paragraph 1 */}
+              <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-6 font-light tracking-[0.01em]">
+                Professional web design services for {city} law firms. Build trust, establish credibility, and convert visitors into consultations with a modern, high-performing website.
+              </p>
+              
+              {/* Paragraph 2 */}
+              <p className="text-base sm:text-lg text-white/60 leading-relaxed mb-8 font-light tracking-[0.01em]">
+                {description}
+              </p>
+            </div>
+          </div>
+          
+          {/* Right Section - Image with Overlay */}
+          <div className="relative h-[400px] lg:h-auto overflow-hidden">
+            <div className="absolute inset-0 bg-black">
               <img 
-                src={lawyerGavelOffice}
-                alt={`Professional law firm web design services in ${city}`}
-                className="w-full h-full object-cover rounded-2xl"
-                loading="lazy"
+                src={lawyerProfessionalMeeting} 
+                alt={`Professional law firm web design services in ${city}`} 
+                className="w-full h-full object-cover"
+                loading="eager"
                 decoding="async"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
             </div>
+            
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10"></div>
           </div>
         </div>
 
         {/* Section 1: Why Your City Law Firm Needs a Professional Website */}
-        <section className="mb-16 sm:mb-20 md:mb-24">
+        <section 
+          data-section-id="why-professional-website"
+          ref={(el) => {
+            if (el) sectionRefs.current.set('why-professional-website', el);
+          }}
+          className={`mb-16 sm:mb-20 md:mb-24 transition-all duration-1000 ${
+            visibleSections.has('why-professional-website') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-12'
+          }`}
+        >
           <div className="bg-slate-900/90 backdrop-blur-sm rounded-2xl p-8 sm:p-10 md:p-12 border border-slate-800/50 shadow-2xl relative overflow-hidden">
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
             
@@ -186,11 +269,34 @@ const LawyerLocation = () => {
                 In today's digital-first legal market, your website is often the first interaction potential clients have with your {city} law firm. <span className="text-cyan-300 font-semibold">78% of people research lawyers online before making contact</span>, and that number rises to <span className="text-cyan-300 font-semibold">92% among younger demographics</span>. Without a professional, trustworthy website, your firm is invisible to the majority of potential clients.
               </p>
               
-              <p className="text-white/60 mb-6 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em]">
+              <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em]">
                 First impressions are formed in just 0.05 seconds, and <span className="text-cyan-300 font-semibold">94% of those impressions are design-related</span>. A professional website signals competence, attention to detail, and technological capability. Conversely, a poorly designed or outdated website can instantly erode trust, causing potential clients to question your firm's capabilities and move on to a competitor.
               </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 2: The Cost of a Bad Website */}
+        <section 
+          data-section-id="cost-bad-website"
+          ref={(el) => {
+            if (el) sectionRefs.current.set('cost-bad-website', el);
+          }}
+          className={`mb-16 sm:mb-20 md:mb-24 transition-all duration-1000 ${
+            visibleSections.has('cost-bad-website') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-12'
+          }`}
+        >
+          <div className="bg-slate-900/90 backdrop-blur-sm rounded-2xl p-8 sm:p-10 md:p-12 border border-slate-800/50 shadow-2xl relative overflow-hidden">
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
+            
+            <div className="relative z-10">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extralight text-white mb-6 leading-[1.1] tracking-[-0.04em]">
+                <span className="block font-light opacity-90">The Cost of a</span>
+                <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Bad Website</span>
+              </h2>
               
-              <h3 className="text-xl sm:text-2xl font-semibold text-white mb-4 mt-8">The Cost of a Bad Website</h3>
               <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em]">
                 Law firms with outdated websites lose <span className="text-cyan-300 font-semibold">40-60% of potential clients who bounce</span>. The average law firm loses <span className="text-cyan-300 font-semibold">$50,000 to $100,000+ annually</span> in missed opportunities from poor web presence. Firms with professional websites see <span className="text-cyan-300 font-semibold">3x more consultation requests</span> compared to those with outdated sites.
               </p>
@@ -198,97 +304,95 @@ const LawyerLocation = () => {
           </div>
         </section>
 
-        {/* Section 2: How We Help City Law Firms */}
-        <section className="mb-16 sm:mb-20 md:mb-24">
-          <div className="bg-slate-900/90 backdrop-blur-sm rounded-2xl p-8 sm:p-10 md:p-12 border border-slate-800/50 shadow-2xl relative overflow-hidden">
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
-            
-            <div className="relative z-10">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extralight text-white mb-6 leading-[1.1] tracking-[-0.04em]">
-                <span className="block font-light opacity-90">How We Help {city}</span>
-                <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Law Firms Succeed Online</span>
-              </h2>
-              
-              <p className="text-white/60 mb-6 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em]">
-                Zenara Designs specializes in creating professional, high-performing websites for law firms across the Greater Toronto Area, including {city}. We understand the unique needs of legal practices and design websites that build trust, showcase expertise, and convert visitors into consultations.
-              </p>
-              
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">Custom Design for Legal Practices</h3>
-                    <p className="text-white/60 text-sm leading-relaxed font-light">
-                      Every website is custom-designed to reflect your firm's unique brand, practice areas, and client base. No templates, no generic designs.
-                    </p>
+        {/* Section 3: Essential Web Design Features for Modern Law Firms */}
+        <section 
+          data-section-id="features"
+          ref={(el) => {
+            if (el) sectionRefs.current.set('features', el);
+          }}
+          className={`mb-16 sm:mb-20 md:mb-24 transition-all duration-1000 ${
+            visibleSections.has('features') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-12'
+          }`}
+        >
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extralight text-white mb-8 sm:mb-12 text-center leading-[1.1] tracking-[-0.04em]">
+            <span className="block font-light opacity-90">Essential Web Design Features for</span>
+            <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Modern Law Firms</span>
+          </h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {[
+              {
+                title: 'Consultation Booking Systems',
+                description: 'Automated scheduling tools that integrate with your calendar, reducing administrative time by 40% and capturing leads 24/7. Seamless booking experience that converts visitors into consultations.'
+              },
+              {
+                title: 'Practice Area Showcase Pages',
+                description: 'SEO-optimized dedicated pages for each practice area (family law, real estate, criminal defense, etc.) with clear navigation structure and conversion-focused design that educates and converts.'
+              },
+              {
+                title: 'Case Studies & Success Stories',
+                description: 'Showcase successful outcomes and build credibility through real results. Demonstrate your expertise with detailed case studies that highlight your firm\'s track record and client victories.'
+              },
+              {
+                title: 'Legal Blog & Content Marketing',
+                description: 'Attorney-written articles and SEO content strategy that positions your firm as a thought leader. Regular blog content improves search rankings and demonstrates expertise to potential clients.'
+              },
+              {
+                title: 'Attorney Profiles & Team Pages',
+                description: 'Professional bios and credentials display that build personal connections with potential clients. Showcase your team\'s expertise, education, and experience to build trust and rapport.'
+              },
+              {
+                title: 'Client Testimonials & Reviews',
+                description: 'Social proof integration and trust signals through client testimonials and review management. Build credibility by showcasing what your satisfied clients say about your firm.'
+              }
+            ].map((feature, index) => {
+              const itemIndex = index;
+              return (
+                <div 
+                  key={index}
+                  ref={(el) => {
+                    if (el && !itemRefs.current[itemIndex]) {
+                      itemRefs.current[itemIndex] = el;
+                    }
+                  }}
+                  data-item-index={itemIndex}
+                  className={`bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-300 relative overflow-hidden group ${
+                    visibleItems.includes(itemIndex)
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-8'
+                  }`}
+                  style={{ transitionDelay: `${index * 100}ms` }}
+                >
+                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="relative z-10">
+                    <div className="w-12 h-12 bg-gradient-to-br from-cyan-300/20 via-purple-300/20 to-cyan-300/20 border border-cyan-500/30 rounded-xl flex items-center justify-center flex-shrink-0 mb-4 sm:mb-6 group-hover:border-cyan-400/50 transition-all duration-300">
+                      <span className="text-2xl font-bold bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
+                        {index + 1}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-cyan-300 transition-colors">{feature.title}</h3>
+                    <p className="text-white/60 text-sm sm:text-base leading-relaxed font-light">{feature.description}</p>
                   </div>
                 </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">Local SEO Optimization</h3>
-                    <p className="text-white/60 text-sm leading-relaxed font-light">
-                      We optimize your website to rank for local searches like "{city} family lawyer" and "{city} real estate attorney" to capture ready-to-consult prospects.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">Trust-Building Features</h3>
-                    <p className="text-white/60 text-sm leading-relaxed font-light">
-                      Consultation booking systems, practice area showcases, case studies, attorney profiles, and client testimonials that build credibility.
-                    </p>
-                  </div>
-                </div>
-                
-                <div className="flex items-start space-x-4">
-                  <div className="w-10 h-10 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <CheckCircle className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">Fast, Secure, and Reliable</h3>
-                    <p className="text-white/60 text-sm leading-relaxed font-light">
-                      Built on modern technology for fast load times, superior performance, and 24/7 reliability that your clients expect.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Section 3: Local SEO for City Law Firms */}
-        <section className="mb-16 sm:mb-20 md:mb-24">
-          <div className="bg-slate-900/90 backdrop-blur-sm rounded-2xl p-8 sm:p-10 md:p-12 border border-slate-800/50 shadow-2xl relative overflow-hidden">
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
-            
-            <div className="relative z-10">
-              <h3 className="text-xl sm:text-2xl md:text-3xl font-semibold text-white mb-6">
-                <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Local SEO for {city} Law Firms</span>
-              </h3>
-              
-              <p className="text-white/60 mb-6 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em]">
-                With <span className="text-cyan-300 font-semibold">68% of users performing local searches</span> before contacting a law firm, local SEO is critical for acquiring clients in {city}. We implement a "Local Authority Engine" that ensures your firm appears in Google Map Pack for city-specific searches.
-              </p>
-              
-              <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em]">
-                Our local SEO strategy includes location-specific content, Google Business Profile optimization, local schema markup, and citation building to ensure your {city} law firm is the first choice for local clients searching for legal services.
-              </p>
-            </div>
+              );
+            })}
           </div>
         </section>
 
         {/* CTA Section */}
-        <section className="mb-16 sm:mb-20 md:mb-24">
+        <section 
+          data-section-id="cta"
+          ref={(el) => {
+            if (el) sectionRefs.current.set('cta', el);
+          }}
+          className={`mb-16 sm:mb-20 md:mb-24 transition-all duration-1000 ${
+            visibleSections.has('cta') 
+              ? 'opacity-100 translate-y-0' 
+              : 'opacity-0 translate-y-12'
+          }`}
+        >
           <div className="bg-slate-900/90 backdrop-blur-sm rounded-2xl p-8 sm:p-10 md:p-12 border border-slate-800/50 shadow-2xl relative overflow-hidden">
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
             

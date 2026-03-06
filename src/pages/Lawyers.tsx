@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle, FileText, Calendar, Users, Scale, BookOpen, Award, ChevronDown } from 'lucide-react';
+import { ArrowRight, CheckCircle, FileText, Calendar, Users, BookOpen, Award, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { useScrollToTop, useSEO } from '@/hooks';
+import { useScrollToTop, useSEO, scrollToTop } from '@/hooks';
 import { memo, useEffect, useRef, useState, useCallback } from 'react';
 import StructuredData from '@/components/StructuredData';
 import { generateLocalBusinessSchema, generateServiceSchema } from '@/lib/structured-data';
@@ -211,7 +211,7 @@ const Lawyers = () => {
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
-      {/* Gradient Background Layers */}
+      {/* Gradient Background Layers - Applied to entire page */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
         <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
@@ -220,7 +220,7 @@ const Lawyers = () => {
       </div>
       
       {/* Space Background Elements */}
-      <div className="absolute inset-0">
+      <div className="absolute inset-0 pointer-events-none">
         <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
         <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
         <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
@@ -236,41 +236,84 @@ const Lawyers = () => {
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 md:pt-32 lg:pt-40 pb-16 sm:pb-20 md:pb-24 relative z-10">
-        {/* Hero Section */}
-        <div className="text-center mb-12 sm:mb-16 md:mb-20">
-          <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
-            <span className="block font-light opacity-90">Law Firm Web Design</span>
-            <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Greater Toronto Area</span>
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-4xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4 mb-4">
-            <span className="text-cyan-300 font-semibold">78% of people</span> research lawyers online before contacting, and that number jumps to <span className="text-cyan-300 font-semibold">92% among younger clients</span>. Your website is your first impression, your credibility signal, and your 24/7 client acquisition engine.
-          </p>
-          <p className="text-base sm:text-lg text-white/50 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4 mb-8">
-            Professional web design that builds trust, showcases expertise, and converts visitors into consultations.
-          </p>
-          <div className="flex justify-center">
-            <div className="relative rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
-              <Button asChild className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold group">
-                <Link to="/contact" className="flex items-center justify-center">
-                  <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full"></span>
-                  <span className="flex items-center justify-center relative z-10 group-hover:text-white whitespace-nowrap">
-                    Book Free Consultation
-                    <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-                  </span>
-                </Link>
-              </Button>
+      {/* Hero Section - Split Layout */}
+      <div className="relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-[600px] lg:min-h-[700px]">
+          {/* Left Section - Text Content */}
+          <div className="bg-slate-900/95 backdrop-blur-sm flex items-center py-12 sm:py-16 md:py-20 lg:py-24 px-6 sm:px-8 md:px-12 lg:px-16 border-r border-slate-800/50 pt-24 sm:pt-28 md:pt-32 lg:pt-40">
+            <div className="w-full max-w-2xl mx-auto lg:mx-0">
+              {/* Accent line */}
+              <div className="w-12 h-0.5 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 mb-6"></div>
+              
+              {/* Main Heading */}
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-4 text-white leading-[1.1] tracking-[-0.04em]">
+                <span className="font-light opacity-90">Law Firm Web Design</span>
+              </h1>
+              
+              {/* Subheading */}
+              <p className="text-lg sm:text-xl md:text-2xl mb-6 font-light">
+                <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Greater Toronto Area</span>
+              </p>
+              
+              {/* Paragraph 1 */}
+              <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-6 font-light tracking-[0.01em]">
+                <span className="font-semibold text-cyan-300">78% of people</span> research lawyers online before contacting, and that number jumps to <span className="font-semibold text-cyan-300">92% among younger clients</span>. Your website is your first impression, your credibility signal, and your 24/7 client acquisition engine.
+              </p>
+              
+              {/* Paragraph 2 */}
+              <p className="text-base sm:text-lg text-white/60 leading-relaxed mb-8 font-light tracking-[0.01em]">
+                Professional web design that builds trust, showcases expertise, and converts visitors into consultations.
+              </p>
+              
+              {/* CTA Button */}
+              <div>
+                <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
+                  <Button 
+                    asChild 
+                    className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold group"
+                  >
+                    <Link 
+                      to="/contact" 
+                      onClick={scrollToTop}
+                      className="flex items-center gap-2 relative z-10 group-hover:text-white"
+                    >
+                      <span className="relative z-10">Get A Quote</span>
+                      <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 relative z-10" />
+                      {/* Hover background animation - left to right */}
+                      <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full"></span>
+                    </Link>
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
+          
+          {/* Right Section - Image with Overlay */}
+          <div className="relative h-[400px] lg:h-auto overflow-hidden">
+            <div className="absolute inset-0 bg-black">
+              <img 
+                src={lawyerGavelOffice} 
+                alt="Professional law firm web design services in Greater Toronto Area" 
+                className="w-full h-full object-cover"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+            
+            {/* Dark Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10"></div>
+          </div>
         </div>
+      </div>
 
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 pb-16 sm:pb-20 md:pb-24 relative z-10">
         {/* Section 1: Modern Law Firm Transformation */}
         <section 
           data-section-id="transformation"
           ref={(el) => {
             if (el) sectionRefs.current.set('transformation', el);
           }}
-          className={`mb-16 sm:mb-20 md:mb-24 transition-all duration-1000 ${
+          className={`pt-16 sm:pt-20 md:pt-24 mb-16 sm:mb-20 md:mb-24 transition-all duration-1000 ${
             visibleSections.has('transformation') 
               ? 'opacity-100 translate-y-0' 
               : 'opacity-0 translate-y-12'
@@ -279,32 +322,37 @@ const Lawyers = () => {
           <div className="bg-slate-900/90 backdrop-blur-sm rounded-2xl p-8 sm:p-10 md:p-12 border border-slate-800/50 shadow-2xl relative overflow-hidden">
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
             
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-              <div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl font-extralight text-white mb-6 leading-[1.1] tracking-[-0.04em]">
-                  <span className="block font-light opacity-90">From Traditional Practice to</span>
-                  <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Digital-First Client Acquisition</span>
-                </h2>
-                <p className="text-white/60 mb-6 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em]">
-                  The legal profession in Ontario is undergoing its most significant transformation in decades. <span className="text-cyan-300 font-semibold">78% of people now research lawyers online before making contact</span>, and that number rises to <span className="text-cyan-300 font-semibold">92% among millennials and Gen Z clients</span>. With law firms across the GTA serving diverse communities from Markham to Oshawa, your online presence has become your most critical business asset.
-                </p>
-                <p className="text-white/60 mb-6 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em]">
-                  Traditional client acquisition models are being disrupted by digital-first competitors. To thrive, your firm must pivot toward modern client engagement, becoming a trusted advisor accessible 24/7 rather than a traditional office-only practice. This transition requires a website that builds trust instantly, showcases your expertise clearly, and converts visitors into consultations.
-                </p>
-                <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em]">
-                  Firms that provide seamless digital experiences with professional, credible websites see rising client satisfaction and higher retention rates. However, your expertise is only as visible as your digital storefront. A Zenara-designed platform showcases your precision and professionalism, positioning your firm as a leader in the York and Durham legal communities.
-                </p>
-              </div>
-              <div className="relative rounded-2xl overflow-hidden">
-                <div className="aspect-[4/3] bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center">
-                  <img 
-                    src={lawyerGavelOffice}
-                    alt="Professional lawyer in modern office setting"
-                    className="w-full h-full object-cover rounded-2xl"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+            <div className="relative z-10">
+              {/* Heading spanning full width */}
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extralight text-white mb-8 sm:mb-10 md:mb-12 leading-[1.1] tracking-[-0.04em] text-center">
+                <span className="block font-light opacity-90">From Traditional Practice to</span>
+                <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Digital-First Client Acquisition</span>
+              </h2>
+              
+              {/* Content grid */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                <div>
+                  <p className="text-white/60 mb-6 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em]">
+                    The legal profession in Ontario is undergoing its most significant transformation in decades. <span className="text-cyan-300 font-semibold">78% of people now research lawyers online before making contact</span>, and that number rises to <span className="text-cyan-300 font-semibold">92% among millennials and Gen Z clients</span>. With law firms across the GTA serving diverse communities from Markham to Oshawa, your online presence has become your most critical business asset.
+                  </p>
+                  <p className="text-white/60 mb-6 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em]">
+                    Traditional client acquisition models are being disrupted by digital-first competitors. To thrive, your firm must pivot toward modern client engagement, becoming a trusted advisor accessible 24/7 rather than a traditional office-only practice. This transition requires a website that builds trust instantly, showcases your expertise clearly, and converts visitors into consultations.
+                  </p>
+                  <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em]">
+                    Firms that provide seamless digital experiences with professional, credible websites see rising client satisfaction and higher retention rates. However, your expertise is only as visible as your digital storefront. A Zenara-designed platform showcases your precision and professionalism, positioning your firm as a leader in the York and Durham legal communities.
+                  </p>
+                </div>
+                <div className="relative rounded-2xl overflow-hidden">
+                  <div className="aspect-[4/3] bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center">
+                    <img 
+                      src={lawyerGavelOffice}
+                      alt="Professional lawyer in modern office setting"
+                      className="w-full h-full object-cover rounded-2xl"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -328,7 +376,7 @@ const Lawyers = () => {
             <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Trust is Built in 0.05 Seconds</span>
           </h2>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 items-center">
             <div className="bg-slate-900/90 backdrop-blur-sm rounded-2xl p-8 sm:p-10 md:p-12 border border-slate-800/50 shadow-2xl relative overflow-hidden">
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
               
@@ -345,17 +393,14 @@ const Lawyers = () => {
               </div>
             </div>
 
-            <div className="relative rounded-2xl overflow-hidden">
-              <div className="aspect-[4/3] bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center">
-                <img 
-                  src={lawyerConsultationDocument}
-                  alt="Professional legal consultation and client meeting"
-                  className="w-full h-full object-cover rounded-2xl"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-              </div>
+            <div className="flex items-center justify-center">
+              <img 
+                src={lawyerConsultationDocument}
+                alt="Professional legal consultation and client meeting"
+                className="w-full h-auto max-h-[500px] object-contain"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
           </div>
 
@@ -423,18 +468,15 @@ const Lawyers = () => {
             <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Bad Website</span>
           </h2>
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-            <div className="relative rounded-2xl overflow-hidden order-2 lg:order-1">
-              <div className="aspect-[4/3] bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center">
-                <img 
-                  src={lawyerProfessionalMeeting}
-                  alt="Law firm losing clients due to poor website design"
-                  className="w-full h-full object-cover rounded-2xl"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-              </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 items-center">
+            <div className="flex items-center justify-center order-2 lg:order-1">
+              <img 
+                src={lawyerProfessionalMeeting}
+                alt="Law firm losing clients due to poor website design"
+                className="w-full h-auto max-h-[500px] object-contain"
+                loading="lazy"
+                decoding="async"
+              />
             </div>
 
             <div className="bg-slate-900/90 backdrop-blur-sm rounded-2xl p-8 sm:p-10 md:p-12 border border-slate-800/50 shadow-2xl relative overflow-hidden order-1 lg:order-2">
@@ -529,32 +571,26 @@ const Lawyers = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {[
               {
-                icon: Calendar,
                 title: 'Consultation Booking Systems',
                 description: 'Automated scheduling tools that integrate with your calendar, reducing administrative time by 40% and capturing leads 24/7. Seamless booking experience that converts visitors into consultations.'
               },
               {
-                icon: Users,
                 title: 'Practice Area Showcase Pages',
                 description: 'SEO-optimized dedicated pages for each practice area (family law, real estate, criminal defense, etc.) with clear navigation structure and conversion-focused design that educates and converts.'
               },
               {
-                icon: BookOpen,
                 title: 'Case Studies & Success Stories',
                 description: 'Showcase successful outcomes and build credibility through real results. Demonstrate your expertise with detailed case studies that highlight your firm\'s track record and client victories.'
               },
               {
-                icon: FileText,
                 title: 'Legal Blog & Content Marketing',
                 description: 'Attorney-written articles and SEO content strategy that positions your firm as a thought leader. Regular blog content improves search rankings and demonstrates expertise to potential clients.'
               },
               {
-                icon: Award,
                 title: 'Attorney Profiles & Team Pages',
                 description: 'Professional bios and credentials display that build personal connections with potential clients. Showcase your team\'s expertise, education, and experience to build trust and rapport.'
               },
               {
-                icon: CheckCircle,
                 title: 'Client Testimonials & Reviews',
                 description: 'Social proof integration and trust signals through client testimonials and review management. Build credibility by showcasing what your satisfied clients say about your firm.'
               }
@@ -577,14 +613,14 @@ const Lawyers = () => {
                   style={{ transitionDelay: `${index * 100}ms` }}
                 >
                   <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="relative z-10 flex items-start space-x-4">
-                    <div className="w-12 h-12 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <feature.icon className="h-6 w-6 text-white" />
+                  <div className="relative z-10">
+                    <div className="w-12 h-12 bg-gradient-to-br from-cyan-300/20 via-purple-300/20 to-cyan-300/20 border border-cyan-500/30 rounded-xl flex items-center justify-center flex-shrink-0 mb-4 sm:mb-6 group-hover:border-cyan-400/50 transition-all duration-300">
+                      <span className="text-2xl font-bold bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
+                        {index + 1}
+                      </span>
                     </div>
-                    <div>
-                      <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
-                      <p className="text-white/60 text-sm sm:text-base leading-relaxed font-light">{feature.description}</p>
-                    </div>
+                    <h3 className="text-xl font-semibold text-white mb-2 group-hover:text-cyan-300 transition-colors">{feature.title}</h3>
+                    <p className="text-white/60 text-sm sm:text-base leading-relaxed font-light">{feature.description}</p>
                   </div>
                 </div>
               );
@@ -639,10 +675,6 @@ const Lawyers = () => {
                     <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     
                     <div className="relative z-10 flex flex-col h-full items-center text-center">
-                      <div className="w-12 h-12 sm:w-14 sm:h-14 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-xl flex items-center justify-center mb-3 mx-auto">
-                        <Scale className="h-6 w-6 sm:h-7 sm:w-7 text-white" />
-                      </div>
-                      
                       <h3 className="text-base sm:text-lg font-semibold text-white mb-4">
                         <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Law Firm Website {location.city}</span>
                       </h3>
@@ -685,18 +717,18 @@ const Lawyers = () => {
             {[
               {
                 step: '01',
-                title: 'Discovery & Market Mapping',
-                description: 'We conduct an in-depth audit of your local GTA competitors to identify high-value keywords and opportunities. We analyze your practice areas, target clients, and regional market dynamics.'
+                title: 'Design & Strategy',
+                description: 'We work closely with your firm to understand your brand, practice areas, and client needs. Our team creates custom design mockups and a strategic plan that builds trust and showcases your expertise. Every visual element is crafted to establish credibility and convert visitors.'
               },
               {
                 step: '02',
-                title: 'Custom Design & Development',
-                description: 'We build your visual identity and site architecture that builds trust and compels prospects to act, utilizing proven conversion patterns. Every element is designed to establish credibility and leave a lasting positive impression.'
+                title: 'Implementation & Development',
+                description: 'We bring your design to life with modern development practices, ensuring your website is fast, secure, and fully responsive. Your custom platform is built with attention to detail, optimized for performance, and ready to serve your clients 24/7.'
               },
               {
                 step: '03',
-                title: 'Optimized Launch & SEO Control',
-                description: 'We deploy your custom platform on Vercel\'s global edge network, implementing advanced schema markup for Map Pack dominance and ensuring your firm ranks for local searches.'
+                title: 'Custom Features & Launch',
+                description: 'We implement your specific requests and custom features tailored to your firm\'s needs. From consultation booking systems to practice area showcases, we ensure everything works seamlessly. We also optimize for search rankings to help potential clients find you, then launch your professional website.'
               }
             ].map((phase, index) => {
               const itemIndex = index + 23; // Offset from previous items
@@ -742,30 +774,30 @@ const Lawyers = () => {
               : 'opacity-0 translate-y-12'
           }`}
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extralight text-white mb-8 sm:mb-12 text-center leading-[1.1] tracking-[-0.04em]">
-            <span className="block font-light opacity-90">Frequently Asked</span>
-            <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Questions</span>
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extralight text-white mb-6 sm:mb-8 text-center leading-[1.1] tracking-[-0.04em]">
+            <span className="font-light opacity-90">Frequently Asked </span>
+            <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Questions</span>
           </h2>
           
           <div className="max-w-4xl mx-auto">
-            <Accordion type="single" collapsible className="w-full space-y-4 sm:space-y-6">
+            <Accordion type="single" collapsible className="w-full space-y-2 sm:space-y-3">
               {faqs.map((faq, index) => (
                 <AccordionItem 
                   key={index} 
                   value={`item-${index}`}
-                  className="border border-slate-800/50 rounded-xl bg-slate-900/90 backdrop-blur-sm data-[state=open]:bg-gradient-to-r data-[state=open]:from-cyan-500/20 data-[state=open]:via-purple-500/20 data-[state=open]:to-cyan-500/20 data-[state=open]:border-cyan-500/50 transition-all duration-200 relative overflow-hidden min-h-[80px] sm:min-h-[90px] flex flex-col"
+                  className="border border-slate-800/50 rounded-xl bg-slate-900/90 backdrop-blur-sm data-[state=open]:bg-gradient-to-r data-[state=open]:from-cyan-500/20 data-[state=open]:via-purple-500/20 data-[state=open]:to-cyan-500/20 data-[state=open]:border-cyan-500/50 transition-all duration-200 relative overflow-hidden min-h-[60px] sm:min-h-[70px] flex flex-col"
                 >
                   {/* Gradient vertical bar on the left */}
                   <div className="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-300 via-purple-300 to-cyan-300 rounded-l-xl z-10"></div>
                   <AccordionTrigger 
-                    className="px-4 sm:px-6 py-4 sm:py-5 hover:no-underline text-left data-[state=open]:text-white data-[state=closed]:text-white/80 relative overflow-hidden group w-full min-h-[80px] sm:min-h-[90px] flex items-center pl-5 sm:pl-7"
+                    className="px-4 sm:px-6 py-3 sm:py-4 hover:no-underline text-left data-[state=open]:text-white data-[state=closed]:text-white/80 relative overflow-hidden group w-full min-h-[60px] sm:min-h-[70px] flex items-center pl-5 sm:pl-7"
                   >
                     {/* Hover background animation - left to right */}
                     <div className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-xl"></div>
-                    <span className="font-light text-base sm:text-lg pr-4 flex-1 relative z-10 group-hover:text-white transition-colors duration-300">{faq.question}</span>
-                    <ChevronDown className="h-5 w-5 shrink-0 data-[state=closed]:text-white/60 data-[state=open]:text-white group-hover:text-white transition-all duration-200 relative z-10" />
+                    <span className="font-light text-sm sm:text-base pr-4 flex-1 relative z-10 group-hover:text-white transition-colors duration-300">{faq.question}</span>
+                    <ChevronDown className="h-4 w-4 shrink-0 data-[state=closed]:text-white/60 data-[state=open]:text-white group-hover:text-white transition-all duration-200 relative z-10" />
                   </AccordionTrigger>
-                  <AccordionContent className="px-4 sm:px-6 pb-4 sm:pb-5 text-white/60 text-sm sm:text-base leading-[1.7] font-light tracking-[0.01em]">
+                  <AccordionContent className="px-4 sm:px-6 pb-3 sm:pb-4 text-white/60 text-sm leading-[1.6] font-light tracking-[0.01em]">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
@@ -790,12 +822,6 @@ const Lawyers = () => {
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
             
             <div className="relative z-10 text-center">
-              <div className="inline-flex items-center justify-center space-x-2 mb-6">
-                <div className="w-2 h-2 bg-gradient-to-r from-cyan-300 to-purple-300 rounded-full animate-pulse"></div>
-                <span className="text-cyan-300 font-light text-lg sm:text-xl">
-                  Ready to Transform Your Law Firm's Digital Presence?
-                </span>
-              </div>
               <h2 className="text-2xl sm:text-3xl md:text-4xl font-extralight text-white mb-4 leading-[1.1] tracking-[-0.04em]">
                 <span className="block font-light opacity-90">Get Your</span>
                 <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Free Strategy Audit</span>
