@@ -25,6 +25,18 @@ const routes = [
   { url: "/mobile", priority: 0.7, changefreq: "monthly" },
   { url: "/payments", priority: 0.7, changefreq: "monthly" },
   { url: "/lawyers", priority: 0.8, changefreq: "monthly" },
+  { url: "/lawyers/markham", priority: 0.7, changefreq: "monthly" },
+  { url: "/lawyers/vaughan", priority: 0.7, changefreq: "monthly" },
+  { url: "/lawyers/pickering", priority: 0.7, changefreq: "monthly" },
+  { url: "/lawyers/ajax", priority: 0.7, changefreq: "monthly" },
+  { url: "/lawyers/oshawa", priority: 0.7, changefreq: "monthly" },
+  { url: "/lawyers/whitby", priority: 0.7, changefreq: "monthly" },
+  { url: "/lawyers/richmond-hill", priority: 0.7, changefreq: "monthly" },
+  { url: "/lawyers/newmarket", priority: 0.7, changefreq: "monthly" },
+  { url: "/lawyers/aurora", priority: 0.7, changefreq: "monthly" },
+  { url: "/lawyers/stouffville", priority: 0.7, changefreq: "monthly" },
+  { url: "/accountants", priority: 0.8, changefreq: "monthly" },
+  { url: "/renovations", priority: 0.8, changefreq: "monthly" },
   { url: "/blog", priority: 0.8, changefreq: "weekly" }
 ];
 
