@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import { Star, ArrowRight, CheckCircle, Layers, Heart, ChevronLeft, ChevronRight, Rocket, TrendingUp, ChevronDown } from 'lucide-react';
+import { Star, ArrowRight, CheckCircle, Layers, Heart, ChevronLeft, ChevronRight, Rocket, TrendingUp, ChevronDown, Scale, Calculator, Hammer } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { useScrollToTop, useSEO } from '@/hooks';
+import { useScrollToTop, useSEO, scrollToTop } from '@/hooks';
 import { useState, useEffect, useRef, memo, useCallback, useMemo } from 'react';
 import StructuredData from '@/components/StructuredData';
 import logo from '@/assets/zenara-logo-v5.svg';
@@ -151,8 +151,10 @@ const Services = () => {
   
   const [visibleItems, setVisibleItems] = useState<number[]>([]);
   const [imageVisibleItems, setImageVisibleItems] = useState<number[]>([]);
+  const [industryVisibleItems, setIndustryVisibleItems] = useState<number[]>([]);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const industryRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const handleItemIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
     entries.forEach((entry) => {
@@ -178,9 +180,22 @@ const Services = () => {
     });
   }, []);
 
+  const handleIndustryIntersection = useCallback((entries: IntersectionObserverEntry[]) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const index = parseInt(entry.target.getAttribute('data-industry-index') || '0');
+        setIndustryVisibleItems(prev => [...prev, index]);
+      } else {
+        const index = parseInt(entry.target.getAttribute('data-industry-index') || '0');
+        setIndustryVisibleItems(prev => prev.filter(item => item !== index));
+      }
+    });
+  }, []);
+
   useEffect(() => {
     const observer = new IntersectionObserver(handleItemIntersection, { threshold: 0.2 });
     const imageObserver = new IntersectionObserver(handleImageIntersection, { threshold: 0.3 });
+    const industryObserver = new IntersectionObserver(handleIndustryIntersection, { threshold: 0.2 });
 
     itemRefs.current.forEach((ref) => {
       if (ref) observer.observe(ref);
@@ -190,6 +205,10 @@ const Services = () => {
       if (ref) imageObserver.observe(ref);
     });
 
+    industryRefs.current.forEach((ref) => {
+      if (ref) industryObserver.observe(ref);
+    });
+
     return () => {
       itemRefs.current.forEach((ref) => {
         if (ref) observer.unobserve(ref);
@@ -197,8 +216,11 @@ const Services = () => {
       imageRefs.current.forEach((ref) => {
         if (ref) imageObserver.unobserve(ref);
       });
+      industryRefs.current.forEach((ref) => {
+        if (ref) industryObserver.unobserve(ref);
+      });
     };
-  }, [handleItemIntersection, handleImageIntersection]);
+  }, [handleItemIntersection, handleImageIntersection, handleIndustryIntersection]);
 
   const services = useMemo(() => [
     {
@@ -255,6 +277,33 @@ const Services = () => {
         "Google Business setup and optimization",
         "Additional brand-related services available on request"
       ]
+    }
+  ], []);
+
+  const industries = useMemo(() => [
+    {
+      icon: Scale,
+      title: "Law Firms",
+      description: "Professional web design solutions tailored for legal practices. Build trust and credibility with modern websites that showcase your expertise and convert visitors into clients.",
+      href: "/lawyers"
+    },
+    {
+      icon: Calculator,
+      title: "Accounting Agencies",
+      description: "Secure, professional websites for accounting firms. Showcase your services, build client trust, and streamline client communication with custom web solutions.",
+      href: "/accountants"
+    },
+    {
+      icon: Hammer,
+      title: "Renovation Companies",
+      description: "Showcase your craftsmanship with stunning portfolio websites. Highlight your projects, attract new clients, and grow your renovation business online.",
+      href: "/renovations"
+    },
+    {
+      icon: Heart,
+      title: "Wellness Clinics",
+      description: "Modern websites designed for wellness and healthcare practices. Enable online booking, showcase services, and build trust with potential patients.",
+      href: "/clinics"
     }
   ], []);
 
@@ -454,6 +503,109 @@ const Services = () => {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Industries We Specialize In */}
+      <section className="services-industries py-16 sm:py-20 md:py-24 relative overflow-hidden bg-black">
+        {/* Gradient Background Layers */}
+        <div className="absolute inset-0">
+          {/* Base gradient layer */}
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
+          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
+          {/* Accent gradients with theme colors */}
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/35 to-transparent"></div>
+        </div>
+        
+        {/* Space Background Elements */}
+        <div className="absolute inset-0">
+          {/* Background Stars */}
+          <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
+          <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
+          <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
+          <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
+          <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
+          <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
+          <div className="bg-star" style={{ top: '18%', left: '68%' }}></div>
+          <div className="bg-star" style={{ top: '7%', left: '78%' }}></div>
+          <div className="bg-star" style={{ top: '14%', left: '88%' }}></div>
+          <div className="bg-star" style={{ top: '11%', left: '95%' }}></div>
+          <div className="bg-star" style={{ top: '25%', left: '5%' }}></div>
+          <div className="bg-star" style={{ top: '28%', left: '15%' }}></div>
+          <div className="bg-star" style={{ top: '32%', left: '28%' }}></div>
+          <div className="bg-star" style={{ top: '26%', left: '42%' }}></div>
+          <div className="bg-star" style={{ top: '35%', left: '55%' }}></div>
+          <div className="bg-star" style={{ top: '29%', left: '68%' }}></div>
+          <div className="bg-star" style={{ top: '38%', left: '82%' }}></div>
+          <div className="bg-star" style={{ top: '27%', left: '92%' }}></div>
+          
+          {/* Nebula Effects */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        </div>
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="text-center mb-12 sm:mb-16">
+            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 leading-[0.95] tracking-[-0.04em]">
+              <span className="font-light opacity-90 text-white">Industries We </span>
+              <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Specialize In</span>
+            </h2>
+            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
+              We understand the unique needs of different industries and create tailored web solutions that drive results.
+            </p>
+          </div>
+          
+          {/* Industries Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10">
+            {industries.map((industry, index) => {
+              const IconComponent = industry.icon;
+              return (
+                <div
+                  key={index}
+                  ref={(el) => (industryRefs.current[index] = el)}
+                  data-industry-index={index}
+                  className={`transition-all duration-1000 ${
+                    industryVisibleItems.includes(index)
+                      ? 'opacity-100 translate-y-0'
+                      : 'opacity-0 translate-y-12'
+                  }`}
+                >
+                  <Link
+                    to={industry.href}
+                    onClick={scrollToTop}
+                    className="group bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-300 relative overflow-hidden h-full flex flex-col"
+                  >
+                    {/* Gradient glow on hover */}
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    
+                    <div className="relative z-10 flex flex-col h-full">
+                      {/* Icon */}
+                      <div className="w-12 h-12 bg-slate-800/80 border border-slate-700/50 rounded-xl flex items-center justify-center flex-shrink-0 mb-4 sm:mb-6 group-hover:bg-slate-800 group-hover:border-cyan-500/30 transition-all duration-300">
+                        <IconComponent className="h-6 w-6 text-cyan-400 group-hover:text-cyan-300 transition-colors duration-300" />
+                      </div>
+                      
+                      {/* Title */}
+                      <h3 className="text-xl sm:text-2xl font-semibold text-white mb-3 group-hover:text-cyan-300 transition-colors">
+                        {industry.title}
+                      </h3>
+                      
+                      {/* Description */}
+                      <p className="text-white/60 text-sm sm:text-base leading-relaxed font-light mb-6 flex-grow">
+                        {industry.description}
+                      </p>
+                      
+                      {/* Learn More Link */}
+                      <div className="flex items-center text-cyan-400 group-hover:text-purple-400 transition-colors mt-auto">
+                        <span className="text-sm sm:text-base font-medium mr-2">Learn More</span>
+                        <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

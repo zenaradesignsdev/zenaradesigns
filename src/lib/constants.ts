@@ -29,6 +29,7 @@ export const FOOTER_ADDITIONAL_LINKS = [
   { href: '/security', label: 'Security' },
   { href: '/mobile', label: 'Mobile' },
   { href: '/blog', label: 'Blog' },
+  { href: '/payments', label: 'Payments' },
 ] as const;
 
 // Animation constants
