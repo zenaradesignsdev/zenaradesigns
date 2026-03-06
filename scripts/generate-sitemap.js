@@ -37,6 +37,7 @@ const routes = [
   { url: "/lawyers/stouffville", priority: 0.7, changefreq: "monthly" },
   { url: "/accountants", priority: 0.8, changefreq: "monthly" },
   { url: "/renovations", priority: 0.8, changefreq: "monthly" },
+  { url: "/clinics", priority: 0.8, changefreq: "monthly" },
   { url: "/blog", priority: 0.8, changefreq: "weekly" }
 ];
 

@@ -257,6 +257,13 @@ const Footer = () => {
                 >
                   Renovation Companies
                 </Link>
+                <Link
+                  to="/clinics"
+                  onClick={scrollToTop}
+                  className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
+                >
+                  Wellness Clinics
+                </Link>
               </div>
             </div>
 
