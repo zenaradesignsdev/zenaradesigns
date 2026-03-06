@@ -107,6 +107,31 @@ export const useSEO = ({ title, description, canonical, noindex = false, structu
       document.head.appendChild(ogDescription);
     }
 
+    // Update Open Graph URL
+    if (canonical) {
+      let normalizedCanonical = canonical;
+      normalizedCanonical = normalizedCanonical.replace(/^https?:\/\/(www\.)?/, 'https://');
+      if (normalizedCanonical.startsWith('http://zenaradesigns.com')) {
+        normalizedCanonical = normalizedCanonical.replace('http://', 'https://');
+      } else if (!normalizedCanonical.startsWith('https://zenaradesigns.com')) {
+        if (normalizedCanonical.startsWith('/')) {
+          normalizedCanonical = `https://zenaradesigns.com${normalizedCanonical}`;
+        } else {
+          normalizedCanonical = normalizedCanonical.replace(/^http:/, 'https:');
+        }
+      }
+      
+      let ogUrl = document.querySelector('meta[property="og:url"]');
+      if (ogUrl) {
+        ogUrl.setAttribute('content', normalizedCanonical);
+      } else {
+        ogUrl = document.createElement('meta');
+        ogUrl.setAttribute('property', 'og:url');
+        ogUrl.setAttribute('content', normalizedCanonical);
+        document.head.appendChild(ogUrl);
+      }
+    }
+
     // Update Twitter title
     let twitterTitle = document.querySelector('meta[name="twitter:title"]');
     if (twitterTitle) {
@@ -155,5 +180,25 @@ export const useSEO = ({ title, description, canonical, noindex = false, structu
       injectMultipleSchemas(schemas);
     }
 
+    // Cleanup function for structured data
+    return () => {
+      if (structuredData) {
+        // Remove structured data scripts when component unmounts or dependencies change
+        // Note: injectMultipleSchemas already removes all scripts, but we add cleanup for safety
+        const existingScripts = document.querySelectorAll('script[type="application/ld+json"]');
+        existingScripts.forEach(script => {
+          // Only remove if it's one of our schemas (has @context schema.org)
+          try {
+            const content = script.textContent;
+            if (content && content.includes('"@context":"https://schema.org"')) {
+              script.remove();
+            }
+          } catch (e) {
+            // If parsing fails, remove anyway for safety
+            script.remove();
+          }
+        });
+      }
+    };
   }, [title, description, canonical, noindex, structuredData]);
 };

@@ -145,29 +145,15 @@ const LawyerLocation = () => {
     };
   }, [handleSectionIntersection, handleItemIntersection]);
 
-  // SEO meta tags
+  // SEO meta tags with structured data
   useSEO({
     title: `Law Firm Web Design ${city} | Professional Legal Websites | Zenara`,
     description: `Professional web design for ${city} law firms. Build trust, showcase expertise, and convert visitors. ${keywords.join(', ')}. Free consultation.`,
-    canonical: `https://zenaradesigns.com/lawyers/${locationSlug}`
+    canonical: `https://zenaradesigns.com/lawyers/${locationSlug}`,
+    structuredData: {
+      type: 'localBusiness'
+    }
   });
-
-  // Inject structured data
-  useEffect(() => {
-    const schema = generateLocalBusinessSchema();
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify(schema);
-    document.head.appendChild(script);
-    
-    return () => {
-      document.querySelectorAll('script[type="application/ld+json"]').forEach(script => {
-        if (script.textContent?.includes('LocalBusiness')) {
-          script.remove();
-        }
-      });
-    };
-  }, []);
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
