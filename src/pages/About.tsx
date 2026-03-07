@@ -187,7 +187,7 @@ const About = () => {
     }
   ], []);
 
-  // Timeline animation effect
+  // Timeline animation effect - simple entrance only
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -197,11 +197,8 @@ const About = () => {
             setVisibleTimelineItems(prev => 
               prev.includes(index) ? prev : [...prev, index]
             );
-          } else {
-            setVisibleTimelineItems(prev => 
-              prev.filter(item => item !== index)
-            );
           }
+          // Removed exit animation - items stay visible once they've appeared
         });
       },
       { threshold: PERFORMANCE_THRESHOLDS.INTERSECTION_OBSERVER }
@@ -581,10 +578,10 @@ const About = () => {
             <div 
               ref={(el) => (timelineRefs.current[0] = el)}
               data-timeline-index={0}
-              className={`relative mb-32 sm:mb-40 transition-all duration-1000 ${
+              className={`relative mb-32 sm:mb-40 transition-all duration-500 ease-out ${
                 visibleTimelineItems.includes(0) 
                   ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-8'
+                  : 'opacity-0 translate-y-12'
               }`}
             >
               <div className="relative flex flex-col lg:flex-row items-start gap-0">
@@ -662,12 +659,12 @@ const About = () => {
             <div 
               ref={(el) => (timelineRefs.current[1] = el)}
               data-timeline-index={1}
-              className={`relative mb-32 sm:mb-40 transition-all duration-1000 ${
+              className={`relative mb-32 sm:mb-40 transition-all duration-500 ease-out ${
                 visibleTimelineItems.includes(1) 
                   ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-8'
+                  : 'opacity-0 translate-y-12'
               }`}
-              style={{ transitionDelay: '200ms' }}
+              style={{ transitionDelay: '100ms' }}
             >
               <div className="relative flex flex-col lg:flex-row-reverse items-start gap-0">
                 {/* Image - Right side with creative shape */}
@@ -744,12 +741,12 @@ const About = () => {
             <div 
               ref={(el) => (timelineRefs.current[2] = el)}
               data-timeline-index={2}
-              className={`relative mb-32 sm:mb-40 transition-all duration-1000 ${
+              className={`relative mb-32 sm:mb-40 transition-all duration-500 ease-out ${
                 visibleTimelineItems.includes(2) 
                   ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-8'
+                  : 'opacity-0 translate-y-12'
               }`}
-              style={{ transitionDelay: '400ms' }}
+              style={{ transitionDelay: '200ms' }}
             >
               <div className="relative min-h-[500px] sm:min-h-[600px] rounded-3xl overflow-hidden group/image">
                 {/* Gradient border */}
@@ -812,12 +809,12 @@ const About = () => {
                     key={globalIndex}
                     ref={(el) => (timelineRefs.current[globalIndex] = el)}
                     data-timeline-index={globalIndex}
-                    className={`relative transition-all duration-1000 ${
+                    className={`relative transition-all duration-500 ease-out ${
                       visibleTimelineItems.includes(globalIndex) 
-                        ? 'opacity-100 translate-x-0' 
-                        : 'opacity-0 translate-x-8'
+                        ? 'opacity-100 translate-y-0' 
+                        : 'opacity-0 translate-y-12'
                     }`}
-                    style={{ transitionDelay: `${(globalIndex) * 200}ms` }}
+                    style={{ transitionDelay: `${(globalIndex - 3) * 100}ms` }}
                   >
                     <div className="flex items-start gap-6 sm:gap-8">
                       {/* Number indicator - vertical */}
