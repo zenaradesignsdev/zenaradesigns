@@ -58,6 +58,16 @@ const routes = [
   { url: "/renovations/aurora", priority: 0.7, changefreq: "monthly" },
   { url: "/renovations/stouffville", priority: 0.7, changefreq: "monthly" },
   { url: "/clinics", priority: 0.8, changefreq: "monthly" },
+  { url: "/clinics/markham", priority: 0.7, changefreq: "monthly" },
+  { url: "/clinics/vaughan", priority: 0.7, changefreq: "monthly" },
+  { url: "/clinics/pickering", priority: 0.7, changefreq: "monthly" },
+  { url: "/clinics/ajax", priority: 0.7, changefreq: "monthly" },
+  { url: "/clinics/oshawa", priority: 0.7, changefreq: "monthly" },
+  { url: "/clinics/whitby", priority: 0.7, changefreq: "monthly" },
+  { url: "/clinics/richmond-hill", priority: 0.7, changefreq: "monthly" },
+  { url: "/clinics/newmarket", priority: 0.7, changefreq: "monthly" },
+  { url: "/clinics/aurora", priority: 0.7, changefreq: "monthly" },
+  { url: "/clinics/stouffville", priority: 0.7, changefreq: "monthly" },
   { url: "/blog", priority: 0.8, changefreq: "weekly" }
 ];
 

@@ -36,6 +36,7 @@ const AccountantLocation = lazy(() => import("./pages/AccountantLocation"));
 const Renovations = lazy(() => import("./pages/Renovations"));
 const RenovationLocation = lazy(() => import("./pages/RenovationLocation"));
 const Clinics = lazy(() => import("./pages/Clinics"));
+const ClinicLocation = lazy(() => import("./pages/ClinicLocation"));
 const Blog = lazy(() => import("./pages/Blog"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
 
@@ -112,6 +113,7 @@ const App = () => {
                       <Route path="/renovations" element={<ErrorBoundary><Renovations /></ErrorBoundary>} />
                       <Route path="/renovations/:location" element={<ErrorBoundary><RenovationLocation /></ErrorBoundary>} />
                       <Route path="/clinics" element={<ErrorBoundary><Clinics /></ErrorBoundary>} />
+                      <Route path="/clinics/:location" element={<ErrorBoundary><ClinicLocation /></ErrorBoundary>} />
                       
                       {/* Blog Routes */}
                       <Route path="/blog" element={<ErrorBoundary><Blog /></ErrorBoundary>} />
