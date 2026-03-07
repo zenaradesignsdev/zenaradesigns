@@ -17,8 +17,15 @@ export const SafeImage = ({ src, alt, className, priority = false, sizes, onLoad
   // Mobile: full width, Tablet: 50% width, Desktop: max 1200px
   const defaultSizes = sizes || "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 1200px";
 
+  // If className includes height classes (h-*), don't force h-auto on img
+  const hasHeightClass = className?.match(/\bh-\w+/);
+  const pictureClassName = className || '';
+  const imgClassName = className 
+    ? (hasHeightClass ? className : `w-full h-auto ${className}`)
+    : 'w-full h-auto';
+
   return (
-    <picture className={className}>
+    <picture className={pictureClassName}>
       <source srcSet={avifSet} type="image/avif" sizes={defaultSizes} />
       <source srcSet={webpSet} type="image/webp" sizes={defaultSizes} />
       <img
@@ -26,7 +33,7 @@ export const SafeImage = ({ src, alt, className, priority = false, sizes, onLoad
         alt={alt}
         loading={priority ? 'eager' : 'lazy'}
         fetchPriority={priority ? 'high' : 'auto'}
-        className={className ? `w-full h-auto ${className}` : 'w-full h-auto'}
+        className={imgClassName}
         sizes={defaultSizes}
         onLoad={onLoad}
       />

@@ -451,18 +451,16 @@ const Services = () => {
                             : 'opacity-0 translate-x-12'
                       }`}
                     >
-                      <SafeImage 
-                        src={index === 0 ? realEstateWebImage : index === 1 ? rocketWebImage : index === 2 ? gardenWebImage : travelWebImage} 
-                        alt={`${service.title} - Professional Web Design Service Icon`}
-                        className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
-                        style={{ 
-                          objectFit: 'contain',
-                          objectPosition: 'center center',
-                          transform: (index === 0 || index === 3) ? 'scale(1.5)' : 'scale(1)'
-                        }}
-                        loading="eager"
-                        decoding="async"
-                      />
+                      <div 
+                        className="w-full h-full"
+                        style={index === 0 || index === 3 ? { transform: 'scale(1.5)' } : undefined}
+                      >
+                        <SafeImage 
+                          src={index === 0 ? realEstateWebImage : index === 1 ? rocketWebImage : index === 2 ? gardenWebImage : travelWebImage} 
+                          alt={`${service.title} - Professional Web Design Service Icon`}
+                          className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
+                        />
+                      </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                     </div>
                   </div>
