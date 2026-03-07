@@ -5,6 +5,7 @@ import { useScrollToTop, useSEO, scrollToTop } from '@/hooks';
 import { memo, useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import StructuredData from '@/components/StructuredData';
 import { generateLocalBusinessSchema } from '@/lib/structured-data';
+import { SafeImage } from '@/components/ui/safe-image';
 import accountantComputerOffice from '@/assets/accountant-computer-office.png';
 import NotFound from './NotFound';
 
@@ -218,14 +219,11 @@ const AccountantLocation = () => {
           {/* Right Section - Image with Overlay */}
           <div className="relative h-[400px] lg:h-auto overflow-hidden">
             <div className="absolute inset-0 bg-black">
-              <img 
+              <SafeImage 
                 src={accountantComputerOffice} 
                 alt={`Professional accounting firm web design services in ${city}`} 
                 className="w-full h-full object-cover"
-                width="1200"
-                height="800"
-                loading="eager"
-                decoding="async"
+                priority
               />
             </div>
             

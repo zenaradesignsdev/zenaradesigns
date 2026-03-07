@@ -5,6 +5,7 @@ import { useScrollToTop, useSEO } from '@/hooks';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
 import type { Capability, Differentiator, SuccessMetric, AnimatedNumbers } from '@/lib/types';
 import logo from '@/assets/zenara-logo-v5.svg';
+import { SafeImage } from '@/components/ui/safe-image';
 import realEstateWebImage from '@/assets/website-example-realestate.png';
 import rocketWebImage from '@/assets/website-example-rocket.png';
 import gardenWebImage from '@/assets/website-example-garden.png';
@@ -994,14 +995,10 @@ const Home = () => {
                   <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl overflow-hidden">
                     <div className="aspect-video bg-gradient-to-br from-cyan-500/20 to-purple-500/20 p-6">
                       <div className="h-full bg-white/90 rounded-xl shadow-lg overflow-hidden">
-                        <img 
+                        <SafeImage 
                           src={realEstateWebImage} 
                           alt="Real Estate Website Design Toronto - Professional Property Showcase Platform" 
                           className="w-full h-full object-cover"
-                          width="400"
-                          height="225"
-                          loading="lazy"
-                          decoding="async"
                         />
                       </div>
                     </div>
@@ -1017,14 +1014,10 @@ const Home = () => {
                   <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl overflow-hidden">
                     <div className="aspect-video bg-gradient-to-br from-purple-500/20 to-pink-500/20 p-6">
                       <div className="h-full bg-white/90 rounded-xl shadow-lg overflow-hidden">
-                        <img 
+                        <SafeImage 
                           src={rocketWebImage} 
                           alt="Rocket Launch Website Design Toronto - Modern Tech Startup Platform" 
                           className="w-full h-full object-cover"
-                          width="400"
-                          height="225"
-                          loading="lazy"
-                          decoding="async"
                         />
                       </div>
                     </div>
@@ -1040,14 +1033,10 @@ const Home = () => {
                   <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl overflow-hidden">
                     <div className="aspect-video bg-gradient-to-br from-pink-500/20 to-cyan-500/20 p-6">
                       <div className="h-full bg-white/90 rounded-xl shadow-lg overflow-hidden">
-                        <img 
+                        <SafeImage 
                           src={gardenWebImage} 
                           alt="Garden & Landscaping Website Design GTA - Professional Horticulture Business Platform" 
                           className="w-full h-full object-cover"
-                          width="400"
-                          height="225"
-                          loading="lazy"
-                          decoding="async"
                         />
                       </div>
                     </div>
@@ -1063,14 +1052,10 @@ const Home = () => {
                   <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl overflow-hidden">
                     <div className="aspect-video bg-gradient-to-br from-teal-500/20 to-purple-500/20 p-6">
                       <div className="h-full bg-white/90 rounded-xl shadow-lg overflow-hidden">
-                        <img 
+                        <SafeImage 
                           src={travelWebImage} 
                           alt="Travel & Tourism Website Design Toronto - Adventure Booking Platform" 
                           className="w-full h-full object-cover"
-                          width="400"
-                          height="225"
-                          loading="lazy"
-                          decoding="async"
                         />
                       </div>
                     </div>
@@ -1087,14 +1072,11 @@ const Home = () => {
                   <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl overflow-hidden">
                     <div className="aspect-video bg-gradient-to-br from-cyan-500/20 to-purple-500/20 p-6">
                       <div className="h-full bg-white/90 rounded-xl shadow-lg overflow-hidden">
-                        <img 
+                        <SafeImage 
                           src={realEstateWebImage} 
                           alt="Real Estate Website Design Toronto - Property Showcase Platform" 
                           className="w-full h-full object-cover"
-                          width="400"
-                          height="225"
-                          loading="eager"
-                          decoding="async"
+                          priority
                         />
                       </div>
                     </div>
@@ -1110,14 +1092,10 @@ const Home = () => {
                   <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl overflow-hidden">
                     <div className="aspect-video bg-gradient-to-br from-purple-500/20 to-pink-500/20 p-6">
                       <div className="h-full bg-white/90 rounded-xl shadow-lg overflow-hidden">
-                        <img 
+                        <SafeImage 
                           src={rocketWebImage} 
                           alt="Rocket Launch Website Design Toronto - Modern Tech Startup Platform" 
                           className="w-full h-full object-cover"
-                          width="400"
-                          height="225"
-                          loading="lazy"
-                          decoding="async"
                         />
                       </div>
                     </div>
@@ -1133,14 +1111,10 @@ const Home = () => {
                   <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl overflow-hidden">
                     <div className="aspect-video bg-gradient-to-br from-pink-500/20 to-cyan-500/20 p-6">
                       <div className="h-full bg-white/90 rounded-xl shadow-lg overflow-hidden">
-                        <img 
+                        <SafeImage 
                           src={gardenWebImage} 
                           alt="Garden & Landscaping Website Design GTA - Professional Horticulture Business Platform" 
                           className="w-full h-full object-cover"
-                          width="400"
-                          height="225"
-                          loading="lazy"
-                          decoding="async"
                         />
                       </div>
                     </div>
@@ -1156,14 +1130,10 @@ const Home = () => {
                   <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl overflow-hidden">
                     <div className="aspect-video bg-gradient-to-br from-teal-500/20 to-purple-500/20 p-6">
                       <div className="h-full bg-white/90 rounded-xl shadow-lg overflow-hidden">
-                        <img 
+                        <SafeImage 
                           src={travelWebImage} 
                           alt="Travel & Tourism Website Design Toronto - Adventure Booking Platform" 
                           className="w-full h-full object-cover"
-                          width="400"
-                          height="225"
-                          loading="lazy"
-                          decoding="async"
                         />
                       </div>
                     </div>

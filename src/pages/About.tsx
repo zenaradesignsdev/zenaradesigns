@@ -6,6 +6,7 @@ import { useState, useEffect, useRef, memo, useMemo, useCallback } from 'react';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
 import type { TeamMember, ProcessStep, Differentiator, Position } from '@/lib/types';
 import logo from '@/assets/zenara-logo-v5.svg';
+import { SafeImage } from '@/components/ui/safe-image';
 import saturnImage from '@/assets/saturn.png';
 import moonImage from '@/assets/moon.png';
 import discoveryImage from '@/assets/zenara-discovery.jpg';
@@ -338,14 +339,10 @@ const About = () => {
             opacity: saturnPosition.opacity
           }}
         >
-          <img 
+          <SafeImage 
             src={saturnImage} 
             alt="Decorative Saturn planet illustration for web design agency background" 
             className="w-full h-full object-contain"
-            width="200"
-            height="200"
-            loading="lazy"
-            decoding="async"
           />
         </div>
         {/* Animated Background Elements */}
@@ -460,14 +457,10 @@ const About = () => {
             opacity: moonPosition.opacity * 0.15
           }}
         >
-          <img 
+          <SafeImage 
             src={moonImage} 
             alt="Decorative moon illustration for web design agency background" 
             className="w-full h-full object-contain animate-levitate"
-            width="150"
-            height="150"
-            loading="lazy"
-            decoding="async"
           />
         </div>
         {/* Space Background Elements */}
@@ -612,11 +605,10 @@ const About = () => {
                           clipPath: 'polygon(0 0, 100% 0, 85% 100%, 0% 100%)'
                         }}
                       >
-                        <img 
+                        <SafeImage 
                           src={discoveryImage} 
                           alt="Modern office workspace for web design discovery phase" 
                           className="w-full h-full object-cover transition-transform duration-700 group-hover/image:scale-105"
-                          loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/20 via-transparent to-purple-500/20 transition-opacity duration-500 group-hover/image:opacity-0"></div>
                         {/* Subtle inner glow */}
@@ -695,11 +687,10 @@ const About = () => {
                           clipPath: 'polygon(15% 0, 100% 0, 100% 100%, 0% 100%)'
                         }}
                       >
-                        <img 
+                        <SafeImage 
                           src={prototypingImage} 
                           alt="Design desk workspace for prototyping phase" 
                           className="w-full h-full object-cover transition-transform duration-700 group-hover/image:scale-105"
-                          loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-bl from-purple-500/20 via-transparent to-cyan-500/20 transition-opacity duration-500 group-hover/image:opacity-0"></div>
                         {/* Subtle inner glow */}
@@ -766,11 +757,10 @@ const About = () => {
                   <div className="absolute inset-[2px] rounded-3xl overflow-hidden">
                     {/* Image background */}
                     <div className="absolute inset-0">
-                      <img 
+                      <SafeImage 
                         src={buildImage} 
                         alt="Development workspace for build phase" 
                         className="w-full h-full object-cover transition-transform duration-700 group-hover/image:scale-105"
-                        loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/70 to-black/80 transition-opacity duration-500 group-hover/image:opacity-90"></div>
                       <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-purple-500/10"></div>

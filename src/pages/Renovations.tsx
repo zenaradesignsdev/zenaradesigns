@@ -6,6 +6,7 @@ import { useScrollToTop, useSEO, scrollToTop } from '@/hooks';
 import { memo, useEffect, useRef, useState, useCallback } from 'react';
 import StructuredData from '@/components/StructuredData';
 import { generateLocalBusinessSchema, generateServiceSchema } from '@/lib/structured-data';
+import { SafeImage } from '@/components/ui/safe-image';
 import renovationBackyard from '@/assets/renovation-backyard.png';
 import renovationKitchen from '@/assets/renovation-kitchen.png';
 import renovationHome from '@/assets/renovation-home.png';
@@ -284,14 +285,11 @@ const Renovations = () => {
           {/* Right Section - Image with Overlay */}
           <div className="relative h-[400px] lg:h-auto overflow-hidden">
             <div className="absolute inset-0 bg-black">
-              <img 
+              <SafeImage 
                 src={renovationBackyard} 
                 alt="Professional renovation company web design services in Greater Toronto Area" 
                 className="w-full h-full object-cover"
-                width="1200"
-                height="800"
-                loading="eager"
-                decoding="async"
+                priority
               />
             </div>
             
@@ -338,14 +336,10 @@ const Renovations = () => {
                   </p>
                 </div>
                 <div className="flex items-center justify-center">
-                  <img 
+                  <SafeImage 
                     src={renovationKitchen}
                     alt="Professional renovation company digital transformation"
                     className="w-full h-auto max-h-[500px] object-contain"
-                    width="800"
-                    height="600"
-                    loading="lazy"
-                    decoding="async"
                   />
                 </div>
               </div>
@@ -372,14 +366,10 @@ const Renovations = () => {
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 items-center">
             <div className="flex items-center justify-center order-2 lg:order-1">
-              <img 
+              <SafeImage 
                 src={renovationHome}
                 alt="Professional renovation craftsmanship and trust"
                 className="w-full h-auto max-h-[500px] object-contain"
-                width="800"
-                height="600"
-                loading="lazy"
-                decoding="async"
               />
             </div>
             <div className="bg-slate-900/90 backdrop-blur-sm rounded-2xl p-8 sm:p-10 md:p-12 border border-slate-800/50 shadow-2xl relative overflow-hidden order-1 lg:order-2">

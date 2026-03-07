@@ -6,6 +6,7 @@ import { useScrollToTop, useSEO, scrollToTop } from '@/hooks';
 import { memo, useEffect, useRef, useState, useCallback } from 'react';
 import StructuredData from '@/components/StructuredData';
 import { generateLocalBusinessSchema, generateServiceSchema } from '@/lib/structured-data';
+import { SafeImage } from '@/components/ui/safe-image';
 import lawyerGavelOffice from '@/assets/lawyer-gavel-office.png';
 import lawyerConsultationDocument from '@/assets/lawyer-consultation-document.png';
 import lawyerProfessionalMeeting from '@/assets/lawyer-professional-meeting.png';
@@ -293,14 +294,11 @@ const Lawyers = () => {
           {/* Right Section - Image with Overlay */}
           <div className="relative h-[400px] lg:h-auto overflow-hidden">
             <div className="absolute inset-0 bg-black">
-              <img 
+              <SafeImage 
                 src={lawyerGavelOffice} 
                 alt="Professional law firm web design services in Greater Toronto Area" 
                 className="w-full h-full object-cover"
-                width="1200"
-                height="800"
-                loading="eager"
-                decoding="async"
+                priority
               />
             </div>
             
@@ -348,12 +346,10 @@ const Lawyers = () => {
                 </div>
                 <div className="relative rounded-2xl overflow-hidden">
                   <div className="aspect-[4/3] bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl flex items-center justify-center">
-                    <img 
+                    <SafeImage 
                       src={lawyerGavelOffice}
                       alt="Professional lawyer in modern office setting"
                       className="w-full h-full object-cover rounded-2xl"
-                      loading="lazy"
-                      decoding="async"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
                   </div>
@@ -398,14 +394,10 @@ const Lawyers = () => {
             </div>
 
             <div className="flex items-center justify-center">
-              <img 
+              <SafeImage 
                 src={lawyerConsultationDocument}
                 alt="Professional legal consultation and client meeting"
                 className="w-full h-auto max-h-[500px] object-contain"
-                width="800"
-                height="600"
-                loading="lazy"
-                decoding="async"
               />
             </div>
           </div>
@@ -476,14 +468,10 @@ const Lawyers = () => {
           
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 items-center">
             <div className="flex items-center justify-center order-2 lg:order-1">
-              <img 
+              <SafeImage 
                 src={lawyerProfessionalMeeting}
                 alt="Law firm losing clients due to poor website design"
                 className="w-full h-auto max-h-[500px] object-contain"
-                width="800"
-                height="600"
-                loading="lazy"
-                decoding="async"
               />
             </div>
 

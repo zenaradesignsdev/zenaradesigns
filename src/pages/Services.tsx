@@ -5,6 +5,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { useScrollToTop, useSEO, scrollToTop } from '@/hooks';
 import { useState, useEffect, useRef, memo, useCallback, useMemo } from 'react';
 import StructuredData from '@/components/StructuredData';
+import { SafeImage } from '@/components/ui/safe-image';
 import logo from '@/assets/zenara-logo-v5.svg';
 import realEstateWebImage from '@/assets/website-example-realestate.png';
 import rocketWebImage from '@/assets/website-example-rocket.png';
@@ -411,14 +412,10 @@ const Services = () => {
                 />
                 {/* Moon behind Solutions */}
                 <div className="absolute -top-4 -right-4 sm:-top-6 sm:-right-6 md:-top-8 md:-right-8 w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 opacity-15 animate-levitate">
-                  <img 
+                  <SafeImage 
                     src={moonImage} 
                     alt="Decorative moon illustration for web design services background" 
                     className="w-full h-full object-contain"
-                    width="120"
-                    height="120"
-                    loading="lazy"
-                    decoding="async"
                   />
                 </div>
               </span>
@@ -454,11 +451,9 @@ const Services = () => {
                             : 'opacity-0 translate-x-12'
                       }`}
                     >
-                      <img 
+                      <SafeImage 
                         src={index === 0 ? realEstateWebImage : index === 1 ? rocketWebImage : index === 2 ? gardenWebImage : travelWebImage} 
                         alt={`${service.title} - Professional Web Design Service Icon`}
-                        width="48"
-                        height="48"
                         className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-105"
                         style={{ 
                           objectFit: 'contain',

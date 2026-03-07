@@ -2,6 +2,7 @@ import { Rocket, ExternalLink, Scale } from 'lucide-react';
 import { useScrollToTop, useSEO } from '@/hooks';
 import { memo } from 'react';
 import StructuredData from '@/components/StructuredData';
+import { SafeImage } from '@/components/ui/safe-image';
 import renoProjectImage from '@/assets/reno-project.png';
 import ashcamSiteImage from '@/assets/ashcam-site.png';
 import jbloansImage from '@/assets/jbloans.png';
@@ -116,17 +117,10 @@ const Projects = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
                   
                   {/* Project Image */}
-                  <img 
+                  <SafeImage 
                     src={renoProjectImage} 
                     alt="Luxury Renovation Website - Professional luxury renovation and construction services" 
                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
-                    style={{
-                      willChange: 'transform'
-                    }}
-                    width="800"
-                    height="450"
-                    loading="lazy"
-                    decoding="async"
                   />
                 </div>
                 
@@ -188,17 +182,10 @@ const Projects = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
                   
                   {/* Project Image */}
-                  <img 
+                  <SafeImage 
                     src={novaMotionPhysioImage} 
                     alt="Nova Motion Physio Website - Professional physiotherapy and wellness clinic platform" 
                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
-                    style={{
-                      willChange: 'transform'
-                    }}
-                    width="800"
-                    height="450"
-                    loading="lazy"
-                    decoding="async"
                   />
                 </div>
                 
@@ -260,17 +247,10 @@ const Projects = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
                   
                   {/* Project Image */}
-                  <img 
+                  <SafeImage 
                     src={accountingFirmProjectImage} 
                     alt="Accounting Firm Website - Professional accounting and tax services platform" 
                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
-                    style={{
-                      willChange: 'transform'
-                    }}
-                    width="800"
-                    height="450"
-                    loading="lazy"
-                    decoding="async"
                   />
                 </div>
                 
@@ -332,17 +312,10 @@ const Projects = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
                   
                   {/* Project Image */}
-                  <img 
+                  <SafeImage 
                     src={pickeringLawImage} 
                     alt="Pickering Law Firm Website - Professional legal services website design" 
                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
-                    style={{
-                      willChange: 'transform'
-                    }}
-                    width="800"
-                    height="450"
-                    loading="lazy"
-                    decoding="async"
                   />
                 </div>
                 
@@ -404,17 +377,10 @@ const Projects = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
                   
                   {/* Project Image */}
-                  <img 
+                  <SafeImage 
                     src={ashcamSiteImage} 
                     alt="AshCam Cutting Solutions Website - Construction blades and equipment e-commerce platform" 
                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
-                    style={{
-                      willChange: 'transform'
-                    }}
-                    width="800"
-                    height="450"
-                    loading="lazy"
-                    decoding="async"
                   />
                 </div>
                 
@@ -476,17 +442,10 @@ const Projects = () => {
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
                   
                   {/* Project Image */}
-                  <img 
+                  <SafeImage 
                     src={jbloansImage} 
                     alt="JB Loans Mortgage Broker Website - Professional mortgage services platform" 
                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
-                    style={{
-                      willChange: 'transform'
-                    }}
-                    width="800"
-                    height="450"
-                    loading="lazy"
-                    decoding="async"
                   />
                 </div>
                 

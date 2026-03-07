@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
 import StructuredData from '@/components/StructuredData';
+import { SafeImage } from '@/components/ui/safe-image';
 
 const Blog = () => {
   // Scroll to top when component mounts
@@ -158,11 +159,11 @@ const Blog = () => {
                     {featuredPost.featuredImage ? (
                       <div className="lg:w-96 lg:flex-shrink-0">
                         <div className="w-full h-64 sm:h-80 lg:h-full rounded-xl overflow-hidden bg-gradient-to-br from-cyan-500/20 to-purple-500/20 relative">
-                          <img
+                          <SafeImage
                             src={featuredPost.featuredImage}
                             alt={featuredPost.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                            loading="eager"
+                            priority
                           />
                         </div>
                       </div>
