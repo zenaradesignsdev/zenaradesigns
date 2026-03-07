@@ -6,6 +6,7 @@ import renoProjectImage from '@/assets/reno-project.png';
 import ashcamSiteImage from '@/assets/ashcam-site.png';
 import jbloansImage from '@/assets/jbloans.png';
 import pickeringLawImage from '@/assets/project2.png';
+import novaMotionPhysioImage from '@/assets/nova-motion-physio.png';
 // Placeholder images - replace when actual images are available
 import lawyerGavelOffice from '@/assets/lawyer-gavel-office.png';
 
@@ -149,6 +150,78 @@ const Projects = () => {
                   
                   <p className="text-slate-300 text-sm sm:text-base mb-6 font-light leading-relaxed flex-1">
                     Luxury renovation and construction services website designed for Toronto businesses. Modern, responsive design with seamless user experience. Showcasing premium craftsmanship and attention to detail.
+                  </p>
+                  
+                  <div className="flex items-center justify-between pt-4 border-t border-slate-800/50 group-hover:border-cyan-500/30 transition-colors mt-auto">
+                    <span className="text-cyan-400 text-sm font-medium group-hover:text-purple-400 transition-colors">
+                      View Live Site
+                    </span>
+                    <div className="flex items-center text-slate-400 group-hover:text-cyan-400 transition-colors">
+                      <ExternalLink className="h-4 w-4" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </a>
+
+            {/* Nova Motion Physio Project */}
+            <a
+              href="https://projectthree.zenaradesigns.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="group bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-800/50 hover:border-cyan-400/70 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/30 overflow-hidden relative hover:-translate-y-2 flex flex-col h-full"
+            >
+              {/* Animated gradient border */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/0 via-purple-500/0 to-cyan-500/0 group-hover:from-cyan-500/30 group-hover:via-purple-500/30 group-hover:to-cyan-500/30 transition-all duration-500 blur-xl"></div>
+              
+              {/* Box glow */}
+              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+              
+              {/* Background gradient on hover */}
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
+
+              <div className="relative z-10">
+                {/* Project Preview */}
+                <div className="aspect-video relative overflow-hidden">
+                  {/* Shine effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
+                  
+                  {/* Project Image */}
+                  <img 
+                    src={novaMotionPhysioImage} 
+                    alt="Nova Motion Physio Website - Professional physiotherapy and wellness clinic platform" 
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
+                    style={{
+                      willChange: 'transform'
+                    }}
+                    width="800"
+                    height="450"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                
+                {/* Project Info */}
+                <div className="p-6 sm:p-8 flex flex-col flex-1">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="flex-1">
+                      <h3 className="text-white font-semibold text-xl sm:text-2xl mb-1 group-hover:text-cyan-300 transition-colors">
+                        Nova Motion Physio
+                      </h3>
+                      <div className="flex items-center gap-2 mt-2">
+                        <span className="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-medium rounded-full border border-cyan-500/30">
+                          Web Design
+                        </span>
+                        <span className="px-2.5 py-1 bg-purple-500/20 text-purple-300 text-xs font-medium rounded-full border border-purple-500/30">
+                          Wellness
+                        </span>
+                      </div>
+                    </div>
+                    <ExternalLink className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 group-hover:text-cyan-400 transition-all duration-300 flex-shrink-0 ml-3 group-hover:scale-110" />
+                  </div>
+                  
+                  <p className="text-slate-300 text-sm sm:text-base mb-6 font-light leading-relaxed flex-1">
+                    Professional physiotherapy and wellness clinic website designed to showcase services and enable online appointment booking. Modern, clean design that builds trust and converts visitors into clients.
                   </p>
                   
                   <div className="flex items-center justify-between pt-4 border-t border-slate-800/50 group-hover:border-cyan-500/30 transition-colors mt-auto">
@@ -377,78 +450,6 @@ const Projects = () => {
                   </div>
               </div>
             </div>
-            </a>
-
-            {/* Nova Motion Physio Project */}
-            <a
-              href="https://projectthree.zenaradesigns.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-800/50 hover:border-cyan-400/70 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/30 overflow-hidden relative hover:-translate-y-2 flex flex-col h-full"
-            >
-              {/* Animated gradient border */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/0 via-purple-500/0 to-cyan-500/0 group-hover:from-cyan-500/30 group-hover:via-purple-500/30 group-hover:to-cyan-500/30 transition-all duration-500 blur-xl"></div>
-              
-              {/* Box glow */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              {/* Background gradient on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
-
-              <div className="relative z-10">
-                {/* Project Preview */}
-                <div className="aspect-video relative overflow-hidden">
-                  {/* Shine effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
-                  
-                  {/* Project Image */}
-                  <img 
-                    src={lawyerGavelOffice} 
-                    alt="Nova Motion Physio Website - Professional physiotherapy and wellness clinic platform" 
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
-                    style={{
-                      willChange: 'transform'
-                    }}
-                    width="800"
-                    height="450"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-                
-                {/* Project Info */}
-                <div className="p-6 sm:p-8 flex flex-col flex-1">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <h3 className="text-white font-semibold text-xl sm:text-2xl mb-1 group-hover:text-cyan-300 transition-colors">
-                        Nova Motion Physio
-                      </h3>
-                      <div className="flex items-center gap-2 mt-2">
-                        <span className="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-medium rounded-full border border-cyan-500/30">
-                          Web Design
-                        </span>
-                        <span className="px-2.5 py-1 bg-purple-500/20 text-purple-300 text-xs font-medium rounded-full border border-purple-500/30">
-                          Wellness
-                        </span>
-                      </div>
-                    </div>
-                    <ExternalLink className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 group-hover:text-cyan-400 transition-all duration-300 flex-shrink-0 ml-3 group-hover:scale-110" />
-                  </div>
-                  
-                  <p className="text-slate-300 text-sm sm:text-base mb-6 font-light leading-relaxed flex-1">
-                    Professional physiotherapy and wellness clinic website designed to showcase services and enable online appointment booking. Modern, clean design that builds trust and converts visitors into clients.
-                  </p>
-                  
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-800/50 group-hover:border-cyan-500/30 transition-colors mt-auto">
-                    <span className="text-cyan-400 text-sm font-medium group-hover:text-purple-400 transition-colors">
-                      View Live Site
-                    </span>
-                    <div className="flex items-center text-slate-400 group-hover:text-cyan-400 transition-colors">
-                      <ExternalLink className="h-4 w-4" />
-                    </div>
-                  </div>
-                </div>
-              </div>
             </a>
 
             {/* Accounting Firm Project */}
