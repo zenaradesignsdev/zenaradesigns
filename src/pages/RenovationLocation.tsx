@@ -5,7 +5,7 @@ import { useScrollToTop, useSEO, scrollToTop } from '@/hooks';
 import { memo, useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import StructuredData from '@/components/StructuredData';
 import { generateLocalBusinessSchema } from '@/lib/structured-data';
-import renoProject from '@/assets/reno-project.png';
+import renovationBackyard from '@/assets/renovation-backyard.png';
 import NotFound from './NotFound';
 
 // GTA Locations data - matches Renovations.tsx
@@ -217,7 +217,7 @@ const RenovationLocation = () => {
           <div className="relative h-[400px] lg:h-auto overflow-hidden">
             <div className="absolute inset-0 bg-black">
               <img 
-                src={renoProject} 
+                src={renovationBackyard} 
                 alt={`Professional renovation company web design services in ${city}`} 
                 className="w-full h-full object-cover"
                 loading="eager"

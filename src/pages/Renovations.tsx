@@ -6,7 +6,9 @@ import { useScrollToTop, useSEO, scrollToTop } from '@/hooks';
 import { memo, useEffect, useRef, useState, useCallback } from 'react';
 import StructuredData from '@/components/StructuredData';
 import { generateLocalBusinessSchema, generateServiceSchema } from '@/lib/structured-data';
-import renoProject from '@/assets/reno-project.png';
+import renovationBackyard from '@/assets/renovation-backyard.png';
+import renovationKitchen from '@/assets/renovation-kitchen.png';
+import renovationHome from '@/assets/renovation-home.png';
 
 const Renovations = () => {
   useScrollToTop();
@@ -281,7 +283,7 @@ const Renovations = () => {
           <div className="relative h-[400px] lg:h-auto overflow-hidden">
             <div className="absolute inset-0 bg-black">
               <img 
-                src={renoProject} 
+                src={renovationBackyard} 
                 alt="Professional renovation company web design services in Greater Toronto Area" 
                 className="w-full h-full object-cover"
                 loading="eager"
@@ -333,7 +335,7 @@ const Renovations = () => {
                 </div>
                 <div className="flex items-center justify-center">
                   <img 
-                    src={renoProject}
+                    src={renovationKitchen}
                     alt="Professional renovation company digital transformation"
                     className="w-full h-auto max-h-[500px] object-contain"
                     loading="lazy"
@@ -365,7 +367,7 @@ const Renovations = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 items-center">
             <div className="flex items-center justify-center order-2 lg:order-1">
               <img 
-                src={renoProject}
+                src={renovationHome}
                 alt="Professional renovation craftsmanship and trust"
                 className="w-full h-auto max-h-[500px] object-contain"
                 loading="lazy"
@@ -456,7 +458,7 @@ const Renovations = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8 items-center">
             <div className="flex items-center justify-center order-2 lg:order-1">
               <img 
-                src={renoProject}
+                src={renovationHome}
                 alt="Renovation company losing projects due to poor website design"
                 className="w-full h-auto max-h-[500px] object-contain"
                 loading="lazy"
