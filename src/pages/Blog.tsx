@@ -6,6 +6,7 @@ import { BookOpen, Sparkles, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
+import StructuredData from '@/components/StructuredData';
 
 const Blog = () => {
   // Scroll to top when component mounts
@@ -236,6 +237,15 @@ const Blog = () => {
           </div>
         </section>
       )}
+      
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Blog', url: '/blog' }
+        ]} 
+      />
     </div>
   );
 };

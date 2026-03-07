@@ -150,6 +150,8 @@ const AccountantLocation = () => {
     title: `Accounting Firm Web Design ${city} | Professional CPA Websites | Zenara`,
     description: `Professional web design for ${city} accounting firms. Build trust, showcase expertise, and convert visitors. ${keywords.join(', ')}. Free consultation.`,
     canonical: `https://zenaradesigns.com/accountants/${locationSlug}`,
+    ogImage: "/assets/accountant-computer-office.png",
+    twitterImage: "/assets/accountant-computer-office.png",
     structuredData: {
       type: 'localBusiness'
     }
@@ -220,6 +222,8 @@ const AccountantLocation = () => {
                 src={accountantComputerOffice} 
                 alt={`Professional accounting firm web design services in ${city}`} 
                 className="w-full h-full object-cover"
+                width="1200"
+                height="800"
                 loading="eager"
                 decoding="async"
               />
@@ -426,6 +430,16 @@ const AccountantLocation = () => {
       {/* Structured Data */}
       <StructuredData 
         type="localBusiness"
+      />
+      
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Accounting Firm Web Design', url: '/accountants' },
+          { name: `Accounting Firm Web Design ${city}`, url: `/accountants/${locationSlug}` }
+        ]} 
       />
     </div>
   );

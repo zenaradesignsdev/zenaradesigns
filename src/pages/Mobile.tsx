@@ -2,6 +2,7 @@ import { Smartphone, Monitor, Tablet, Zap, Users, Globe, CheckCircle, ArrowRight
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useScrollToTop, useSEO } from '@/hooks';
+import StructuredData from '@/components/StructuredData';
 import { useState, useEffect, useRef, memo, useMemo, useCallback } from 'react';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
 
@@ -555,6 +556,15 @@ const Mobile = () => {
           </div>
         </div>
       </section>
+      
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Mobile-First Design', url: '/mobile' }
+        ]} 
+      />
     </div>
   );
 };

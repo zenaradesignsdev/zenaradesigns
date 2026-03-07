@@ -6,6 +6,10 @@ interface SEOProps {
   description: string;
   canonical?: string;
   noindex?: boolean;
+  ogImage?: string;
+  twitterImage?: string;
+  ogType?: 'website' | 'article';
+  lang?: string;
   structuredData?: {
     type: 'localBusiness' | 'organization' | 'website' | 'service';
     serviceName?: string;
@@ -13,7 +17,7 @@ interface SEOProps {
   };
 }
 
-export const useSEO = ({ title, description, canonical, noindex = false, structuredData }: SEOProps) => {
+export const useSEO = ({ title, description, canonical, noindex = false, ogImage, twitterImage, ogType = 'website', lang = 'en-CA', structuredData }: SEOProps) => {
   useEffect(() => {
     // SEO validation warnings (development only)
     if (process.env.NODE_ENV === 'development') {
@@ -154,6 +158,86 @@ export const useSEO = ({ title, description, canonical, noindex = false, structu
       document.head.appendChild(twitterDescription);
     }
 
+    // Update Open Graph type
+    let ogTypeMeta = document.querySelector('meta[property="og:type"]');
+    if (ogTypeMeta) {
+      ogTypeMeta.setAttribute('content', ogType);
+    } else {
+      ogTypeMeta = document.createElement('meta');
+      ogTypeMeta.setAttribute('property', 'og:type');
+      ogTypeMeta.setAttribute('content', ogType);
+      document.head.appendChild(ogTypeMeta);
+    }
+
+    // Update Open Graph image
+    if (ogImage) {
+      let normalizedOgImage = ogImage;
+      // If relative URL, make it absolute
+      if (!normalizedOgImage.startsWith('http')) {
+        if (normalizedOgImage.startsWith('/')) {
+          normalizedOgImage = `https://zenaradesigns.com${normalizedOgImage}`;
+        } else {
+          normalizedOgImage = `https://zenaradesigns.com/${normalizedOgImage}`;
+        }
+      }
+
+      let ogImageMeta = document.querySelector('meta[property="og:image"]');
+      if (ogImageMeta) {
+        ogImageMeta.setAttribute('content', normalizedOgImage);
+      } else {
+        ogImageMeta = document.createElement('meta');
+        ogImageMeta.setAttribute('property', 'og:image');
+        ogImageMeta.setAttribute('content', normalizedOgImage);
+        document.head.appendChild(ogImageMeta);
+      }
+
+      // Update og:image:alt if not present
+      let ogImageAlt = document.querySelector('meta[property="og:image:alt"]');
+      if (!ogImageAlt) {
+        ogImageAlt = document.createElement('meta');
+        ogImageAlt.setAttribute('property', 'og:image:alt');
+        ogImageAlt.setAttribute('content', title);
+        document.head.appendChild(ogImageAlt);
+      }
+    }
+
+    // Update Twitter image
+    if (twitterImage) {
+      let normalizedTwitterImage = twitterImage;
+      // If relative URL, make it absolute
+      if (!normalizedTwitterImage.startsWith('http')) {
+        if (normalizedTwitterImage.startsWith('/')) {
+          normalizedTwitterImage = `https://zenaradesigns.com${normalizedTwitterImage}`;
+        } else {
+          normalizedTwitterImage = `https://zenaradesigns.com/${normalizedTwitterImage}`;
+        }
+      }
+
+      let twitterImageMeta = document.querySelector('meta[name="twitter:image"]');
+      if (twitterImageMeta) {
+        twitterImageMeta.setAttribute('content', normalizedTwitterImage);
+      } else {
+        twitterImageMeta = document.createElement('meta');
+        twitterImageMeta.setAttribute('name', 'twitter:image');
+        twitterImageMeta.setAttribute('content', normalizedTwitterImage);
+        document.head.appendChild(twitterImageMeta);
+      }
+
+      // Update twitter:image:alt if not present
+      let twitterImageAlt = document.querySelector('meta[name="twitter:image:alt"]');
+      if (!twitterImageAlt) {
+        twitterImageAlt = document.createElement('meta');
+        twitterImageAlt.setAttribute('name', 'twitter:image:alt');
+        twitterImageAlt.setAttribute('content', title);
+        document.head.appendChild(twitterImageAlt);
+      }
+    }
+
+    // Update HTML lang attribute
+    if (document.documentElement) {
+      document.documentElement.setAttribute('lang', lang);
+    }
+
     // Inject structured data if specified
     if (structuredData) {
       const schemas = [];
@@ -200,5 +284,5 @@ export const useSEO = ({ title, description, canonical, noindex = false, structu
         });
       }
     };
-  }, [title, description, canonical, noindex, structuredData]);
+  }, [title, description, canonical, noindex, ogImage, twitterImage, ogType, lang, structuredData]);
 };

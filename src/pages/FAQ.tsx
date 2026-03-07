@@ -316,6 +316,15 @@ const FAQ = () => {
         type="faq" 
         faqs={allFaqs}
       />
+      
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'FAQ', url: '/faq' }
+        ]} 
+      />
     </div>
   );
 };

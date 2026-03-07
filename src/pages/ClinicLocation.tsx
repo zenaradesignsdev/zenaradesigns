@@ -150,6 +150,8 @@ const ClinicLocation = () => {
     title: `Wellness Clinic Web Design ${city} | Professional Clinic Websites | Zenara`,
     description: `Professional web design for ${city} wellness clinics. Establish clinical authority, prioritize patient experience, and convert visitors. ${keywords.join(', ')}. Free consultation.`,
     canonical: `https://zenaradesigns.com/clinics/${locationSlug}`,
+    ogImage: "/assets/clinic-practitioner.png",
+    twitterImage: "/assets/clinic-practitioner.png",
     structuredData: {
       type: 'localBusiness'
     }
@@ -220,6 +222,8 @@ const ClinicLocation = () => {
                 src={clinicPractitioner} 
                 alt={`Professional wellness clinic web design services in ${city}`} 
                 className="w-full h-full object-cover"
+                width="1200"
+                height="800"
                 loading="eager"
                 decoding="async"
               />
@@ -426,6 +430,16 @@ const ClinicLocation = () => {
       {/* Structured Data */}
       <StructuredData 
         type="localBusiness"
+      />
+      
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Wellness Clinic Web Design', url: '/clinics' },
+          { name: `Wellness Clinic Web Design ${city}`, url: `/clinics/${locationSlug}` }
+        ]} 
       />
     </div>
   );

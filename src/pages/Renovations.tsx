@@ -17,7 +17,9 @@ const Renovations = () => {
   useSEO({
     title: "Renovation Company Web Design GTA | Construction Websites | Zenara",
     description: "Professional web design for renovation companies in Markham, Vaughan, Pickering & across GTA. Showcase projects, capture leads, and grow your construction business.",
-    canonical: "https://zenaradesigns.com/renovations"
+    canonical: "https://zenaradesigns.com/renovations",
+    ogImage: "/assets/renovation-backyard.png",
+    twitterImage: "/assets/renovation-backyard.png"
   });
 
   // Entrance animations state
@@ -286,6 +288,8 @@ const Renovations = () => {
                 src={renovationBackyard} 
                 alt="Professional renovation company web design services in Greater Toronto Area" 
                 className="w-full h-full object-cover"
+                width="1200"
+                height="800"
                 loading="eager"
                 decoding="async"
               />
@@ -338,6 +342,8 @@ const Renovations = () => {
                     src={renovationKitchen}
                     alt="Professional renovation company digital transformation"
                     className="w-full h-auto max-h-[500px] object-contain"
+                    width="800"
+                    height="600"
                     loading="lazy"
                     decoding="async"
                   />
@@ -370,6 +376,8 @@ const Renovations = () => {
                 src={renovationHome}
                 alt="Professional renovation craftsmanship and trust"
                 className="w-full h-auto max-h-[500px] object-contain"
+                width="800"
+                height="600"
                 loading="lazy"
                 decoding="async"
               />
@@ -461,6 +469,8 @@ const Renovations = () => {
                 src={renovationHome}
                 alt="Renovation company losing projects due to poor website design"
                 className="w-full h-auto max-h-[500px] object-contain"
+                width="800"
+                height="600"
                 loading="lazy"
                 decoding="async"
               />
@@ -838,6 +848,15 @@ const Renovations = () => {
       <StructuredData 
         type="faq" 
         faqs={faqs}
+      />
+      
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Renovation Company Web Design', url: '/renovations' }
+        ]} 
       />
     </div>
   );

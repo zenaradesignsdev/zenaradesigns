@@ -2,6 +2,7 @@ import { Shield, Lock, Eye, Server, Clock, CheckCircle, AlertTriangle, ArrowRigh
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { useScrollToTop, useSEO } from '@/hooks';
+import StructuredData from '@/components/StructuredData';
 import { useState, useEffect, useRef, memo, useMemo, useCallback } from 'react';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
 
@@ -402,6 +403,15 @@ const Security = () => {
           </div>
         </div>
       </section>
+      
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Website Security', url: '/security' }
+        ]} 
+      />
     </div>
   );
 };

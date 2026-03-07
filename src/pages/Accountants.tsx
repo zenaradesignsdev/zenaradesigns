@@ -17,7 +17,9 @@ const Accountants = () => {
   useSEO({
     title: "Accounting Firm Web Design GTA | CPA Websites | Zenara",
     description: "Professional web design for accounting firms in Markham, Vaughan, Pickering & across GTA. Secure, compliant platforms with client portals. Free consultation.",
-    canonical: "https://zenaradesigns.com/accountants"
+    canonical: "https://zenaradesigns.com/accountants",
+    ogImage: "/assets/accountant-computer-office.png",
+    twitterImage: "/assets/accountant-computer-office.png"
   });
 
   // Entrance animations state
@@ -286,6 +288,8 @@ const Accountants = () => {
                 src={accountantComputerOffice} 
                 alt="Professional accounting firm web design services in Greater Toronto Area" 
                 className="w-full h-full object-cover"
+                width="1200"
+                height="800"
                 loading="eager"
                 decoding="async"
               />
@@ -338,6 +342,8 @@ const Accountants = () => {
                     src={accountantWebsiteWork}
                     alt="Professional accounting firm digital transformation"
                     className="w-full h-auto max-h-[500px] object-contain"
+                    width="800"
+                    height="600"
                     loading="lazy"
                     decoding="async"
                   />
@@ -370,6 +376,8 @@ const Accountants = () => {
                 src={accountantDocuments}
                 alt="Professional accounting documents and financial trust"
                 className="w-full h-auto max-h-[500px] object-contain"
+                width="800"
+                height="600"
                 loading="lazy"
                 decoding="async"
               />
@@ -461,6 +469,8 @@ const Accountants = () => {
                 src={accountantDocuments}
                 alt="Accounting firm losing clients due to poor website design"
                 className="w-full h-auto max-h-[500px] object-contain"
+                width="800"
+                height="600"
                 loading="lazy"
                 decoding="async"
               />
@@ -838,6 +848,15 @@ const Accountants = () => {
       <StructuredData 
         type="faq" 
         faqs={faqs}
+      />
+      
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Accounting Firm Web Design', url: '/accountants' }
+        ]} 
       />
     </div>
   );

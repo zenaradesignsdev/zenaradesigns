@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { CheckCircle, ArrowRight, Code2, Search, Palette, Wrench, Rocket, Headphones, Clock, Users, Target, Zap, Shield, Globe, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useScrollToTop, useSEO } from '@/hooks';
+import StructuredData from '@/components/StructuredData';
 import { useState, useEffect, useRef, memo, useMemo } from 'react';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
 
@@ -511,6 +512,15 @@ const Process = () => {
           </div>
         </div>
       </section>
+      
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Our Process', url: '/process' }
+        ]} 
+      />
     </div>
   );
 };

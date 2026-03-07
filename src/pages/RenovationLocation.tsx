@@ -150,6 +150,8 @@ const RenovationLocation = () => {
     title: `Renovation Company Web Design ${city} | Professional Contractor Websites | Zenara`,
     description: `Professional web design for ${city} renovation companies. Showcase projects, capture leads, and grow your business. ${keywords.join(', ')}. Free consultation.`,
     canonical: `https://zenaradesigns.com/renovations/${locationSlug}`,
+    ogImage: "/assets/renovation-backyard.png",
+    twitterImage: "/assets/renovation-backyard.png",
     structuredData: {
       type: 'localBusiness'
     }
@@ -220,6 +222,8 @@ const RenovationLocation = () => {
                 src={renovationBackyard} 
                 alt={`Professional renovation company web design services in ${city}`} 
                 className="w-full h-full object-cover"
+                width="1200"
+                height="800"
                 loading="eager"
                 decoding="async"
               />
@@ -426,6 +430,16 @@ const RenovationLocation = () => {
       {/* Structured Data */}
       <StructuredData 
         type="localBusiness"
+      />
+      
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Renovation Company Web Design', url: '/renovations' },
+          { name: `Renovation Company Web Design ${city}`, url: `/renovations/${locationSlug}` }
+        ]} 
       />
     </div>
   );

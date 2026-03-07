@@ -17,7 +17,9 @@ const Clinics = () => {
   useSEO({
     title: "Wellness Clinic Web Design GTA | Health & Wellness Websites | Zenara",
     description: "Professional web design for wellness clinics in Markham, Vaughan, Pickering & across GTA. Modern platforms for massage therapy, chiropractic, physiotherapy, and holistic health. Free consultation.",
-    canonical: "https://zenaradesigns.com/clinics"
+    canonical: "https://zenaradesigns.com/clinics",
+    ogImage: "/assets/clinic-practitioner.png",
+    twitterImage: "/assets/clinic-practitioner.png"
   });
 
   // Entrance animations state
@@ -286,6 +288,8 @@ const Clinics = () => {
                 src={clinicPractitioner} 
                 alt="Professional wellness clinic web design services in Greater Toronto Area" 
                 className="w-full h-full object-cover"
+                width="1200"
+                height="800"
                 loading="eager"
                 decoding="async"
               />
@@ -338,6 +342,8 @@ const Clinics = () => {
                     src={clinicWellnessCare}
                     alt="Professional wellness clinic digital transformation"
                     className="w-full h-auto max-h-[500px] object-contain"
+                    width="800"
+                    height="600"
                     loading="lazy"
                     decoding="async"
                   />
@@ -370,6 +376,8 @@ const Clinics = () => {
                 src={clinicPhysioTreatment}
                 alt="Professional wellness clinic trust and credibility"
                 className="w-full h-auto max-h-[500px] object-contain"
+                width="800"
+                height="600"
                 loading="lazy"
                 decoding="async"
               />
@@ -461,6 +469,8 @@ const Clinics = () => {
                 src={clinicPhysioTreatment}
                 alt="Wellness clinic losing patients due to poor website design"
                 className="w-full h-auto max-h-[500px] object-contain"
+                width="800"
+                height="600"
                 loading="lazy"
                 decoding="async"
               />
@@ -838,6 +848,15 @@ const Clinics = () => {
       <StructuredData 
         type="faq" 
         faqs={faqs}
+      />
+      
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Wellness Clinic Web Design', url: '/clinics' }
+        ]} 
       />
     </div>
   );

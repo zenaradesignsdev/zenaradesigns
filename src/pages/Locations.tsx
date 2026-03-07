@@ -2,6 +2,7 @@ import { useScrollToTop, useSEO } from '@/hooks';
 import { memo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import StructuredData from '@/components/StructuredData';
 import { 
   MapPin, 
   ArrowRight, 
@@ -258,6 +259,15 @@ const Locations = () => {
           </p>
         </div>
       </div>
+      
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Locations', url: '/locations' }
+        ]} 
+      />
     </div>
   );
 };

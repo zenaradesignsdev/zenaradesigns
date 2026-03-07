@@ -150,6 +150,8 @@ const LawyerLocation = () => {
     title: `Law Firm Web Design ${city} | Professional Legal Websites | Zenara`,
     description: `Professional web design for ${city} law firms. Build trust, showcase expertise, and convert visitors. ${keywords.join(', ')}. Free consultation.`,
     canonical: `https://zenaradesigns.com/lawyers/${locationSlug}`,
+    ogImage: "/assets/lawyer-professional-meeting.png",
+    twitterImage: "/assets/lawyer-professional-meeting.png",
     structuredData: {
       type: 'localBusiness'
     }
@@ -220,6 +222,8 @@ const LawyerLocation = () => {
                 src={lawyerProfessionalMeeting} 
                 alt={`Professional law firm web design services in ${city}`} 
                 className="w-full h-full object-cover"
+                width="1200"
+                height="800"
                 loading="eager"
                 decoding="async"
               />
@@ -426,6 +430,16 @@ const LawyerLocation = () => {
       {/* Structured Data */}
       <StructuredData 
         type="localBusiness"
+      />
+      
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Law Firm Web Design', url: '/lawyers' },
+          { name: `Law Firm Web Design ${city}`, url: `/lawyers/${locationSlug}` }
+        ]} 
       />
     </div>
   );

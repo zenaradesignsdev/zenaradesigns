@@ -17,7 +17,9 @@ const Lawyers = () => {
   useSEO({
     title: "Law Firm Web Design GTA | Trust & Credibility | Zenara",
     description: "Professional web design for law firms in Markham, Vaughan, Pickering & across GTA. Build trust, showcase expertise, convert visitors. 78% research online first. Free consultation.",
-    canonical: "https://zenaradesigns.com/lawyers"
+    canonical: "https://zenaradesigns.com/lawyers",
+    ogImage: "/assets/lawyer-gavel-office.png",
+    twitterImage: "/assets/lawyer-gavel-office.png"
   });
 
   // Entrance animations state
@@ -295,6 +297,8 @@ const Lawyers = () => {
                 src={lawyerGavelOffice} 
                 alt="Professional law firm web design services in Greater Toronto Area" 
                 className="w-full h-full object-cover"
+                width="1200"
+                height="800"
                 loading="eager"
                 decoding="async"
               />
@@ -398,6 +402,8 @@ const Lawyers = () => {
                 src={lawyerConsultationDocument}
                 alt="Professional legal consultation and client meeting"
                 className="w-full h-auto max-h-[500px] object-contain"
+                width="800"
+                height="600"
                 loading="lazy"
                 decoding="async"
               />
@@ -474,6 +480,8 @@ const Lawyers = () => {
                 src={lawyerProfessionalMeeting}
                 alt="Law firm losing clients due to poor website design"
                 className="w-full h-auto max-h-[500px] object-contain"
+                width="800"
+                height="600"
                 loading="lazy"
                 decoding="async"
               />
@@ -851,6 +859,15 @@ const Lawyers = () => {
       <StructuredData 
         type="faq" 
         faqs={faqs}
+      />
+      
+      {/* Breadcrumb Schema */}
+      <StructuredData 
+        type="breadcrumb" 
+        breadcrumbs={[
+          { name: 'Home', url: '/' },
+          { name: 'Law Firm Web Design', url: '/lawyers' }
+        ]} 
       />
     </div>
   );
