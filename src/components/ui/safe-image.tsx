@@ -4,9 +4,10 @@ interface ImageProps {
   className?: string;
   priority?: boolean; // If true, it's for Hero images
   sizes?: string; // Optional custom sizes attribute
+  onLoad?: React.ReactEventHandler<HTMLImageElement>; // Optional onLoad handler
 }
 
-export const SafeImage = ({ src, alt, className, priority = false, sizes }: ImageProps) => {
+export const SafeImage = ({ src, alt, className, priority = false, sizes, onLoad }: ImageProps) => {
   // Generate responsive srcsets with multiple widths
   // vite-imagetools generates 3 image variants: 400px (mobile), 800px (tablet), 1200px (desktop)
   const avifSet = `${src}?w=400;800;1200&format=avif&as=srcset`;
@@ -27,6 +28,7 @@ export const SafeImage = ({ src, alt, className, priority = false, sizes }: Imag
         fetchPriority={priority ? 'high' : 'auto'}
         className={className ? `w-full h-auto ${className}` : 'w-full h-auto'}
         sizes={defaultSizes}
+        onLoad={onLoad}
       />
     </picture>
   );

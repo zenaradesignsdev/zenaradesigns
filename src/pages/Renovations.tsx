@@ -13,6 +13,7 @@ import renovationHome from '@/assets/renovation-home.png';
 
 const Renovations = () => {
   useScrollToTop();
+  const [heroImageLoaded, setHeroImageLoaded] = useState(false);
   
   // SEO meta tags
   useSEO({
@@ -284,11 +285,12 @@ const Renovations = () => {
           
           {/* Right Section - Image with Overlay */}
           <div className="relative h-[400px] lg:h-auto overflow-hidden">
-            <div className="absolute inset-0 bg-black">
+            <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
               <SafeImage 
                 src={renovationBackyard} 
                 alt="Professional renovation company web design services in Greater Toronto Area" 
-                className="w-full h-full object-cover"
+                className={`w-full h-full object-cover transition-opacity duration-500 ease-in-out ${heroImageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => setHeroImageLoaded(true)}
                 priority
               />
             </div>
