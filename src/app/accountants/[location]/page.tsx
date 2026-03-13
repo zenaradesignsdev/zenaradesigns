@@ -36,10 +36,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const city = loc?.city ?? params.location;
 
   return {
-    title: `Accounting Firm Web Design ${city} | Professional CPA Websites | Zenara`,
-    description: `Professional web design for ${city} accounting firms. Build trust, showcase expertise, and convert visitors. Free consultation.`,
+    title: `Accounting Firm Web Design ${city} | CPA Websites That Convert | Zenara`,
+    description: `Web design for ${city} accounting firms. Professional CPA websites that build trust, attract clients, and rank in local search. Fully managed. Free consultation.`,
     alternates: { canonical: `https://zenaradesigns.com/accountants/${params.location}` },
     openGraph: {
+      title: `Accounting Firm Web Design ${city} | CPA Websites That Convert | Zenara`,
+      description: `Web design for ${city} accounting firms. Professional CPA websites that build trust, attract clients, and rank in local search. Fully managed. Free consultation.`,
+      url: `https://zenaradesigns.com/accountants/${params.location}`,
       images: [{ url: 'https://zenaradesigns.com/images/accountant-computer-office.png' }],
     },
   };

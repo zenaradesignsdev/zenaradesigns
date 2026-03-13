@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import Contact from '@/components/pages/Contact';
 
 export const metadata: Metadata = {
-  title: 'Contact Us | Web Design Toronto | Zenara Designs',
+  title: 'Get a Free Web Design Quote | Toronto & GTA | Zenara Designs',
   description:
-    'Contact Zenara Designs for professional web design, development, and digital marketing services in Toronto & GTA. Get a free quote for your project today.',
+    'Ready to start your project? Contact Zenara Designs for a free consultation. Web design, business cards & logo design for Toronto & GTA. We respond within 24 hours.',
   alternates: { canonical: 'https://zenaradesigns.com/contact' },
   openGraph: {
-    title: 'Contact Us | Web Design Toronto | Zenara Designs',
+    title: 'Get a Free Web Design Quote | Toronto & GTA | Zenara Designs',
     description:
-      'Contact Zenara Designs for professional web design, development, and digital marketing services in Toronto & GTA. Get a free quote for your project today.',
+      'Ready to start your project? Contact Zenara Designs for a free consultation. Web design, business cards & logo design for Toronto & GTA. We respond within 24 hours.',
     url: 'https://zenaradesigns.com/contact',
   },
 };

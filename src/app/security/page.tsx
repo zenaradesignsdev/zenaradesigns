@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import Security from '@/components/pages/Security';
 
 export const metadata: Metadata = {
-  title: 'Website Security Best Practices | SSL, Uptime & Protection | Zenara',
+  title: 'Website Security | SSL, Uptime & Spam Protection | Zenara',
   description:
-    'Learn about essential website security measures including SSL certificates, uptime monitoring, anti-spam protection, and maintenance. Keep your Toronto business website secure.',
+    'Protect your Toronto business website with SSL certificates, uptime monitoring, and anti-spam tools. See the security practices Zenara builds into every site we deliver.',
   alternates: { canonical: 'https://zenaradesigns.com/security' },
   openGraph: {
-    title: 'Website Security Best Practices | SSL, Uptime & Protection | Zenara',
+    title: 'Website Security | SSL, Uptime & Spam Protection | Zenara',
     description:
-      'Learn about essential website security measures including SSL certificates, uptime monitoring, anti-spam protection, and maintenance. Keep your Toronto business website secure.',
+      'Protect your Toronto business website with SSL certificates, uptime monitoring, and anti-spam tools. See the security practices Zenara builds into every site we deliver.',
     url: 'https://zenaradesigns.com/security',
   },
 };

@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next';
 import { blogPosts } from '@/content/blog';
 
 const baseUrl = 'https://zenaradesigns.com';
-const lastModified = new Date('2025-03-10');
+const lastModified = new Date('2026-01-01');
 
 const locations = [
   'markham',

@@ -36,10 +36,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const city = loc?.city ?? params.location;
 
   return {
-    title: `Law Firm Web Design ${city} | Professional Legal Websites | Zenara`,
-    description: `Professional web design for ${city} law firms. Build trust, showcase expertise, and convert visitors. Free consultation.`,
+    title: `Law Firm Web Design ${city} | Legal Websites That Convert | Zenara`,
+    description: `Web design for ${city} law firms. Professional, trust-first websites that rank in local search and convert visitors into clients. Fast, mobile-ready. Free consultation.`,
     alternates: { canonical: `https://zenaradesigns.com/lawyers/${params.location}` },
     openGraph: {
+      title: `Law Firm Web Design ${city} | Legal Websites That Convert | Zenara`,
+      description: `Web design for ${city} law firms. Professional, trust-first websites that rank in local search and convert visitors into clients. Fast, mobile-ready. Free consultation.`,
+      url: `https://zenaradesigns.com/lawyers/${params.location}`,
       images: [{ url: 'https://zenaradesigns.com/images/lawyer-professional-meeting.png' }],
     },
   };

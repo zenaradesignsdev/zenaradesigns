@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import Schedule from '@/components/pages/Schedule';
 
 export const metadata: Metadata = {
-  title: 'Schedule a Meeting | Contact Zenara Designs | Toronto',
+  title: 'Book a Free Web Design Consultation | Toronto | Zenara',
   description:
-    'Book a meeting with Zenara Designs to discuss your web design project. Schedule a 30-minute consultation call with our team in Toronto & GTA.',
+    'Schedule a free 30-minute call with Zenara Designs to discuss your website project. Easy online booking, flexible times. Serving Toronto & all GTA.',
   alternates: { canonical: 'https://zenaradesigns.com/contact/schedule' },
   openGraph: {
-    title: 'Schedule a Meeting | Contact Zenara Designs | Toronto',
+    title: 'Book a Free Web Design Consultation | Toronto | Zenara',
     description:
-      'Book a meeting with Zenara Designs to discuss your web design project. Schedule a 30-minute consultation call with our team in Toronto & GTA.',
+      'Schedule a free 30-minute call with Zenara Designs to discuss your website project. Easy online booking, flexible times. Serving Toronto & all GTA.',
     url: 'https://zenaradesigns.com/contact/schedule',
   },
 };

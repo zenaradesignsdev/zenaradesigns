@@ -6,6 +6,12 @@ export const metadata: Metadata = {
   description:
     'Complete web design services in Toronto & GTA. Custom websites, business cards, logo design, and digital marketing. Get a free consultation for your project today!',
   alternates: { canonical: 'https://zenaradesigns.com/services' },
+  openGraph: {
+    title: 'Web Design Services Toronto | Business Cards & Logo | Zenara',
+    description:
+      'Complete web design services in Toronto & GTA. Custom websites, business cards, logo design, and digital marketing. Get a free consultation for your project today!',
+    url: 'https://zenaradesigns.com/services',
+  },
 };
 
 export default function ServicesPage() {
