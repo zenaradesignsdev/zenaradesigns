@@ -1,6 +1,6 @@
 {
   "functions": {
-    "src/app/api/send-email/route.ts": {
+    "api/send-email": {
       "maxDuration": 10
     }
   }
