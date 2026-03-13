@@ -1,22 +1,26 @@
+'use client';
+
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import Link from 'next/link';
+import Image from 'next/image';
+import { usePathname, useRouter } from 'next/navigation';
 import { X, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { scrollToTop } from '@/hooks';
 import { NAVIGATION_LINKS } from '@/lib/constants';
-import logo from '@/assets/zenara-logo-v5.svg';
+
+const logo = '/images/zenara-logo-v5.svg';
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const location = useLocation();
-  const navigate = useNavigate();
+  const pathname = usePathname();
+  const router = useRouter();
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousBodyOverflow = useRef<string>('');
 
   const navLinks = NAVIGATION_LINKS;
-  const isActive = (href: string) => location.pathname === href;
+  const isActive = (href: string) => pathname === href;
 
   // Handle menu open
   const openMobileMenu = () => {
@@ -37,14 +41,12 @@ const Navbar = () => {
     }
   };
 
-  // Handle navigation with menu close - proper React Router navigation
   const handleNavigation = (href: string) => {
     closeMobileMenu();
-    // Use requestAnimationFrame for smoother transition
     requestAnimationFrame(() => {
       setTimeout(() => {
-        navigate(href);
-        scrollToTop();
+        router.push(href);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }, 200);
     });
   };
@@ -135,7 +137,7 @@ const Navbar = () => {
       <div
         ref={mobileMenuRef}
         id="mobile-menu"
-        className="lg:hidden fixed inset-0 z-[9999] mobile-menu-container"
+        className="lg:hidden fixed inset-0 z-[10001] mobile-menu-container"
         role="dialog"
         aria-modal="true"
         aria-label="Mobile navigation menu"
@@ -156,21 +158,20 @@ const Navbar = () => {
           {/* Header */}
           <div className="flex items-center justify-between p-5 sm:p-6 border-b border-white/10 flex-shrink-0">
             <Link
-              to="/"
+              href="/"
               className="flex items-center touch-manipulation"
               onClick={(e) => {
                 e.preventDefault();
                 handleNavigation('/');
               }}
             >
-              <img
+              <Image
                 src={logo}
                 alt="Zenara Designs"
                 className="h-9 sm:h-10 w-auto"
-                width="40"
-                height="40"
-                loading="eager"
-                decoding="async"
+                width={40}
+                height={40}
+                priority
               />
             </Link>
 
@@ -193,7 +194,7 @@ const Navbar = () => {
               {navLinks.map((link, index) => (
                 <Link
                   key={link.href}
-                  to={link.href}
+                  href={link.href}
                   onClick={(e) => {
                     e.preventDefault();
                     handleNavigation(link.href);
@@ -227,7 +228,7 @@ const Navbar = () => {
                   className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-200 w-full py-4 px-6 text-base font-semibold group active:scale-[0.98] touch-manipulation"
                 >
                   <Link
-                    to="/contact"
+                    href="/contact"
                     onClick={(e) => {
                       e.preventDefault();
                       handleNavigation('/contact');
@@ -253,22 +254,21 @@ const Navbar = () => {
     <>
     <nav 
       id="navigation"
-        className="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] sm:w-[92%] md:w-[88%] lg:w-[85%] xl:w-[82%] max-w-[1400px]"
+        className="fixed top-4 left-1/2 -translate-x-1/2 z-[100] w-[95%] sm:w-[92%] md:w-[88%] lg:w-[85%] xl:w-[82%] max-w-[1400px]"
       role="navigation"
       aria-label="Main navigation"
     >
         <div className="bg-white/10 backdrop-blur-xl rounded-full border border-white/20 shadow-2xl px-4 sm:px-6 lg:px-8 xl:px-10 py-2 sm:py-2.5">
           <div className="flex items-center justify-between h-12 sm:h-14">
           {/* Logo */}
-            <Link to="/" className="flex items-center" onClick={scrollToTop}>
-              <img
+            <Link href="/" className="flex items-center" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
+              <Image
                 src={logo}
                 alt="Zenara Designs - Professional Web Design Agency Toronto"
                 className="h-6 sm:h-8 w-auto"
-                width="32"
-                height="32"
-                loading="eager"
-                decoding="async"
+                width={32}
+                height={32}
+                priority
               />
           </Link>
 
@@ -280,8 +280,8 @@ const Navbar = () => {
             {navLinks.map((link) => (
               <Link
                 key={link.href}
-                to={link.href}
-                onClick={scrollToTop}
+                href={link.href}
+                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   className={`font-light text-sm xl:text-base transition-colors hover:text-cyan-300 ${
                     isActive(link.href) ? 'text-cyan-300' : 'text-white'
                 }`}
@@ -299,8 +299,8 @@ const Navbar = () => {
                   className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-5 xl:px-6 py-1.5 xl:py-2 text-xs xl:text-sm font-semibold group"
                     >
                       <Link 
-                        to="/contact" 
-                    onClick={scrollToTop}
+                        href="/contact" 
+                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                     className="flex items-center gap-1.5 xl:gap-2 relative z-10 group-hover:text-white"
                   >
                     <span className="relative z-10">Let's Talk</span>

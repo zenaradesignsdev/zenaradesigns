@@ -32,6 +32,16 @@ export const FOOTER_ADDITIONAL_LINKS = [
   { href: '/payments', label: 'Payments' },
 ] as const;
 
+// Service sub-page links for footer
+export const SERVICE_LINKS = [
+  { href: '/services/web-design', label: 'Web Design' },
+  { href: '/services/ecommerce', label: 'E-Commerce' },
+  { href: '/services/logo-design', label: 'Logo Design' },
+  { href: '/services/business-cards', label: 'Business Cards' },
+  { href: '/services/seo', label: 'SEO' },
+  { href: '/services/hosting', label: 'Hosting' },
+] as const;
+
 // Animation constants
 export const ANIMATION_DURATIONS = {
   FAST: 200,

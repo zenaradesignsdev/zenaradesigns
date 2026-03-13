@@ -1,7 +1,9 @@
+'use client';
+
 import React, { Component, ErrorInfo, ReactNode } from 'react';
+import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 interface Props {
   children: ReactNode;
@@ -69,7 +71,7 @@ class ErrorBoundary extends Component<Props, State> {
               </Button>
               
               <Button asChild variant="outline" className="w-full border-cyan-400 text-cyan-300 bg-cyan-500/10 hover:bg-cyan-500/20">
-                <Link to="/">
+                <Link href="/">
                   <Home className="w-4 h-4 mr-2" />
                   Go Home
                 </Link>

@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(echo \"y\" | npx create-next-app@14 . --typescript --tailwind --eslint --app --src-dir --import-alias \"@/*\" --use-npm --no-git 2>&1)",
+      "Bash(cp /Users/kavinmural/dev/zenara/boilerplate/.claude/settings.local.json /tmp/claude_settings_backup.json && rm -rf /Users/kavinmural/dev/zenara/boilerplate/.claude)",
+      "Bash(ls /Users/kavinmural/dev/zenara/boilerplate/node_modules/.bin/next && node /Users/kavinmural/dev/zenara/boilerplate/node_modules/next/dist/bin/next --version 2>&1)",
+      "Bash(npm run:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(mkdir -p .claude/skills && git clone --depth=1 https://github.com/Dammyjay93/interface-design.git /tmp/id && cp -r /tmp/id/.claude/skills/interface-design .claude/skills/ && rm -rf /tmp/id)",
+      "Bash(git add:*)",
+      "Bash(git restore:*)",
+      "Bash(git push:*)",
+      "Bash(git remote:*)"
+    ]
+  }
+}

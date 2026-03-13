@@ -1,3 +1,5 @@
+'use client';
+
 import { useState, useEffect } from 'react';
 import { Star, ChevronDown, ChevronUp, CheckCircle } from 'lucide-react';
 
@@ -92,6 +94,11 @@ const GoogleReviews = () => {
   }
 
   const { rating, userRatingCount, reviews } = reviewsData;
+
+  // Hide section entirely when there are no reviews
+  if (reviews.length === 0) {
+    return null;
+  }
   const averageRating = rating || 0;
   const totalReviews = userRatingCount || 0;
 

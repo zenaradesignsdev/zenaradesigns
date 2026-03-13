@@ -1,5 +1,5 @@
 import { Calendar, Clock, User, Edit } from 'lucide-react';
-import { BlogPost } from '@/lib/types';
+import { BlogPost } from '@/types';
 import { format } from 'date-fns';
 
 interface BlogMetadataProps {

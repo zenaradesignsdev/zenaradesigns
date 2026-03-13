@@ -1,23 +1,23 @@
 import { z } from 'zod';
 import { FORM_LIMITS, PERFORMANCE_THRESHOLDS } from './constants';
 import { sanitizeForXSS, validateEmail, validatePhone, generateSecureToken, getEmailTypoSuggestion } from './security';
-import type { ContactFormData, EmailResponse, RateLimitEntry } from './types';
+import type { ContactFormData, EmailResponse, RateLimitEntry } from '@/types';
 
 // Validation schema for contact form with enhanced security
 export const contactFormSchema = z.object({
   name: z.string()
     .min(FORM_LIMITS.NAME_MIN, `Name must be at least ${FORM_LIMITS.NAME_MIN} characters`)
     .max(FORM_LIMITS.NAME_MAX, `Name must be less than ${FORM_LIMITS.NAME_MAX} characters`)
-    .regex(/^[a-zA-Z\s\-'\.]+$/, 'Name contains invalid characters'),
+    .regex(/^[a-zA-Z\s\-'.]+$/, 'Name contains invalid characters'),
   email: z.string()
     .email('Invalid email address')
     .max(FORM_LIMITS.EMAIL_MAX, `Email must be less than ${FORM_LIMITS.EMAIL_MAX} characters`)
     .refine((val) => validateEmail(val), (val) => {
       const typoSuggestion = getEmailTypoSuggestion(val);
       if (typoSuggestion) {
-        return `Did you mean ${val.replace(/@.*/, '@' + typoSuggestion)}?`;
+        return { message: `Did you mean ${val.replace(/@.*/, '@' + typoSuggestion)}?` };
       }
-      return 'Email contains invalid characters, format, or is from a disposable email service';
+      return { message: 'Email contains invalid characters, format, or is from a disposable email service' };
     }),
   phone: z.string()
     .optional()

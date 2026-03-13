@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect, useState } from 'react';
 import { onCLS, onFCP, onLCP, onTTFB, onINP } from 'web-vitals';
 
@@ -10,11 +12,6 @@ interface PerformanceMetrics {
 }
 
 const PerformanceMonitor = () => {
-  // Early return for production
-  if (process.env.NODE_ENV !== 'development') {
-    return null;
-  }
-
   const [metrics, setMetrics] = useState<PerformanceMetrics>({
     LCP: null,
     INP: null,
@@ -26,6 +23,7 @@ const PerformanceMonitor = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
+    if (process.env.NODE_ENV !== 'development') return;
     const updateMetric = (name: string, value: number) => {
       setMetrics(prev => ({ ...prev, [name]: value }));
     };
@@ -42,7 +40,7 @@ const PerformanceMonitor = () => {
     return () => clearTimeout(timer);
   }, []);
 
-  if (!isVisible) return null;
+  if (process.env.NODE_ENV !== 'development' || !isVisible) return null;
 
   const getRating = (metric: string, value: number) => {
     const thresholds: Record<string, { good: number; needsImprovement: number }> = {

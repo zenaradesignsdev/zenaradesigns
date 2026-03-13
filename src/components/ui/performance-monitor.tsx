@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { performanceMetrics } from '@/utils/performance';
+import { performanceMetrics } from '@/lib/performance';
 
 interface PerformanceMonitorProps {
   componentName: string;

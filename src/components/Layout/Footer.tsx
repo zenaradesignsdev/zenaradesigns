@@ -1,9 +1,12 @@
-import { Link } from 'react-router-dom';
+'use client';
+
+import Link from 'next/link';
+import Image from 'next/image';
 import { Mail, Phone, CheckCircle, Instagram } from 'lucide-react';
-import { scrollToTop } from '@/hooks';
-import { BUSINESS_EMAIL, BUSINESS_PHONE, NAVIGATION_LINKS, FOOTER_ADDITIONAL_LINKS } from '@/lib/constants';
-import logo from '@/assets/zenara-logo-v5.svg';
+import { BUSINESS_EMAIL, BUSINESS_PHONE, NAVIGATION_LINKS, FOOTER_ADDITIONAL_LINKS, SERVICE_LINKS } from '@/lib/constants';
 import { useState, FormEvent, useEffect } from 'react';
+
+const logo = '/images/zenara-logo-v5.svg';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -177,11 +180,11 @@ const Footer = () => {
 
         {/* Footer Content */}
         <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 lg:gap-10 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8 lg:gap-10 mb-8">
             {/* Brand */}
             <div className="space-y-4">
               <div className="flex items-center space-x-3">
-                <img src={logo} alt="Zenara Designs - Professional Web Design Agency Toronto" className="h-8 w-auto" width="32" height="32" loading="lazy" decoding="async" />
+                <Image src={logo} alt="Zenara Designs - Professional Web Design Agency Toronto" className="h-8 w-auto" width={32} height={32} />
                 <span className="font-light text-base sm:text-lg text-white">Zenara Designs</span>
               </div>
               <p className="text-slate-300 max-w-md font-light text-xs sm:text-sm">
@@ -222,8 +225,25 @@ const Footer = () => {
                 {quickLinks.map((link) => (
                   <Link
                     key={link.href}
-                    to={link.href}
-                    onClick={scrollToTop}
+                    href={link.href}
+                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                    className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
+                  >
+                    {link.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Services */}
+            <div>
+              <h3 className="font-light mb-4 text-white text-sm sm:text-base">Services</h3>
+              <div className="grid grid-cols-1 gap-x-1 gap-y-2">
+                {SERVICE_LINKS.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                     className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                   >
                     {link.label}
@@ -237,29 +257,29 @@ const Footer = () => {
               <h3 className="font-light mb-4 text-white text-sm sm:text-base">Industries</h3>
               <div className="grid grid-cols-1 gap-x-1 gap-y-2">
                 <Link
-                  to="/lawyers"
-                  onClick={scrollToTop}
+                  href="/lawyers"
+                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                 >
                   Law Firms
                 </Link>
                 <Link
-                  to="/accountants"
-                  onClick={scrollToTop}
+                  href="/accountants"
+                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                 >
                   Accounting Agencies
                 </Link>
                 <Link
-                  to="/renovations"
-                  onClick={scrollToTop}
+                  href="/renovations"
+                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                 >
                   Renovation Companies
                 </Link>
                 <Link
-                  to="/clinics"
-                  onClick={scrollToTop}
+                  href="/clinics"
+                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                 >
                   Wellness Clinics
@@ -274,8 +294,8 @@ const Footer = () => {
                 {FOOTER_ADDITIONAL_LINKS.map((link) => (
                   <Link
                     key={link.href}
-                    to={link.href}
-                    onClick={scrollToTop}
+                    href={link.href}
+                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                     className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                   >
                     {link.label}

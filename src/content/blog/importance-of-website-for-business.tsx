@@ -1,4 +1,4 @@
-import { BlogPost } from '@/lib/types';
+import { BlogPost } from '@/types';
 
 const ImportanceOfWebsiteContent = () => {
   return (

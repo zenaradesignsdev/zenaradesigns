@@ -1,6 +1,9 @@
-import { Link } from 'react-router-dom';
+'use client';
+
+import Link from 'next/link';
+import Image from 'next/image';
 import { Calendar, Clock, User } from 'lucide-react';
-import { BlogPost } from '@/lib/types';
+import { BlogPost } from '@/types';
 import { format } from 'date-fns';
 
 interface BlogCardProps {
@@ -21,7 +24,7 @@ export const BlogCard = ({ post }: BlogCardProps) => {
 
   return (
     <Link
-      to={`/blog/${post.slug}`}
+      href={`/blog/${post.slug}`}
       className="group block bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 hover:border-cyan-400/50 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/20 h-full flex flex-col relative overflow-hidden"
     >
       {/* Box glow */}
@@ -34,11 +37,12 @@ export const BlogCard = ({ post }: BlogCardProps) => {
         {/* Featured Image Placeholder - can be enhanced later */}
         {post.featuredImage ? (
           <div className="w-full h-48 sm:h-56 mb-4 rounded-lg overflow-hidden bg-gradient-to-br from-cyan-500/20 to-purple-500/20 relative group/image">
-            <img
+            <Image
               src={post.featuredImage}
               alt={post.title}
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              loading="lazy"
+              fill
+              className="object-cover group-hover:scale-110 transition-transform duration-500"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
           </div>
