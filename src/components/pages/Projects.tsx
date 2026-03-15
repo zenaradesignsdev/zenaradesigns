@@ -1,499 +1,407 @@
-import { ExternalLink } from 'lucide-react';
-import StructuredData from '@/components/StructuredData';
+'use client';
+
+import { useEffect, useRef } from 'react';
+import { ArrowUpRight } from 'lucide-react';
 import { SafeImage } from '@/components/ui/safe-image';
-const renoProjectImage = '/images/reno-project.png';
-const ashcamSiteImage = '/images/ashcam-site.png';
-const jbloansImage = '/images/jbloans.png';
-const pickeringLawImage = '/images/project2.png';
-const novaMotionPhysioImage = '/images/nova-motion-physio.png';
-const accountingFirmProjectImage = '/images/accounting-firm-project.png';
-// Placeholder images - replace when actual images are available
-const lawyerGavelOffice = '/images/lawyer-gavel-office.png';
+import StructuredData from '@/components/StructuredData';
+
+interface FeaturedProject {
+  number: string;
+  name: string;
+  tags: string[];
+  description: string;
+  url: string;
+  image: string;
+  imageAlt: string;
+  flip: boolean;
+}
+
+interface TileProject {
+  name: string;
+  tags: string[];
+  description: string;
+  url: string;
+  image: string;
+  imageAlt: string;
+}
+
+const featured: FeaturedProject[] = [
+  {
+    number: '01',
+    name: 'Luxury Renovation',
+    tags: ['Web Design', 'Toronto'],
+    description:
+      'Luxury renovation and construction services website designed for Toronto businesses. Modern, responsive design with seamless user experience. Showcasing premium craftsmanship and attention to detail.',
+    url: 'https://projectone.zenaradesigns.com',
+    image: '/images/reno-project.png',
+    imageAlt: 'Luxury Renovation Website — professional renovation and construction services',
+    flip: false,
+  },
+  {
+    number: '02',
+    name: 'Nova Motion Physio',
+    tags: ['Web Design', 'Wellness'],
+    description:
+      'Professional physiotherapy and wellness clinic website designed to showcase services and enable online appointment booking. Modern, clean design that builds trust and converts visitors into clients.',
+    url: 'https://projectthree.zenaradesigns.com',
+    image: '/images/nova-motion-physio.png',
+    imageAlt: 'Nova Motion Physio Website — physiotherapy and wellness clinic platform',
+    flip: true,
+  },
+  {
+    number: '03',
+    name: 'Accounting Firm',
+    tags: ['Web Design', 'Accounting'],
+    description:
+      'Professional accounting firm website designed to showcase tax preparation, bookkeeping, and advisory services. Secure platform with client portal integration and modern design that builds credibility.',
+    url: 'https://projectfour.zenaradesigns.com',
+    image: '/images/accounting-firm-project.png',
+    imageAlt: 'Accounting Firm Website — professional accounting and tax services platform',
+    flip: false,
+  },
+  {
+    number: '04',
+    name: 'Pickering Law Firm',
+    tags: ['Web Design', 'Legal'],
+    description:
+      'Professional law firm website designed to showcase legal expertise and build client trust. Modern, authoritative design with clear navigation and comprehensive service information.',
+    url: 'https://projecttwo.zenaradesigns.com/',
+    image: '/images/project2.png',
+    imageAlt: 'Pickering Law Firm Website — professional legal services website design',
+    flip: true,
+  },
+];
+
+const more: TileProject[] = [
+  {
+    name: 'AshCam Cutting Solutions',
+    tags: ['E-commerce', 'Construction'],
+    description:
+      'Construction company specializing in cutting blades and equipment. Modern e-commerce platform designed for industrial customers.',
+    url: 'https://ashcamcuttingsolution.ca/',
+    image: '/images/ashcam-site.png',
+    imageAlt: 'AshCam Cutting Solutions Website — construction blades and equipment platform',
+  },
+  {
+    name: 'JB Loans',
+    tags: ['Web Design', 'Mortgage Broker'],
+    description:
+      'Professional mortgage broker website helping clients find the best loan solutions with a seamless application process.',
+    url: 'https://jbloans.ca/',
+    image: '/images/jbloans.png',
+    imageAlt: 'JB Loans Mortgage Broker Website — professional mortgage services platform',
+  },
+];
+
+function useFadeIn(ref: React.RefObject<HTMLElement | null>) {
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.classList.add('proj-visible');
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.15 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [ref]);
+}
+
+interface FeaturedRowProps {
+  project: FeaturedProject;
+  index: number;
+}
+
+function FeaturedRow({ project, index }: FeaturedRowProps) {
+  const rowRef = useRef<HTMLDivElement>(null);
+  const imgRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+  useFadeIn(rowRef);
+
+  return (
+    <div
+      ref={rowRef}
+      className="proj-row group relative py-16 md:py-20 lg:py-24 border-b border-white/5 last:border-0"
+    >
+      {/* Large decorative number */}
+      <span
+        className="pointer-events-none absolute top-8 select-none text-[10rem] md:text-[14rem] lg:text-[18rem] font-black leading-none text-white/[0.025] tracking-[-0.04em]"
+        style={{ right: project.flip ? 'auto' : '0', left: project.flip ? '0' : 'auto' }}
+        aria-hidden="true"
+      >
+        {project.number}
+      </span>
+
+      <div
+        className={`relative z-10 flex flex-col ${project.flip ? 'lg:flex-row-reverse' : 'lg:flex-row'} items-center gap-10 lg:gap-16`}
+      >
+        {/* Image */}
+        <div
+          ref={imgRef}
+          className={`proj-img w-full lg:w-[58%] flex-shrink-0 ${project.flip ? 'proj-from-right' : 'proj-from-left'}`}
+        >
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="block relative overflow-hidden rounded-2xl border border-white/10 group-hover:border-cyan-400/40 transition-colors duration-500"
+            tabIndex={-1}
+            aria-hidden="true"
+          >
+            {/* Shine sweep */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/8 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10 pointer-events-none" />
+            {/* Glow */}
+            <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-br from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-xl pointer-events-none" />
+            <div className="aspect-[16/10] relative bg-slate-900">
+              <SafeImage
+                src={project.image}
+                alt={project.imageAlt}
+                className="w-full h-full object-contain project-image"
+                priority={index === 0}
+                sizes="(max-width: 640px) 100vw, (max-width: 1280px) 58vw, 740px"
+                quality={85}
+              />
+            </div>
+          </a>
+        </div>
+
+        {/* Text */}
+        <div
+          ref={textRef}
+          className={`proj-text w-full lg:w-[42%] flex flex-col ${project.flip ? 'proj-from-left lg:pl-0 lg:pr-4' : 'proj-from-right lg:pr-0 lg:pl-4'}`}
+        >
+          {/* Number + divider */}
+          <div className="flex items-center gap-3 mb-6">
+            <span className="text-xs font-mono text-cyan-400/70 tracking-widest uppercase">
+              {project.number}
+            </span>
+            <div className="h-px w-8 bg-cyan-400/30" />
+            <span className="text-xs font-mono text-white/30 tracking-widest uppercase">
+              Project
+            </span>
+          </div>
+
+          <h3 className="text-3xl sm:text-4xl lg:text-5xl font-light text-white tracking-[-0.02em] leading-tight mb-5">
+            {project.name}
+          </h3>
+
+          <p className="text-white/55 text-base sm:text-lg leading-relaxed font-light mb-8">
+            {project.description}
+          </p>
+
+          {/* Tags */}
+          <div className="flex flex-wrap gap-2 mb-10">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="px-3 py-1 text-xs font-medium tracking-wide rounded-full border border-white/10 text-white/50 bg-white/5"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-3 self-start group/btn"
+          >
+            <span className="relative flex items-center justify-center w-12 h-12 rounded-full border border-cyan-400/40 text-cyan-400 group-hover/btn:bg-cyan-400/10 group-hover/btn:border-cyan-400/70 transition-all duration-300">
+              <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+            </span>
+            <span className="text-sm font-medium text-white/70 group-hover/btn:text-cyan-300 transition-colors duration-300 tracking-wide">
+              View Live Site
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+interface TileCardProps {
+  project: TileProject;
+}
+
+function TileCard({ project }: TileCardProps) {
+  return (
+    <a
+      href={project.url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative flex flex-col bg-slate-900/60 border border-white/8 hover:border-cyan-400/40 rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-1 hover:shadow-xl hover:shadow-cyan-500/10"
+    >
+      <div className="aspect-[16/10] relative overflow-hidden bg-slate-900">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/8 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10 pointer-events-none" />
+        <SafeImage
+          src={project.image}
+          alt={project.imageAlt}
+          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
+          sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 620px"
+          quality={80}
+        />
+      </div>
+      <div className="p-6 flex flex-col flex-1">
+        <h3 className="text-white font-medium text-lg mb-2 group-hover:text-cyan-300 transition-colors duration-300">
+          {project.name}
+        </h3>
+        <p className="text-white/50 text-sm leading-relaxed font-light flex-1 mb-5">
+          {project.description}
+        </p>
+        <div className="flex items-center justify-between">
+          <div className="flex flex-wrap gap-1.5">
+            {project.tags.map((tag) => (
+              <span
+                key={tag}
+                className="px-2.5 py-0.5 text-xs rounded-full border border-white/10 text-white/40 bg-white/5"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+          <ArrowUpRight className="w-4 h-4 text-white/30 group-hover:text-cyan-400 transition-colors duration-300 flex-shrink-0 ml-3" />
+        </div>
+      </div>
+    </a>
+  );
+}
 
 const Projects = () => {
-  // Scroll to top when component mounts  
   return (
-    <div className="min-h-screen bg-black">
-      {/* Combined Hero & Projects Section */}
-      <section className="min-h-screen pt-24 sm:pt-28 md:pt-32 lg:pt-40 pb-16 sm:pb-20 md:pb-24 lg:pb-32 relative overflow-hidden bg-black">
-        {/* Gradient Background Layers */}
-        <div className="absolute inset-0">
-          {/* Base gradient layer */}
-          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
-          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
-          {/* Accent gradients with theme colors */}
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20"></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/35 to-transparent"></div>
-        </div>
-        
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0">
-          {/* Background Stars */}
-          <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
-          <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
-          <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
-          <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
-          <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
-          <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
-          <div className="bg-star" style={{ top: '18%', left: '68%' }}></div>
-          <div className="bg-star" style={{ top: '7%', left: '78%' }}></div>
-          <div className="bg-star" style={{ top: '14%', left: '88%' }}></div>
-          <div className="bg-star" style={{ top: '11%', left: '95%' }}></div>
-          <div className="bg-star" style={{ top: '25%', left: '5%' }}></div>
-          <div className="bg-star" style={{ top: '28%', left: '15%' }}></div>
-          <div className="bg-star" style={{ top: '32%', left: '28%' }}></div>
-          <div className="bg-star" style={{ top: '26%', left: '42%' }}></div>
-          <div className="bg-star" style={{ top: '35%', left: '55%' }}></div>
-          <div className="bg-star" style={{ top: '29%', left: '68%' }}></div>
-          <div className="bg-star" style={{ top: '38%', left: '82%' }}></div>
-          <div className="bg-star" style={{ top: '27%', left: '92%' }}></div>
-          <div className="bg-star" style={{ top: '45%', left: '8%' }}></div>
-          <div className="bg-star" style={{ top: '48%', left: '22%' }}></div>
-          <div className="bg-star" style={{ top: '52%', left: '35%' }}></div>
-          <div className="bg-star" style={{ top: '55%', left: '48%' }}></div>
-          <div className="bg-star" style={{ top: '58%', left: '62%' }}></div>
-          <div className="bg-star" style={{ top: '62%', left: '75%' }}></div>
-          <div className="bg-star" style={{ top: '65%', left: '88%' }}></div>
-          <div className="bg-star" style={{ top: '75%', left: '12%' }}></div>
-          <div className="bg-star" style={{ top: '78%', left: '28%' }}></div>
-          <div className="bg-star" style={{ top: '82%', left: '45%' }}></div>
-          <div className="bg-star" style={{ top: '85%', left: '62%' }}></div>
-          <div className="bg-star" style={{ top: '88%', left: '78%' }}></div>
-          <div className="bg-star" style={{ top: '92%', left: '92%' }}></div>
-          
-          {/* Nebula Effects */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/15 to-purple-500/15 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/15 to-cyan-500/15 rounded-full blur-3xl animate-pulse delay-1000"></div>
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-r from-cyan-500/8 via-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-500"></div>
+    <>
+      <style>{`
+        .proj-row .proj-img,
+        .proj-row .proj-text {
+          opacity: 0;
+          transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .proj-row .proj-from-left  { transform: translateX(-32px); }
+        .proj-row .proj-from-right { transform: translateX(32px); }
+
+        .proj-visible .proj-img  { opacity: 1; transform: none; }
+        .proj-visible .proj-text {
+          opacity: 1;
+          transform: none;
+          transition-delay: 0.12s;
+        }
+      `}</style>
+
+      <div className="min-h-screen bg-black relative overflow-hidden">
+        {/* Background — matches site-wide space theme */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black" />
+          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black" />
+          <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20" />
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/35 to-transparent" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-          {/* Hero Header */}
-          <div className="text-center mb-12 sm:mb-16 md:mb-20 lg:mb-24">
-            <h1 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extralight mb-4 sm:mb-6 text-white leading-[0.95] tracking-[-0.04em]">
-              <span className="font-light opacity-90">Web Design </span>
-              <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Portfolio</span>
-              </h1>
-            <p className="text-base sm:text-lg md:text-xl text-white/60 leading-[1.7] max-w-2xl mx-auto font-light tracking-[0.01em] mt-6">
-              Explore our portfolio of custom web design projects for businesses across Toronto and the GTA.
-            </p>
-          </div>
+        {/* Stars */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="bg-star" style={{ top: '3%', left: '5%' }} />
+          <div className="bg-star" style={{ top: '7%', left: '18%' }} />
+          <div className="bg-star" style={{ top: '5%', left: '32%' }} />
+          <div className="bg-star" style={{ top: '10%', left: '48%' }} />
+          <div className="bg-star" style={{ top: '4%', left: '63%' }} />
+          <div className="bg-star" style={{ top: '9%', left: '77%' }} />
+          <div className="bg-star" style={{ top: '6%', left: '90%' }} />
+          <div className="bg-star" style={{ top: '18%', left: '8%' }} />
+          <div className="bg-star" style={{ top: '22%', left: '24%' }} />
+          <div className="bg-star" style={{ top: '16%', left: '41%' }} />
+          <div className="bg-star" style={{ top: '25%', left: '57%' }} />
+          <div className="bg-star" style={{ top: '19%', left: '73%' }} />
+          <div className="bg-star" style={{ top: '23%', left: '88%' }} />
+          <div className="bg-star" style={{ top: '35%', left: '3%' }} />
+          <div className="bg-star" style={{ top: '38%', left: '16%' }} />
+          <div className="bg-star" style={{ top: '42%', left: '30%' }} />
+          <div className="bg-star" style={{ top: '36%', left: '52%' }} />
+          <div className="bg-star" style={{ top: '44%', left: '68%' }} />
+          <div className="bg-star" style={{ top: '39%', left: '84%' }} />
+          <div className="bg-star" style={{ top: '55%', left: '10%' }} />
+          <div className="bg-star" style={{ top: '58%', left: '27%' }} />
+          <div className="bg-star" style={{ top: '62%', left: '45%' }} />
+          <div className="bg-star" style={{ top: '56%', left: '61%' }} />
+          <div className="bg-star" style={{ top: '60%', left: '79%' }} />
+          <div className="bg-star" style={{ top: '65%', left: '93%' }} />
+          <div className="bg-star" style={{ top: '72%', left: '6%' }} />
+          <div className="bg-star" style={{ top: '76%', left: '22%' }} />
+          <div className="bg-star" style={{ top: '79%', left: '38%' }} />
+          <div className="bg-star" style={{ top: '74%', left: '55%' }} />
+          <div className="bg-star" style={{ top: '82%', left: '71%' }} />
+          <div className="bg-star" style={{ top: '77%', left: '87%' }} />
+          <div className="bg-star" style={{ top: '88%', left: '14%' }} />
+          <div className="bg-star" style={{ top: '91%', left: '33%' }} />
+          <div className="bg-star" style={{ top: '85%', left: '50%' }} />
+          <div className="bg-star" style={{ top: '93%', left: '67%' }} />
+          <div className="bg-star" style={{ top: '89%', left: '82%' }} />
+          {/* Nebula orbs */}
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-300/20 via-purple-300/20 to-cyan-300/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-300/20 via-cyan-300/20 to-purple-300/20 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-r from-cyan-900/25 to-cyan-300/15 rounded-full blur-3xl" />
+          <div className="absolute top-3/4 left-1/3 w-72 h-72 bg-gradient-to-r from-cyan-300/15 via-purple-300/15 to-cyan-300/15 rounded-full blur-3xl" />
+        </div>
 
-          <h2 className="sr-only">Featured Projects</h2>
-
-          {/* Projects Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 max-w-7xl mx-auto">
-            {/* Renovation Company Project */}
-            <a
-              href="https://projectone.zenaradesigns.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-800/50 hover:border-cyan-400/70 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/30 overflow-hidden relative hover:-translate-y-2 flex flex-col h-full"
-            >
-              {/* Animated gradient border */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/0 via-purple-500/0 to-cyan-500/0 group-hover:from-cyan-500/30 group-hover:via-purple-500/30 group-hover:to-cyan-500/30 transition-all duration-500 blur-xl"></div>
-              
-              {/* Box glow */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              {/* Background gradient on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
-
-              <div className="relative z-10">
-                {/* Project Preview */}
-                <div className="aspect-video relative overflow-hidden">
-                  {/* Shine effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
-                  
-                  {/* Project Image */}
-                  <SafeImage 
-                    src={renoProjectImage} 
-                    alt="Luxury Renovation Website - Professional luxury renovation and construction services" 
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
-                    priority
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                  />
-                </div>
-                
-                {/* Project Info */}
-                <div className="p-6 sm:p-8 flex flex-col flex-1">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <h3 className="text-white font-semibold text-xl sm:text-2xl mb-1 group-hover:text-cyan-300 transition-colors">
-                        Luxury Renovation
-                      </h3>
-                      <div className="flex items-center gap-2 mt-2">
-                        <span className="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-medium rounded-full border border-cyan-500/30">
-                          Web Design
-                        </span>
-                        <span className="px-2.5 py-1 bg-purple-500/20 text-purple-300 text-xs font-medium rounded-full border border-purple-500/30">
-                          Toronto
-                </span>
+        <div className="relative z-10">
+          {/* Hero */}
+          <section className="pt-28 sm:pt-32 md:pt-36 lg:pt-44 pb-12 sm:pb-16">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="max-w-3xl">
+                <p className="text-xs font-mono text-cyan-400/60 tracking-[0.2em] uppercase mb-6">
+                  Portfolio
+                </p>
+                <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extralight text-white leading-[0.92] tracking-[-0.04em] mb-8">
+                  Web Design{' '}
+                  <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-light">
+                    Projects
+                  </span>
+                </h1>
+                <p className="text-base sm:text-lg text-white/50 font-light leading-relaxed max-w-xl">
+                  Custom websites built for businesses across Toronto and the GTA. Each one designed from scratch, never from a template.
+                </p>
               </div>
             </div>
-                    <ExternalLink className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 group-hover:text-cyan-400 transition-all duration-300 flex-shrink-0 ml-3 group-hover:scale-110" />
-                  </div>
-                  
-                  <p className="text-slate-300 text-sm sm:text-base mb-6 font-light leading-relaxed flex-1">
-                    Luxury renovation and construction services website designed for Toronto businesses. Modern, responsive design with seamless user experience. Showcasing premium craftsmanship and attention to detail.
-                  </p>
-                  
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-800/50 group-hover:border-cyan-500/30 transition-colors mt-auto">
-                    <span className="text-cyan-400 text-sm font-medium group-hover:text-purple-400 transition-colors">
-                      View Live Site
-                    </span>
-                    <div className="flex items-center text-slate-400 group-hover:text-cyan-400 transition-colors">
-                      <ExternalLink className="h-4 w-4" />
-                    </div>
-                  </div>
-                </div>
+          </section>
+
+          {/* Featured Projects — full-width scroll rows */}
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 md:pb-24">
+            <h2 className="sr-only">Featured Projects</h2>
+            {featured.map((project, i) => (
+              <FeaturedRow key={project.number} project={project} index={i} />
+            ))}
+          </section>
+
+          {/* More Projects — tile grid */}
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-24 md:pb-32">
+            <div className="border-t border-white/8 pt-16 md:pt-20">
+              <div className="flex items-center gap-4 mb-10">
+                <p className="text-xs font-mono text-white/30 tracking-[0.2em] uppercase">
+                  More Projects
+                </p>
+                <div className="h-px flex-1 bg-white/6" />
               </div>
-            </a>
-
-            {/* Nova Motion Physio Project */}
-            <a
-              href="https://projectthree.zenaradesigns.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-800/50 hover:border-cyan-400/70 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/30 overflow-hidden relative hover:-translate-y-2 flex flex-col h-full"
-            >
-              {/* Animated gradient border */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/0 via-purple-500/0 to-cyan-500/0 group-hover:from-cyan-500/30 group-hover:via-purple-500/30 group-hover:to-cyan-500/30 transition-all duration-500 blur-xl"></div>
-              
-              {/* Box glow */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              {/* Background gradient on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
-
-              <div className="relative z-10">
-                {/* Project Preview */}
-                <div className="aspect-video relative overflow-hidden">
-                  {/* Shine effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
-                  
-                  {/* Project Image */}
-                  <SafeImage 
-                    src={novaMotionPhysioImage} 
-                    alt="Nova Motion Physio Website - Professional physiotherapy and wellness clinic platform" 
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
-                    priority
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                  />
-                </div>
-                
-                {/* Project Info */}
-                <div className="p-6 sm:p-8 flex flex-col flex-1">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <h3 className="text-white font-semibold text-xl sm:text-2xl mb-1 group-hover:text-cyan-300 transition-colors">
-                        Nova Motion Physio
-                      </h3>
-                      <div className="flex items-center gap-2 mt-2">
-                        <span className="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-medium rounded-full border border-cyan-500/30">
-                          Web Design
-                        </span>
-                        <span className="px-2.5 py-1 bg-purple-500/20 text-purple-300 text-xs font-medium rounded-full border border-purple-500/30">
-                          Wellness
-                        </span>
-                      </div>
-                    </div>
-                    <ExternalLink className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 group-hover:text-cyan-400 transition-all duration-300 flex-shrink-0 ml-3 group-hover:scale-110" />
-                  </div>
-                  
-                  <p className="text-slate-300 text-sm sm:text-base mb-6 font-light leading-relaxed flex-1">
-                    Professional physiotherapy and wellness clinic website designed to showcase services and enable online appointment booking. Modern, clean design that builds trust and converts visitors into clients.
-                  </p>
-                  
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-800/50 group-hover:border-cyan-500/30 transition-colors mt-auto">
-                    <span className="text-cyan-400 text-sm font-medium group-hover:text-purple-400 transition-colors">
-                      View Live Site
-                    </span>
-                    <div className="flex items-center text-slate-400 group-hover:text-cyan-400 transition-colors">
-                      <ExternalLink className="h-4 w-4" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </a>
-
-            {/* Accounting Firm Project */}
-            <a
-              href="https://projectfour.zenaradesigns.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-800/50 hover:border-cyan-400/70 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/30 overflow-hidden relative hover:-translate-y-2 flex flex-col h-full"
-            >
-              {/* Animated gradient border */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/0 via-purple-500/0 to-cyan-500/0 group-hover:from-cyan-500/30 group-hover:via-purple-500/30 group-hover:to-cyan-500/30 transition-all duration-500 blur-xl"></div>
-              
-              {/* Box glow */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              {/* Background gradient on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
-
-              <div className="relative z-10">
-                {/* Project Preview */}
-                <div className="aspect-video relative overflow-hidden">
-                  {/* Shine effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
-                  
-                  {/* Project Image */}
-                  <SafeImage 
-                    src={accountingFirmProjectImage} 
-                    alt="Accounting Firm Website - Professional accounting and tax services platform" 
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                  />
-                </div>
-                
-                {/* Project Info */}
-                <div className="p-6 sm:p-8 flex flex-col flex-1">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <h3 className="text-white font-semibold text-xl sm:text-2xl mb-1 group-hover:text-cyan-300 transition-colors">
-                        Accounting Firm
-                      </h3>
-                      <div className="flex items-center gap-2 mt-2">
-                        <span className="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-medium rounded-full border border-cyan-500/30">
-                          Web Design
-                        </span>
-                        <span className="px-2.5 py-1 bg-purple-500/20 text-purple-300 text-xs font-medium rounded-full border border-purple-500/30">
-                          Accounting
-                        </span>
-                      </div>
-                    </div>
-                    <ExternalLink className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 group-hover:text-cyan-400 transition-all duration-300 flex-shrink-0 ml-3 group-hover:scale-110" />
-                  </div>
-                  
-                  <p className="text-slate-300 text-sm sm:text-base mb-6 font-light leading-relaxed flex-1">
-                    Professional accounting firm website designed to showcase tax preparation, bookkeeping, and advisory services. Secure platform with client portal integration and modern design that builds credibility.
-                  </p>
-                  
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-800/50 group-hover:border-cyan-500/30 transition-colors mt-auto">
-                    <span className="text-cyan-400 text-sm font-medium group-hover:text-purple-400 transition-colors">
-                      View Live Site
-                    </span>
-                    <div className="flex items-center text-slate-400 group-hover:text-cyan-400 transition-colors">
-                      <ExternalLink className="h-4 w-4" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </a>
-
-            {/* Pickering Law Firm Project */}
-            <a
-              href="https://projecttwo.zenaradesigns.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-800/50 hover:border-cyan-400/70 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/30 overflow-hidden relative hover:-translate-y-2 flex flex-col h-full"
-            >
-              {/* Animated gradient border */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/0 via-purple-500/0 to-cyan-500/0 group-hover:from-cyan-500/30 group-hover:via-purple-500/30 group-hover:to-cyan-500/30 transition-all duration-500 blur-xl"></div>
-              
-              {/* Box glow */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              {/* Background gradient on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
-              
-              <div className="relative z-10">
-                {/* Project Preview */}
-                <div className="aspect-video relative overflow-hidden">
-                  {/* Shine effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
-                  
-                  {/* Project Image */}
-                  <SafeImage 
-                    src={pickeringLawImage} 
-                    alt="Pickering Law Firm Website - Professional legal services website design" 
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                  />
-                </div>
-                
-                {/* Project Info */}
-                <div className="p-6 sm:p-8 flex flex-col flex-1">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <h3 className="text-white font-semibold text-xl sm:text-2xl mb-1 group-hover:text-cyan-300 transition-colors">
-                        Pickering Law Firm
-                      </h3>
-                      <div className="flex items-center gap-2 mt-2">
-                        <span className="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-medium rounded-full border border-cyan-500/30">
-                          Web Design
-                        </span>
-                        <span className="px-2.5 py-1 bg-purple-500/20 text-purple-300 text-xs font-medium rounded-full border border-purple-500/30">
-                          Legal
-                        </span>
-                      </div>
-                    </div>
-                    <ExternalLink className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 group-hover:text-cyan-400 transition-all duration-300 flex-shrink-0 ml-3 group-hover:scale-110" />
-                  </div>
-                  
-                  <p className="text-slate-300 text-sm sm:text-base mb-6 font-light leading-relaxed flex-1">
-                    Professional law firm website designed to showcase legal expertise and build client trust. Modern, authoritative design with clear navigation and comprehensive service information.
-                  </p>
-                  
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-800/50 group-hover:border-cyan-500/30 transition-colors mt-auto">
-                    <span className="text-cyan-400 text-sm font-medium group-hover:text-purple-400 transition-colors">
-                      View Live Site
-                    </span>
-                    <div className="flex items-center text-slate-400 group-hover:text-cyan-400 transition-colors">
-                      <ExternalLink className="h-4 w-4" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </a>
-
-            {/* AshCam Cutting Solutions Project */}
-            <a
-              href="https://ashcamcuttingsolution.ca/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-800/50 hover:border-cyan-400/70 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/30 overflow-hidden relative hover:-translate-y-2 flex flex-col h-full"
-            >
-              {/* Animated gradient border */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/0 via-purple-500/0 to-cyan-500/0 group-hover:from-cyan-500/30 group-hover:via-purple-500/30 group-hover:to-cyan-500/30 transition-all duration-500 blur-xl"></div>
-              
-              {/* Box glow */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              {/* Background gradient on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
-
-              <div className="relative z-10">
-                {/* Project Preview */}
-                <div className="aspect-video relative overflow-hidden">
-                  {/* Shine effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
-                  
-                  {/* Project Image */}
-                  <SafeImage 
-                    src={ashcamSiteImage} 
-                    alt="AshCam Cutting Solutions Website - Construction blades and equipment e-commerce platform" 
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                  />
-                </div>
-                
-                {/* Project Info */}
-                <div className="p-6 sm:p-8 flex flex-col flex-1">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <h3 className="text-white font-semibold text-xl sm:text-2xl mb-1 group-hover:text-cyan-300 transition-colors">
-                        AshCam Cutting Solutions
-                      </h3>
-                      <div className="flex items-center gap-2 mt-2">
-                        <span className="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-medium rounded-full border border-cyan-500/30">
-                          E-commerce
-                        </span>
-                        <span className="px-2.5 py-1 bg-purple-500/20 text-purple-300 text-xs font-medium rounded-full border border-purple-500/30">
-                          Construction
-                        </span>
-                      </div>
-                    </div>
-                    <ExternalLink className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 group-hover:text-cyan-400 transition-all duration-300 flex-shrink-0 ml-3 group-hover:scale-110" />
-                  </div>
-                  
-                  <p className="text-slate-300 text-sm sm:text-base mb-6 font-light leading-relaxed flex-1">
-                    Construction company specializing in cutting blades and equipment. Modern e-commerce platform designed for industrial customers with seamless product browsing and ordering.
-                  </p>
-                  
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-800/50 group-hover:border-cyan-500/30 transition-colors mt-auto">
-                    <span className="text-cyan-400 text-sm font-medium group-hover:text-purple-400 transition-colors">
-                      View Live Site
-                    </span>
-                    <div className="flex items-center text-slate-400 group-hover:text-cyan-400 transition-colors">
-                      <ExternalLink className="h-4 w-4" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </a>
-
-            {/* JB Loans Mortgage Broker Project */}
-            <a
-              href="https://jbloans.ca/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group bg-slate-900/80 backdrop-blur-xl rounded-3xl border border-slate-800/50 hover:border-cyan-400/70 transition-all duration-500 hover:shadow-2xl hover:shadow-cyan-500/30 overflow-hidden relative hover:-translate-y-2 flex flex-col h-full"
-            >
-              {/* Animated gradient border */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/0 via-purple-500/0 to-cyan-500/0 group-hover:from-cyan-500/30 group-hover:via-purple-500/30 group-hover:to-cyan-500/30 transition-all duration-500 blur-xl"></div>
-              
-              {/* Box glow */}
-              <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              {/* Background gradient on hover */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-purple-500/5 to-cyan-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl"></div>
-
-              <div className="relative z-10">
-                {/* Project Preview */}
-                <div className="aspect-video relative overflow-hidden">
-                  {/* Shine effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10"></div>
-                  
-                  {/* Project Image */}
-                  <SafeImage 
-                    src={jbloansImage} 
-                    alt="JB Loans Mortgage Broker Website - Professional mortgage services platform" 
-                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700 project-image"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
-                  />
-                </div>
-                
-                {/* Project Info */}
-                <div className="p-6 sm:p-8 flex flex-col flex-1">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="flex-1">
-                      <h3 className="text-white font-semibold text-xl sm:text-2xl mb-1 group-hover:text-cyan-300 transition-colors">
-                        JB Loans
-                      </h3>
-                      <div className="flex items-center gap-2 mt-2">
-                        <span className="px-2.5 py-1 bg-cyan-500/20 text-cyan-300 text-xs font-medium rounded-full border border-cyan-500/30">
-                          Web Design
-                        </span>
-                        <span className="px-2.5 py-1 bg-purple-500/20 text-purple-300 text-xs font-medium rounded-full border border-purple-500/30">
-                          Mortgage Broker
-                        </span>
-                      </div>
-                    </div>
-                    <ExternalLink className="h-5 w-5 sm:h-6 sm:w-6 text-slate-400 group-hover:text-cyan-400 transition-all duration-300 flex-shrink-0 ml-3 group-hover:scale-110" />
-                  </div>
-                  
-                  <p className="text-slate-300 text-sm sm:text-base mb-6 font-light leading-relaxed flex-1">
-                    Professional mortgage broker website designed to help clients find the best loan solutions. Modern, user-friendly platform with seamless application process and expert guidance.
-                  </p>
-                  
-                  <div className="flex items-center justify-between pt-4 border-t border-slate-800/50 group-hover:border-cyan-500/30 transition-colors mt-auto">
-                    <span className="text-cyan-400 text-sm font-medium group-hover:text-purple-400 transition-colors">
-                      View Live Site
-                    </span>
-                    <div className="flex items-center text-slate-400 group-hover:text-cyan-400 transition-colors">
-                      <ExternalLink className="h-4 w-4" />
-                    </div>
-                  </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+                {more.map((project) => (
+                  <TileCard key={project.name} project={project} />
+                ))}
               </div>
             </div>
-            </a>
-
-          </div>
+          </section>
         </div>
-      </section>
-      
-      {/* Breadcrumb Schema */}
-      <StructuredData 
-        type="breadcrumb" 
-        breadcrumbs={[
-          { name: 'Home', url: '/' },
-          { name: 'Projects', url: '/projects' }
-        ]} 
-      />
-    </div>
+
+        <StructuredData
+          type="breadcrumb"
+          breadcrumbs={[
+            { name: 'Home', url: '/' },
+            { name: 'Projects', url: '/projects' },
+          ]}
+        />
+      </div>
+    </>
   );
 };
 

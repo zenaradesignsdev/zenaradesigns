@@ -6,6 +6,7 @@ interface ImageProps {
   className?: string;
   priority?: boolean;
   sizes?: string;
+  quality?: number;
   width?: number;
   height?: number;
   onLoad?: React.ReactEventHandler<HTMLImageElement>;
@@ -17,6 +18,7 @@ export const SafeImage = ({
   className,
   priority = false,
   sizes,
+  quality,
   width,
   height,
   onLoad,
@@ -35,6 +37,7 @@ export const SafeImage = ({
         className={className}
         priority={priority}
         sizes={defaultSizes}
+        quality={quality}
         onLoad={onLoad}
       />
     );
@@ -49,6 +52,7 @@ export const SafeImage = ({
         className={objectFitClass}
         priority={priority}
         sizes={defaultSizes}
+        quality={quality}
         onLoad={onLoad}
       />
     </div>
