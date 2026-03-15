@@ -191,7 +191,7 @@ export const generateOrganizationSchema = () => {
       streetAddress: BUSINESS_INFO.address.streetAddress,
       addressLocality: BUSINESS_INFO.address.addressLocality,
       addressRegion: BUSINESS_INFO.address.addressRegion,
-      postalCode: BUSINESS_INFO.address.addressRegion,
+      postalCode: BUSINESS_INFO.address.postalCode,
       addressCountry: BUSINESS_INFO.address.addressCountry
     },
     

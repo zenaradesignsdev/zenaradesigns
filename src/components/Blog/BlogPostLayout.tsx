@@ -1,4 +1,5 @@
-import { BlogPost } from '@/lib/types';
+import Image from 'next/image';
+import { BlogPost } from '@/types';
 import { BlogMetadata } from './BlogMetadata';
 
 interface BlogPostLayoutProps {
@@ -44,11 +45,14 @@ export const BlogPostLayout = ({ post }: BlogPostLayoutProps) => {
       {post.featuredImage && (
         <div className="w-full mb-12 sm:mb-16 md:mb-20 rounded-xl overflow-hidden relative">
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
-          <img
+          <Image
             src={post.featuredImage}
             alt={post.title}
+            width={1200}
+            height={630}
             className="w-full h-auto object-cover relative z-10"
-            loading="eager"
+            priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
           />
         </div>
       )}

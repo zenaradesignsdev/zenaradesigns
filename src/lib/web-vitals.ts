@@ -12,8 +12,9 @@ const VITALS_THRESHOLDS = {
 
 // Send Web Vitals to GA4
 function sendToGA4(metric: any) {
-  if (typeof gtag !== 'undefined') {
-    gtag('event', metric.name, {
+  const gtagFn = (window as any).gtag;
+  if (typeof gtagFn !== 'undefined') {
+    gtagFn('event', metric.name, {
       event_category: 'Web Vitals',
       event_label: metric.id,
       value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
@@ -83,7 +84,7 @@ export function initPerformanceObserver() {
     // Observe LCP candidates
     const lcpObserver = new PerformanceObserver((list) => {
       const entries = list.getEntries();
-      const lastEntry = entries[entries.length - 1];
+      const lastEntry = entries[entries.length - 1] as any;
       logger.debug('[Performance] LCP Element:', {
         element: lastEntry.element?.tagName,
         url: lastEntry.url,

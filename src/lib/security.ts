@@ -1,6 +1,6 @@
 // Security configuration and utilities
 import { FORM_LIMITS } from './constants';
-import type { SecurityConfig, SecurityHeaders, CSPConfig } from './types';
+import type { SecurityConfig, SecurityHeaders, CSPConfig } from '@/types';
 
 // Security constants
 export const SECURITY_CONFIG: SecurityConfig = {
@@ -70,6 +70,7 @@ export function sanitizeInput(input: string): string {
   sanitized = sanitized.normalize('NFC');
   
   // Remove control characters except newlines and tabs
+  // eslint-disable-next-line no-control-regex
   sanitized = sanitized.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, '');
   
   // Trim whitespace
@@ -182,8 +183,8 @@ export function validatePhone(phone: string): boolean {
   if (XSS_PATTERNS.JAVASCRIPT_PROTOCOL.test(sanitized)) return false;
   
   // Phone regex (international format)
-  const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
-  const cleanPhone = sanitized.replace(/[\s\-\(\)]/g, '');
+  const phoneRegex = /^[+]?[1-9]\d{0,15}$/;
+  const cleanPhone = sanitized.replace(/[\s\-()]/g, '');
   
   return phoneRegex.test(cleanPhone);
 }

@@ -7,10 +7,20 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
-dist
-dist-ssr
+
+# Next.js build output
+.next/
+next-env.d.ts
+dist/
+tsconfig.tsbuildinfo
+
+# Environment variables
 *.local
+.env
+.env.*
+!.env.example
 
 # Editor directories and files
 .vscode/*
@@ -23,7 +33,14 @@ dist-ssr
 *.sln
 *.sw?
 
+# Lockfiles for unused package managers
+bun.lockb
+
 # Screenshots and temporary files
 .cursor/
 screenshots/
 browser-logs/
+
+# GSC audit reports (contain sensitive performance data)
+gsc-audit-report.md
+gsc-audit-report-*.md

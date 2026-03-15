@@ -1,12 +1,5 @@
 // Centralized error handling utilities
 
-export interface AppError {
-  code: string;
-  message: string;
-  details?: any;
-  timestamp: number;
-}
-
 export class AppError extends Error {
   public code: string;
   public details?: any;
