@@ -116,7 +116,8 @@ const PortfolioSection = () => {
                           alt={item.alt}
                           className="w-full h-full object-cover"
                           priority={index === 0}
-                          sizes="(max-width: 1024px) calc(100vw - 80px), 540px"
+                          quality={60}
+                          sizes="(max-width: 640px) calc(100vw - 112px), (max-width: 1024px) calc(50vw - 80px), 540px"
                         />
                       </div>
                     </div>
