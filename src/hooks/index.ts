@@ -1,5 +1,4 @@
 // Centralized exports for all custom hooks
-export { useTypingAnimation } from './useTypingAnimation';
 export { useIsMobile } from './use-mobile';
 export { useToast } from './use-toast';
 export { useIntersectionObserver } from './use-intersection-observer';

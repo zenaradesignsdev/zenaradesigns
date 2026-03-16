@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useState, useEffect, useRef, memo } from 'react';
-import { TypingTextLines } from './TypingAnimations';
+import { FadeIn } from '@/components/ui/fade-in';
 
 const shopifyLogo = '/images/shopify.svg';
 const vercelLogo = '/images/vercel.svg';
@@ -145,12 +145,12 @@ const AgencyPartnersSection = () => {
         {/* Top Section - Text Content with Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center mb-16 sm:mb-20">
           <div className="text-center lg:text-left space-y-4 sm:space-y-6">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-[-0.02em]">
-              <TypingTextLines
-                lines={['So much more than', 'a web design agency.']}
-                className="[&>div:first-child]:block [&>div:last-child]:block [&>div:last-child]:mt-1"
-              />
-            </h2>
+            <FadeIn>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-[-0.02em]">
+                <span className="block">So much more than</span>
+                <span className="block mt-1">a web design agency.</span>
+              </h2>
+            </FadeIn>
             <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white/90 leading-[1.1] tracking-[-0.02em] mt-4">
               <span>We are your </span>
               <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">IT team</span>.

@@ -2,10 +2,10 @@
 
 import dynamic from 'next/dynamic';
 import { TooltipProvider } from '@/components/ui/tooltip';
-import { Toaster } from '@/components/ui/toaster';
-import { Toaster as Sonner } from '@/components/ui/sonner';
 import ErrorBoundary from '@/components/ErrorBoundary';
 
+const Toaster = dynamic(() => import('@/components/ui/toaster').then((m) => ({ default: m.Toaster })), { ssr: false });
+const Sonner = dynamic(() => import('@/components/ui/sonner').then((m) => ({ default: m.Toaster })), { ssr: false });
 const PerformanceMonitor = dynamic(() => import('@/components/PerformanceMonitor'), {
   ssr: false,
 });

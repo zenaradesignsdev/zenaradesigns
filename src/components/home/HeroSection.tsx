@@ -108,8 +108,6 @@ const HeroSection = () => {
           <div className="shooting-star shooting-star-1"></div>
           <div className="shooting-star shooting-star-2"></div>
           <div className="shooting-star shooting-star-3"></div>
-          <div className="shooting-star shooting-star-4"></div>
-          <div className="shooting-star shooting-star-5"></div>
           <div className="bg-star bg-star-1"></div>
           <div className="bg-star bg-star-2"></div>
           <div className="bg-star bg-star-3"></div>
@@ -123,27 +121,9 @@ const HeroSection = () => {
           <div className="bg-star bg-star-11"></div>
           <div className="bg-star bg-star-12"></div>
           <div className="bg-star bg-star-13"></div>
-          <div className="bg-star bg-star-14"></div>
-          <div className="bg-star bg-star-15"></div>
-          <div className="bg-star bg-star-16"></div>
-          <div className="bg-star bg-star-17"></div>
-          <div className="bg-star bg-star-18"></div>
-          <div className="bg-star bg-star-19"></div>
-          <div className="bg-star bg-star-20"></div>
-          <div className="particle particle-1"></div>
-          <div className="particle particle-2"></div>
-          <div className="particle particle-3"></div>
-          <div className="particle particle-4"></div>
-          <div className="particle particle-5"></div>
-          <div className="particle particle-6"></div>
-          <div className="particle particle-7"></div>
-          <div className="particle particle-8"></div>
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-300/20 via-purple-300/20 to-cyan-300/20 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-300/20 via-cyan-300/20 to-purple-300/20 rounded-full blur-3xl delay-1000"></div>
-          <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-r from-cyan-900/25 to-cyan-300/15 rounded-full blur-3xl delay-2000"></div>
-          <div className="absolute top-1/3 left-1/2 w-72 h-72 bg-gradient-to-r from-cyan-300/15 via-purple-300/15 to-cyan-300/15 rounded-full blur-3xl delay-500"></div>
-          <div className="absolute bottom-1/3 left-1/6 w-56 h-56 bg-gradient-to-r from-purple-300/15 to-cyan-300/15 rounded-full blur-3xl delay-1500"></div>
-          <div className="absolute top-2/3 right-1/6 w-48 h-48 bg-gradient-to-r from-cyan-900/20 via-cyan-300/15 to-purple-300/15 rounded-full blur-3xl delay-2500"></div>
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-300/20 via-cyan-300/20 to-purple-300/20 rounded-full blur-3xl"></div>
+          <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-r from-cyan-900/25 to-cyan-300/15 rounded-full blur-3xl"></div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 h-full flex items-center pt-16 sm:pt-20 md:pt-24">

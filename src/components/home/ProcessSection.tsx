@@ -2,7 +2,7 @@
 
 import { Compass, Palette, BarChart, ArrowUpRight } from 'lucide-react';
 import { memo } from 'react';
-import { TypingTextLines } from './TypingAnimations';
+import { FadeIn } from '@/components/ui/fade-in';
 
 const ProcessSection = () => {
   return (
@@ -62,17 +62,12 @@ const ProcessSection = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Headline */}
         <div className="text-center mb-12 sm:mb-16 relative z-20">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-white mb-8 sm:mb-10 leading-[0.95] tracking-[-0.04em] text-center">
-            <TypingTextLines
-              lines={['Where Innovation', 'Meets Excellence']}
-              className="inline-block w-full max-w-full [&>div:first-child]:block [&>div:first-child]:font-light [&>div:first-child]:opacity-90 [&>div:last-child]:block [&>div:last-child]:mt-2 sm:[&>div:last-child]:mt-2.5"
-              lineClassName={(index) => {
-                if (index === 0) return 'block font-light opacity-90';
-                if (index === 1) return 'block bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal';
-                return '';
-              }}
-            />
-          </h2>
+          <FadeIn as="div">
+            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-white mb-8 sm:mb-10 leading-[0.95] tracking-[-0.04em] text-center">
+              <span className="block font-light opacity-90">Where Innovation</span>
+              <span className="block mt-2 sm:mt-2.5 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Meets Excellence</span>
+            </h2>
+          </FadeIn>
           <p className="text-base sm:text-lg md:text-xl text-white/60 mb-12 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em]">
             Elevating brands through strategic design, cutting-edge technology, and results-driven solutions.
           </p>

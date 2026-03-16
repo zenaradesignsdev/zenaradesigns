@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Rocket, Users, Zap, Heart, Shield, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useRef, memo } from 'react';
-import { TypingTextSection } from './TypingAnimations';
+import { FadeIn } from '@/components/ui/fade-in';
 
 const DifferentiatorsSection = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -69,13 +69,12 @@ const DifferentiatorsSection = () => {
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 sm:mb-16 gap-6">
           <div className="flex-1">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight mb-4 text-white leading-[0.95] tracking-[-0.04em]">
-              <TypingTextSection text="What Sets Us " className="font-light" />
-              <TypingTextSection
-                text="Apart"
-                className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal"
-              />
-            </h2>
+            <FadeIn>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight mb-4 text-white leading-[0.95] tracking-[-0.04em]">
+                <span className="font-light">What Sets Us </span>
+                <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Apart</span>
+              </h2>
+            </FadeIn>
             <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-2xl leading-[1.7] font-light tracking-[0.01em]">
               We don&apos;t just build websites. We craft digital experiences that grow with your business.
             </p>

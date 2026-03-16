@@ -3,7 +3,7 @@
 import { Users, Target, CheckCircle, Sparkles, Zap, Heart, Rocket, Code2, ArrowRight, Shield, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { useState, useEffect, useRef, memo, useMemo, useCallback } from 'react';
+import { useState, useEffect, useRef, memo, useMemo } from 'react';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
 import type { TeamMember, ProcessStep, Differentiator, Position } from '@/types';
 const logo = '/images/zenara-logo-v5.svg';
@@ -14,115 +14,7 @@ const discoveryImage = '/images/zenara-discovery.jpg';
 const prototypingImage = '/images/zenara-prototyping.jpg';
 const buildImage = '/images/zenara-build.jpg';
 import StructuredData from '@/components/StructuredData';
-import { useTypingAnimation } from '@/hooks/useTypingAnimation';
-
-// Single line component that can be controlled externally
-const TypingTextLine = ({ text, startTyping, onComplete, className = '' }: { 
-  text: string; 
-  startTyping: boolean; 
-  onComplete: () => void;
-  className?: string;
-}) => {
-  const [displayedText, setDisplayedText] = useState('');
-  const [isTyping, setIsTyping] = useState(false);
-  const [hasCompleted, setHasCompleted] = useState(false);
-
-  useEffect(() => {
-    if (startTyping && !isTyping && !hasCompleted) {
-      setIsTyping(true);
-      setDisplayedText('');
-    }
-  }, [startTyping, isTyping, hasCompleted]);
-
-  useEffect(() => {
-    if (isTyping && displayedText.length < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayedText(text.slice(0, displayedText.length + 1));
-      }, 25);
-
-      return () => clearTimeout(timeout);
-    } else if (isTyping && displayedText.length === text.length) {
-      setIsTyping(false);
-      setHasCompleted(true);
-      onComplete();
-    }
-  }, [isTyping, displayedText, text, onComplete]);
-
-  return (
-    <span className={className}>
-      {hasCompleted ? text : displayedText}
-      {isTyping && <span className="animate-pulse">|</span>}
-    </span>
-  );
-};
-
-// Component for multi-line typing animation (sequential)
-const TypingTextLines = ({ lines, className = '', lineClassName = '' }: { 
-  lines: string[]; 
-  className?: string; 
-  lineClassName?: string | ((index: number, totalLines: number) => string);
-}) => {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [currentLineIndex, setCurrentLineIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
-  const [completedLines, setCompletedLines] = useState<number[]>([]);
-
-  useEffect(() => {
-    const element = containerRef.current;
-    if (!element) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !isVisible) {
-            setIsVisible(true);
-          }
-        });
-      },
-      {
-        threshold: 0.2,
-        rootMargin: '0px'
-      }
-    );
-
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, [isVisible]);
-
-  const handleLineComplete = (index: number) => {
-    setCompletedLines(prev => [...prev, index]);
-    if (index < lines.length - 1) {
-      setTimeout(() => setCurrentLineIndex(index + 1), 200);
-    }
-  };
-
-  return (
-    <div ref={containerRef} className={`w-full ${className}`}>
-      {lines.map((line, index) => {
-        const shouldStart = isVisible && index === currentLineIndex && !completedLines.includes(index);
-        
-        // Apply lineClassName to the span wrapper for styling
-        const spanClasses = typeof lineClassName === 'function' ? lineClassName(index, lines.length) : (lineClassName || '');
-        
-        return (
-          <div key={index} className="relative w-full" style={{ minHeight: 'clamp(1.2em, 4vw, 1.5em)' }}>
-            {/* Invisible placeholder to reserve space */}
-            <span className="invisible block w-full break-words" aria-hidden="true">{line}</span>
-            {/* Typing text overlay */}
-            <span className={`absolute left-0 top-0 block w-full break-words ${spanClasses}`}>
-              <TypingTextLine
-                text={line}
-                startTyping={shouldStart}
-                onComplete={() => handleLineComplete(index)}
-                className=""
-              />
-            </span>
-          </div>
-        );
-      })}
-    </div>
-  );
-};
+import { FadeIn } from '@/components/ui/fade-in';
 
 const About = () => {
   // Scroll to top when component mounts  
@@ -355,17 +247,12 @@ const About = () => {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 pt-24 sm:pt-32 md:pt-40 lg:pt-44">
           <div className="text-center mb-12 sm:mb-16 md:mb-20">
-            <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
-              <TypingTextLines
-                lines={["We're not just developers,", "we're digital architects"]}
-                className="[&>div:first-child]:block [&>div:last-child]:block [&>div:last-child]:mt-2"
-                lineClassName={(index) => {
-                  if (index === 0) return "block font-light opacity-90";
-                  if (index === 1) return "block bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1";
-                  return "";
-                }}
-              />
-            </h1>
+            <FadeIn>
+              <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
+                <span className="block font-light opacity-90">We&apos;re not just developers,</span>
+                <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">we&apos;re digital architects</span>
+              </h1>
+            </FadeIn>
             <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-4xl mx-auto leading-[1.7] font-light tracking-[0.01em] mb-8 sm:mb-12 px-4">
               Every business deserves a digital presence that not only looks amazing but drives real results. 
               We bridge the gap between cutting-edge technology and thoughtful design strategy. Based in Toronto and serving the GTA.
@@ -473,17 +360,12 @@ const About = () => {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-16">
-            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
-              <TypingTextLines
-                lines={['The', 'Dream Team']}
-                className="[&>div:first-child]:block [&>div:last-child]:block [&>div:last-child]:mt-2"
-                lineClassName={(index) => {
-                  if (index === 0) return "block font-light opacity-90";
-                  if (index === 1) return "block bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1";
-                  return "";
-                }}
-              />
-            </h2>
+            <FadeIn>
+              <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
+                <span className="block font-light opacity-90">The</span>
+                <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Dream Team</span>
+              </h2>
+            </FadeIn>
             <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
               Passionate professionals dedicated to turning your vision into digital reality
             </p>
@@ -548,17 +430,12 @@ const About = () => {
         
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-16 md:mb-20">
-            <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
-              <TypingTextLines
-                lines={['How We', 'Bring Ideas to Life']}
-                className="[&>div:first-child]:block [&>div:last-child]:block [&>div:last-child]:mt-2"
-                lineClassName={(index) => {
-                  if (index === 0) return "block font-light opacity-90";
-                  if (index === 1) return "block bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1";
-                  return "";
-                }}
-              />
-            </h2>
+            <FadeIn>
+              <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
+                <span className="block font-light opacity-90">How We</span>
+                <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Bring Ideas to Life</span>
+              </h2>
+            </FadeIn>
             <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
               A proven methodology that transforms your vision into a digital masterpiece
             </p>

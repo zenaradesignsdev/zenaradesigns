@@ -164,20 +164,13 @@
     -webkit-backface-visibility: hidden;
   }
 
-  /* Optimize animations for better performance */
-  .animate-pulse,
-  .animate-twinkle,
+  /* Animations use opacity/transform — composited by default, no will-change needed */
   .animate-spin-slow,
   .animate-spin-slow-reverse,
-  .animate-float,
-  .animate-levitate,
   .animate-rocket-launch,
   .animate-rocket-bounce {
-    will-change: transform, opacity;
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    transform: translateZ(0); /* Force hardware acceleration */
-    contain: layout style paint; /* CSS containment for better performance */
   }
 
   /* Reduce animations on mobile for better performance */
@@ -439,6 +432,30 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+
+  /* Fade-in-up entrance animation for headings and subheadings */
+  .animate-fade-in-up {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .animate-fade-in-up.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .delay-100 {
+    transition-delay: 100ms;
+  }
+
+  .delay-200 {
+    transition-delay: 200ms;
+  }
+
+  .delay-300 {
+    transition-delay: 300ms;
   }
 
     .service-card {
@@ -1125,7 +1142,6 @@
   background: rgba(255, 255, 255, 0.6);
   border-radius: 50%;
   animation: particle-float 8s linear infinite;
-  will-change: transform, opacity;
 }
 
 .particle-1 {
@@ -1230,6 +1246,7 @@
   border-radius: 50%;
   box-shadow: 0 0 4px white;
   animation: twinkle 3s ease-in-out infinite;
+  contain: layout style paint;
 }
 
 .bg-star-1 { top: 10%; left: 5%; animation-delay: 0s; }
