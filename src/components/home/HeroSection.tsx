@@ -47,10 +47,12 @@ const HeroSection = () => {
     const heroSection = document.querySelector('.cursor-glow') as HTMLElement;
     if (!heroSection) return;
 
+    // Cache rect to avoid forced reflow on every mousemove
+    let cachedRect = heroSection.getBoundingClientRect();
+
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = heroSection.getBoundingClientRect();
-      heroSection.style.setProperty('--mouse-x', (e.clientX - rect.left) + 'px');
-      heroSection.style.setProperty('--mouse-y', (e.clientY - rect.top) + 'px');
+      heroSection.style.setProperty('--mouse-x', (e.clientX - cachedRect.left) + 'px');
+      heroSection.style.setProperty('--mouse-y', (e.clientY - cachedRect.top) + 'px');
     };
 
     const handleMouseLeave = () => {
@@ -58,11 +60,17 @@ const HeroSection = () => {
       heroSection.style.setProperty('--mouse-y', '-100px');
     };
 
+    const handleResize = () => {
+      cachedRect = heroSection.getBoundingClientRect();
+    };
+
     heroSection.addEventListener('mousemove', handleMouseMove);
     heroSection.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('resize', handleResize, { passive: true });
     return () => {
       heroSection.removeEventListener('mousemove', handleMouseMove);
       heroSection.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 

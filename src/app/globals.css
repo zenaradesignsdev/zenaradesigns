@@ -975,22 +975,6 @@
   to { transform: rotate(0deg); }
 }
 
-@keyframes particle-float {
-  0% {
-    transform: translateY(100vh) translateX(0px);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-100px) translateX(100px);
-    opacity: 0;
-  }
-}
 
 /* Shooting Stars */
 .shooting-star {
@@ -1000,7 +984,6 @@
   background: linear-gradient(45deg, #fff, transparent);
   border-radius: 50%;
   box-shadow: 0 0 6px #fff;
-  will-change: transform, opacity;
 }
 
 .shooting-star::before {
@@ -1032,183 +1015,19 @@
   animation: shooting-star 3.5s linear infinite 2s;
 }
 
-.shooting-star-4 {
-  top: 30%;
-  left: 15%;
-  animation: shooting-star 4.5s linear infinite 0.5s;
-}
 
-.shooting-star-5 {
-  top: 70%;
-  left: 25%;
-  animation: shooting-star 3.8s linear infinite 1.5s;
-}
-
-.shooting-star-6 {
-  top: 15%;
-  left: 60%;
-  animation: shooting-star 4.2s linear infinite 2.5s;
-}
-
-.shooting-star-7 {
-  top: 55%;
-  left: 70%;
-  animation: shooting-star 3.2s linear infinite 0.8s;
-}
-
-.shooting-star-8 {
-  top: 85%;
-  left: 40%;
-  animation: shooting-star 4.8s linear infinite 3.2s;
-}
-
-.shooting-star-9 {
-  top: 25%;
-  left: 80%;
-  animation: shooting-star 3.5s linear infinite 1.8s;
-}
-
-.shooting-star-10 {
-  top: 45%;
-  left: 5%;
-  animation: shooting-star 4.1s linear infinite 2.8s;
-}
-
-.shooting-star-11 {
-  top: 65%;
-  left: 90%;
-  animation: shooting-star 3.7s linear infinite 0.3s;
-}
-
-.shooting-star-12 {
-  top: 35%;
-  left: 35%;
-  animation: shooting-star 4.3s linear infinite 1.2s;
-}
-
-.shooting-star-13 {
-  top: 75%;
-  left: 55%;
-  animation: shooting-star 3.9s linear infinite 2.1s;
-}
-
-.shooting-star-14 {
-  top: 5%;
-  left: 45%;
-  animation: shooting-star 4.6s linear infinite 0.7s;
-}
-
-.shooting-star-15 {
-  top: 95%;
-  left: 15%;
-  animation: shooting-star 3.3s linear infinite 2.9s;
-}
-
-.shooting-star-16 {
-  top: 50%;
-  left: 25%;
-  animation: shooting-star 4.4s linear infinite 1.6s;
-}
-
-.shooting-star-17 {
-  top: 80%;
-  left: 75%;
-  animation: shooting-star 3.6s linear infinite 0.9s;
-}
-
-.shooting-star-18 {
-  top: 10%;
-  left: 10%;
-  animation: shooting-star 4.7s linear infinite 2.4s;
-}
-
-.shooting-star-19 {
-  top: 40%;
-  left: 85%;
-  animation: shooting-star 3.4s linear infinite 1.4s;
-}
-
-.shooting-star-20 {
-  top: 90%;
-  left: 65%;
-  animation: shooting-star 4.5s linear infinite 0.6s;
-}
-
-/* Floating Particles */
-.particle {
-  position: absolute;
-  width: 4px;
-  height: 4px;
-  background: rgba(255, 255, 255, 0.6);
-  border-radius: 50%;
-  animation: particle-float 8s linear infinite;
-}
-
-.particle-1 {
-  left: 10%;
-  animation-delay: 0s;
-  animation-duration: 6s;
-}
-
-.particle-2 {
-  left: 20%;
-  animation-delay: 1s;
-  animation-duration: 8s;
-}
-
-.particle-3 {
-  left: 30%;
-  animation-delay: 2s;
-  animation-duration: 7s;
-}
-
-.particle-4 {
-  left: 40%;
-  animation-delay: 0.5s;
-  animation-duration: 9s;
-}
-
-.particle-5 {
-  left: 50%;
-  animation-delay: 1.5s;
-  animation-duration: 6.5s;
-}
-
-.particle-6 {
-  left: 60%;
-  animation-delay: 2.5s;
-  animation-duration: 8.5s;
-}
-
-.particle-7 {
-  left: 70%;
-  animation-delay: 3s;
-  animation-duration: 7.5s;
-}
-
-.particle-8 {
-  left: 80%;
-  animation-delay: 0.8s;
-  animation-duration: 9.5s;
-}
 
 /* Animation Classes */
 .animate-float {
   animation: float 3s ease-in-out infinite;
-  will-change: transform;
-  transform: translateZ(0);
 }
 
 .animate-twinkle {
   animation: twinkle 2s ease-in-out infinite;
-  will-change: opacity, transform;
-  transform: translateZ(0);
 }
 
 .animate-spin-slow-reverse {
   animation: spin-slow-reverse 20s linear infinite;
-  will-change: transform;
-  transform: translateZ(0);
 }
 
 /* Cool Text Animation */
@@ -1262,29 +1081,6 @@
 .bg-star-11 { top: 5%; left: 45%; animation-delay: 0.2s; }
 .bg-star-12 { top: 20%; left: 55%; animation-delay: 0.7s; }
 .bg-star-13 { top: 40%; left: 48%; animation-delay: 1.2s; }
-.bg-star-14 { top: 60%; left: 65%; animation-delay: 1.7s; }
-.bg-star-15 { top: 80%; left: 58%; animation-delay: 2.2s; }
-.bg-star-16 { top: 12%; left: 75%; animation-delay: 0.4s; }
-.bg-star-17 { top: 32%; left: 82%; animation-delay: 0.9s; }
-.bg-star-18 { top: 52%; left: 78%; animation-delay: 1.4s; }
-.bg-star-19 { top: 72%; left: 85%; animation-delay: 1.9s; }
-.bg-star-20 { top: 92%; left: 72%; animation-delay: 2.4s; }
-.bg-star-21 { top: 8%; left: 12%; animation-delay: 0.1s; }
-.bg-star-22 { top: 18%; left: 28%; animation-delay: 0.6s; }
-.bg-star-23 { top: 28%; left: 42%; animation-delay: 1.1s; }
-.bg-star-24 { top: 38%; left: 58%; animation-delay: 1.6s; }
-.bg-star-25 { top: 48%; left: 72%; animation-delay: 2.1s; }
-.bg-star-26 { top: 58%; left: 88%; animation-delay: 2.6s; }
-.bg-star-27 { top: 68%; left: 8%; animation-delay: 0.2s; }
-.bg-star-28 { top: 78%; left: 22%; animation-delay: 0.7s; }
-.bg-star-29 { top: 88%; left: 38%; animation-delay: 1.2s; }
-.bg-star-30 { top: 98%; left: 52%; animation-delay: 1.7s; }
-.bg-star-31 { top: 3%; left: 68%; animation-delay: 2.2s; }
-.bg-star-32 { top: 13%; left: 82%; animation-delay: 2.7s; }
-.bg-star-33 { top: 23%; left: 6%; animation-delay: 0.3s; }
-.bg-star-34 { top: 33%; left: 18%; animation-delay: 0.8s; }
-.bg-star-35 { top: 43%; left: 34%; animation-delay: 1.3s; }
-.bg-star-36 { top: 53%; left: 48%; animation-delay: 1.8s; }
 
 /* Rocket Animation */
 .rocket-container {
