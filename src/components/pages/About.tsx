@@ -25,32 +25,6 @@ const About = () => {
   const heroSectionRef = useRef<HTMLDivElement>(null);
   const zenaraDifferenceRef = useRef<HTMLDivElement>(null);
 
-  // Cached absolute positions — updated on mount and resize only, never inside scroll handler
-  const heroTopRef = useRef<number>(0);
-  const heroHeightRef = useRef<number>(0);
-  const moonTopRef = useRef<number>(0);
-  const moonHeightRef = useRef<number>(0);
-  const windowHeightRef = useRef<number>(0);
-
-  useEffect(() => {
-    const cachePositions = () => {
-      windowHeightRef.current = window.innerHeight;
-      if (heroSectionRef.current) {
-        const r = heroSectionRef.current.getBoundingClientRect();
-        heroTopRef.current = r.top + window.scrollY;
-        heroHeightRef.current = r.height;
-      }
-      if (zenaraDifferenceRef.current) {
-        const r = zenaraDifferenceRef.current.getBoundingClientRect();
-        moonTopRef.current = r.top + window.scrollY;
-        moonHeightRef.current = r.height;
-      }
-    };
-    cachePositions();
-    window.addEventListener('resize', cachePositions, { passive: true });
-    return () => window.removeEventListener('resize', cachePositions);
-  }, []);
-
 
   const team = useMemo((): TeamMember[] => [
     {
@@ -121,100 +95,108 @@ const About = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Saturn scroll animation — reads only window.scrollY (no forced layout)
+  // Saturn scroll animation
   useEffect(() => {
-    let rafId: number | null = null;
-
     const handleScroll = () => {
-      if (rafId !== null) return;
-      rafId = requestAnimationFrame(() => {
-        rafId = null;
-        const sectionTop = heroTopRef.current - window.scrollY;
-        const sectionHeight = heroHeightRef.current;
-        const windowHeight = windowHeightRef.current || window.innerHeight;
-        const triggerPoint = windowHeight * 0.8;
+      if (!heroSectionRef.current) return;
 
-        if (sectionTop > triggerPoint) {
-          setSaturnPosition({ scale: 1, x: 0, y: 0, opacity: 0.2 });
-          return;
-        }
-
-        const scrollFromTrigger = Math.max(0, triggerPoint - sectionTop);
-        const maxScroll = triggerPoint + sectionHeight;
-        const scrollProgress = Math.min(1, scrollFromTrigger / maxScroll);
-        const newPosition = { scale: 1, x: 0, y: 0, opacity: 0.2 };
-
-        if (scrollProgress < 0.3) {
-          const phaseProgress = scrollProgress / 0.3;
-          newPosition.scale = 1 + (1.5 * phaseProgress);
-          newPosition.opacity = 0.2 + (0.3 * phaseProgress);
-        } else {
-          const phaseProgress = (scrollProgress - 0.3) / 0.7;
-          newPosition.scale = 2.5;
-          newPosition.x = -300 * phaseProgress;
-          newPosition.y = 200 * phaseProgress;
-          newPosition.opacity = 0.5 - (0.5 * phaseProgress);
-        }
-
-        setSaturnPosition(newPosition);
-      });
+      const section = heroSectionRef.current;
+      const sectionRect = section.getBoundingClientRect();
+      const sectionTop = sectionRect.top;
+      const sectionHeight = sectionRect.height;
+      const windowHeight = window.innerHeight;
+      
+      // Start animation when section is 80% visible (earlier trigger)
+      const triggerPoint = windowHeight * 0.8; // Start when section top is at 80% of viewport height
+      
+      if (sectionTop > triggerPoint) {
+        // Reset to initial position when section is still mostly visible
+        setSaturnPosition({ scale: 1, x: 0, y: 0, opacity: 0.2 });
+        return;
+      }
+      
+      // Calculate scroll progress from trigger point to completely past section
+      const scrollFromTrigger = Math.max(0, triggerPoint - sectionTop);
+      const maxScroll = triggerPoint + sectionHeight; // Total scroll distance
+      const scrollProgress = Math.min(1, scrollFromTrigger / maxScroll);
+      
+      const newPosition = { scale: 1, x: 0, y: 0, opacity: 0.2 };
+      
+      if (scrollProgress < 0.3) {
+        // Phase 1: Zoom in (starts earlier)
+        const phaseProgress = scrollProgress / 0.3;
+        newPosition.scale = 1 + (1.5 * phaseProgress); // Scale from 1 to 2.5
+        newPosition.x = 0;
+        newPosition.y = 0;
+        newPosition.opacity = 0.2 + (0.3 * phaseProgress); // Increase opacity
+      } else {
+        // Phase 2: Move left and down, then fade out
+        const phaseProgress = (scrollProgress - 0.3) / 0.7;
+        newPosition.scale = 2.5; // Keep zoomed in
+        newPosition.x = -300 * phaseProgress; // Move left
+        newPosition.y = 200 * phaseProgress; // Move down
+        newPosition.opacity = 0.5 - (0.5 * phaseProgress); // Fade out
+      }
+      
+      setSaturnPosition(newPosition);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial call
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (rafId !== null) cancelAnimationFrame(rafId);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Moon scroll animation — reads only window.scrollY (no forced layout)
+  // Moon scroll animation for The Zenara Difference section
   useEffect(() => {
-    let rafId: number | null = null;
-
     const handleScroll = () => {
-      if (rafId !== null) return;
-      rafId = requestAnimationFrame(() => {
-        rafId = null;
-        const sectionTop = moonTopRef.current - window.scrollY;
-        const sectionHeight = moonHeightRef.current;
-        const windowHeight = windowHeightRef.current || window.innerHeight;
-        const triggerPoint = windowHeight * 0.8;
+      if (!zenaraDifferenceRef.current) return;
 
-        if (sectionTop > triggerPoint) {
-          setMoonPosition({ scale: 0, x: 0, y: 0, opacity: 0 });
-          return;
-        }
-
-        const scrollFromTrigger = Math.max(0, triggerPoint - sectionTop);
-        const maxScroll = triggerPoint + sectionHeight;
-        const scrollProgress = Math.min(1, scrollFromTrigger / maxScroll);
-        const newPosition = { scale: 0, x: 0, y: 0, opacity: 0 };
-
-        if (scrollProgress < 0.2) {
-          const phaseProgress = scrollProgress / 0.2;
-          newPosition.scale = 1 + (1 * phaseProgress);
-          newPosition.opacity = 0.2 + (0.3 * phaseProgress);
-        } else {
-          const phaseProgress = (scrollProgress - 0.2) / 0.8;
-          newPosition.scale = 2;
-          newPosition.x = 500 * phaseProgress;
-          newPosition.y = 400 * phaseProgress;
-          newPosition.opacity = 0.5 - (0.5 * phaseProgress);
-        }
-
-        setMoonPosition(newPosition);
-      });
+      const section = zenaraDifferenceRef.current;
+      const sectionRect = section.getBoundingClientRect();
+      const sectionTop = sectionRect.top;
+      const sectionHeight = sectionRect.height;
+      const windowHeight = window.innerHeight;
+      
+      // Start animation when section comes into view
+      const triggerPoint = windowHeight * 0.8; // Start when section top is at 80% of viewport height
+      
+      if (sectionTop > triggerPoint) {
+        // Reset to initial position when section is not yet visible
+        setMoonPosition({ scale: 0, x: 0, y: 0, opacity: 0 });
+        return;
+      }
+      
+      // Calculate scroll progress from trigger point to completely past section
+      const scrollFromTrigger = Math.max(0, triggerPoint - sectionTop);
+      const maxScroll = triggerPoint + sectionHeight; // Total scroll distance
+      const scrollProgress = Math.min(1, scrollFromTrigger / maxScroll);
+      
+      const newPosition = { scale: 0, x: 0, y: 0, opacity: 0 };
+      
+      if (scrollProgress < 0.2) {
+        // Phase 1: Zoom in and appear
+        const phaseProgress = scrollProgress / 0.2;
+        newPosition.scale = 1 + (1 * phaseProgress); // Scale from 1 to 2 (smaller final size)
+        newPosition.x = 0;
+        newPosition.y = 0;
+        newPosition.opacity = 0.2 + (0.3 * phaseProgress); // Increase opacity
+      } else {
+        // Phase 2: Move right and down, then fade out (starts earlier)
+        const phaseProgress = (scrollProgress - 0.2) / 0.8;
+        newPosition.scale = 2; // Keep zoomed in (smaller size)
+        newPosition.x = 500 * phaseProgress; // Move right (more drastic)
+        newPosition.y = 400 * phaseProgress; // Move down (more drastic)
+        newPosition.opacity = 0.5 - (0.5 * phaseProgress); // Fade out
+      }
+      
+      setMoonPosition(newPosition);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial call
 
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (rafId !== null) cancelAnimationFrame(rafId);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
