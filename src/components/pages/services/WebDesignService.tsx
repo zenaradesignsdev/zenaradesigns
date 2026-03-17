@@ -65,6 +65,29 @@ const differentiators = [
   },
 ];
 
+const faqs = [
+  {
+    question: 'How much does a custom website cost in Toronto?',
+    answer: 'Custom websites built with Next.js typically range from $2,500–$10,000+ depending on complexity, number of pages, and features required. We provide fixed-price quotes upfront — no hourly billing surprises. Book a free consultation to get an accurate estimate for your project.',
+  },
+  {
+    question: 'How long does it take to build a website?',
+    answer: 'Most small business websites take 3–6 weeks from kickoff to launch. This includes discovery, design, development, revisions, and QA. Complex projects with custom functionality or e-commerce can take 8–12 weeks. We provide a detailed timeline before starting every project.',
+  },
+  {
+    question: 'Why Next.js instead of WordPress?',
+    answer: 'Next.js delivers significantly faster load times (often 2–5x), better SEO through server-side rendering, stronger security (no plugin vulnerabilities), and a modern development experience. For professional service businesses in the GTA, the performance and SEO advantages translate directly into more leads.',
+  },
+  {
+    question: 'Do you work with businesses outside of Toronto?',
+    answer: 'Yes. While we specialize in Toronto and GTA businesses, we work with clients across Ontario and Canada. All consultations, design reviews, and project communication happen remotely via video call — location is never a barrier to great work.',
+  },
+  {
+    question: 'Will my website be mobile-friendly?',
+    answer: 'Every website we build is mobile-first by default. We design for small screens first, then scale up for tablets and desktops. All sites are tested across iOS, Android, and major browsers before launch to ensure a flawless experience on every device.',
+  },
+];
+
 const WebDesignService = () => {
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
@@ -194,6 +217,28 @@ const WebDesignService = () => {
           </div>
         </section>
 
+        {/* FAQ Section */}
+        <section className="mb-16 sm:mb-20 md:mb-24">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extralight text-white mb-8 sm:mb-12 text-center leading-[1.1] tracking-[-0.04em]">
+            <span className="block font-light opacity-90">Frequently Asked</span>
+            <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Questions</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-300 relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <h3 className="text-base sm:text-lg font-semibold text-white mb-3 group-hover:text-cyan-300 transition-colors">{faq.question}</h3>
+                  <p className="text-white/60 text-sm leading-relaxed font-light">{faq.answer}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* CTA Section */}
         <section>
           <div className="bg-slate-900/90 backdrop-blur-sm rounded-2xl p-8 sm:p-10 md:p-12 border border-slate-800/50 shadow-2xl relative overflow-hidden max-w-4xl mx-auto">
@@ -243,6 +288,21 @@ const WebDesignService = () => {
           { name: 'Services', url: '/services' },
           { name: 'Web Design', url: '/services/web-design' },
         ]}
+      />
+      <StructuredData
+        type="serviceOffering"
+        services={[
+          {
+            name: 'Custom Web Design Toronto',
+            description: 'Professional custom website design and development for Toronto & GTA businesses. Built with Next.js for performance, SEO, and modern user experiences.',
+            features: ['Custom UI/UX Design', 'Responsive Development', 'Performance Optimization', 'SEO Integration', 'Clean Code Architecture', 'Security & Accessibility'],
+            emoji: '🌐',
+          },
+        ]}
+      />
+      <StructuredData
+        type="faq"
+        faqs={faqs}
       />
     </div>
   );

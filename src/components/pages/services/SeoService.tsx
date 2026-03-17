@@ -65,6 +65,29 @@ const differentiators = [
   },
 ];
 
+const faqs = [
+  {
+    question: 'How long does SEO take to show results in Toronto?',
+    answer: 'Most Toronto businesses start seeing meaningful ranking improvements within 3–6 months of starting SEO. Local SEO and Google Business Profile optimization can show results faster — sometimes within 4–8 weeks. Technical fixes like site speed and structured data improvements can have an immediate positive impact on Core Web Vitals scores.',
+  },
+  {
+    question: 'Do you offer local SEO for GTA businesses?',
+    answer: 'Yes — local SEO is our specialty. We optimize your Google Business Profile, build local citations on Canadian directories, create geo-targeted landing pages, and implement LocalBusiness schema markup. Our strategies are built specifically for Toronto, Mississauga, Brampton, Vaughan, Markham, and surrounding GTA markets.',
+  },
+  {
+    question: 'What is included in a free SEO audit?',
+    answer: 'Our free SEO audit covers technical health (crawlability, site speed, Core Web Vitals, mobile usability), on-page factors (title tags, meta descriptions, heading structure), local SEO signals (Google Business Profile, citations), and a keyword gap analysis against your top 3 Toronto competitors. You receive a written report with prioritized action items.',
+  },
+  {
+    question: 'Do you require long-term SEO contracts?',
+    answer: 'No. We work month-to-month with no lock-in periods. Our results earn your continued business rather than a contract keeping you in place. We do recommend committing to at least 3–6 months to see meaningful results — SEO is a long-term investment — but you are free to cancel any time.',
+  },
+  {
+    question: 'Can you do SEO for a website you didn\'t build?',
+    answer: 'Absolutely. We perform SEO on any website — WordPress, Squarespace, Wix, custom-built, or any other platform. If your site has significant technical limitations, we will flag them with recommendations. For maximum results, a Next.js rebuild eliminates technical SEO barriers entirely, but it is not required to start improving your rankings.',
+  },
+];
+
 const SeoService = () => {
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
@@ -177,6 +200,7 @@ const SeoService = () => {
             <div className="flex flex-wrap justify-center gap-4">
               {[
                 { label: 'Web Design', href: '/services/web-design' },
+                { label: 'E-Commerce', href: '/services/ecommerce' },
                 { label: 'Web Hosting', href: '/services/hosting' },
               ].map((link) => (
                 <Link
@@ -189,6 +213,28 @@ const SeoService = () => {
                 </Link>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-16 sm:mb-20 md:mb-24">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extralight text-white mb-8 sm:mb-12 text-center leading-[1.1] tracking-[-0.04em]">
+            <span className="block font-light opacity-90">Frequently Asked</span>
+            <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Questions</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-300 relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <h3 className="text-base sm:text-lg font-semibold text-white mb-3 group-hover:text-cyan-300 transition-colors">{faq.question}</h3>
+                  <p className="text-white/60 text-sm leading-relaxed font-light">{faq.answer}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -241,6 +287,21 @@ const SeoService = () => {
           { name: 'Services', url: '/services' },
           { name: 'SEO Services', url: '/services/seo' },
         ]}
+      />
+      <StructuredData
+        type="serviceOffering"
+        services={[
+          {
+            name: 'SEO Services Toronto',
+            description: 'Professional SEO services for Toronto & GTA businesses. Local SEO, technical optimization, keyword research, and Google ranking improvements. Month-to-month, no contracts.',
+            features: ['Local SEO', 'Technical SEO', 'Content Strategy', 'Keyword Research', 'On-Page Optimization', 'Link Building'],
+            emoji: '🔍',
+          },
+        ]}
+      />
+      <StructuredData
+        type="faq"
+        faqs={faqs}
       />
     </div>
   );

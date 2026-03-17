@@ -65,6 +65,29 @@ const differentiators = [
   },
 ];
 
+const faqs = [
+  {
+    question: 'How much does professional business card design cost in Toronto?',
+    answer: 'Business card design at Zenara Designs starts at $150 for a single-sided card and ranges to $400+ for a double-sided premium design with multiple concepts. Print costs are separate and depend on quantity, stock, and finishing options. We can coordinate with GTA print vendors on your behalf.',
+  },
+  {
+    question: 'What file formats do I receive for printing?',
+    answer: 'You receive print-ready PDF files with crop marks and bleed, CMYK-optimized files at 300 DPI, and full-resolution PNG exports. We also provide all source files (AI, PSD) so you own your design forever and can reprint or update contact information at any time.',
+  },
+  {
+    question: 'Can you match my existing brand colours and fonts?',
+    answer: 'Absolutely. Every card we design is built on your existing brand identity — matching exact Pantone/CMYK colour codes, typefaces, logo usage, and visual style. If you don\'t have brand guidelines yet, we can develop your full identity alongside the card design.',
+  },
+  {
+    question: 'How fast can you design my business cards?',
+    answer: 'Design concepts are typically delivered within 3–5 business days. Rush turnaround (24–48 hours) is available for time-sensitive events like conferences or networking functions. Reach out with your deadline and we will confirm availability before booking.',
+  },
+  {
+    question: 'Do you offer premium finishes like spot UV or foil?',
+    answer: 'Yes. We design for premium finishing options including spot UV coating, foil stamping (gold, silver, rose gold), soft-touch lamination, embossing, debossing, edge painting, and letterpress. We guide you through the options that will best complement your brand and budget.',
+  },
+];
+
 const BusinessCardsService = () => {
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
@@ -178,6 +201,7 @@ const BusinessCardsService = () => {
               {[
                 { label: 'Logo Design', href: '/services/logo-design' },
                 { label: 'Web Design', href: '/services/web-design' },
+                { label: 'Web Hosting', href: '/services/hosting' },
               ].map((link) => (
                 <Link
                   key={link.href}
@@ -189,6 +213,28 @@ const BusinessCardsService = () => {
                 </Link>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-16 sm:mb-20 md:mb-24">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extralight text-white mb-8 sm:mb-12 text-center leading-[1.1] tracking-[-0.04em]">
+            <span className="block font-light opacity-90">Frequently Asked</span>
+            <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Questions</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-300 relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <h3 className="text-base sm:text-lg font-semibold text-white mb-3 group-hover:text-cyan-300 transition-colors">{faq.question}</h3>
+                  <p className="text-white/60 text-sm leading-relaxed font-light">{faq.answer}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -241,6 +287,21 @@ const BusinessCardsService = () => {
           { name: 'Services', url: '/services' },
           { name: 'Business Cards', url: '/services/business-cards' },
         ]}
+      />
+      <StructuredData
+        type="serviceOffering"
+        services={[
+          {
+            name: 'Business Card Design Toronto',
+            description: 'Professional business card design for Toronto & GTA professionals. Premium print-ready designs with spot UV, foil, and soft-touch options. 3–5 day turnaround.',
+            features: ['Print-Ready Files', 'Premium Materials', 'Brand-Consistent Design', 'Fast Turnaround', 'Double-Sided Layouts', 'Finishing Options'],
+            emoji: '🃏',
+          },
+        ]}
+      />
+      <StructuredData
+        type="faq"
+        faqs={faqs}
       />
     </div>
   );

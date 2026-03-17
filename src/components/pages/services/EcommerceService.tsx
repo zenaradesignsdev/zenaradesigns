@@ -65,6 +65,29 @@ const differentiators = [
   },
 ];
 
+const faqs = [
+  {
+    question: 'How much does a Shopify store cost to build in Toronto?',
+    answer: 'Shopify store builds typically range from $3,000–$12,000+ depending on the number of products, custom theme requirements, and app integrations. We provide a fixed-price quote after a free discovery call. Monthly Shopify subscription fees are separate and billed directly by Shopify.',
+  },
+  {
+    question: 'Do you build custom storefronts or only Shopify?',
+    answer: 'We build both. For most small-to-medium businesses, Shopify is the ideal platform. For brands needing complete creative freedom or headless commerce architecture, we build custom Next.js storefronts connected to Shopify or other backends. We recommend the right solution after understanding your specific needs.',
+  },
+  {
+    question: 'Can you migrate my existing online store to Shopify?',
+    answer: 'Yes. We handle full platform migrations from WooCommerce, Magento, BigCommerce, and other platforms to Shopify or custom Next.js storefronts. This includes product data, customer records, order history, URL redirects, and SEO preservation — zero downtime during the migration.',
+  },
+  {
+    question: 'Do your e-commerce sites work for Canadian businesses with HST/GST?',
+    answer: 'Absolutely. All stores we build include proper Canadian tax configuration — GST, HST, PST by province. We also set up Stripe and PayPal with Canadian banking, and can configure multi-currency for businesses selling internationally.',
+  },
+  {
+    question: 'What payment gateways do you integrate?',
+    answer: 'We integrate Stripe, PayPal, Apple Pay, Google Pay, Shop Pay, and Shopify Payments. For high-risk industries, we can integrate specialized payment processors. Every checkout is PCI-compliant and optimized for conversion on both mobile and desktop.',
+  },
+];
+
 const EcommerceService = () => {
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
@@ -177,6 +200,7 @@ const EcommerceService = () => {
             <div className="flex flex-wrap justify-center gap-4">
               {[
                 { label: 'Web Design', href: '/services/web-design' },
+                { label: 'SEO Services', href: '/services/seo' },
                 { label: 'Web Hosting', href: '/services/hosting' },
               ].map((link) => (
                 <Link
@@ -189,6 +213,28 @@ const EcommerceService = () => {
                 </Link>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-16 sm:mb-20 md:mb-24">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extralight text-white mb-8 sm:mb-12 text-center leading-[1.1] tracking-[-0.04em]">
+            <span className="block font-light opacity-90">Frequently Asked</span>
+            <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Questions</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-300 relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <h3 className="text-base sm:text-lg font-semibold text-white mb-3 group-hover:text-cyan-300 transition-colors">{faq.question}</h3>
+                  <p className="text-white/60 text-sm leading-relaxed font-light">{faq.answer}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -241,6 +287,21 @@ const EcommerceService = () => {
           { name: 'Services', url: '/services' },
           { name: 'E-Commerce', url: '/services/ecommerce' },
         ]}
+      />
+      <StructuredData
+        type="serviceOffering"
+        services={[
+          {
+            name: 'E-Commerce Web Design Toronto',
+            description: 'Professional e-commerce website design and development for Toronto & GTA businesses. Shopify stores, custom storefronts, payment integration, and conversion optimization.',
+            features: ['Shopify Development', 'Payment Integration', 'Product Management', 'Conversion Optimization', 'Analytics & Reporting', 'Multi-Currency & Tax'],
+            emoji: '🛒',
+          },
+        ]}
+      />
+      <StructuredData
+        type="faq"
+        faqs={faqs}
       />
     </div>
   );

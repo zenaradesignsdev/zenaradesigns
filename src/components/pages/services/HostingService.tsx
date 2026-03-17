@@ -65,6 +65,29 @@ const differentiators = [
   },
 ];
 
+const faqs = [
+  {
+    question: 'How much does managed web hosting cost in Toronto?',
+    answer: 'Managed hosting plans at Zenara Designs start at $45/month and include SSL, CDN, daily backups, uptime monitoring, and priority support. Higher tiers add more storage, performance tuning, and enhanced SLAs. All plans are month-to-month with no annual price hikes or hidden bandwidth fees.',
+  },
+  {
+    question: 'What is included in managed hosting versus a regular host?',
+    answer: 'With managed hosting, our team handles everything: server configuration, security patches, software updates, SSL renewals, performance monitoring, and daily backups. Unlike shared hosting providers (GoDaddy, Bluehost), you don\'t need to touch a control panel or manage technical issues. We handle it so you can focus on your business.',
+  },
+  {
+    question: 'What is your uptime guarantee?',
+    answer: 'We offer a 99.9% uptime SLA, which equals less than 9 hours of unplanned downtime per year. Our infrastructure includes redundant servers, automatic failover, and 24/7 monitoring with instant alerts. In practice, most hosted sites experience zero unplanned downtime in a given year.',
+  },
+  {
+    question: 'Can you migrate my website from another host?',
+    answer: 'Yes, migration is included at no extra cost. We handle the full transfer — DNS configuration, SSL setup, file migration, database migration, and email migration if applicable — with zero downtime. The cutover happens during a low-traffic window so your visitors never notice the transition.',
+  },
+  {
+    question: 'Is your hosting optimized for Next.js and React?',
+    answer: 'Yes. Our infrastructure is purpose-built for Next.js applications deployed on Vercel\'s edge network — not a generic shared hosting environment. This means server-side rendering, ISR (Incremental Static Regeneration), edge functions, and image optimization all perform at their peak, giving you the fastest possible load times.',
+  },
+];
+
 const HostingService = () => {
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
@@ -193,6 +216,28 @@ const HostingService = () => {
           </div>
         </section>
 
+        {/* FAQ Section */}
+        <section className="mb-16 sm:mb-20 md:mb-24">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extralight text-white mb-8 sm:mb-12 text-center leading-[1.1] tracking-[-0.04em]">
+            <span className="block font-light opacity-90">Frequently Asked</span>
+            <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Questions</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-300 relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <h3 className="text-base sm:text-lg font-semibold text-white mb-3 group-hover:text-cyan-300 transition-colors">{faq.question}</h3>
+                  <p className="text-white/60 text-sm leading-relaxed font-light">{faq.answer}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* CTA Section */}
         <section>
           <div className="bg-slate-900/90 backdrop-blur-sm rounded-2xl p-8 sm:p-10 md:p-12 border border-slate-800/50 shadow-2xl relative overflow-hidden max-w-4xl mx-auto">
@@ -242,6 +287,21 @@ const HostingService = () => {
           { name: 'Services', url: '/services' },
           { name: 'Web Hosting', url: '/services/hosting' },
         ]}
+      />
+      <StructuredData
+        type="serviceOffering"
+        services={[
+          {
+            name: 'Managed Web Hosting Toronto',
+            description: 'Managed web hosting and maintenance for Toronto businesses. 99.9% uptime SLA, SSL, global CDN, daily backups, and priority support. Plans from $45/month. Migration included.',
+            features: ['Managed Hosting', 'SSL & Security', 'Daily Backups', 'Global CDN', 'Uptime Monitoring', 'Priority Support'],
+            emoji: '🖥️',
+          },
+        ]}
+      />
+      <StructuredData
+        type="faq"
+        faqs={faqs}
       />
     </div>
   );

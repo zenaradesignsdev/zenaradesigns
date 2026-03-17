@@ -65,6 +65,29 @@ const differentiators = [
   },
 ];
 
+const faqs = [
+  {
+    question: 'How much does a professional logo design cost in Toronto?',
+    answer: 'Professional logo design at Zenara Designs starts at $500 for a standalone logo and ranges to $2,500+ for a complete brand identity package including guidelines, colour palette, and typography system. We provide fixed-price quotes after a free consultation — no hourly billing.',
+  },
+  {
+    question: 'How many logo concepts will I receive?',
+    answer: 'We present 3–4 distinct logo concepts per project, each exploring a different visual direction. After you choose a direction, we refine through unlimited revision rounds until you are completely satisfied. You won\'t be locked into a concept that doesn\'t feel right.',
+  },
+  {
+    question: 'What file formats are included with my logo?',
+    answer: 'You receive every file format you will ever need: SVG, PNG (transparent & white backgrounds), PDF, EPS, and AI source files. We also provide light and dark variants, with and without tagline, and social media-optimized sizes for profile pictures and cover photos.',
+  },
+  {
+    question: 'Can my logo be trademarked?',
+    answer: 'Yes. Every logo we design is 100% original — no stock icons, no clip art, no templates. Original custom logos are eligible for trademark registration in Canada through the Canadian Intellectual Property Office (CIPO). We recommend consulting a trademark lawyer for formal registration.',
+  },
+  {
+    question: 'Do you also design business cards and websites to match?',
+    answer: 'Yes — brand consistency across every touchpoint is our specialty. Once your logo is finalized, we can extend the identity to business cards, letterhead, email signatures, and your full website. Everything will share the same visual language and feel like one unified brand.',
+  },
+];
+
 const LogoDesignService = () => {
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
@@ -178,6 +201,7 @@ const LogoDesignService = () => {
               {[
                 { label: 'Business Cards', href: '/services/business-cards' },
                 { label: 'Web Design', href: '/services/web-design' },
+                { label: 'SEO Services', href: '/services/seo' },
               ].map((link) => (
                 <Link
                   key={link.href}
@@ -189,6 +213,28 @@ const LogoDesignService = () => {
                 </Link>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="mb-16 sm:mb-20 md:mb-24">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-extralight text-white mb-8 sm:mb-12 text-center leading-[1.1] tracking-[-0.04em]">
+            <span className="block font-light opacity-90">Frequently Asked</span>
+            <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Questions</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+            {faqs.map((faq, index) => (
+              <div
+                key={index}
+                className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-300 relative overflow-hidden group"
+              >
+                <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div className="relative z-10">
+                  <h3 className="text-base sm:text-lg font-semibold text-white mb-3 group-hover:text-cyan-300 transition-colors">{faq.question}</h3>
+                  <p className="text-white/60 text-sm leading-relaxed font-light">{faq.answer}</p>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
 
@@ -241,6 +287,21 @@ const LogoDesignService = () => {
           { name: 'Services', url: '/services' },
           { name: 'Logo Design', url: '/services/logo-design' },
         ]}
+      />
+      <StructuredData
+        type="serviceOffering"
+        services={[
+          {
+            name: 'Logo Design & Brand Identity Toronto',
+            description: 'Professional logo design and brand identity for Toronto & GTA businesses. Custom logos, colour palettes, typography, and complete brand guidelines with unlimited revisions.',
+            features: ['Custom Logo Creation', 'Color Psychology', 'Typography Selection', 'Brand Guidelines', 'Visual Identity System', 'Multi-Format Delivery'],
+            emoji: '✏️',
+          },
+        ]}
+      />
+      <StructuredData
+        type="faq"
+        faqs={faqs}
       />
     </div>
   );
