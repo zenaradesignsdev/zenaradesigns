@@ -236,6 +236,45 @@ function buildFixDetails(audit) {
       .join('\n') + '\n';
   }
 
+  // debugdata audits (e.g. forced-reflow) — wraps nested table/list items
+  if (details.type === 'debugdata' && details.items?.length) {
+    const lines = [];
+    for (const inner of details.items) {
+      if (inner.type === 'table' && inner.items?.length) {
+        const rows = inner.items.slice(0, 8).map((item) => {
+          const src = item.source;
+          const location = src
+            ? `${truncate(src.url ?? '', 70)}:${src.line ?? '?'}:${src.column ?? '?'}`
+            : item.nodeLabel ?? JSON.stringify(item);
+          return { location: truncate(String(location), 120) };
+        });
+        lines.push(mdTable(rows, [{ key: 'location', label: 'Source location' }]));
+      } else if (inner.type === 'list' && inner.items?.length) {
+        lines.push(
+          inner.items.slice(0, 8).map((i) => `- ${truncate(String(i.value ?? i), 120)}`).join('\n') + '\n'
+        );
+      }
+    }
+    return lines.length ? lines.join('\n') : null;
+  }
+
+  // criticalrequestchains audit (network dependency tree)
+  if (details.type === 'criticalrequestchains') {
+    const rows = [];
+    const walk = (chains, depth) => {
+      for (const chain of Object.values(chains ?? {})) {
+        const req = chain.request ?? {};
+        const url = truncate(req.url ?? '(unknown)', 80);
+        const transferSize = req.transferSize ? fmt.bytes(req.transferSize) : '—';
+        rows.push({ url: '  '.repeat(depth) + url, transferSize });
+        walk(chain.children, depth + 1);
+      }
+    };
+    walk(details.chains, 0);
+    if (!rows.length) return null;
+    return mdTable(rows, [{ key: 'url', label: 'Request chain' }, { key: 'transferSize', label: 'Size' }]);
+  }
+
   return null;
 }
 

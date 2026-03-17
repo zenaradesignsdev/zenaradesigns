@@ -25,6 +25,32 @@ const About = () => {
   const heroSectionRef = useRef<HTMLDivElement>(null);
   const zenaraDifferenceRef = useRef<HTMLDivElement>(null);
 
+  // Cached absolute positions — updated on mount and resize only, never inside scroll handler
+  const heroTopRef = useRef<number>(0);
+  const heroHeightRef = useRef<number>(0);
+  const moonTopRef = useRef<number>(0);
+  const moonHeightRef = useRef<number>(0);
+  const windowHeightRef = useRef<number>(0);
+
+  useEffect(() => {
+    const cachePositions = () => {
+      windowHeightRef.current = window.innerHeight;
+      if (heroSectionRef.current) {
+        const r = heroSectionRef.current.getBoundingClientRect();
+        heroTopRef.current = r.top + window.scrollY;
+        heroHeightRef.current = r.height;
+      }
+      if (zenaraDifferenceRef.current) {
+        const r = zenaraDifferenceRef.current.getBoundingClientRect();
+        moonTopRef.current = r.top + window.scrollY;
+        moonHeightRef.current = r.height;
+      }
+    };
+    cachePositions();
+    window.addEventListener('resize', cachePositions, { passive: true });
+    return () => window.removeEventListener('resize', cachePositions);
+  }, []);
+
 
   const team = useMemo((): TeamMember[] => [
     {
@@ -95,7 +121,7 @@ const About = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Saturn scroll animation
+  // Saturn scroll animation — reads only window.scrollY (no forced layout)
   useEffect(() => {
     let rafId: number | null = null;
 
@@ -103,14 +129,9 @@ const About = () => {
       if (rafId !== null) return;
       rafId = requestAnimationFrame(() => {
         rafId = null;
-        if (!heroSectionRef.current) return;
-
-        const section = heroSectionRef.current;
-        const sectionRect = section.getBoundingClientRect();
-        const sectionTop = sectionRect.top;
-        const sectionHeight = sectionRect.height;
-        const windowHeight = window.innerHeight;
-
+        const sectionTop = heroTopRef.current - window.scrollY;
+        const sectionHeight = heroHeightRef.current;
+        const windowHeight = windowHeightRef.current || window.innerHeight;
         const triggerPoint = windowHeight * 0.8;
 
         if (sectionTop > triggerPoint) {
@@ -121,14 +142,11 @@ const About = () => {
         const scrollFromTrigger = Math.max(0, triggerPoint - sectionTop);
         const maxScroll = triggerPoint + sectionHeight;
         const scrollProgress = Math.min(1, scrollFromTrigger / maxScroll);
-
         const newPosition = { scale: 1, x: 0, y: 0, opacity: 0.2 };
 
         if (scrollProgress < 0.3) {
           const phaseProgress = scrollProgress / 0.3;
           newPosition.scale = 1 + (1.5 * phaseProgress);
-          newPosition.x = 0;
-          newPosition.y = 0;
           newPosition.opacity = 0.2 + (0.3 * phaseProgress);
         } else {
           const phaseProgress = (scrollProgress - 0.3) / 0.7;
@@ -151,7 +169,7 @@ const About = () => {
     };
   }, []);
 
-  // Moon scroll animation for The Zenara Difference section
+  // Moon scroll animation — reads only window.scrollY (no forced layout)
   useEffect(() => {
     let rafId: number | null = null;
 
@@ -159,14 +177,9 @@ const About = () => {
       if (rafId !== null) return;
       rafId = requestAnimationFrame(() => {
         rafId = null;
-        if (!zenaraDifferenceRef.current) return;
-
-        const section = zenaraDifferenceRef.current;
-        const sectionRect = section.getBoundingClientRect();
-        const sectionTop = sectionRect.top;
-        const sectionHeight = sectionRect.height;
-        const windowHeight = window.innerHeight;
-
+        const sectionTop = moonTopRef.current - window.scrollY;
+        const sectionHeight = moonHeightRef.current;
+        const windowHeight = windowHeightRef.current || window.innerHeight;
         const triggerPoint = windowHeight * 0.8;
 
         if (sectionTop > triggerPoint) {
@@ -177,14 +190,11 @@ const About = () => {
         const scrollFromTrigger = Math.max(0, triggerPoint - sectionTop);
         const maxScroll = triggerPoint + sectionHeight;
         const scrollProgress = Math.min(1, scrollFromTrigger / maxScroll);
-
         const newPosition = { scale: 0, x: 0, y: 0, opacity: 0 };
 
         if (scrollProgress < 0.2) {
           const phaseProgress = scrollProgress / 0.2;
           newPosition.scale = 1 + (1 * phaseProgress);
-          newPosition.x = 0;
-          newPosition.y = 0;
           newPosition.opacity = 0.2 + (0.3 * phaseProgress);
         } else {
           const phaseProgress = (scrollProgress - 0.2) / 0.8;
