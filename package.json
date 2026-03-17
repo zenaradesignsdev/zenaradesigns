@@ -8,7 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "gsc-audit": "node scripts/gsc-audit.js"
+    "gsc-audit": "node scripts/gsc-audit.js",
+    "pagespeed-audit": "node scripts/pagespeed-audit.js"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
@@ -45,7 +46,6 @@
     "cmdk": "^1.1.1",
     "critters": "^0.0.23",
     "date-fns": "^3.6.0",
-    "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.462.0",
     "next": "^14.2.35",
@@ -55,7 +55,6 @@
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.61.1",
     "react-resizable-panels": "^2.1.9",
-    "recharts": "^2.15.4",
     "resend": "^6.1.2",
     "sonner": "^1.7.4",
     "tailwind-merge": "^2.6.0",

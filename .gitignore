@@ -44,3 +44,5 @@ browser-logs/
 # GSC audit reports (contain sensitive performance data)
 gsc-audit-report.md
 gsc-audit-report-*.md
+pagespeed-audit-report.md
+gsc-audit-report.md

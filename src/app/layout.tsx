@@ -184,6 +184,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en-CA" className={fontSans.variable}>
       <head>
         <meta name="theme-color" content="#0f172a" />
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         {/* Structured Data */}
         <script
           type="application/ld+json"

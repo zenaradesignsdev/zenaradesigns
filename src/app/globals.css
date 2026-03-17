@@ -407,18 +407,6 @@
     }
   }
 
-  /* Mobile navigation animations */
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
   /* Fade-in-up entrance animation for headings and subheadings */
   .animate-fade-in-up {
     opacity: 0;
@@ -1066,60 +1054,6 @@
 .bg-star-11 { top: 5%; left: 45%; animation-delay: 0.2s; }
 .bg-star-12 { top: 20%; left: 55%; animation-delay: 0.7s; }
 .bg-star-13 { top: 40%; left: 48%; animation-delay: 1.2s; }
-
-/* Rocket Animation */
-.rocket-container {
-  position: absolute;
-  top: 30%;
-  left: -200px;
-  width: 200px;
-  height: 200px;
-  animation: rocket-launch 8s linear infinite;
-  z-index: 5;
-}
-
-.rocket-emoji {
-  font-size: 120px;
-  animation: rocket-bounce 0.5s ease-in-out infinite alternate;
-  filter: drop-shadow(0 0 20px rgba(6, 182, 212, 0.8));
-}
-
-@keyframes rocket-launch {
-  0% {
-    transform: translateX(0) translateY(0) rotate(15deg);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1;
-  }
-  90% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(calc(100vw + 200px)) translateY(-300px) rotate(15deg);
-    opacity: 0;
-  }
-}
-
-@keyframes rocket-bounce {
-  0% {
-    transform: translateY(0px);
-  }
-  100% {
-    transform: translateY(-10px);
-  }
-}
-
-@keyframes pulse-slow {
-  0%, 100% {
-    opacity: 0.3;
-    transform: scaleY(1);
-  }
-  50% {
-    opacity: 0.5;
-    transform: scaleY(1.1);
-  }
-}
 
 @keyframes levitate {
   0% {

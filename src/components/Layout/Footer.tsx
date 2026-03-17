@@ -220,7 +220,7 @@ const Footer = () => {
 
             {/* Quick Links */}
             <div>
-              <h3 className="font-light mb-4 text-white text-sm sm:text-base">Quick Links</h3>
+              <h2 className="font-light mb-4 text-white text-sm sm:text-base">Quick Links</h2>
               <div className="grid grid-cols-1 gap-x-1 gap-y-2">
                 {quickLinks.map((link) => (
                   <Link
@@ -237,7 +237,7 @@ const Footer = () => {
 
             {/* Services */}
             <div>
-              <h3 className="font-light mb-4 text-white text-sm sm:text-base">Services</h3>
+              <h2 className="font-light mb-4 text-white text-sm sm:text-base">Services</h2>
               <div className="grid grid-cols-1 gap-x-1 gap-y-2">
                 {SERVICE_LINKS.map((link) => (
                   <Link
@@ -254,7 +254,7 @@ const Footer = () => {
 
             {/* Industries */}
             <div>
-              <h3 className="font-light mb-4 text-white text-sm sm:text-base">Industries</h3>
+              <h2 className="font-light mb-4 text-white text-sm sm:text-base">Industries</h2>
               <div className="grid grid-cols-1 gap-x-1 gap-y-2">
                 <Link
                   href="/lawyers"
@@ -289,7 +289,7 @@ const Footer = () => {
 
             {/* Additional Links */}
             <div>
-              <h3 className="font-light mb-4 text-white text-sm sm:text-base">Resources</h3>
+              <h2 className="font-light mb-4 text-white text-sm sm:text-base">Resources</h2>
               <div className="grid grid-cols-1 gap-x-1 gap-y-2">
                 {FOOTER_ADDITIONAL_LINKS.map((link) => (
                   <Link
@@ -309,7 +309,7 @@ const Footer = () => {
           <div className="border-t border-cyan-400/20 pt-8">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
               <div className="flex-shrink-0">
-                <h3 className="font-light mb-2 text-white text-sm sm:text-base">Newsletter</h3>
+                <h2 className="font-light mb-2 text-white text-sm sm:text-base">Newsletter</h2>
                 <p className="text-slate-300 text-xs sm:text-sm font-light">
                   Subscribe to our newsletter and stay updated.
                 </p>
