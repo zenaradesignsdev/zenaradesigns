@@ -170,10 +170,8 @@ const generateServiceOfferingSchema = (service: {
       url: 'https://zenaradesigns.com',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: '123 King Street West',
         addressLocality: 'Toronto',
         addressRegion: 'ON',
-        postalCode: 'M5H 1A1',
         addressCountry: 'CA'
       }
     },

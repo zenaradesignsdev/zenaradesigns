@@ -10,12 +10,10 @@ export const BUSINESS_INFO = {
   logo: 'https://zenaradesigns.com/logo-seo.svg',
   description: 'Professional web design and development agency serving Toronto and the Greater Toronto Area. We create modern, fast, and secure websites for small businesses and professionals.',
   
-  // Address information (using Toronto as primary location)
+  // Address information (service-area business — no physical storefront)
   address: {
-    streetAddress: '123 King Street West',
     addressLocality: 'Toronto',
     addressRegion: 'ON',
-    postalCode: 'M5H 1A1',
     addressCountry: 'CA'
   },
   
@@ -71,13 +69,8 @@ export const BUSINESS_INFO = {
   // Price range
   priceRange: '$$',
   
-  // Aggregate rating (example - would be updated with real data)
-  aggregateRating: {
-    ratingValue: 4.9,
-    reviewCount: 47,
-    bestRating: 5,
-    worstRating: 1
-  }
+  // Price range
+  priceRangeIndicator: '$$'
 };
 
 // Generate LocalBusiness JSON-LD schema
@@ -92,13 +85,11 @@ export const generateLocalBusinessSchema = () => {
     description: BUSINESS_INFO.description,
     url: BUSINESS_INFO.url,
     
-    // Address (PostalAddress)
+    // Address (PostalAddress — service-area business, no street address)
     address: {
       '@type': 'PostalAddress',
-      streetAddress: BUSINESS_INFO.address.streetAddress,
       addressLocality: BUSINESS_INFO.address.addressLocality,
       addressRegion: BUSINESS_INFO.address.addressRegion,
-      postalCode: BUSINESS_INFO.address.postalCode,
       addressCountry: BUSINESS_INFO.address.addressCountry
     },
     
@@ -155,17 +146,8 @@ export const generateLocalBusinessSchema = () => {
     // Price range
     priceRange: BUSINESS_INFO.priceRange,
     
-    // Aggregate rating
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: BUSINESS_INFO.aggregateRating.ratingValue,
-      reviewCount: BUSINESS_INFO.aggregateRating.reviewCount,
-      bestRating: BUSINESS_INFO.aggregateRating.bestRating,
-      worstRating: BUSINESS_INFO.aggregateRating.worstRating
-    },
-    
     // Additional business details
-    foundingDate: '2020',
+    foundingDate: '2024',
     numberOfEmployees: '2-10',
     currenciesAccepted: 'CAD',
     paymentAccepted: ['Cash', 'Check', 'Credit Card', 'Bank Transfer'],
@@ -188,13 +170,11 @@ export const generateOrganizationSchema = () => {
     
     address: {
       '@type': 'PostalAddress',
-      streetAddress: BUSINESS_INFO.address.streetAddress,
       addressLocality: BUSINESS_INFO.address.addressLocality,
       addressRegion: BUSINESS_INFO.address.addressRegion,
-      postalCode: BUSINESS_INFO.address.postalCode,
       addressCountry: BUSINESS_INFO.address.addressCountry
     },
-    
+
     contactPoint: {
       '@type': 'ContactPoint',
       telephone: BUSINESS_INFO.phone,
@@ -202,9 +182,9 @@ export const generateOrganizationSchema = () => {
       contactType: 'customer service',
       availableLanguage: 'English'
     },
-    
+
     sameAs: BUSINESS_INFO.sameAs,
-    foundingDate: '2020',
+    foundingDate: '2024',
     numberOfEmployees: '2-10'
   };
 };
@@ -263,16 +243,7 @@ export const generateWebSiteSchema = () => {
       }
     },
     
-    potentialAction: {
-      '@type': 'SearchAction',
-      target: {
-        '@type': 'EntryPoint',
-        urlTemplate: 'https://zenaradesigns.com/search?q={search_term_string}'
-      },
-      'query-input': 'required name=search_term_string'
-    },
-    
-    // Add hasPart to indicate main pages in the site structure
+    // Main pages in the site structure
     hasPart: mainPages
   };
 };
@@ -293,14 +264,12 @@ export const generateServiceSchema = (serviceName: string, serviceDescription: s
       url: BUSINESS_INFO.url,
       address: {
         '@type': 'PostalAddress',
-        streetAddress: BUSINESS_INFO.address.streetAddress,
         addressLocality: BUSINESS_INFO.address.addressLocality,
         addressRegion: BUSINESS_INFO.address.addressRegion,
-        postalCode: BUSINESS_INFO.address.postalCode,
         addressCountry: BUSINESS_INFO.address.addressCountry
       }
     },
-    
+
     areaServed: BUSINESS_INFO.areaServed.map(area => ({
       '@type': 'City',
       name: area

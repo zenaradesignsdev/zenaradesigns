@@ -172,11 +172,6 @@ const websiteJsonLd = {
   description:
     'Leading web design & development agency in Toronto & GTA. Professional business cards, logo design, and custom websites for small businesses.',
   publisher: { '@type': 'Organization', name: 'Zenara Designs' },
-  potentialAction: {
-    '@type': 'SearchAction',
-    target: 'https://zenaradesigns.com/search?q={search_term_string}',
-    'query-input': 'required name=search_term_string',
-  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

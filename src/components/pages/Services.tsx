@@ -1052,15 +1052,6 @@ const Services = () => {
         services={services}
       />
       <StructuredData 
-        type="aggregateRating" 
-        rating={{
-          ratingValue: 4.9,
-          reviewCount: testimonials.length,
-          bestRating: 5,
-          worstRating: 1
-        }}
-      />
-      <StructuredData 
         type="breadcrumb" 
         breadcrumbs={[
           { name: 'Home', url: '/' },
