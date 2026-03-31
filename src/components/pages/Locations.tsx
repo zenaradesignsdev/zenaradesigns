@@ -1,11 +1,15 @@
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import StructuredData from '@/components/StructuredData';
-import { 
-  MapPin, 
-  ArrowRight, 
+import {
+  MapPin,
+  ArrowRight,
   Building,
-  CheckCircle
+  CheckCircle,
+  Scale,
+  Calculator,
+  Hammer,
+  Heart
 } from 'lucide-react';
 
 const locations = [
@@ -230,6 +234,50 @@ const Locations = () => {
                   <div className="text-white/60 text-sm sm:text-base font-light">Local Support</div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Industry-Specific Web Design */}
+        <div className="bg-slate-900/90 backdrop-blur-sm rounded-2xl p-8 sm:p-10 md:p-12 border border-slate-800/50 shadow-2xl relative overflow-hidden mb-16 sm:mb-20">
+          <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
+
+          <div className="relative z-10">
+            <div className="text-center mb-10 sm:mb-12">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-extralight text-white mb-4 leading-[1.1] tracking-[-0.04em]">
+                <span className="block font-light opacity-90">Industry-Specific</span>
+                <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Web Design Across the GTA</span>
+              </h2>
+              <p className="text-white/60 text-base sm:text-lg max-w-2xl mx-auto leading-[1.7] font-light">
+                We build tailored websites for specific industries in every GTA city we serve.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+              {[
+                { icon: Scale, title: 'Law Firms', href: '/lawyers', desc: 'Trust-focused websites that convert visitors into clients across the GTA.' },
+                { icon: Calculator, title: 'Accounting Firms', href: '/accountants', desc: 'Secure, professional platforms with client portals for GTA accountants.' },
+                { icon: Hammer, title: 'Renovation Companies', href: '/renovations', desc: 'Portfolio websites that showcase your projects and capture leads.' },
+                { icon: Heart, title: 'Wellness Clinics', href: '/clinics', desc: 'Modern platforms with online booking for clinics across the GTA.' },
+              ].map((industry) => {
+                const IconComponent = industry.icon;
+                return (
+                  <Link
+                    key={industry.href}
+                    href={industry.href}
+                    className="group bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 hover:border-cyan-500/50 transition-all duration-300"
+                  >
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-r from-cyan-500/20 to-purple-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                      <IconComponent className="h-5 w-5 text-cyan-400" />
+                    </div>
+                    <h3 className="text-lg font-semibold text-white mb-2 tracking-tight">{industry.title}</h3>
+                    <p className="text-white/60 text-sm leading-relaxed font-light mb-3">{industry.desc}</p>
+                    <span className="inline-flex items-center text-cyan-300 text-sm font-medium group-hover:text-cyan-200 transition-colors">
+                      View Details <ArrowRight className="ml-1.5 h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>

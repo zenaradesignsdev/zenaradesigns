@@ -5,6 +5,7 @@ import AgencyPartnersSection from '@/components/home/AgencyPartnersSection';
 import PortfolioSection from '@/components/home/PortfolioSection';
 import ProcessSection from '@/components/home/ProcessSection';
 import DifferentiatorsSection from '@/components/home/DifferentiatorsSection';
+import IndustriesSection from '@/components/home/IndustriesSection';
 import CTABand from '@/components/home/CTABand';
 
 const GoogleReviews = dynamic(() => import('@/components/GoogleReviews'), {
@@ -20,6 +21,7 @@ const Home = () => {
       <PortfolioSection />
       <ProcessSection />
       <DifferentiatorsSection />
+      <IndustriesSection />
       <GoogleReviews />
       <CTABand />
 

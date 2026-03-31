@@ -259,7 +259,7 @@ const Pricing = () => {
                   
                   <div className="relative z-10 flex flex-col h-full">
                     <div className="text-center mb-6 sm:mb-8 flex-shrink-0">
-                      <h3 className="text-2xl sm:text-3xl font-semibold mb-2 text-white tracking-tight">{plan.name}</h3>
+                      <h2 className="text-2xl sm:text-3xl font-semibold mb-2 text-white tracking-tight">{plan.name}</h2>
                       <p className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-light mb-3 sm:mb-4 text-sm sm:text-base">{plan.subtitle}</p>
                       <div className="text-4xl sm:text-5xl font-light mb-3 sm:mb-4 text-white">{plan.price}</div>
                       <p className="text-white/60 text-base sm:text-lg font-light">{plan.description}</p>
@@ -383,7 +383,7 @@ const Pricing = () => {
                             <IconComponent className="h-6 w-6 sm:h-7 sm:w-7 text-white relative z-10" strokeWidth={2} />
                           </div>
                         </div>
-                        <h3 className="text-2xl sm:text-3xl font-semibold mb-2 text-white tracking-tight">{plan.name}</h3>
+                        <h2 className="text-2xl sm:text-3xl font-semibold mb-2 text-white tracking-tight">{plan.name}</h2>
                         <div className="text-4xl sm:text-5xl font-light mb-3 sm:mb-4 text-white">
                           ${plan.monthlyPrice}
                           <span className="text-lg sm:text-xl text-white/60 font-light">
