@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import Projects from '@/components/pages/Projects';
 
 export const metadata: Metadata = {
-  title: 'Web Design Portfolio | Toronto & GTA Projects | Zenara',
+  title: 'Websites We Built for Toronto Law Firms, Clinics & More | Zenara',
   description:
-    'Browse Zenara\'s portfolio of custom web design projects for Toronto & GTA businesses. Real websites, real results — law firms, accountants, clinics, and more.',
+    'Browse real web design projects for GTA businesses — law firms, accounting firms, clinics, and contractors. See the designs, the approach, and the results behind each build.',
   alternates: { canonical: 'https://zenaradesigns.com/projects' },
   openGraph: {
-    title: 'Web Design Portfolio | Toronto & GTA Projects | Zenara',
+    title: 'Websites We Built for Toronto Law Firms, Clinics & More | Zenara',
     description:
-      'Browse Zenara\'s portfolio of custom web design projects for Toronto & GTA businesses. Real websites, real results — law firms, accountants, clinics, and more.',
+      'Browse real web design projects for GTA businesses — law firms, accounting firms, clinics, and contractors. See the designs, the approach, and the results behind each build.',
     url: 'https://zenaradesigns.com/projects',
   },
 };

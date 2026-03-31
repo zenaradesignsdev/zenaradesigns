@@ -31,6 +31,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'article',
       url: `https://zenaradesigns.com/blog/${post.slug}`,
       publishedTime: post.publishedAt.toISOString(),
+      ...(post.featuredImage && {
+        images: [{ url: `https://zenaradesigns.com${post.featuredImage}` }],
+      }),
     },
   };
 }

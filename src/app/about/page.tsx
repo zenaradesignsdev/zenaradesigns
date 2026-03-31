@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import About from '@/components/pages/About';
 
 export const metadata: Metadata = {
-  title: 'About Zenara Designs | Web Design Team Toronto | Zenara',
+  title: 'Meet the Team Behind Zenara — Toronto Web Design Agency | Zenara',
   description:
-    "Meet Toronto's leading web design team at Zenara Designs. Learn about our expertise, process, and commitment to creating exceptional digital experiences for GTA businesses. Contact us today!",
+    'Zenara Designs is a Toronto web design agency built by engineers from Waterloo and Ottawa. We build fast, modern websites for law firms, clinics, and GTA businesses. See our team and process.',
   alternates: { canonical: 'https://zenaradesigns.com/about' },
   openGraph: {
-    title: 'About Zenara Designs | Web Design Team Toronto | Zenara',
+    title: 'Meet the Team Behind Zenara — Toronto Web Design Agency | Zenara',
     description:
-      "Meet Toronto's leading web design team at Zenara Designs. Learn about our expertise, process, and commitment to creating exceptional digital experiences for GTA businesses. Contact us today!",
+      'Zenara Designs is a Toronto web design agency built by engineers from Waterloo and Ottawa. We build fast, modern websites for law firms, clinics, and GTA businesses. See our team and process.',
     url: 'https://zenaradesigns.com/about',
   },
 };

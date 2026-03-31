@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import Pricing from '@/components/pages/Pricing';
 
 export const metadata: Metadata = {
-  title: 'Web Design Pricing Toronto | Transparent Packages | Zenara',
+  title: 'Web Design Packages from $499 — Compare Plans & Pricing | Zenara',
   description:
-    "Transparent web design pricing for Toronto & GTA businesses. Compare packages, see exactly what's included, and get a free custom quote within 24 hours. No hidden fees.",
+    "Compare 3 web design packages with transparent pricing for Toronto & GTA businesses. See exactly what's included at every tier — no hidden fees. Free custom quote within 24 hours.",
   alternates: { canonical: 'https://zenaradesigns.com/pricing' },
   openGraph: {
-    title: 'Web Design Pricing Toronto | Transparent Packages | Zenara',
+    title: 'Web Design Packages from $499 — Compare Plans & Pricing | Zenara',
     description:
-      "Transparent web design pricing for Toronto & GTA businesses. Compare packages, see exactly what's included, and get a free custom quote within 24 hours. No hidden fees.",
+      "Compare 3 web design packages with transparent pricing for Toronto & GTA businesses. See exactly what's included at every tier — no hidden fees. Free custom quote within 24 hours.",
     url: 'https://zenaradesigns.com/pricing',
   },
 };

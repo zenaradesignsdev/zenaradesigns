@@ -2,14 +2,14 @@ import type { Metadata } from 'next';
 import Process from '@/components/pages/Process';
 
 export const metadata: Metadata = {
-  title: 'Our 6-Step Web Design Process | Toronto Agency | Zenara',
+  title: 'How We Build Your Website in 6 Steps — Discovery to Launch | Zenara',
   description:
-    'See exactly how Zenara builds websites — from discovery and design to launch and ongoing support. A transparent, 6-step process built for Toronto & GTA businesses.',
+    'From initial call to live website in weeks. See the exact 6-step process Toronto & GTA businesses go through with Zenara — with timelines and what to expect at each stage.',
   alternates: { canonical: 'https://zenaradesigns.com/process' },
   openGraph: {
-    title: 'Our 6-Step Web Design Process | Toronto Agency | Zenara',
+    title: 'How We Build Your Website in 6 Steps — Discovery to Launch | Zenara',
     description:
-      'See exactly how Zenara builds websites — from discovery and design to launch and ongoing support. A transparent, 6-step process built for Toronto & GTA businesses.',
+      'From initial call to live website in weeks. See the exact 6-step process Toronto & GTA businesses go through with Zenara — with timelines and what to expect at each stage.',
     url: 'https://zenaradesigns.com/process',
   },
 };
