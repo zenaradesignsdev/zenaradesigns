@@ -52,6 +52,7 @@ export default function BlogPostPage({ params }: Props) {
         <script
           key={i}
           type="application/ld+json"
+          data-ssr="true"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}

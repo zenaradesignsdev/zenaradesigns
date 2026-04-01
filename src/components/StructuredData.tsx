@@ -320,9 +320,9 @@ const StructuredData: React.FC<StructuredDataProps> = ({
     // Inject all schemas
     injectMultipleSchemas(schemas);
     
-    // Cleanup function
+    // Cleanup function — only remove client-injected scripts, not server-rendered ones
     return () => {
-      const existingScripts = document.querySelectorAll('script[type="application/ld+json"]');
+      const existingScripts = document.querySelectorAll('script[type="application/ld+json"]:not([data-ssr])');
       existingScripts.forEach(script => script.remove());
     };
   }, [type, data, faqs, products, reviews, services, serviceName, serviceDescription, rating, breadcrumbs]);

@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import AccountantLocation from '@/components/pages/AccountantLocation';
+import { accountantLocationContent } from '@/lib/location-content';
 
 const locations = [
   { id: 'markham', city: 'Markham' },
@@ -48,6 +49,34 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function AccountantLocationPage() {
-  return <AccountantLocation />;
+export default function AccountantLocationPage({ params }: Props) {
+  const content = accountantLocationContent[params.location];
+  const faqSchema =
+    content?.faqs && content.faqs.length > 0
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: content.faqs.map((faq) => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: {
+              '@type': 'Answer',
+              text: faq.answer,
+            },
+          })),
+        }
+      : null;
+
+  return (
+    <>
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          data-ssr="true"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
+      <AccountantLocation />
+    </>
+  );
 }

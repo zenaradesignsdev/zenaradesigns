@@ -9,6 +9,7 @@ import { memo, useEffect, useMemo, useRef, useState, useCallback } from 'react';
 import StructuredData from '@/components/StructuredData';
 import { generateLocalBusinessSchema } from '@/lib/structured-data';
 import { SafeImage } from '@/components/ui/safe-image';
+import { renovationLocationContent } from '@/lib/location-content';
 const renovationBackyard = '/images/renovation-backyard.png';
 import NotFound from './NotFound';
 
@@ -201,6 +202,7 @@ const RenovationLocation = () => {
   }
 
   const { city, description, keywords } = locationData;
+  const content = renovationLocationContent[locationData.id];
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
@@ -277,6 +279,36 @@ const RenovationLocation = () => {
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10"></div>
           </div>
         </div>
+
+        {/* Local Context Section */}
+        {content?.localContext && (
+          <section
+            data-section-id="local-context"
+            ref={(el) => {
+              if (el) sectionRefs.current.set('local-context', el as HTMLDivElement);
+            }}
+            className={`mb-16 sm:mb-20 md:mb-24 transition-all duration-1000 ${
+              visibleSections.has('local-context')
+                ? 'opacity-100 translate-y-0'
+                : 'opacity-0 translate-y-12'
+            }`}
+          >
+            <div className="bg-slate-900/90 backdrop-blur-sm rounded-2xl p-8 sm:p-10 md:p-12 border border-slate-800/50 shadow-2xl relative overflow-hidden">
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
+
+              <div className="relative z-10">
+                <h2 className="text-2xl sm:text-3xl md:text-4xl font-extralight text-white mb-6 leading-[1.1] tracking-[-0.04em]">
+                  <span className="block font-light opacity-90">Renovation Company Web Design in</span>
+                  <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">{city}</span>
+                </h2>
+
+                <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em]">
+                  {content.localContext}
+                </p>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Section 1: Why Your City Renovation Company Needs a Professional Website */}
         <section 
@@ -415,8 +447,43 @@ const RenovationLocation = () => {
           </div>
         </section>
 
+        {/* City-Specific FAQ Section */}
+        {content?.faqs && content.faqs.length > 0 && (
+          <section
+            data-section-id="city-faq"
+            ref={(el) => {
+              if (el) sectionRefs.current.set('city-faq', el as HTMLDivElement);
+            }}
+            className={`mb-16 sm:mb-20 md:mb-24 transition-all duration-1000 ${
+              visibleSections.has('city-faq')
+                ? 'opacity-100 translate-y-0'
+                : 'opacity-0 translate-y-12'
+            }`}
+          >
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extralight text-white mb-4 text-center leading-[1.1] tracking-[-0.04em]">
+              <span className="block font-light opacity-90">Frequently Asked Questions</span>
+              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Renovation Web Design in {city}</span>
+            </h2>
+            <p className="text-white/50 text-center mb-8 sm:mb-12 text-base sm:text-lg font-light">
+              Common questions about renovation company web design in {city}.
+            </p>
+
+            <div className="space-y-6">
+              {content.faqs.map((faq, i) => (
+                <div
+                  key={i}
+                  className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-300 relative overflow-hidden"
+                >
+                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-3">{faq.question}</h3>
+                  <p className="text-white/60 text-sm sm:text-base leading-relaxed font-light">{faq.answer}</p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
         {/* CTA Section */}
-        <section 
+        <section
           data-section-id="cta"
           ref={(el) => {
             if (el) sectionRefs.current.set('cta', el as HTMLDivElement);
