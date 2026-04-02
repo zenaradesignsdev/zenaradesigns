@@ -1,10 +1,33 @@
 'use client';
 
 import { Compass, Palette, BarChart, ArrowUpRight } from 'lucide-react';
-import { memo } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
+import { TextReveal } from '@/components/ui/text-reveal';
 import { FadeIn } from '@/components/ui/fade-in';
 
 const ProcessSection = () => {
+  const cardsRef = useRef<HTMLDivElement>(null);
+  const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set());
+
+  useEffect(() => {
+    const cards = cardsRef.current?.querySelectorAll('[data-process-card]');
+    if (!cards) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = Number(entry.target.getAttribute('data-process-card'));
+            setVisibleCards((prev) => new Set(prev).add(idx));
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    );
+    cards.forEach((c) => observer.observe(c));
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section className="py-12 sm:py-16 md:py-20 relative overflow-hidden bg-black">
       {/* Background Glowing Lines - Curved from top corners */}
@@ -62,21 +85,29 @@ const ProcessSection = () => {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         {/* Headline */}
         <div className="text-center mb-12 sm:mb-16 relative z-20">
-          <FadeIn as="div">
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-white mb-8 sm:mb-10 leading-[0.95] tracking-[-0.04em] text-center">
-              <span className="block font-light opacity-90">Where Innovation</span>
-              <span className="block mt-2 sm:mt-2.5 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Meets Excellence</span>
-            </h2>
+          <TextReveal
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-white mb-8 sm:mb-10 leading-[0.95] tracking-[-0.04em] text-center"
+            staggerMs={130}
+            lines={[
+              <span key="l1" className="block font-light opacity-90">Where Innovation</span>,
+              <span key="l2" className="block mt-2 sm:mt-2.5 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Meets Excellence</span>,
+            ]}
+          />
+          <FadeIn delay={280}>
+            <p className="text-base sm:text-lg md:text-xl text-white/60 mb-12 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em]">
+              Elevating brands through strategic design, cutting-edge technology, and results-driven solutions.
+            </p>
           </FadeIn>
-          <p className="text-base sm:text-lg md:text-xl text-white/60 mb-12 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em]">
-            Elevating brands through strategic design, cutting-edge technology, and results-driven solutions.
-          </p>
         </div>
 
         {/* Process Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 relative z-20">
+        <div ref={cardsRef} className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 relative z-20">
           {/* Card 1: Discovery & Planning */}
-          <div className="group relative bg-slate-900/90 backdrop-blur-sm rounded-xl p-5 sm:p-6 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-300 cursor-pointer overflow-hidden">
+          <div
+            data-process-card="0"
+            className={`group relative bg-slate-900/90 backdrop-blur-sm rounded-xl p-5 sm:p-6 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-700 cursor-pointer overflow-hidden ${visibleCards.has(0) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            style={{ transitionDelay: visibleCards.has(0) ? '0ms' : '0ms', transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+          >
             <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/15 via-cyan-500/8 to-cyan-500/15 blur-2xl opacity-60 animate-pulse"></div>
             <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-cyan-400/20 via-transparent to-cyan-400/20 blur-sm opacity-50"></div>
             <div className="relative z-10">
@@ -96,7 +127,11 @@ const ProcessSection = () => {
           </div>
 
           {/* Card 2: Design & Development */}
-          <div className="group relative bg-slate-900/90 backdrop-blur-sm rounded-xl p-5 sm:p-6 border border-slate-800/50 hover:border-purple-500/30 transition-all duration-300 cursor-pointer overflow-hidden">
+          <div
+            data-process-card="1"
+            className={`group relative bg-slate-900/90 backdrop-blur-sm rounded-xl p-5 sm:p-6 border border-slate-800/50 hover:border-purple-500/30 transition-all duration-700 cursor-pointer overflow-hidden ${visibleCards.has(1) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            style={{ transitionDelay: visibleCards.has(1) ? '120ms' : '0ms', transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+          >
             <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/15 via-purple-500/8 to-purple-500/15 blur-2xl opacity-60 animate-pulse"></div>
             <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-purple-400/20 via-transparent to-purple-400/20 blur-sm opacity-50"></div>
             <div className="relative z-10">
@@ -116,7 +151,11 @@ const ProcessSection = () => {
           </div>
 
           {/* Card 3: Launch & Optimize */}
-          <div className="group relative bg-slate-900/90 backdrop-blur-sm rounded-xl p-5 sm:p-6 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-300 cursor-pointer overflow-hidden">
+          <div
+            data-process-card="2"
+            className={`group relative bg-slate-900/90 backdrop-blur-sm rounded-xl p-5 sm:p-6 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-700 cursor-pointer overflow-hidden ${visibleCards.has(2) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            style={{ transitionDelay: visibleCards.has(2) ? '240ms' : '0ms', transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
+          >
             <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/15 via-cyan-500/8 to-cyan-500/15 blur-2xl opacity-60 animate-pulse"></div>
             <div className="absolute -inset-0.5 rounded-xl bg-gradient-to-r from-cyan-400/20 via-transparent to-cyan-400/20 blur-sm opacity-50"></div>
             <div className="relative z-10">

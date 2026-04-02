@@ -115,6 +115,14 @@ const Navbar = () => {
     };
   }, [isMobileMenuOpen]);
 
+  // Close menu on route change (back/forward navigation)
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      closeMobileMenu();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
+
   // Handle escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
@@ -254,7 +262,8 @@ const Navbar = () => {
     <>
     <nav 
       id="navigation"
-        className="fixed top-4 left-1/2 -translate-x-1/2 z-[100] w-[95%] sm:w-[92%] md:w-[88%] lg:w-[85%] xl:w-[82%] max-w-[1400px]"
+        className="fixed left-1/2 -translate-x-1/2 z-[100] w-[95%] sm:w-[92%] md:w-[88%] lg:w-[85%] xl:w-[82%] max-w-[1400px]"
+        style={{ top: 'max(16px, env(safe-area-inset-top, 0px))' }}
       role="navigation"
       aria-label="Main navigation"
     >
@@ -318,7 +327,7 @@ const Navbar = () => {
                 className="lg:hidden relative w-10 h-10 flex flex-col items-center justify-center space-y-1.5 z-50 group touch-manipulation active:scale-95 transition-transform duration-200"
                 onClick={openMobileMenu}
                 aria-label="Open navigation menu"
-                aria-expanded={false}
+                aria-expanded={isMobileMenuOpen}
                 aria-controls="mobile-menu"
                 type="button"
               >

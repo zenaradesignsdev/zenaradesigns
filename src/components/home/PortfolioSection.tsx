@@ -5,6 +5,7 @@ import { Rocket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SafeImage } from '@/components/ui/safe-image';
 import { memo } from 'react';
+import { TextReveal } from '@/components/ui/text-reveal';
 import { FadeIn } from '@/components/ui/fade-in';
 
 const realEstateWebImage = '/images/website-example-realestate.png';
@@ -76,19 +77,24 @@ const PortfolioSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center">
           {/* Left Side - Text Content */}
           <div className="space-y-6 text-center lg:text-left">
-            <FadeIn>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white leading-[0.95] tracking-[-0.04em]">
-                <span className="block font-light opacity-90">Bring your</span>
-                <span className="block mt-1 sm:mt-1.5">
+            <TextReveal
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white leading-[0.95] tracking-[-0.04em]"
+              staggerMs={120}
+              lines={[
+                <span key="l1" className="block font-light opacity-90">Bring your</span>,
+                <span key="l2" className="block mt-1 sm:mt-1.5">
                   <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">ideas</span>
                   {' '}
                   <span className="font-light">to life</span>
-                </span>
-              </h2>
+                </span>,
+              ]}
+            />
+            <FadeIn delay={240}>
+              <p className="text-base sm:text-lg md:text-xl text-white/60 leading-[1.7] max-w-lg mx-auto lg:mx-0 font-light tracking-[0.01em]">
+                At Zenara Designs we specialize in creating beautiful websites for any industry and we work with you to bring your vision to life without all the technical details so you can focus on your core business.
+              </p>
             </FadeIn>
-            <p className="text-base sm:text-lg md:text-xl text-white/60 leading-[1.7] max-w-lg mx-auto lg:mx-0 font-light tracking-[0.01em]">
-              At Zenara Designs we specialize in creating beautiful websites for any industry and we work with you to bring your vision to life without all the technical details so you can focus on your core business.
-            </p>
+            <FadeIn delay={360}>
             <div className="flex justify-center lg:justify-start">
               <div className="relative inline-block rounded-full p-[3.5px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
                 <Button asChild className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-7 py-5 sm:px-9 sm:py-6 text-lg sm:text-xl font-semibold group">
@@ -100,6 +106,7 @@ const PortfolioSection = () => {
                 </Button>
               </div>
             </div>
+            </FadeIn>
           </div>
 
           {/* Right Side - Vertical Sliding Animation */}

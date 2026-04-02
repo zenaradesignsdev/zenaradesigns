@@ -1460,3 +1460,48 @@
   right: 0;
   bottom: 0;
 }
+
+/* ── Projects page row animations ── */
+.proj-row .proj-img,
+.proj-row .proj-text {
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.proj-row .proj-from-left  { transform: translateX(-32px); }
+.proj-row .proj-from-right { transform: translateX(32px); }
+.proj-visible .proj-img  { opacity: 1; transform: none; }
+.proj-visible .proj-text {
+  opacity: 1;
+  transform: none;
+  transition-delay: 0.12s;
+}
+
+/* ── Contact page rocket animations ── */
+@keyframes rocket-drift {
+  0%   { transform: translate(0, 0) rotate(-42deg); opacity: 0; }
+  8%   { opacity: 0.06; }
+  92%  { opacity: 0.06; }
+  100% { transform: translate(240px, -340px) rotate(-42deg); opacity: 0; }
+}
+@keyframes rocket-drift-b {
+  0%   { transform: translate(0, 0) rotate(-38deg); opacity: 0; }
+  10%  { opacity: 0.05; }
+  90%  { opacity: 0.05; }
+  100% { transform: translate(180px, -260px) rotate(-38deg); opacity: 0; }
+}
+@keyframes rocket-drift-c {
+  0%   { transform: translate(0, 0) rotate(-45deg); opacity: 0; }
+  12%  { opacity: 0.04; }
+  88%  { opacity: 0.04; }
+  100% { transform: translate(160px, -220px) rotate(-45deg); opacity: 0; }
+}
+.rocket-a { animation: rocket-drift   28s ease-in-out infinite; }
+.rocket-b { animation: rocket-drift-b 22s ease-in-out infinite; animation-delay: 9s; }
+.rocket-c { animation: rocket-drift-c 35s ease-in-out infinite; animation-delay: 19s; }
+
+/* ── Newsletter input placeholder (Brevo/SIB embed) ── */
+#sib-container #EMAIL::placeholder             { color: #94a3b8 !important; opacity: 1 !important; }
+#sib-container #EMAIL::-webkit-input-placeholder { color: #94a3b8 !important; opacity: 1 !important; }
+#sib-container #EMAIL::-moz-placeholder          { color: #94a3b8 !important; opacity: 1 !important; }
+#sib-container #EMAIL:-ms-input-placeholder      { color: #94a3b8 !important; opacity: 1 !important; }
+#sib-container #EMAIL                            { color: #ffffff !important; }

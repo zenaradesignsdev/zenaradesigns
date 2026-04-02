@@ -5,6 +5,7 @@ import { Rocket, Users, Zap, Heart, Shield, Star, ChevronLeft, ChevronRight } fr
 import { Button } from '@/components/ui/button';
 import { useRef, memo } from 'react';
 import { FadeIn } from '@/components/ui/fade-in';
+import { TextReveal } from '@/components/ui/text-reveal';
 
 const DifferentiatorsSection = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -69,15 +70,21 @@ const DifferentiatorsSection = () => {
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 sm:mb-16 gap-6">
           <div className="flex-1">
-            <FadeIn>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight mb-4 text-white leading-[0.95] tracking-[-0.04em]">
-                <span className="font-light">What Sets Us </span>
-                <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Apart</span>
-              </h2>
+            <TextReveal
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight mb-4 text-white leading-[0.95] tracking-[-0.04em]"
+              staggerMs={120}
+              lines={[
+                <span key="l1">
+                  <span className="font-light">What Sets Us </span>
+                  <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Apart</span>
+                </span>,
+              ]}
+            />
+            <FadeIn delay={240}>
+              <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-2xl leading-[1.7] font-light tracking-[0.01em]">
+                We don&apos;t just build websites. We craft digital experiences that grow with your business.
+              </p>
             </FadeIn>
-            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-2xl leading-[1.7] font-light tracking-[0.01em]">
-              We don&apos;t just build websites. We craft digital experiences that grow with your business.
-            </p>
           </div>
           <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 w-full lg:w-auto">
             <Button asChild className="relative overflow-hidden bg-slate-900 rounded-full text-white px-6 py-3 font-medium transition-all duration-300 w-full group">

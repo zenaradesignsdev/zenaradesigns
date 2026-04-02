@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { useState, useEffect, useRef, memo } from 'react';
+import { TextReveal } from '@/components/ui/text-reveal';
 import { FadeIn } from '@/components/ui/fade-in';
 
 const shopifyLogo = '/images/shopify.svg';
@@ -145,16 +146,20 @@ const AgencyPartnersSection = () => {
         {/* Top Section - Text Content with Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center mb-16 sm:mb-20">
           <div className="text-center lg:text-left space-y-4 sm:space-y-6">
-            <FadeIn>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-[-0.02em]">
-                <span className="block">So much more than</span>
-                <span className="block mt-1">a web design agency.</span>
-              </h2>
+            <TextReveal
+              staggerMs={120}
+              lineClassName="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-[-0.02em]"
+              lines={[
+                <span key="l1" className="block">So much more than</span>,
+                <span key="l2" className="block mt-1">a web design agency.</span>,
+              ]}
+            />
+            <FadeIn delay={260}>
+              <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white/90 leading-[1.1] tracking-[-0.02em]">
+                <span>We are your </span>
+                <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">IT team</span>.
+              </h3>
             </FadeIn>
-            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white/90 leading-[1.1] tracking-[-0.02em] mt-4">
-              <span>We are your </span>
-              <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">IT team</span>.
-            </h3>
           </div>
 
           <div className="text-center" ref={yearsRef}>
@@ -178,10 +183,15 @@ const AgencyPartnersSection = () => {
 
         {/* Our Trusted Partners */}
         <div className="text-center mb-12 sm:mb-16">
-          <h3 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white mb-4 leading-[0.95] tracking-[-0.04em]">
-            <span className="font-light">Our Trusted </span>
-            <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Partners</span>
-          </h3>
+          <TextReveal
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white mb-4 leading-[0.95] tracking-[-0.04em]"
+            lines={[
+              <span key="l1">
+                <span className="font-light">Our Trusted </span>
+                <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Partners</span>
+              </span>,
+            ]}
+          />
         </div>
 
         {/* Partners Carousel */}

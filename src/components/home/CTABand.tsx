@@ -1,6 +1,9 @@
-import Link from 'next/link';
+'use client';
 
-// Server Component — no client JS needed
+import Link from 'next/link';
+import { TextReveal } from '@/components/ui/text-reveal';
+import { FadeIn } from '@/components/ui/fade-in';
+
 const CTABand = () => {
   return (
     <section className="py-20 sm:py-28 md:py-32 relative overflow-hidden bg-black">
@@ -32,13 +35,20 @@ const CTABand = () => {
           </div>
 
           <div className="relative z-10 px-6 sm:px-8 md:px-12 lg:px-16 py-12 sm:py-16 md:py-20 text-center">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white mb-6 leading-[1.1] tracking-[-0.04em]">
-              <span className="block font-light opacity-90">Let&apos;s Build Something</span>
-              <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Amazing</span>
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-white/70 mb-10 sm:mb-12 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em]">
-              Our team is ready to provide tailored solutions that drive growth and revenue.
-            </p>
+            <TextReveal
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white mb-6 leading-[1.1] tracking-[-0.04em]"
+              staggerMs={140}
+              lines={[
+                <span key="l1" className="block font-light opacity-90">Let&apos;s Build Something</span>,
+                <span key="l2" className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Amazing</span>,
+              ]}
+            />
+            <FadeIn delay={300}>
+              <p className="text-base sm:text-lg md:text-xl text-white/70 mb-10 sm:mb-12 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em]">
+                Our team is ready to provide tailored solutions that drive growth and revenue.
+              </p>
+            </FadeIn>
+            <FadeIn delay={440}>
             <div>
               <Link href="/contact" className="relative inline-block group">
                 <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 rounded-full blur opacity-50 group-hover:opacity-70 transition-opacity duration-300"></div>
@@ -47,6 +57,7 @@ const CTABand = () => {
                 </div>
               </Link>
             </div>
+            </FadeIn>
           </div>
         </div>
       </div>

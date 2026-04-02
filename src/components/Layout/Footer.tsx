@@ -3,8 +3,8 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Mail, Phone, CheckCircle, Instagram } from 'lucide-react';
-import { BUSINESS_EMAIL, BUSINESS_PHONE, NAVIGATION_LINKS, FOOTER_ADDITIONAL_LINKS, SERVICE_LINKS } from '@/lib/constants';
-import { useState, FormEvent, useEffect } from 'react';
+import { BUSINESS_EMAIL, BUSINESS_PHONE, BUSINESS_PHONE_E164, NAVIGATION_LINKS, FOOTER_ADDITIONAL_LINKS, SERVICE_LINKS } from '@/lib/constants';
+import { useState, FormEvent } from 'react';
 
 const logo = '/images/zenara-logo-v5.svg';
 
@@ -16,35 +16,6 @@ const Footer = () => {
 
   const quickLinks = NAVIGATION_LINKS;
 
-  // Add styles for newsletter input placeholder
-  useEffect(() => {
-    const style = document.createElement('style');
-    style.textContent = `
-      #sib-container #EMAIL::placeholder {
-        color: #94a3b8 !important;
-        opacity: 1 !important;
-      }
-      #sib-container #EMAIL::-webkit-input-placeholder {
-        color: #94a3b8 !important;
-        opacity: 1 !important;
-      }
-      #sib-container #EMAIL::-moz-placeholder {
-        color: #94a3b8 !important;
-        opacity: 1 !important;
-      }
-      #sib-container #EMAIL:-ms-input-placeholder {
-        color: #94a3b8 !important;
-        opacity: 1 !important;
-      }
-      #sib-container #EMAIL {
-        color: #ffffff !important;
-      }
-    `;
-    document.head.appendChild(style);
-    return () => {
-      document.head.removeChild(style);
-    };
-  }, []);
 
   const handleNewsletterSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -199,7 +170,7 @@ const Footer = () => {
                 </div>
                 <div className="flex items-baseline space-x-2 text-slate-300">
                   <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5" />
-                  <a href={`tel:${BUSINESS_PHONE}`} className="hover:text-cyan-400 transition-colors text-xs sm:text-sm" rel="noopener noreferrer">
+                  <a href={`tel:${BUSINESS_PHONE_E164}`} className="hover:text-cyan-400 transition-colors text-xs sm:text-sm" rel="noopener noreferrer">
                     {BUSINESS_PHONE}
                   </a>
                 </div>

@@ -1,465 +1,497 @@
 'use client';
 
-import { Users, Target, CheckCircle, Sparkles, Zap, Heart, Rocket, Code2, ArrowRight, Shield, TrendingUp } from 'lucide-react';
+import { ArrowRight, Rocket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { useState, useEffect, useRef, memo, useMemo } from 'react';
+import { useState, useEffect, useRef, memo } from 'react';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
-import type { TeamMember, ProcessStep, Differentiator, Position } from '@/types';
-const logo = '/images/zenara-logo-v5.svg';
+import type { ProcessStep, Position } from '@/types';
 import { SafeImage } from '@/components/ui/safe-image';
+import StructuredData from '@/components/StructuredData';
+import { TextReveal } from '@/components/ui/text-reveal';
+import { FadeIn } from '@/components/ui/fade-in';
+
 const saturnImage = '/images/saturn.png';
-const moonImage = '/images/moon.png';
 const discoveryImage = '/images/zenara-discovery.jpg';
 const prototypingImage = '/images/zenara-prototyping.jpg';
 const buildImage = '/images/zenara-build.jpg';
-import StructuredData from '@/components/StructuredData';
-import { FadeIn } from '@/components/ui/fade-in';
+
+const team = [
+  {
+    name: 'Pratik Mistry',
+    initials: 'PM',
+    role: 'Lead Developer',
+    school: 'University of Ottawa',
+    degree: 'Computer Engineering',
+    bio: '4–5 years building scalable web applications. Obsessed with clean architecture, performance, and shipping products that actually work.',
+  },
+  {
+    name: 'Kavin Mural',
+    initials: 'KM',
+    role: 'Lead Developer',
+    school: 'University of Waterloo',
+    degree: 'Computer Science',
+    bio: '4–5 years across full-stack development. Specializes in modern web tech, developer tooling, and turning complex requirements into elegant solutions.',
+  },
+  {
+    name: 'Ryan Honeybone',
+    initials: 'RH',
+    role: 'UX / UI Designer',
+    school: 'McGill University',
+    degree: 'Design',
+    bio: '3 years crafting interfaces that convert. Bridges the gap between brand identity and user behaviour — no templates, no shortcuts.',
+  },
+];
+
+const stackItems = [
+  { name: 'Next.js 14', category: 'Framework', desc: 'App Router, SSR, static generation for Lighthouse 90+ scores' },
+  { name: 'TypeScript', category: 'Language', desc: 'Strict-mode across every project — zero runtime surprises' },
+  { name: 'Tailwind CSS', category: 'Styling', desc: 'Utility-first, purged at build — no unused CSS ever ships' },
+  { name: 'Vercel', category: 'Deployment', desc: 'Edge network, instant rollbacks, automatic preview environments' },
+  { name: 'Cloudflare', category: 'Security & CDN', desc: 'DDoS protection, DNS, WAF, and global cache layer' },
+  { name: 'Figma', category: 'Design', desc: 'High-fidelity prototypes reviewed and approved before any code is written' },
+  { name: 'Stripe', category: 'Payments', desc: 'PCI-compliant payment flows for e-commerce and booking integrations' },
+  { name: 'Google Analytics 4', category: 'Analytics', desc: 'Privacy-first tracking with anonymised IP and custom event funnels' },
+];
+
+
+const process: ProcessStep[] = [
+  {
+    phase: 'Discovery',
+    details: ['Business goals analysis', 'Target audience research', 'Competitive landscape review', 'Technical requirements gathering'],
+  },
+  {
+    phase: 'Prototyping',
+    details: ['Mock-up designs', 'Button/links design flow', 'Image/video placement design', 'Systems design and software architecture'],
+  },
+  {
+    phase: 'Build',
+    details: ['Modern development practices', 'Component-based architecture', 'Performance optimization', 'Cross-browser testing'],
+  },
+  {
+    phase: 'Quality Testing',
+    details: ['Performance testing', 'Device compatibility check', 'SEO optimization', 'Mobile responsiveness and optimization', 'Custom functionality testing'],
+  },
+  {
+    phase: 'Launch',
+    details: ['DNS setup & SSL', 'CDN configuration', 'Analytics integration', 'Domain hookup', 'Email notification config'],
+  },
+  {
+    phase: 'Support',
+    details: ['Monthly maintenance', 'Content updates', 'Security patches', 'Performance monitoring'],
+  },
+];
 
 const About = () => {
-  // Scroll to top when component mounts  
   const [visibleTimelineItems, setVisibleTimelineItems] = useState<number[]>([]);
   const [saturnPosition, setSaturnPosition] = useState<Position>({ scale: 1, x: 0, y: 0, opacity: 0.2 });
-  const [moonPosition, setMoonPosition] = useState<Position>({ scale: 0, x: 0, y: 0, opacity: 0 });
   const timelineRefs = useRef<(HTMLDivElement | null)[]>([]);
   const heroSectionRef = useRef<HTMLDivElement>(null);
-  const zenaraDifferenceRef = useRef<HTMLDivElement>(null);
 
-
-  const team = useMemo((): TeamMember[] => [
-    {
-      name: "Pratik Mistry",
-      role: "Lead Developer", 
-      bio: "4-5 years of experience in software engineering with a Computer Engineering degree from University of Ottawa. Passionate about building scalable and efficient web applications."
-    },
-    {
-      name: "Kavin Mural",
-      role: "Lead Developer",
-      bio: "4-5 years of experience in software engineering with a Computer Science degree from University of Waterloo. Specializes in modern web technologies and full-stack development."
-    },
-    {
-      name: "Ryan Honeybone", 
-      role: "UX/UI Designer",
-      bio: "3 years of experience in design with a strong educational background from McGill University. Creates intuitive and beautiful user experiences that drive engagement."
-    }
-  ], []);
-
-  const process = useMemo((): ProcessStep[] => [
-    {
-      phase: "Discovery",
-      details: ["Business goals analysis", "Target audience research", "Competitive landscape review", "Technical requirements gathering"]
-    },
-    {
-      phase: "Prototyping", 
-      details: ["Mock-up designs", "Button/links design flow", "Image/video placement design", "Systems design and software architecture"]
-    },
-    {
-      phase: "Build",
-      details: ["Modern development practices", "Component-based architecture", "Performance optimization", "Cross-browser testing"]
-    },
-    {
-      phase: "Quality Testing",
-      details: ["Performance testing", "Device compatibility check", "SEO optimization", "Mobile responsiveness and optimization", "Custom functionality testing"]
-    },
-    {
-      phase: "Launch",
-      details: ["DNS setup & SSL", "CDN configuration", "Analytics integration", "Domain hookup", "Email notification config"]
-    },
-    {
-      phase: "Support",
-      details: ["Monthly maintenance", "Content updates", "Security patches", "Performance monitoring"]
-    }
-  ], []);
-
-  // Timeline animation effect - simple entrance only
+  // Timeline animation
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           const index = parseInt(entry.target.getAttribute('data-timeline-index') || '0');
           if (entry.isIntersecting) {
-            setVisibleTimelineItems(prev => 
-              prev.includes(index) ? prev : [...prev, index]
-            );
+            setVisibleTimelineItems((prev) => (prev.includes(index) ? prev : [...prev, index]));
           }
-          // Removed exit animation - items stay visible once they've appeared
         });
       },
       { threshold: PERFORMANCE_THRESHOLDS.INTERSECTION_OBSERVER }
     );
-
-    timelineRefs.current.forEach((ref) => {
-      if (ref) observer.observe(ref);
-    });
-
+    timelineRefs.current.forEach((ref) => { if (ref) observer.observe(ref); });
     return () => observer.disconnect();
   }, []);
 
-  // Saturn scroll animation
+  // Saturn scroll parallax
   useEffect(() => {
     const handleScroll = () => {
       if (!heroSectionRef.current) return;
-
-      const section = heroSectionRef.current;
-      const sectionRect = section.getBoundingClientRect();
-      const sectionTop = sectionRect.top;
-      const sectionHeight = sectionRect.height;
-      const windowHeight = window.innerHeight;
-      
-      // Start animation when section is 80% visible (earlier trigger)
-      const triggerPoint = windowHeight * 0.8; // Start when section top is at 80% of viewport height
-      
-      if (sectionTop > triggerPoint) {
-        // Reset to initial position when section is still mostly visible
+      const rect = heroSectionRef.current.getBoundingClientRect();
+      const triggerPoint = window.innerHeight * 0.8;
+      if (rect.top > triggerPoint) {
         setSaturnPosition({ scale: 1, x: 0, y: 0, opacity: 0.2 });
         return;
       }
-      
-      // Calculate scroll progress from trigger point to completely past section
-      const scrollFromTrigger = Math.max(0, triggerPoint - sectionTop);
-      const maxScroll = triggerPoint + sectionHeight; // Total scroll distance
-      const scrollProgress = Math.min(1, scrollFromTrigger / maxScroll);
-      
-      const newPosition = { scale: 1, x: 0, y: 0, opacity: 0.2 };
-      
-      if (scrollProgress < 0.3) {
-        // Phase 1: Zoom in (starts earlier)
-        const phaseProgress = scrollProgress / 0.3;
-        newPosition.scale = 1 + (1.5 * phaseProgress); // Scale from 1 to 2.5
-        newPosition.x = 0;
-        newPosition.y = 0;
-        newPosition.opacity = 0.2 + (0.3 * phaseProgress); // Increase opacity
+      const scrollFromTrigger = Math.max(0, triggerPoint - rect.top);
+      const progress = Math.min(1, scrollFromTrigger / (triggerPoint + rect.height));
+      if (progress < 0.3) {
+        const p = progress / 0.3;
+        setSaturnPosition({ scale: 1 + 1.5 * p, x: 0, y: 0, opacity: 0.2 + 0.3 * p });
       } else {
-        // Phase 2: Move left and down, then fade out
-        const phaseProgress = (scrollProgress - 0.3) / 0.7;
-        newPosition.scale = 2.5; // Keep zoomed in
-        newPosition.x = -300 * phaseProgress; // Move left
-        newPosition.y = 200 * phaseProgress; // Move down
-        newPosition.opacity = 0.5 - (0.5 * phaseProgress); // Fade out
+        const p = (progress - 0.3) / 0.7;
+        setSaturnPosition({ scale: 2.5, x: -300 * p, y: 200 * p, opacity: 0.5 - 0.5 * p });
       }
-      
-      setSaturnPosition(newPosition);
     };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial call
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Moon scroll animation for The Zenara Difference section
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!zenaraDifferenceRef.current) return;
-
-      const section = zenaraDifferenceRef.current;
-      const sectionRect = section.getBoundingClientRect();
-      const sectionTop = sectionRect.top;
-      const sectionHeight = sectionRect.height;
-      const windowHeight = window.innerHeight;
-      
-      // Start animation when section comes into view
-      const triggerPoint = windowHeight * 0.8; // Start when section top is at 80% of viewport height
-      
-      if (sectionTop > triggerPoint) {
-        // Reset to initial position when section is not yet visible
-        setMoonPosition({ scale: 0, x: 0, y: 0, opacity: 0 });
-        return;
-      }
-      
-      // Calculate scroll progress from trigger point to completely past section
-      const scrollFromTrigger = Math.max(0, triggerPoint - sectionTop);
-      const maxScroll = triggerPoint + sectionHeight; // Total scroll distance
-      const scrollProgress = Math.min(1, scrollFromTrigger / maxScroll);
-      
-      const newPosition = { scale: 0, x: 0, y: 0, opacity: 0 };
-      
-      if (scrollProgress < 0.2) {
-        // Phase 1: Zoom in and appear
-        const phaseProgress = scrollProgress / 0.2;
-        newPosition.scale = 1 + (1 * phaseProgress); // Scale from 1 to 2 (smaller final size)
-        newPosition.x = 0;
-        newPosition.y = 0;
-        newPosition.opacity = 0.2 + (0.3 * phaseProgress); // Increase opacity
-      } else {
-        // Phase 2: Move right and down, then fade out (starts earlier)
-        const phaseProgress = (scrollProgress - 0.2) / 0.8;
-        newPosition.scale = 2; // Keep zoomed in (smaller size)
-        newPosition.x = 500 * phaseProgress; // Move right (more drastic)
-        newPosition.y = 400 * phaseProgress; // Move down (more drastic)
-        newPosition.opacity = 0.5 - (0.5 * phaseProgress); // Fade out
-      }
-      
-      setMoonPosition(newPosition);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll(); // Initial call
-
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   return (
     <div className="min-h-screen" role="main" aria-label="About page">
-      {/* Space-Themed Hero Section */}
-      <section ref={heroSectionRef} className="about-hero py-16 sm:py-20 md:py-24 relative overflow-hidden bg-black">
-        {/* Gradient Background Layers */}
-        <div className="absolute inset-0">
-          {/* Base gradient layer */}
-          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
-          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
-          {/* Accent gradients with theme colors */}
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20"></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/35 to-transparent"></div>
+
+      {/* ─── HERO ────────────────────────────────────────────────────── */}
+      <section
+        ref={heroSectionRef}
+        className="relative overflow-hidden bg-black pt-36 sm:pt-44 md:pt-52 pb-20 sm:pb-24 md:pb-32"
+      >
+        {/* Background */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/50 to-black" />
+          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/40 to-black" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
+          <div className="bg-star" style={{ top: '12%', left: '8%' }} />
+          <div className="bg-star" style={{ top: '20%', left: '22%' }} />
+          <div className="bg-star" style={{ top: '8%', left: '55%' }} />
+          <div className="bg-star" style={{ top: '30%', left: '70%' }} />
+          <div className="bg-star" style={{ top: '15%', left: '88%' }} />
         </div>
-        {/* Saturn in top right */}
-        <div 
-          className="absolute top-4 right-4 sm:top-8 sm:right-8 w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 transition-all duration-300 ease-out"
+
+        {/* Saturn parallax */}
+        <div
+          className="absolute top-8 right-8 sm:top-12 sm:right-12 w-24 h-24 sm:w-36 sm:h-36 md:w-52 md:h-52 pointer-events-none"
           style={{
             transform: `scale(${saturnPosition.scale}) translate(${saturnPosition.x}px, ${saturnPosition.y}px)`,
-            opacity: saturnPosition.opacity
+            opacity: saturnPosition.opacity,
+            transition: 'transform 0.3s ease-out, opacity 0.3s ease-out',
           }}
         >
-          <SafeImage 
-            src={saturnImage} 
-            alt="Decorative Saturn planet illustration for web design agency background" 
-            className="w-full h-full object-contain"
-          />
+          <SafeImage src={saturnImage} alt="" className="w-full h-full object-contain" aria-hidden="true" />
         </div>
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0">
-          {/* Background Stars */}
-          <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
-          <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
-          <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
-          <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
-          <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
-          <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
-          <div className="bg-star" style={{ top: '18%', left: '68%' }}></div>
-          <div className="bg-star" style={{ top: '7%', left: '78%' }}></div>
-          <div className="bg-star" style={{ top: '14%', left: '88%' }}></div>
-          <div className="bg-star" style={{ top: '11%', left: '95%' }}></div>
-          
-          {/* Nebula Effects */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 pt-24 sm:pt-32 md:pt-40 lg:pt-44">
-          <div className="text-center mb-12 sm:mb-16 md:mb-20">
-            <FadeIn>
-              <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
-                <span className="block font-light opacity-90">We&apos;re not just developers,</span>
-                <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">we&apos;re digital architects</span>
-              </h1>
-            </FadeIn>
-            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-4xl mx-auto leading-[1.7] font-light tracking-[0.01em] mb-8 sm:mb-12 px-4">
-              Every business deserves a digital presence that not only looks amazing but drives real results. 
-              We bridge the gap between cutting-edge technology and thoughtful design strategy. Based in Toronto and serving the GTA.
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-12 sm:mb-16">
-              <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 w-full sm:w-auto">
-                <Button asChild className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-6 py-4 sm:px-8 sm:py-5 md:px-10 md:py-6 text-base sm:text-lg font-semibold w-full sm:w-auto group">
-                  <Link href="/contact">
-                    <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full"></span>
-                    <span className="flex items-center justify-center relative z-10 group-hover:text-white">
-                      Start Your Project
-                      <Rocket className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-                    </span>
-                  </Link>
-                </Button>
-              </div>
-            </div>
 
-            {/* Auto-scrolling Carousel */}
-            <div className="mt-12 sm:mt-16 md:mt-20 overflow-hidden relative">
-              <div 
-                className="flex gap-8 sm:gap-12" 
-                style={{ 
-                  width: 'fit-content',
-                  animation: 'scroll-horizontal 30s linear infinite'
-                }}
-              >
-                {[
-                  "Speed with Quality",
-                  "Transparent Communication",
-                  "Results-Driven Design",
-                  "Clarity over Complexity",
-                  "Security First",
-                  "Fair Pricing"
-                ].map((title, index) => (
-                  <div key={index} className="flex-shrink-0">
-                    <div className="inline-flex items-center space-x-3 bg-slate-900/90 backdrop-blur-sm rounded-full px-6 py-3 sm:px-8 sm:py-4 border border-slate-800/50">
-                      <div className="w-2 h-2 bg-gradient-to-r from-cyan-300 to-purple-300 rounded-full"></div>
-                      <span className="text-white text-sm sm:text-base md:text-lg font-light whitespace-nowrap">
-                        {title}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="max-w-4xl">
+            <FadeIn delay={0}>
+              <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-cyan-400/70 mb-6 font-medium">
+                Toronto Web Design Agency
+              </p>
+            </FadeIn>
+
+            <TextReveal
+              staggerMs={130}
+              lines={[
+                <span key="l1" className="block font-light text-white/90 text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extralight leading-[0.95] tracking-[-0.04em] pb-3">
+                  Built by engineers.
+                </span>,
+                <span key="l2" className="block text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extralight leading-[0.95] tracking-[-0.04em] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal mt-2">
+                  Obsessed with craft.
+                </span>,
+              ]}
+            />
+
+            <FadeIn delay={340}>
+              <p className="mt-8 sm:mt-10 text-base sm:text-lg md:text-xl text-white/55 max-w-2xl leading-[1.7] font-light tracking-[0.01em]">
+                We&apos;re a two-engineer web design agency from Toronto. We use modern tooling
+                and AI-assisted workflows to build better websites, faster — and we charge fairly for it.
+              </p>
+            </FadeIn>
+
+            <FadeIn delay={460}>
+              <div className="mt-8 sm:mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6">
+                <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
+                  <Button asChild className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-8 py-4 sm:px-10 sm:py-5 text-base sm:text-lg font-semibold group">
+                    <Link href="/contact" className="flex items-center justify-center">
+                      <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full" />
+                      <span className="flex items-center relative z-10 group-hover:text-white">
+                        Start Your Project <Rocket className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
                       </span>
-                    </div>
-                  </div>
-                ))}
-                {/* Duplicate for seamless loop */}
-                {[
-                  "Speed with Quality",
-                  "Transparent Communication",
-                  "Results-Driven Design",
-                  "Clarity over Complexity",
-                  "Security First",
-                  "Fair Pricing"
-                ].map((title, index) => (
-                  <div key={`duplicate-${index}`} className="flex-shrink-0">
-                    <div className="inline-flex items-center space-x-3 bg-slate-900/90 backdrop-blur-sm rounded-full px-6 py-3 sm:px-8 sm:py-4 border border-slate-800/50">
-                      <div className="w-2 h-2 bg-gradient-to-r from-cyan-300 to-purple-300 rounded-full"></div>
-                      <span className="text-white text-sm sm:text-base md:text-lg font-light whitespace-nowrap">
-                        {title}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+                    </Link>
+                  </Button>
+                </div>
+                <Link
+                  href="/services"
+                  className="inline-flex items-center text-base sm:text-lg font-medium text-white/50 hover:text-white transition-colors duration-300 group"
+                >
+                  Our Services <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                </Link>
               </div>
-            </div>
+            </FadeIn>
           </div>
-          
         </div>
       </section>
 
-      {/* The Zenara Difference - Space Theme */}
-      <section ref={zenaraDifferenceRef} className="about-section py-16 sm:py-20 md:py-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-cyan-900 to-slate-900">
-        {/* Moon in top left */}
-        <div 
-          className="absolute top-4 left-4 sm:top-8 sm:left-8 w-20 h-20 sm:w-24 sm:h-24 md:w-32 md:h-32 transition-all duration-300 ease-out opacity-15"
-          style={{
-            transform: `scale(${moonPosition.scale}) translate(${moonPosition.x}px, ${moonPosition.y}px)`,
-            opacity: moonPosition.opacity * 0.15
-          }}
-        >
-          <SafeImage 
-            src={moonImage} 
-            alt="Decorative moon illustration for web design agency background" 
-            className="w-full h-full object-contain animate-levitate"
-          />
+      {/* ─── OUR STORY ───────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden bg-black py-20 sm:py-24 md:py-32">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute -top-20 -left-20 w-[600px] h-[400px] bg-cyan-500/[0.07] rounded-full blur-[120px]" />
+          <div className="absolute bottom-0 right-0 w-[500px] h-[400px] bg-purple-500/[0.08] rounded-full blur-[100px]" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
         </div>
-        {/* Space Background Elements */}
-        <div className="absolute inset-0">
-          {/* Background Stars */}
-          <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
-          <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
-          <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
-          <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
-          <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
-          <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
-          <div className="bg-star" style={{ top: '18%', left: '68%' }}></div>
-          <div className="bg-star" style={{ top: '7%', left: '78%' }}></div>
-          <div className="bg-star" style={{ top: '14%', left: '88%' }}></div>
-          <div className="bg-star" style={{ top: '11%', left: '95%' }}></div>
-          
-          {/* Nebula Effects */}
-          <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/3 right-1/3 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        </div>
-        
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="text-center mb-12 sm:mb-16">
-            <FadeIn>
-              <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
-                <span className="block font-light opacity-90">The</span>
-                <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Dream Team</span>
-              </h2>
-            </FadeIn>
-            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
-              Passionate professionals dedicated to turning your vision into digital reality
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {team.map((member, index) => (
-              <div key={index} className="group h-full">
-                <div className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border border-slate-800/50 shadow-2xl hover:shadow-cyan-500/20 transition-all duration-500 h-full flex flex-col relative overflow-hidden">
-                  {/* Box glow */}
-                  <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
-                  
-                  {/* Glow Effect on Hover */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/20 via-purple-500/20 to-cyan-500/20 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  
-                  <div className="relative z-10 text-center flex flex-col h-full">
-                    <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 rounded-xl mx-auto mb-4 sm:mb-6 flex items-center justify-center text-white group-hover:scale-110 group-hover:rotate-12 transition-all duration-500 shadow-lg flex-shrink-0 relative">
-                      <div className="absolute -inset-1 bg-gradient-to-br from-cyan-400/30 via-purple-400/30 to-cyan-400/30 blur-md opacity-70 animate-pulse rounded-xl"></div>
-                      <Users className="h-8 w-8 sm:h-10 sm:w-10 relative z-10" />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-start">
+
+            {/* Left — narrative */}
+            <div>
+              <FadeIn>
+                <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-cyan-400/70 mb-6 font-medium">
+                  Our Story
+                </p>
+              </FadeIn>
+              <TextReveal
+                staggerMs={120}
+                baseDelayMs={60}
+                lines={[
+                  <span key="l1" className="block text-3xl sm:text-4xl md:text-5xl font-extralight text-white/90 leading-[1.1] tracking-[-0.04em]">
+                    Why we built
+                  </span>,
+                  <span key="l2" className="block text-3xl sm:text-4xl md:text-5xl font-extralight bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient leading-[1.1] tracking-[-0.04em] mt-1">
+                    Zenara Designs
+                  </span>,
+                ]}
+              />
+
+              <div className="mt-8 space-y-5 text-white/55 text-base sm:text-lg leading-[1.8] font-light">
+                <FadeIn delay={200}>
+                  <p>
+                    Small businesses in Toronto were routinely paying $10,000–$50,000 to traditional agencies — then waiting
+                    three to six months for a website that looked like every other agency template on the internet.
+                  </p>
+                </FadeIn>
+                <FadeIn delay={300}>
+                  <p>
+                    We were engineers at tech companies watching this happen. We knew modern tooling — Next.js, serverless
+                    infrastructure, AI-assisted design workflows — could deliver a dramatically better result in a fraction
+                    of the time. So we built a firm around that.
+                  </p>
+                </FadeIn>
+                <FadeIn delay={400}>
+                  <p>
+                    Zenara is two engineers and a designer who genuinely care about the outcome. No account managers,
+                    no offshore hand-offs, no mystery invoices. You talk directly to the people building your site —
+                    from the first call to launch day and beyond.
+                  </p>
+                </FadeIn>
+              </div>
+            </div>
+
+            {/* Right — editorial stat panel */}
+            <FadeIn delay={150}>
+              <div className="lg:mt-12 relative rounded-2xl border border-white/8 overflow-hidden">
+                {/* Subtle background glow */}
+                <div className="absolute inset-0 bg-gradient-to-br from-cyan-950/40 via-slate-900/60 to-purple-950/30 pointer-events-none" />
+                <div className="absolute -top-20 -right-20 w-48 h-48 bg-cyan-400/8 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute -bottom-20 -left-20 w-48 h-48 bg-purple-400/8 rounded-full blur-3xl pointer-events-none" />
+
+                {/* 2×2 stat grid */}
+                <div className="relative grid grid-cols-2 divide-x divide-y divide-white/6">
+                  {[
+                    { value: '2024', label: 'Year founded', sub: 'Toronto, Ontario' },
+                    { value: '1–2', label: 'Weeks to launch', sub: 'From first call to live' },
+                    { value: '3', label: 'Person team', sub: 'Engineers + designer' },
+                    { value: '90+', label: 'Lighthouse score', sub: 'On every site we ship' },
+                  ].map((stat, i) => (
+                    <div key={i} className="group px-4 py-6 sm:px-8 sm:py-8 flex flex-col gap-2 hover:bg-white/[0.02] transition-colors duration-300">
+                      <div className="text-4xl sm:text-5xl md:text-6xl font-extralight bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient tracking-[-0.04em] leading-none">
+                        {stat.value}
+                      </div>
+                      <div className="text-white/70 text-sm sm:text-base font-medium tracking-tight leading-tight mt-1">
+                        {stat.label}
+                      </div>
+                      <div className="text-white/30 text-xs sm:text-sm font-light">
+                        {stat.sub}
+                      </div>
                     </div>
-                    <h3 className="text-xl sm:text-2xl font-semibold mb-2 text-white flex-shrink-0 tracking-tight">{member.name}</h3>
-                    <p className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-light mb-3 sm:mb-4 text-base sm:text-lg flex-shrink-0">{member.role}</p>
-                    <p className="text-white/60 leading-relaxed flex-grow text-sm sm:text-base font-light">{member.bio}</p>
+                  ))}
+                </div>
+
+              </div>
+            </FadeIn>
+
+          </div>
+        </div>
+      </section>
+
+      {/* ─── THE TEAM ────────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden py-20 sm:py-24 md:py-32 bg-gradient-to-br from-slate-900 via-cyan-900/60 to-slate-900">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="bg-star" style={{ top: '8%', left: '5%' }} />
+          <div className="bg-star" style={{ top: '14%', left: '28%' }} />
+          <div className="bg-star" style={{ top: '6%', left: '62%' }} />
+          <div className="bg-star" style={{ top: '18%', left: '82%' }} />
+          <div className="bg-star" style={{ top: '35%', left: '92%' }} />
+          <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/3 right-1/3 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="text-center mb-14 sm:mb-18 md:mb-20">
+            <TextReveal
+              className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-white mb-6 leading-[0.95] tracking-[-0.04em]"
+              staggerMs={130}
+              lines={[
+                <span key="l1" className="block font-light opacity-90 pb-2">The people building</span>,
+                <span key="l2" className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">your site</span>,
+              ]}
+            />
+            <FadeIn delay={280}>
+              <p className="text-base sm:text-lg md:text-xl text-white/55 max-w-2xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
+                No account managers in the way. When you email us, an engineer responds.
+              </p>
+            </FadeIn>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+            {team.map((member, index) => (
+              <FadeIn key={index} delay={index * 120}>
+                <div className="group relative bg-slate-900/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl border border-slate-800/60 hover:border-cyan-500/30 transition-all duration-500 overflow-hidden h-full">
+                  {/* hover wash */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/6 via-purple-500/4 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  {/* corner glow */}
+                  <div className="absolute -top-12 -right-12 w-36 h-36 bg-cyan-400/10 rounded-full blur-3xl group-hover:bg-cyan-400/22 transition-all duration-700" />
+
+                  <div className="relative z-10 p-7 sm:p-8 flex flex-col h-full">
+                    {/* Monogram badge */}
+                    <div className="mb-6 flex items-center gap-4">
+                      <div className="relative flex-shrink-0">
+                        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-purple-500/20 border border-cyan-500/25 flex items-center justify-center group-hover:scale-105 transition-transform duration-400">
+                          <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-cyan-300 to-purple-300 bg-clip-text text-transparent">
+                            {member.initials}
+                          </span>
+                        </div>
+                        <div className="absolute -inset-1 rounded-2xl bg-gradient-to-br from-cyan-400/20 to-purple-400/20 blur-md opacity-0 group-hover:opacity-70 transition-opacity duration-500" />
+                      </div>
+                      <div>
+                        <h3 className="text-lg sm:text-xl font-semibold text-white tracking-tight">{member.name}</h3>
+                        <p className="text-sm bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-medium mt-0.5">
+                          {member.role}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Credential */}
+                    <div className="mb-5 pb-5 border-b border-white/6">
+                      <span className="inline-flex items-center gap-2 text-xs text-white/35 font-light">
+                        <span className="w-1 h-1 rounded-full bg-cyan-400/50 flex-shrink-0" />
+                        {member.degree} · {member.school}
+                      </span>
+                    </div>
+
+                    {/* Bio */}
+                    <p className="text-white/55 text-sm sm:text-base leading-[1.75] font-light flex-grow">
+                      {member.bio}
+                    </p>
                   </div>
                 </div>
-              </div>
+              </FadeIn>
             ))}
           </div>
         </div>
       </section>
 
-      {/* How We Bring Ideas to Life - Visual Design */}
-      <section className="about-timeline py-16 sm:py-20 md:py-24 relative overflow-hidden bg-black">
-        {/* Gradient Background Layers */}
-        <div className="absolute inset-0">
-          {/* Base gradient layer */}
-          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
-          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
-          {/* Accent gradients with theme colors */}
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20"></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/35 to-transparent"></div>
+      {/* ─── OUR STACK ───────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden bg-black py-20 sm:py-24 md:py-32">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-0 right-1/4 w-[500px] h-[300px] bg-purple-500/[0.08] rounded-full blur-[100px]" />
+          <div className="absolute bottom-0 left-1/4 w-[400px] h-[280px] bg-cyan-500/[0.07] rounded-full blur-[80px]" />
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
         </div>
-        
-        {/* Space Background Elements */}
-        <div className="absolute inset-0">
-          {/* Background Stars */}
-          <div className="bg-star" style={{ top: '5%', left: '3%' }}></div>
-          <div className="bg-star" style={{ top: '8%', left: '12%' }}></div>
-          <div className="bg-star" style={{ top: '12%', left: '25%' }}></div>
-          <div className="bg-star" style={{ top: '6%', left: '38%' }}></div>
-          <div className="bg-star" style={{ top: '15%', left: '45%' }}></div>
-          <div className="bg-star" style={{ top: '9%', left: '58%' }}></div>
-          <div className="bg-star" style={{ top: '18%', left: '68%' }}></div>
-          <div className="bg-star" style={{ top: '7%', left: '78%' }}></div>
-          <div className="bg-star" style={{ top: '14%', left: '88%' }}></div>
-          <div className="bg-star" style={{ top: '11%', left: '95%' }}></div>
-          
-          {/* Nebula Effects */}
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        </div>
-        
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="text-center mb-12 sm:mb-16 md:mb-20">
-            <FadeIn>
-              <h2 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]">
-                <span className="block font-light opacity-90">How We</span>
-                <span className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Bring Ideas to Life</span>
-              </h2>
-            </FadeIn>
-            <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
-              A proven methodology that transforms your vision into a digital masterpiece
-            </p>
-          </div>
-          
-          {/* Process Steps — redesigned */}
-          <div className="relative space-y-6 sm:space-y-8">
 
-            {/* Steps 1–3: alternating image + content panels */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14 sm:mb-16">
+            <div>
+              <FadeIn>
+                <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-cyan-400/70 mb-5 font-medium">
+                  Technology
+                </p>
+              </FadeIn>
+              <TextReveal
+                staggerMs={120}
+                baseDelayMs={60}
+                lines={[
+                  <span key="l1" className="block text-3xl sm:text-4xl md:text-5xl font-extralight text-white/90 leading-[1.05] tracking-[-0.04em]">
+                    The stack behind
+                  </span>,
+                  <span key="l2" className="block text-3xl sm:text-4xl md:text-5xl font-extralight bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient leading-[1.05] tracking-[-0.04em] mt-1">
+                    every site we build
+                  </span>,
+                ]}
+              />
+            </div>
+            <FadeIn delay={300}>
+              <p className="text-white/40 text-sm sm:text-base leading-relaxed font-light max-w-sm lg:text-right">
+                No page builders. No drag-and-drop templates. Every site is hand-coded against a production-grade stack.
+              </p>
+            </FadeIn>
+          </div>
+
+          {/* Stack table */}
+          <div className="border border-white/8 rounded-2xl overflow-hidden">
+            {stackItems.map((item, i) => (
+              <FadeIn key={i} delay={i * 60}>
+                <div className={`group flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-0 px-6 sm:px-8 py-5 sm:py-6 border-b border-white/6 last:border-b-0 hover:bg-white/[0.02] transition-colors duration-300 ${i === 0 ? '' : ''}`}>
+                  {/* Tech name */}
+                  <div className="sm:w-48 flex-shrink-0">
+                    <span className="text-white font-semibold text-base sm:text-lg tracking-tight group-hover:text-cyan-300 transition-colors duration-300">
+                      {item.name}
+                    </span>
+                  </div>
+                  {/* Category tag */}
+                  <div className="sm:w-44 flex-shrink-0">
+                    <span className="text-xs uppercase tracking-[0.15em] text-cyan-400/60 font-medium border border-cyan-500/15 rounded-full px-3 py-1">
+                      {item.category}
+                    </span>
+                  </div>
+                  {/* Description */}
+                  <div className="flex-1">
+                    <span className="text-white/40 text-sm sm:text-base font-light leading-relaxed">
+                      {item.desc}
+                    </span>
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── PROCESS ─────────────────────────────────────────────────── */}
+      <section className="relative overflow-hidden py-20 sm:py-24 md:py-32 bg-black">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/50 to-black" />
+          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/40 to-black" />
+          <div className="bg-star" style={{ top: '5%', left: '3%' }} />
+          <div className="bg-star" style={{ top: '10%', left: '20%' }} />
+          <div className="bg-star" style={{ top: '7%', left: '48%' }} />
+          <div className="bg-star" style={{ top: '12%', left: '72%' }} />
+          <div className="bg-star" style={{ top: '4%', left: '90%' }} />
+          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/8 to-transparent" />
+        </div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="text-center mb-14 sm:mb-18 md:mb-20">
+            <TextReveal
+              className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-white mb-6 sm:mb-8 leading-[0.95] tracking-[-0.04em]"
+              staggerMs={130}
+              lines={[
+                <span key="l1" className="block font-light opacity-90">How we bring</span>,
+                <span key="l2" className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">ideas to life</span>,
+              ]}
+            />
+            <FadeIn delay={280}>
+              <p className="text-base sm:text-lg md:text-xl text-white/55 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
+                A proven methodology that transforms your vision into a digital reality — no surprises, no scope creep.
+              </p>
+            </FadeIn>
+          </div>
+
+          {/* Steps 1–3: alternating image + content panels */}
+          <div className="relative space-y-6 sm:space-y-8">
             {([
-              { img: discoveryImage,   alt: 'Discovery workspace' },
+              { img: discoveryImage, alt: 'Discovery workspace' },
               { img: prototypingImage, alt: 'Prototyping workspace' },
-              { img: buildImage,       alt: 'Build workspace'      },
+              { img: buildImage, alt: 'Build workspace' },
             ] as const).map(({ img, alt }, index) => {
-              const isEven     = index % 2 === 1;
-              const isVisible  = visibleTimelineItems.includes(index);
+              const isEven = index % 2 === 1;
+              const isVisible = visibleTimelineItems.includes(index);
               const accentFrom = isEven ? 'from-purple-300' : 'from-cyan-300';
-              const accentVia  = 'via-purple-300';
-              const accentTo   = isEven ? 'to-cyan-300' : 'to-cyan-300';
+              const accentTo = 'to-cyan-300';
               const enterClass = isVisible
                 ? 'opacity-100 translate-x-0'
-                : isEven
-                  ? 'opacity-0 translate-x-16'
-                  : 'opacity-0 -translate-x-16';
+                : isEven ? 'opacity-0 translate-x-16' : 'opacity-0 -translate-x-16';
 
               return (
                 <div
@@ -470,7 +502,6 @@ const About = () => {
                   style={{ transitionDelay: `${index * 80}ms` }}
                 >
                   <div className={`flex flex-col ${isEven ? 'lg:flex-row-reverse' : 'lg:flex-row'} rounded-2xl overflow-hidden border border-slate-800/60 group`}>
-
                     {/* Image half */}
                     <div className="relative w-full lg:w-1/2 h-[280px] sm:h-[340px] lg:h-[420px] overflow-hidden flex-shrink-0">
                       <SafeImage
@@ -478,11 +509,8 @@ const About = () => {
                         alt={alt}
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
                       />
-                      {/* dark gradient for legibility */}
                       <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-transparent to-black/40 pointer-events-none" />
-                      {/* colour tint */}
                       <div className={`absolute inset-0 bg-gradient-to-br ${isEven ? 'from-purple-600/15 to-cyan-600/15' : 'from-cyan-600/15 to-purple-600/15'} pointer-events-none`} />
-                      {/* Step number — bottom corner of image */}
                       <div className={`absolute bottom-5 ${isEven ? 'left-5' : 'right-5'} z-10`}>
                         <div className="relative w-14 h-14 sm:w-16 sm:h-16">
                           <div
@@ -493,7 +521,6 @@ const About = () => {
                               <span className="text-white font-bold text-xl sm:text-2xl">{index + 1}</span>
                             </div>
                           </div>
-                          {/* glow */}
                           <div className={`absolute -inset-2 rounded-xl blur-lg opacity-50 bg-gradient-to-br ${isEven ? 'from-purple-400/50 to-cyan-400/50' : 'from-cyan-400/50 to-purple-400/50'}`} />
                         </div>
                       </div>
@@ -501,15 +528,13 @@ const About = () => {
 
                     {/* Content half */}
                     <div className="relative w-full lg:w-1/2 bg-slate-900/95 backdrop-blur-xl p-8 sm:p-10 md:p-12 flex flex-col justify-center overflow-hidden">
-                      {/* top accent line */}
-                      <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${accentFrom} ${accentVia} ${accentTo}`} />
-                      {/* decorative large number */}
+                      <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${accentFrom} via-purple-300 ${accentTo}`} />
                       <div className="absolute right-4 bottom-2 text-[7rem] sm:text-[9rem] font-black text-white/[0.04] leading-none select-none pointer-events-none">
                         0{index + 1}
                       </div>
                       <div className="relative z-10">
                         <h3 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-white mb-5 tracking-tight leading-tight">
-                          <span className={`bg-gradient-to-r ${accentFrom} ${accentVia} ${accentTo} bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient`}>
+                          <span className={`bg-gradient-to-r ${accentFrom} via-purple-300 ${accentTo} bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient`}>
                             {process[index].phase}
                           </span>
                         </h3>
@@ -523,7 +548,6 @@ const About = () => {
                         </ul>
                       </div>
                     </div>
-
                   </div>
                 </div>
               );
@@ -539,12 +563,12 @@ const About = () => {
               {process.slice(3).map((phase, index) => {
                 const globalIndex = index + 3;
                 const isVisible = visibleTimelineItems.includes(globalIndex);
-                const accentGradients = [
+                const gradients = [
                   'from-cyan-300 via-purple-300 to-cyan-300',
                   'from-purple-300 via-cyan-300 to-purple-300',
                   'from-cyan-300 via-purple-300 to-cyan-300',
                 ];
-                const gradient = accentGradients[index];
+                const gradient = gradients[index];
 
                 return (
                   <div
@@ -557,23 +581,19 @@ const About = () => {
                     style={{ transitionDelay: `${index * 100}ms` }}
                   >
                     <div className="relative h-full bg-slate-900/90 backdrop-blur-sm border border-slate-800/50 rounded-2xl p-7 sm:p-8 overflow-hidden group hover:border-cyan-500/30 transition-[border-color] duration-300">
-                      {/* top accent line */}
                       <div className={`absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r ${gradient}`} />
-                      {/* decorative large number */}
                       <div className="absolute right-3 bottom-2 text-[6rem] font-black text-white/[0.04] leading-none select-none pointer-events-none">
                         0{globalIndex + 1}
                       </div>
-                      {/* step number badge */}
                       <div className="relative inline-flex mb-5">
                         <div
                           className="w-11 h-11 rounded-xl p-[1.5px]"
-                          style={{ background: `linear-gradient(135deg, rgb(103,232,249), rgb(196,181,253))` }}
+                          style={{ background: 'linear-gradient(135deg, rgb(103,232,249), rgb(196,181,253))' }}
                         >
                           <div className="w-full h-full bg-slate-950 rounded-[10px] flex items-center justify-center">
                             <span className="text-white font-bold text-base">{globalIndex + 1}</span>
                           </div>
                         </div>
-                        {/* subtle glow */}
                         <div className={`absolute -inset-1 rounded-xl blur-md opacity-40 bg-gradient-to-br ${gradient}`} />
                       </div>
                       <div className="relative z-10">
@@ -596,27 +616,67 @@ const About = () => {
                 );
               })}
             </div>
-
-          </div>
-          
-          {/* Last Updated Date */}
-          <div className="text-center mt-12 sm:mt-16">
-            <p className="text-white/40 text-sm font-light">
-              Last updated: January 2026
-            </p>
           </div>
         </div>
       </section>
 
-      {/* Breadcrumb Schema */}
-      <StructuredData 
-        type="breadcrumb" 
+      {/* ─── CTA CLOSER — matches home page CTABand ──────────────────── */}
+      <section className="py-20 sm:py-28 md:py-32 relative overflow-hidden bg-black">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-slate-900/80 to-purple-900/40" />
+          <div className="absolute top-20 left-20 w-1.5 h-1.5 bg-cyan-400 rounded-full animate-twinkle" />
+          <div className="absolute top-40 right-32 w-1 h-1 bg-purple-400 rounded-full animate-twinkle delay-1000" />
+          <div className="absolute top-60 left-1/3 w-1 h-1 bg-cyan-300 rounded-full animate-twinkle delay-2000" />
+          <div className="absolute top-32 right-1/4 w-1 h-1 bg-purple-300 rounded-full animate-twinkle delay-500" />
+          <div className="absolute top-1/3 left-1/3 w-96 h-96 bg-gradient-to-r from-cyan-500/8 to-purple-500/8 rounded-full blur-3xl" />
+          <div className="absolute bottom-1/3 right-1/3 w-80 h-80 bg-gradient-to-r from-purple-500/8 to-cyan-500/8 rounded-full blur-3xl delay-1000" />
+        </div>
+
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 relative z-10">
+          <div className="relative rounded-[2rem] overflow-hidden border border-white/20">
+            <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" />
+            <div className="absolute inset-0">
+              <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-gradient-to-br from-cyan-500/25 via-cyan-400/20 to-transparent rounded-full blur-3xl" />
+              <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-gradient-to-tl from-purple-500/25 via-purple-400/20 to-transparent rounded-full blur-3xl delay-1000" />
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gradient-to-r from-cyan-500/15 to-purple-500/15 rounded-full blur-3xl delay-500" />
+            </div>
+
+            <div className="relative z-10 px-6 sm:px-8 md:px-12 lg:px-16 py-12 sm:py-16 md:py-20 text-center">
+              <TextReveal
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white mb-6 leading-[1.1] tracking-[-0.04em]"
+                staggerMs={130}
+                lines={[
+                  <span key="l1" className="block font-light opacity-90">Ready to build something</span>,
+                  <span key="l2" className="block mt-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">amazing?</span>,
+                ]}
+              />
+              <FadeIn delay={280}>
+                <p className="text-base sm:text-lg md:text-xl text-white/70 mb-10 sm:mb-12 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em]">
+                  Free consultation. No hard sell. Just an honest conversation about what you need and whether we&apos;re the right fit.
+                </p>
+              </FadeIn>
+              <FadeIn delay={380}>
+                <div>
+                  <Link href="/contact" className="relative inline-block group">
+                    <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 rounded-full blur opacity-50 group-hover:opacity-70 transition-opacity duration-300" />
+                    <div className="relative bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 hover:from-cyan-400 hover:via-purple-400 hover:to-cyan-400 text-white rounded-full px-10 sm:px-12 md:px-14 py-4 sm:py-5 text-lg sm:text-xl font-semibold shadow-lg transition-all duration-300 transform hover:scale-105 animate-jiggle">
+                      Book a Free Consultation
+                    </div>
+                  </Link>
+                </div>
+              </FadeIn>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <StructuredData
+        type="breadcrumb"
         breadcrumbs={[
           { name: 'Home', url: '/' },
-          { name: 'About', url: '/about' }
-        ]} 
+          { name: 'About', url: '/about' },
+        ]}
       />
-
     </div>
   );
 };

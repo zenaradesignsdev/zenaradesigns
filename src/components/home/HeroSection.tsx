@@ -176,7 +176,8 @@ const HeroSection = () => {
                     style={{ filter: 'drop-shadow(0 0 20px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 40px rgba(0, 0, 0, 0.3))' }}
                     width={350}
                     height={350}
-                    priority
+                    sizes="(max-width: 480px) 180px, (max-width: 640px) 200px, (max-width: 768px) 280px, (max-width: 1024px) 320px, 350px"
+                    priority={true}
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 to-purple-500/0 rounded-full blur-xl group-hover:from-teal-500/20 group-hover:to-purple-500/20 transition-all duration-500"></div>
                 </div>
