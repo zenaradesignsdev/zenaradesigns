@@ -8,7 +8,9 @@ import { fontSans } from '@/lib/fonts';
 export const metadata: Metadata = {
   title: {
     default: 'Web Design Toronto | Business Cards & Logo Design | Zenara',
-    template: '%s | Zenara Designs',
+    // Page titles already include the brand, so the template must not append it
+    // again (was producing "… | Zenara | Zenara Designs").
+    template: '%s',
   },
   description:
     "Toronto's leading web design agency. Professional websites, business cards & logo design for GTA businesses. Modern, fast, secure solutions.",

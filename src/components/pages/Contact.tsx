@@ -174,6 +174,7 @@ const Contact = () => {
                 </p>
               </FadeIn>
               <TextReveal
+                as="h1"
                 className="text-5xl sm:text-6xl md:text-7xl lg:text-6xl xl:text-7xl font-extralight text-white leading-[0.92] tracking-[-0.04em] mb-8"
                 staggerMs={130}
                 lines={[

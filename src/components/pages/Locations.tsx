@@ -93,6 +93,19 @@ const locations = [
     }
 ];
 
+// City display name → /web-design/[slug] (matches src/lib/city-content.ts keys).
+const toCitySlug = (city: string) => city.toLowerCase().replace(/\s+/g, '-');
+
+// Every GTA city with a dedicated web-design landing page, for the hub link list.
+const ALL_CITY_SLUGS = [
+  'toronto', 'mississauga', 'brampton', 'vaughan', 'markham', 'richmond-hill',
+  'oakville', 'burlington', 'hamilton', 'scarborough', 'north-york', 'etobicoke',
+  'pickering', 'ajax', 'whitby', 'oshawa', 'newmarket', 'aurora', 'stouffville',
+];
+
+const slugToLabel = (slug: string) =>
+  slug.split('-').map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
+
 const Locations = () => {
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
@@ -190,10 +203,36 @@ const Locations = () => {
                       ))}
                     </div>
                   </div>
+
+                  <Link
+                    href={`/web-design/${toCitySlug(location.city)}`}
+                    className="mt-6 inline-flex items-center gap-2 text-sm font-medium text-cyan-300 hover:text-cyan-200 transition-colors"
+                  >
+                    Web design in {location.city}
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
                 </div>
               </div>
             </div>
           ))}
+        </div>
+
+        {/* All GTA city web-design pages — internal-link mesh & crawl discovery */}
+        <div className="mb-16 sm:mb-20">
+          <h2 className="text-xl sm:text-2xl font-semibold text-white mb-5">
+            Web design by city across the GTA
+          </h2>
+          <div className="flex flex-wrap gap-3">
+            {ALL_CITY_SLUGS.map((slug) => (
+              <Link
+                key={slug}
+                href={`/web-design/${slug}`}
+                className="text-sm bg-slate-800/50 text-cyan-300 px-4 py-2 rounded-full border border-cyan-500/30 hover:border-cyan-400 hover:text-cyan-200 transition-colors font-light"
+              >
+                Web Design {slugToLabel(slug)}
+              </Link>
+            ))}
+          </div>
         </div>
 
         {/* Why Choose Us Section */}
@@ -212,7 +251,7 @@ const Locations = () => {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6">
               <div className="text-center group">
                 <div className="bg-slate-800/50 rounded-xl p-6 border border-slate-700/50 group-hover:border-cyan-500/50 transition-all duration-300">
-                  <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient mb-2">13</div>
+                  <div className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient mb-2">19</div>
                   <div className="text-white/60 text-sm sm:text-base font-light">GTA Cities Served</div>
                 </div>
               </div>

@@ -133,15 +133,17 @@ const Footer = () => {
 
       <div className="relative z-10">
         {/* ZENARA Brand Section */}
-        <div className="py-16 text-center">
-          <h1 className="text-8xl md:text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/5 leading-none tracking-widest uppercase" style={{
+        <div className="py-8 sm:py-12 md:py-16 text-center">
+          {/* Decorative brand wordmark — not a heading (avoids a second <h1>
+              competing with each page's real H1). */}
+          <div aria-hidden="true" className="text-5xl sm:text-7xl md:text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/5 leading-none tracking-widest uppercase" style={{
             fontFamily: 'Poppins, sans-serif',
             fontWeight: '800',
             letterSpacing: '0.1em',
             textShadow: '0 0 20px rgba(255, 255, 255, 0.1)'
           }}>
             Zenara Designs
-          </h1>
+          </div>
           
           {/* Divider Line */}
           <div className="mt-8 flex justify-center">
@@ -150,10 +152,10 @@ const Footer = () => {
         </div>
 
         {/* Footer Content */}
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8 lg:gap-10 mb-8">
+        <div className="max-w-7xl mx-auto px-6 py-8 sm:py-12">
+          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8 lg:gap-10 mb-8">
             {/* Brand */}
-            <div className="space-y-4">
+            <div className="col-span-2 md:col-span-2 lg:col-span-1 space-y-4">
               <div className="flex items-center space-x-3">
                 <Image src={logo} alt="Zenara Designs - Professional Web Design Agency Toronto" className="h-8 w-auto" width={32} height={32} />
                 <span className="font-light text-base sm:text-lg text-white">Zenara Designs</span>

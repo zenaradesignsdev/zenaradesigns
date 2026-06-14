@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, Printer, Gem, Palette, Clock, Layers, Ruler, Sparkles, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import StructuredData from '@/components/StructuredData';
+import { businessCardsFaqs as faqs } from '@/lib/service-content';
 
 const features = [
   {
@@ -62,29 +62,6 @@ const differentiators = [
   {
     title: 'Lifetime Source Files',
     description: 'You own every file we create. AI, PSD, PDF, and print-ready files are yours forever — update contact info, reprint anytime, no extra licensing fees.',
-  },
-];
-
-const faqs = [
-  {
-    question: 'How much does professional business card design cost in Toronto?',
-    answer: 'Business card design at Zenara Designs starts at $150 for a single-sided card and ranges to $400+ for a double-sided premium design with multiple concepts. Print costs are separate and depend on quantity, stock, and finishing options. We can coordinate with GTA print vendors on your behalf.',
-  },
-  {
-    question: 'What file formats do I receive for printing?',
-    answer: 'You receive print-ready PDF files with crop marks and bleed, CMYK-optimized files at 300 DPI, and full-resolution PNG exports. We also provide all source files (AI, PSD) so you own your design forever and can reprint or update contact information at any time.',
-  },
-  {
-    question: 'Can you match my existing brand colours and fonts?',
-    answer: 'Absolutely. Every card we design is built on your existing brand identity — matching exact Pantone/CMYK colour codes, typefaces, logo usage, and visual style. If you don\'t have brand guidelines yet, we can develop your full identity alongside the card design.',
-  },
-  {
-    question: 'How fast can you design my business cards?',
-    answer: 'Design concepts are typically delivered within 3–5 business days. Rush turnaround (24–48 hours) is available for time-sensitive events like conferences or networking functions. Reach out with your deadline and we will confirm availability before booking.',
-  },
-  {
-    question: 'Do you offer premium finishes like spot UV or foil?',
-    answer: 'Yes. We design for premium finishing options including spot UV coating, foil stamping (gold, silver, rose gold), soft-touch lamination, embossing, debossing, edge painting, and letterpress. We guide you through the options that will best complement your brand and budget.',
   },
 ];
 
@@ -279,30 +256,7 @@ const BusinessCardsService = () => {
         </section>
       </div>
 
-      {/* Breadcrumb Schema */}
-      <StructuredData
-        type="breadcrumb"
-        breadcrumbs={[
-          { name: 'Home', url: '/' },
-          { name: 'Services', url: '/services' },
-          { name: 'Business Cards', url: '/services/business-cards' },
-        ]}
-      />
-      <StructuredData
-        type="serviceOffering"
-        services={[
-          {
-            name: 'Business Card Design Toronto',
-            description: 'Professional business card design for Toronto & GTA professionals. Premium print-ready designs with spot UV, foil, and soft-touch options. 3–5 day turnaround.',
-            features: ['Print-Ready Files', 'Premium Materials', 'Brand-Consistent Design', 'Fast Turnaround', 'Double-Sided Layouts', 'Finishing Options'],
-            emoji: '🃏',
-          },
-        ]}
-      />
-      <StructuredData
-        type="faq"
-        faqs={faqs}
-      />
+      {/* Schema is server-rendered in src/app/services/business-cards/page.tsx */}
     </div>
   );
 };

@@ -7,7 +7,7 @@ import { useState, useEffect, useRef, memo } from 'react';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
 import type { ProcessStep, Position } from '@/types';
 import { SafeImage } from '@/components/ui/safe-image';
-import StructuredData from '@/components/StructuredData';
+import { team } from '@/lib/team';
 import { TextReveal } from '@/components/ui/text-reveal';
 import { FadeIn } from '@/components/ui/fade-in';
 
@@ -16,32 +16,6 @@ const discoveryImage = '/images/zenara-discovery.jpg';
 const prototypingImage = '/images/zenara-prototyping.jpg';
 const buildImage = '/images/zenara-build.jpg';
 
-const team = [
-  {
-    name: 'Pratik Mistry',
-    initials: 'PM',
-    role: 'Lead Developer',
-    school: 'University of Ottawa',
-    degree: 'Computer Engineering',
-    bio: '4–5 years building scalable web applications. Obsessed with clean architecture, performance, and shipping products that actually work.',
-  },
-  {
-    name: 'Kavin Mural',
-    initials: 'KM',
-    role: 'Lead Developer',
-    school: 'University of Waterloo',
-    degree: 'Computer Science',
-    bio: '4–5 years across full-stack development. Specializes in modern web tech, developer tooling, and turning complex requirements into elegant solutions.',
-  },
-  {
-    name: 'Ryan Honeybone',
-    initials: 'RH',
-    role: 'UX / UI Designer',
-    school: 'McGill University',
-    degree: 'Design',
-    bio: '3 years crafting interfaces that convert. Bridges the gap between brand identity and user behaviour — no templates, no shortcuts.',
-  },
-];
 
 const stackItems = [
   { name: 'Next.js 14', category: 'Framework', desc: 'App Router, SSR, static generation for Lighthouse 90+ scores' },
@@ -171,6 +145,7 @@ const About = () => {
             </FadeIn>
 
             <TextReveal
+              as="h1"
               staggerMs={130}
               lines={[
                 <span key="l1" className="block font-light text-white/90 text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extralight leading-[0.95] tracking-[-0.04em] pb-3">
@@ -670,13 +645,8 @@ const About = () => {
         </div>
       </section>
 
-      <StructuredData
-        type="breadcrumb"
-        breadcrumbs={[
-          { name: 'Home', url: '/' },
-          { name: 'About', url: '/about' },
-        ]}
-      />
+      {/* AboutPage, Person (team), Organization, and Breadcrumb schema is
+          server-rendered in src/app/about/page.tsx */}
     </div>
   );
 };

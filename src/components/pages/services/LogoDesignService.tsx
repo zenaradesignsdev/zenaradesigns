@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, Pen, Droplets, Type, BookOpen, Eye, Layers, Target, Repeat } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import StructuredData from '@/components/StructuredData';
+import { logoDesignFaqs as faqs } from '@/lib/service-content';
 
 const features = [
   {
@@ -62,29 +62,6 @@ const differentiators = [
   {
     title: 'Cross-Platform Ready',
     description: 'Designed to look stunning at any size: from a favicon on a browser tab to a billboard on the highway. Scalability is baked into every concept.',
-  },
-];
-
-const faqs = [
-  {
-    question: 'How much does a professional logo design cost in Toronto?',
-    answer: 'Professional logo design at Zenara Designs starts at $500 for a standalone logo and ranges to $2,500+ for a complete brand identity package including guidelines, colour palette, and typography system. We provide fixed-price quotes after a free consultation — no hourly billing.',
-  },
-  {
-    question: 'How many logo concepts will I receive?',
-    answer: 'We present 3–4 distinct logo concepts per project, each exploring a different visual direction. After you choose a direction, we refine through unlimited revision rounds until you are completely satisfied. You won\'t be locked into a concept that doesn\'t feel right.',
-  },
-  {
-    question: 'What file formats are included with my logo?',
-    answer: 'You receive every file format you will ever need: SVG, PNG (transparent & white backgrounds), PDF, EPS, and AI source files. We also provide light and dark variants, with and without tagline, and social media-optimized sizes for profile pictures and cover photos.',
-  },
-  {
-    question: 'Can my logo be trademarked?',
-    answer: 'Yes. Every logo we design is 100% original — no stock icons, no clip art, no templates. Original custom logos are eligible for trademark registration in Canada through the Canadian Intellectual Property Office (CIPO). We recommend consulting a trademark lawyer for formal registration.',
-  },
-  {
-    question: 'Do you also design business cards and websites to match?',
-    answer: 'Yes — brand consistency across every touchpoint is our specialty. Once your logo is finalized, we can extend the identity to business cards, letterhead, email signatures, and your full website. Everything will share the same visual language and feel like one unified brand.',
   },
 ];
 
@@ -279,30 +256,7 @@ const LogoDesignService = () => {
         </section>
       </div>
 
-      {/* Breadcrumb Schema */}
-      <StructuredData
-        type="breadcrumb"
-        breadcrumbs={[
-          { name: 'Home', url: '/' },
-          { name: 'Services', url: '/services' },
-          { name: 'Logo Design', url: '/services/logo-design' },
-        ]}
-      />
-      <StructuredData
-        type="serviceOffering"
-        services={[
-          {
-            name: 'Logo Design & Brand Identity Toronto',
-            description: 'Professional logo design and brand identity for Toronto & GTA businesses. Custom logos, colour palettes, typography, and complete brand guidelines with unlimited revisions.',
-            features: ['Custom Logo Creation', 'Color Psychology', 'Typography Selection', 'Brand Guidelines', 'Visual Identity System', 'Multi-Format Delivery'],
-            emoji: '✏️',
-          },
-        ]}
-      />
-      <StructuredData
-        type="faq"
-        faqs={faqs}
-      />
+      {/* Schema is server-rendered in src/app/services/logo-design/page.tsx */}
     </div>
   );
 };

@@ -1,5 +1,9 @@
 import type { Metadata } from 'next';
 import EcommerceService from '@/components/pages/services/EcommerceService';
+import { JsonLd } from '@/components/JsonLd';
+import { serviceContent, serviceSchema, faqPageSchema, serviceBreadcrumb } from '@/lib/service-content';
+
+const entry = serviceContent['ecommerce'];
 
 export const metadata: Metadata = {
   title: 'E-Commerce Web Design Toronto | Shopify & Custom Stores | Zenara',
@@ -14,5 +18,12 @@ export const metadata: Metadata = {
 };
 
 export default function EcommercePage() {
-  return <EcommerceService />;
+  return (
+    <>
+      <JsonLd schema={serviceBreadcrumb(entry)} />
+      <JsonLd schema={serviceSchema(entry)} />
+      <JsonLd schema={faqPageSchema(entry.path, entry.faqs)} />
+      <EcommerceService />
+    </>
+  );
 }

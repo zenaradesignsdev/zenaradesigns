@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, Server, Shield, Database, Globe, Activity, Headphones, RefreshCw, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import StructuredData from '@/components/StructuredData';
+import { hostingFaqs as faqs } from '@/lib/service-content';
 
 const features = [
   {
@@ -62,29 +62,6 @@ const differentiators = [
   {
     title: 'Migration Included',
     description: 'Moving from another host? We handle the entire migration — DNS, email, SSL, and content — with zero downtime and zero cost.',
-  },
-];
-
-const faqs = [
-  {
-    question: 'How much does managed web hosting cost in Toronto?',
-    answer: 'Managed hosting plans at Zenara Designs start at $45/month and include SSL, CDN, daily backups, uptime monitoring, and priority support. Higher tiers add more storage, performance tuning, and enhanced SLAs. All plans are month-to-month with no annual price hikes or hidden bandwidth fees.',
-  },
-  {
-    question: 'What is included in managed hosting versus a regular host?',
-    answer: 'With managed hosting, our team handles everything: server configuration, security patches, software updates, SSL renewals, performance monitoring, and daily backups. Unlike shared hosting providers (GoDaddy, Bluehost), you don\'t need to touch a control panel or manage technical issues. We handle it so you can focus on your business.',
-  },
-  {
-    question: 'What is your uptime guarantee?',
-    answer: 'We offer a 99.9% uptime SLA, which equals less than 9 hours of unplanned downtime per year. Our infrastructure includes redundant servers, automatic failover, and 24/7 monitoring with instant alerts. In practice, most hosted sites experience zero unplanned downtime in a given year.',
-  },
-  {
-    question: 'Can you migrate my website from another host?',
-    answer: 'Yes, migration is included at no extra cost. We handle the full transfer — DNS configuration, SSL setup, file migration, database migration, and email migration if applicable — with zero downtime. The cutover happens during a low-traffic window so your visitors never notice the transition.',
-  },
-  {
-    question: 'Is your hosting optimized for Next.js and React?',
-    answer: 'Yes. Our infrastructure is purpose-built for Next.js applications deployed on Vercel\'s edge network — not a generic shared hosting environment. This means server-side rendering, ISR (Incremental Static Regeneration), edge functions, and image optimization all perform at their peak, giving you the fastest possible load times.',
   },
 ];
 
@@ -279,30 +256,7 @@ const HostingService = () => {
         </section>
       </div>
 
-      {/* Breadcrumb Schema */}
-      <StructuredData
-        type="breadcrumb"
-        breadcrumbs={[
-          { name: 'Home', url: '/' },
-          { name: 'Services', url: '/services' },
-          { name: 'Web Hosting', url: '/services/hosting' },
-        ]}
-      />
-      <StructuredData
-        type="serviceOffering"
-        services={[
-          {
-            name: 'Managed Web Hosting Toronto',
-            description: 'Managed web hosting and maintenance for Toronto businesses. 99.9% uptime SLA, SSL, global CDN, daily backups, and priority support. Plans from $45/month. Migration included.',
-            features: ['Managed Hosting', 'SSL & Security', 'Daily Backups', 'Global CDN', 'Uptime Monitoring', 'Priority Support'],
-            emoji: '🖥️',
-          },
-        ]}
-      />
-      <StructuredData
-        type="faq"
-        faqs={faqs}
-      />
+      {/* Schema is server-rendered in src/app/services/hosting/page.tsx */}
     </div>
   );
 };

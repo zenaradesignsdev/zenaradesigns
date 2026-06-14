@@ -1,5 +1,9 @@
 import type { Metadata } from 'next';
 import BusinessCardsService from '@/components/pages/services/BusinessCardsService';
+import { JsonLd } from '@/components/JsonLd';
+import { serviceContent, serviceSchema, faqPageSchema, serviceBreadcrumb } from '@/lib/service-content';
+
+const entry = serviceContent['business-cards'];
 
 export const metadata: Metadata = {
   title: 'Business Card Design Toronto | Print-Ready Cards | Zenara Designs',
@@ -14,5 +18,12 @@ export const metadata: Metadata = {
 };
 
 export default function BusinessCardsPage() {
-  return <BusinessCardsService />;
+  return (
+    <>
+      <JsonLd schema={serviceBreadcrumb(entry)} />
+      <JsonLd schema={serviceSchema(entry)} />
+      <JsonLd schema={faqPageSchema(entry.path, entry.faqs)} />
+      <BusinessCardsService />
+    </>
+  );
 }

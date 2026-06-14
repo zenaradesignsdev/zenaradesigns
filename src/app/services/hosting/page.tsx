@@ -1,5 +1,9 @@
 import type { Metadata } from 'next';
 import HostingService from '@/components/pages/services/HostingService';
+import { JsonLd } from '@/components/JsonLd';
+import { serviceContent, serviceSchema, faqPageSchema, serviceBreadcrumb } from '@/lib/service-content';
+
+const entry = serviceContent['hosting'];
 
 export const metadata: Metadata = {
   title: 'Web Hosting & Maintenance Toronto | Managed Hosting | Zenara Designs',
@@ -14,5 +18,12 @@ export const metadata: Metadata = {
 };
 
 export default function HostingPage() {
-  return <HostingService />;
+  return (
+    <>
+      <JsonLd schema={serviceBreadcrumb(entry)} />
+      <JsonLd schema={serviceSchema(entry)} />
+      <JsonLd schema={faqPageSchema(entry.path, entry.faqs)} />
+      <HostingService />
+    </>
+  );
 }

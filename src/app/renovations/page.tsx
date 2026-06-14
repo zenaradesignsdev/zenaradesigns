@@ -1,5 +1,10 @@
 import type { Metadata } from 'next';
 import Renovations from '@/components/pages/Renovations';
+import { JsonLd } from '@/components/JsonLd';
+import { faqPageSchema, breadcrumbSchema } from '@/lib/service-content';
+import { industryContent } from '@/lib/industry-content';
+
+const entry = industryContent['renovations'];
 
 export const metadata: Metadata = {
   title: 'Renovation Company Web Design GTA | Construction Websites | Zenara',
@@ -16,5 +21,14 @@ export const metadata: Metadata = {
 };
 
 export default function RenovationsPage() {
-  return <Renovations />;
+  return (
+    <>
+      <JsonLd schema={breadcrumbSchema(entry.path, [
+        { name: 'Home', url: '/' },
+        { name: entry.breadcrumbLabel, url: entry.path },
+      ])} />
+      <JsonLd schema={faqPageSchema(entry.path, entry.faqs)} />
+      <Renovations />
+    </>
+  );
 }

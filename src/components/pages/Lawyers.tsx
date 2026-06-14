@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { scrollToTop } from '@/hooks';
 import { memo, useEffect, useRef, useState, useCallback } from 'react';
-import StructuredData from '@/components/StructuredData';
+import { lawyersFaqs as faqs } from '@/lib/industry-content';
 import { generateLocalBusinessSchema, generateServiceSchema } from '@/lib/structured-data';
 import { SafeImage } from '@/components/ui/safe-image';
 const lawyerGavelOffice = '/images/lawyer-gavel-office.png';
@@ -136,45 +136,6 @@ const Lawyers = () => {
     }
   ];
 
-  // FAQ data
-  const faqs = [
-    {
-      question: "How much revenue do law firms lose from bad websites?",
-      answer: "The average law firm loses $50,000 to $100,000+ annually in missed opportunities from poor web presence. This includes lost consultation requests, clients who choose competitors, reduced referral rates, and the 40-60% of potential clients who bounce from outdated or poorly designed sites. Firms with professional websites see 3x more consultation requests, making the ROI of professional web design clear."
-    },
-    {
-      question: "Why is website design so important for trust and credibility?",
-      answer: "Research shows that first impressions are formed in just 0.05 seconds, and 94% of those impressions are design-related. 75% of users judge a business's credibility based on website design. With 78% of people researching lawyers online (and 92% among younger demographics), your website is often the first interaction potential clients have with your firm. Professional design signals competence, attention to detail, and technological capability—all critical factors when clients are choosing between multiple law firms."
-    },
-    {
-      question: "How much does a professional law firm website cost in Ontario?",
-      answer: "A custom, professional website for an Ontario law firm typically ranges from $4,000 to $10,000, depending on features like consultation booking systems, practice area pages, case study sections, blog functionality, and attorney profile pages. Zenara Designs provides transparent, fixed-price proposals to ensure budgetary certainty for your practice."
-    },
-    {
-      question: "How long does it take to build a lawyer's website?",
-      answer: "A complete custom law firm website usually takes 5 to 8 weeks from initial discovery to launch. This timeline includes competitive analysis, custom design focused on trust and credibility, development of essential features, and SEO optimization to ensure your firm ranks for local searches."
-    },
-    {
-      question: "What features are essential for a law firm website in 2026?",
-      answer: "Essential features include consultation booking systems, SEO-optimized practice area showcase pages, case studies and success stories, legal blog and content marketing capabilities, attorney profiles and team pages, and client testimonials and reviews. These features build trust, demonstrate expertise, and convert visitors into consultations."
-    },
-    {
-      question: "Do law firms in GTA suburbs need local SEO?",
-      answer: "Absolutely. With 68% of users performing local searches before contacting a law firm, local SEO is critical for acquiring clients. Appearing in Google Map Pack for city-specific terms like 'Markham family lawyer' or 'Vaughan real estate attorney' is essential for capturing ready-to-consult prospects."
-    },
-    {
-      question: "Can a new website help my law firm get more clients?",
-      answer: "Yes. A professionally designed, SEO-optimized website functions as a 24/7 client acquisition engine. Law firms with authoritative content, clear practice area pages, case studies, and optimized call-to-action triggers see a 72% increase in consultation requests compared to firms with outdated digital presences. Professional websites also build trust and credibility, which are essential for converting visitors into clients."
-    },
-    {
-      question: "Why is Next.js better than WordPress for a law firm?",
-      answer: "For legal services, Next.js offers faster load times for better user experience, superior Core Web Vitals that Google rewards with higher rankings, and a more modern, professional foundation. Next.js provides better performance, which is critical for building trust and credibility with potential clients who expect fast, responsive websites."
-    },
-    {
-      question: "Can I update my law firm website content myself?",
-      answer: "Yes. Zenara Designs integrates an intuitive, no-code backend that allows your staff to easily update practice area descriptions, publish blog articles, manage attorney bios, add case studies, update testimonials, and modify consultation availability without technical expertise."
-    }
-  ];
 
   // Inject structured data
   useEffect(() => {
@@ -840,20 +801,7 @@ const Lawyers = () => {
         </section>
       </div>
       
-      {/* Structured Data */}
-      <StructuredData 
-        type="faq" 
-        faqs={faqs}
-      />
-      
-      {/* Breadcrumb Schema */}
-      <StructuredData 
-        type="breadcrumb" 
-        breadcrumbs={[
-          { name: 'Home', url: '/' },
-          { name: 'Law Firm Web Design', url: '/lawyers' }
-        ]} 
-      />
+      {/* FAQPage + Breadcrumb schema is server-rendered in src/app/lawyers/page.tsx */}
     </div>
   );
 };

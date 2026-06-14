@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { scrollToTop } from '@/hooks';
 import { useState, useEffect, useRef, memo } from 'react';
-import StructuredData from '@/components/StructuredData';
 import { SafeImage } from '@/components/ui/safe-image';
 import { TextReveal } from '@/components/ui/text-reveal';
 import { FadeIn } from '@/components/ui/fade-in';
@@ -235,6 +234,7 @@ const Services = () => {
                 </p>
               </FadeIn>
               <TextReveal
+                as="h1"
                 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-extralight text-white leading-[0.92] tracking-[-0.04em] mb-8 sm:mb-10"
                 staggerMs={130}
                 lines={[
@@ -829,8 +829,8 @@ const Services = () => {
       <div className="h-0 overflow-hidden">
         <p className="text-transparent text-sm">Content updated: January 2026</p>
       </div>
-
-      <StructuredData type="review" reviews={TESTIMONIALS} />
+      {/* Review structured data intentionally omitted — schema must mark up
+          real, verifiable reviews with an itemReviewed field (Google policy). */}
     </div>
   );
 };

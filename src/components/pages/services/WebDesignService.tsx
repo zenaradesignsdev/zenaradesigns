@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, Palette, Code, Gauge, Search, Smartphone, Shield, Sparkles, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import StructuredData from '@/components/StructuredData';
+import { webDesignFaqs as faqs } from '@/lib/service-content';
 
 const features = [
   {
@@ -62,29 +62,6 @@ const differentiators = [
   {
     title: 'Post-Launch Support',
     description: 'Your relationship with us doesn\'t end at launch. Ongoing hosting, maintenance, and optimization keep your site performing at its peak.',
-  },
-];
-
-const faqs = [
-  {
-    question: 'How much does a custom website cost in Toronto?',
-    answer: 'Custom websites built with Next.js typically range from $2,500–$10,000+ depending on complexity, number of pages, and features required. We provide fixed-price quotes upfront — no hourly billing surprises. Book a free consultation to get an accurate estimate for your project.',
-  },
-  {
-    question: 'How long does it take to build a website?',
-    answer: 'Most small business websites take 3–6 weeks from kickoff to launch. This includes discovery, design, development, revisions, and QA. Complex projects with custom functionality or e-commerce can take 8–12 weeks. We provide a detailed timeline before starting every project.',
-  },
-  {
-    question: 'Why Next.js instead of WordPress?',
-    answer: 'Next.js delivers significantly faster load times (often 2–5x), better SEO through server-side rendering, stronger security (no plugin vulnerabilities), and a modern development experience. For professional service businesses in the GTA, the performance and SEO advantages translate directly into more leads.',
-  },
-  {
-    question: 'Do you work with businesses outside of Toronto?',
-    answer: 'Yes. While we specialize in Toronto and GTA businesses, we work with clients across Ontario and Canada. All consultations, design reviews, and project communication happen remotely via video call — location is never a barrier to great work.',
-  },
-  {
-    question: 'Will my website be mobile-friendly?',
-    answer: 'Every website we build is mobile-first by default. We design for small screens first, then scale up for tablets and desktops. All sites are tested across iOS, Android, and major browsers before launch to ensure a flawless experience on every device.',
   },
 ];
 
@@ -280,30 +257,8 @@ const WebDesignService = () => {
         </section>
       </div>
 
-      {/* Breadcrumb Schema */}
-      <StructuredData
-        type="breadcrumb"
-        breadcrumbs={[
-          { name: 'Home', url: '/' },
-          { name: 'Services', url: '/services' },
-          { name: 'Web Design', url: '/services/web-design' },
-        ]}
-      />
-      <StructuredData
-        type="serviceOffering"
-        services={[
-          {
-            name: 'Custom Web Design Toronto',
-            description: 'Professional custom website design and development for Toronto & GTA businesses. Built with Next.js for performance, SEO, and modern user experiences.',
-            features: ['Custom UI/UX Design', 'Responsive Development', 'Performance Optimization', 'SEO Integration', 'Clean Code Architecture', 'Security & Accessibility'],
-            emoji: '🌐',
-          },
-        ]}
-      />
-      <StructuredData
-        type="faq"
-        faqs={faqs}
-      />
+      {/* Schema (Service, FAQPage, Breadcrumb) is server-rendered in
+          src/app/services/web-design/page.tsx */}
     </div>
   );
 };

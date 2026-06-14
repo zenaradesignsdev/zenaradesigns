@@ -1,5 +1,9 @@
 import type { Metadata } from 'next';
 import LogoDesignService from '@/components/pages/services/LogoDesignService';
+import { JsonLd } from '@/components/JsonLd';
+import { serviceContent, serviceSchema, faqPageSchema, serviceBreadcrumb } from '@/lib/service-content';
+
+const entry = serviceContent['logo-design'];
 
 export const metadata: Metadata = {
   title: 'Logo Design Toronto | Custom Brand Identity | Zenara Designs',
@@ -14,5 +18,12 @@ export const metadata: Metadata = {
 };
 
 export default function LogoDesignPage() {
-  return <LogoDesignService />;
+  return (
+    <>
+      <JsonLd schema={serviceBreadcrumb(entry)} />
+      <JsonLd schema={serviceSchema(entry)} />
+      <JsonLd schema={faqPageSchema(entry.path, entry.faqs)} />
+      <LogoDesignService />
+    </>
+  );
 }

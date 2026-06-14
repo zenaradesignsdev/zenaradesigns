@@ -1,8 +1,11 @@
 import type { MetadataRoute } from 'next';
 import { blogPosts } from '@/content/blog';
+import { citySlugs } from '@/lib/city-content';
 
 const baseUrl = 'https://zenaradesigns.com';
-const lastModified = new Date('2026-01-01');
+// Build/deploy time — keeps the lastmod signal fresh on every deploy rather
+// than emitting a hardcoded, increasingly stale date.
+const lastModified = new Date();
 
 const locations = [
   'markham',
@@ -64,6 +67,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }))
   );
 
+  const webDesignCityRoutes: MetadataRoute.Sitemap = citySlugs.map((city) => ({
+    url: `${baseUrl}/web-design/${city}`,
+    lastModified,
+    changeFrequency: 'monthly' as const,
+    priority: 0.8,
+  }));
+
   const blogRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: post.updatedAt ?? post.publishedAt,
@@ -71,5 +81,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...industryLocationRoutes, ...blogRoutes];
+  return [...staticRoutes, ...webDesignCityRoutes, ...industryLocationRoutes, ...blogRoutes];
 }

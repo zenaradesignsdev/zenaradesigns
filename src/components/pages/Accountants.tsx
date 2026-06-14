@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { scrollToTop } from '@/hooks';
 import { memo, useEffect, useRef, useState, useCallback } from 'react';
-import StructuredData from '@/components/StructuredData';
+import { accountantsFaqs as faqs } from '@/lib/industry-content';
 import { generateLocalBusinessSchema, generateServiceSchema } from '@/lib/structured-data';
 import { SafeImage } from '@/components/ui/safe-image';
 const accountantComputerOffice = '/images/accountant-computer-office.png';
@@ -137,36 +137,6 @@ const Accountants = () => {
   ];
 
   // FAQ data
-  const faqs = [
-    {
-      question: "How much revenue do accounting firms lose from bad websites?",
-      answer: "The average mid-sized accounting firm loses $50,000 to $100,000+ annually in missed opportunity costs from a poor web presence. This includes lost advisory discovery calls, high-net-worth clients who choose competitors, reduced referral conversion rates, and the 40-60% of potential clients who bounce from outdated or poorly designed sites. Firms with professional websites see 3x more consultation requests, making the ROI of professional web design clear."
-    },
-    {
-      question: "Why is website design so important for accounting firm trust and credibility?",
-      answer: "When dealing with people's money and business finances, trust is everything. Research shows that first impressions are formed in just 0.05 seconds, and 94% of those impressions are design-related. 75% of users judge a business's credibility based on website design. With 74% of business owners researching accounting firms online (and 89% among millennial and Gen Z entrepreneurs), your website is often the first interaction potential clients have with your firm. Professional design signals competence, attention to detail, and modern data-security capabilities."
-    },
-    {
-      question: "How much does a professional accounting firm website cost in Ontario?",
-      answer: "A custom, professional website for an Ontario accounting firm typically ranges from $4,000 to $10,000, depending on features like client portals, tax document management systems, service area pages, blog functionality, and CPA profile pages. Zenara Designs provides transparent, fixed-price proposals to ensure budgetary certainty for your practice."
-    },
-    {
-      question: "How long does it take to build an accounting firm's website?",
-      answer: "A complete custom accounting firm website usually takes 5 to 8 weeks from initial discovery to launch. This timeline includes competitive analysis, custom design focused on trust and security, development of essential features like client portals, and SEO optimization to ensure your firm ranks for local searches."
-    },
-    {
-      question: "What features are essential for an accounting firm website in 2026?",
-      answer: "Essential features include discovery and consultation booking systems, SEO-optimized service area showcase pages, ROI case studies and success stories, financial blog and tax updates, CPA profiles and team pages, and client testimonials with trust signals. These features build trust, demonstrate expertise, and convert visitors into advisory consultations."
-    },
-    {
-      question: "Do accounting firms in GTA suburbs need local SEO?",
-      answer: "Absolutely. With the majority of business owners performing local searches before contacting an accounting firm, local SEO is critical for acquiring clients. Appearing in Google Map Pack for city-specific terms like 'Markham CPA' or 'Vaughan tax preparation' is essential for capturing ready-to-consult prospects."
-    },
-    {
-      question: "Can a new website help my accounting firm get more clients?",
-      answer: "Yes. A professionally designed, SEO-optimized website functions as a 24/7 client acquisition engine. Accounting firms with authoritative content, clear service area pages, case studies, and optimized call-to-action triggers see a significant increase in consultation requests compared to firms with outdated digital presences. Professional websites also build trust and credibility, which are essential for converting visitors into long-term clients."
-    }
-  ];
 
   // Inject structured data
   useEffect(() => {
@@ -827,20 +797,7 @@ const Accountants = () => {
         </section>
       </div>
       
-      {/* Structured Data */}
-      <StructuredData 
-        type="faq" 
-        faqs={faqs}
-      />
-      
-      {/* Breadcrumb Schema */}
-      <StructuredData 
-        type="breadcrumb" 
-        breadcrumbs={[
-          { name: 'Home', url: '/' },
-          { name: 'Accounting Firm Web Design', url: '/accountants' }
-        ]} 
-      />
+      {/* FAQPage + Breadcrumb schema is server-rendered in src/app/accountants/page.tsx */}
     </div>
   );
 };

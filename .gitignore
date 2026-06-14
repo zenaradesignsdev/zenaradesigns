@@ -46,3 +46,6 @@ gsc-audit-report.md
 gsc-audit-report-*.md
 pagespeed-audit-report.md
 gsc-audit-report.md
+
+# Playwright MCP test artifacts
+.playwright-mcp/

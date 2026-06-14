@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, ShoppingCart, CreditCard, Package, TrendingUp, BarChart3, Layers, Globe, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import StructuredData from '@/components/StructuredData';
+import { ecommerceFaqs as faqs } from '@/lib/service-content';
 
 const features = [
   {
@@ -62,29 +62,6 @@ const differentiators = [
   {
     title: 'Ongoing Optimization',
     description: 'Post-launch A/B testing, heat mapping, and continuous conversion rate optimization to keep your revenue growing month over month.',
-  },
-];
-
-const faqs = [
-  {
-    question: 'How much does a Shopify store cost to build in Toronto?',
-    answer: 'Shopify store builds typically range from $3,000–$12,000+ depending on the number of products, custom theme requirements, and app integrations. We provide a fixed-price quote after a free discovery call. Monthly Shopify subscription fees are separate and billed directly by Shopify.',
-  },
-  {
-    question: 'Do you build custom storefronts or only Shopify?',
-    answer: 'We build both. For most small-to-medium businesses, Shopify is the ideal platform. For brands needing complete creative freedom or headless commerce architecture, we build custom Next.js storefronts connected to Shopify or other backends. We recommend the right solution after understanding your specific needs.',
-  },
-  {
-    question: 'Can you migrate my existing online store to Shopify?',
-    answer: 'Yes. We handle full platform migrations from WooCommerce, Magento, BigCommerce, and other platforms to Shopify or custom Next.js storefronts. This includes product data, customer records, order history, URL redirects, and SEO preservation — zero downtime during the migration.',
-  },
-  {
-    question: 'Do your e-commerce sites work for Canadian businesses with HST/GST?',
-    answer: 'Absolutely. All stores we build include proper Canadian tax configuration — GST, HST, PST by province. We also set up Stripe and PayPal with Canadian banking, and can configure multi-currency for businesses selling internationally.',
-  },
-  {
-    question: 'What payment gateways do you integrate?',
-    answer: 'We integrate Stripe, PayPal, Apple Pay, Google Pay, Shop Pay, and Shopify Payments. For high-risk industries, we can integrate specialized payment processors. Every checkout is PCI-compliant and optimized for conversion on both mobile and desktop.',
   },
 ];
 
@@ -279,30 +256,7 @@ const EcommerceService = () => {
         </section>
       </div>
 
-      {/* Breadcrumb Schema */}
-      <StructuredData
-        type="breadcrumb"
-        breadcrumbs={[
-          { name: 'Home', url: '/' },
-          { name: 'Services', url: '/services' },
-          { name: 'E-Commerce', url: '/services/ecommerce' },
-        ]}
-      />
-      <StructuredData
-        type="serviceOffering"
-        services={[
-          {
-            name: 'E-Commerce Web Design Toronto',
-            description: 'Professional e-commerce website design and development for Toronto & GTA businesses. Shopify stores, custom storefronts, payment integration, and conversion optimization.',
-            features: ['Shopify Development', 'Payment Integration', 'Product Management', 'Conversion Optimization', 'Analytics & Reporting', 'Multi-Currency & Tax'],
-            emoji: '🛒',
-          },
-        ]}
-      />
-      <StructuredData
-        type="faq"
-        faqs={faqs}
-      />
+      {/* Schema is server-rendered in src/app/services/ecommerce/page.tsx */}
     </div>
   );
 };

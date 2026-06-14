@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { scrollToTop } from '@/hooks';
 import { memo, useEffect, useRef, useState, useCallback } from 'react';
-import StructuredData from '@/components/StructuredData';
+import { clinicsFaqs as faqs } from '@/lib/industry-content';
 import { generateLocalBusinessSchema, generateServiceSchema } from '@/lib/structured-data';
 import { SafeImage } from '@/components/ui/safe-image';
 const clinicPractitioner = '/images/clinic-practitioner.png';
@@ -137,36 +137,6 @@ const Clinics = () => {
   ];
 
   // FAQ data
-  const faqs = [
-    {
-      question: "How much revenue do wellness clinics lose from bad websites?",
-      answer: "The average multidisciplinary clinic loses $40,000 to $80,000+ annually in missed patient revenue due to a poor web presence. This includes lost initial assessments, reduced retention from patients who can't easily re-book, and a high bounce rate on your service pages. Healthcare sites with poor mobile optimization lose 40-60% of potential patients. Clinics with professional, integrated booking sites see 3x more appointment requests compared to those using static 'contact us' forms."
-    },
-    {
-      question: "Why is website design so important for wellness clinic trust and credibility?",
-      answer: "In healthcare, the stakes are higher. Patients aren't just looking for a service; they are looking for a provider they can trust with their physical well-being. Research shows that first impressions are formed in just 0.05 seconds, and 94% of those impressions are design-related. 75% of users judge a clinic's credibility based on website design. If your website looks neglected, patients subconsciously assume your clinic's hygiene or technology might be as well. A clean, modern, and accessible website signals that you are organized, professional, and up-to-date with modern health practices."
-    },
-    {
-      question: "How much does a professional wellness clinic website cost in Ontario?",
-      answer: "A custom, professional website for an Ontario wellness clinic typically ranges from $4,000 to $10,000, depending on features like booking integration (Jane App, Gorendezvous, Cliniko), practitioner bio pages, condition-specific SEO pages, HIPAA/PHIPA compliant forms, and patient education content. Zenara Designs provides transparent, fixed-price proposals to ensure budgetary certainty for your practice."
-    },
-    {
-      question: "How long does it take to build a wellness clinic's website?",
-      answer: "A complete custom wellness clinic website usually takes 5 to 8 weeks from initial discovery to launch. This timeline includes competitive analysis, custom design focused on clinical authority and patient trust, development of essential features like booking integration, and SEO optimization to ensure your clinic ranks for local searches."
-    },
-    {
-      question: "What features are essential for a wellness clinic website in 2026?",
-      answer: "Essential features include seamless booking integration with platforms like Jane App or Gorendezvous, practitioner portfolios and bios, condition-specific SEO pages, HIPAA/PHIPA compliant lead forms, 'Near Me' local SEO engine, and patient education and video content. These features build trust, establish clinical authority, and convert visitors into confirmed appointments."
-    },
-    {
-      question: "Do wellness clinics in GTA suburbs need local SEO?",
-      answer: "Absolutely. With 77% of patients using search engines to find a healthcare provider before booking, local SEO is critical for acquiring patients. Appearing in Google Map Pack for city-specific terms like 'Markham physiotherapy' or 'Vaughan massage therapy' is essential for capturing ready-to-book patients searching for wellness services."
-    },
-    {
-      question: "Can a new website help my wellness clinic get more patients?",
-      answer: "Yes. A professionally designed, SEO-optimized website functions as a 24/7 patient intake system. Wellness clinics with seamless booking integration, condition-specific SEO pages, practitioner bios, and optimized call-to-action triggers see a significant increase in appointment requests compared to clinics with outdated digital presences. Professional websites also build trust and credibility, which are essential for converting health-conscious browsers into confirmed appointments."
-    }
-  ];
 
   // Inject structured data
   useEffect(() => {
@@ -827,20 +797,7 @@ const Clinics = () => {
         </section>
       </div>
       
-      {/* Structured Data */}
-      <StructuredData 
-        type="faq" 
-        faqs={faqs}
-      />
-      
-      {/* Breadcrumb Schema */}
-      <StructuredData 
-        type="breadcrumb" 
-        breadcrumbs={[
-          { name: 'Home', url: '/' },
-          { name: 'Wellness Clinic Web Design', url: '/clinics' }
-        ]} 
-      />
+      {/* FAQPage + Breadcrumb schema is server-rendered in src/app/clinics/page.tsx */}
     </div>
   );
 };

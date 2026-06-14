@@ -1,0 +1,45 @@
+# Zenara Designs
+
+> Web design and development agency serving Toronto and the Greater Toronto Area (GTA). We build modern, fast, secure, conversion-focused websites for small businesses and professionals — law firms, accounting firms, clinics, renovation companies, and more.
+
+## About
+
+- Name: Zenara Designs
+- Type: Web design & development agency (service-area business, no physical storefront)
+- Service area: Toronto, Mississauga, Brampton, Vaughan, Markham, Richmond Hill, Oakville, Burlington, Hamilton, Scarborough, North York, Etobicoke, Pickering, Ajax, Whitby, Oshawa, Newmarket, Aurora, Stouffville
+- Email: info@zenaradesigns.com
+- Phone: (647) 835-1077
+- Website: https://zenaradesigns.com
+
+## Services
+
+- Custom web design & development (Next.js, modern responsive sites): https://zenaradesigns.com/services/web-design
+- E-commerce development: https://zenaradesigns.com/services/ecommerce
+- Logo design & brand identity: https://zenaradesigns.com/services/logo-design
+- Business card design: https://zenaradesigns.com/services/business-cards
+- SEO services: https://zenaradesigns.com/services/seo
+- Hosting & maintenance: https://zenaradesigns.com/services/hosting
+
+## Pricing
+
+- Starter: $999 (1–3 pages, ~1 week)
+- Small Business: $1,999 (up to 6 pages, 2–3 weeks)
+- Pro: $4,999+ (advanced functionality, unlimited pages, 3–4 weeks)
+- All plans include mobile-responsive design, SEO optimization, and SSL security.
+- Details: https://zenaradesigns.com/pricing
+
+## Industry expertise
+
+- Law firms: https://zenaradesigns.com/lawyers
+- Accounting firms: https://zenaradesigns.com/accountants
+- Renovation companies: https://zenaradesigns.com/renovations
+- Wellness clinics: https://zenaradesigns.com/clinics
+
+## Key pages
+
+- Services overview: https://zenaradesigns.com/services
+- Process: https://zenaradesigns.com/process
+- Projects / portfolio: https://zenaradesigns.com/projects
+- FAQ: https://zenaradesigns.com/faq
+- Contact: https://zenaradesigns.com/contact
+- Locations served: https://zenaradesigns.com/locations

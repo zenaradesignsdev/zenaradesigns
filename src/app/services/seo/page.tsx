@@ -1,5 +1,9 @@
 import type { Metadata } from 'next';
 import SeoService from '@/components/pages/services/SeoService';
+import { JsonLd } from '@/components/JsonLd';
+import { serviceContent, serviceSchema, faqPageSchema, serviceBreadcrumb } from '@/lib/service-content';
+
+const entry = serviceContent['seo'];
 
 export const metadata: Metadata = {
   title: 'SEO Services Toronto | Search Engine Optimization | Zenara Designs',
@@ -14,5 +18,12 @@ export const metadata: Metadata = {
 };
 
 export default function SeoPage() {
-  return <SeoService />;
+  return (
+    <>
+      <JsonLd schema={serviceBreadcrumb(entry)} />
+      <JsonLd schema={serviceSchema(entry)} />
+      <JsonLd schema={faqPageSchema(entry.path, entry.faqs)} />
+      <SeoService />
+    </>
+  );
 }

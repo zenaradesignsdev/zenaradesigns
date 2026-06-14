@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ArrowRight, MapPin, Wrench, FileText, BarChart3, Search, Globe, TrendingUp, Target } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import StructuredData from '@/components/StructuredData';
+import { seoFaqs as faqs } from '@/lib/service-content';
 
 const features = [
   {
@@ -62,29 +62,6 @@ const differentiators = [
   {
     title: 'White-Hat Only',
     description: 'No shortcuts, no black-hat tricks, no PBNs. We follow Google\'s guidelines to the letter because sustainable rankings beat temporary spikes every time.',
-  },
-];
-
-const faqs = [
-  {
-    question: 'How long does SEO take to show results in Toronto?',
-    answer: 'Most Toronto businesses start seeing meaningful ranking improvements within 3–6 months of starting SEO. Local SEO and Google Business Profile optimization can show results faster — sometimes within 4–8 weeks. Technical fixes like site speed and structured data improvements can have an immediate positive impact on Core Web Vitals scores.',
-  },
-  {
-    question: 'Do you offer local SEO for GTA businesses?',
-    answer: 'Yes — local SEO is our specialty. We optimize your Google Business Profile, build local citations on Canadian directories, create geo-targeted landing pages, and implement LocalBusiness schema markup. Our strategies are built specifically for Toronto, Mississauga, Brampton, Vaughan, Markham, and surrounding GTA markets.',
-  },
-  {
-    question: 'What is included in a free SEO audit?',
-    answer: 'Our free SEO audit covers technical health (crawlability, site speed, Core Web Vitals, mobile usability), on-page factors (title tags, meta descriptions, heading structure), local SEO signals (Google Business Profile, citations), and a keyword gap analysis against your top 3 Toronto competitors. You receive a written report with prioritized action items.',
-  },
-  {
-    question: 'Do you require long-term SEO contracts?',
-    answer: 'No. We work month-to-month with no lock-in periods. Our results earn your continued business rather than a contract keeping you in place. We do recommend committing to at least 3–6 months to see meaningful results — SEO is a long-term investment — but you are free to cancel any time.',
-  },
-  {
-    question: 'Can you do SEO for a website you didn\'t build?',
-    answer: 'Absolutely. We perform SEO on any website — WordPress, Squarespace, Wix, custom-built, or any other platform. If your site has significant technical limitations, we will flag them with recommendations. For maximum results, a Next.js rebuild eliminates technical SEO barriers entirely, but it is not required to start improving your rankings.',
   },
 ];
 
@@ -279,30 +256,7 @@ const SeoService = () => {
         </section>
       </div>
 
-      {/* Breadcrumb Schema */}
-      <StructuredData
-        type="breadcrumb"
-        breadcrumbs={[
-          { name: 'Home', url: '/' },
-          { name: 'Services', url: '/services' },
-          { name: 'SEO Services', url: '/services/seo' },
-        ]}
-      />
-      <StructuredData
-        type="serviceOffering"
-        services={[
-          {
-            name: 'SEO Services Toronto',
-            description: 'Professional SEO services for Toronto & GTA businesses. Local SEO, technical optimization, keyword research, and Google ranking improvements. Month-to-month, no contracts.',
-            features: ['Local SEO', 'Technical SEO', 'Content Strategy', 'Keyword Research', 'On-Page Optimization', 'Link Building'],
-            emoji: '🔍',
-          },
-        ]}
-      />
-      <StructuredData
-        type="faq"
-        faqs={faqs}
-      />
+      {/* Schema is server-rendered in src/app/services/seo/page.tsx */}
     </div>
   );
 };

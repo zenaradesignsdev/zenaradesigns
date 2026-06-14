@@ -1,5 +1,10 @@
 import type { Metadata } from 'next';
 import Accountants from '@/components/pages/Accountants';
+import { JsonLd } from '@/components/JsonLd';
+import { faqPageSchema, breadcrumbSchema } from '@/lib/service-content';
+import { industryContent } from '@/lib/industry-content';
+
+const entry = industryContent['accountants'];
 
 export const metadata: Metadata = {
   title: 'Accounting Firm Web Design GTA | CPA Websites | Zenara',
@@ -16,5 +21,14 @@ export const metadata: Metadata = {
 };
 
 export default function AccountantsPage() {
-  return <Accountants />;
+  return (
+    <>
+      <JsonLd schema={breadcrumbSchema(entry.path, [
+        { name: 'Home', url: '/' },
+        { name: entry.breadcrumbLabel, url: entry.path },
+      ])} />
+      <JsonLd schema={faqPageSchema(entry.path, entry.faqs)} />
+      <Accountants />
+    </>
+  );
 }

@@ -12,6 +12,8 @@ interface TextRevealProps {
   staggerMs?: number;
   /** ms delay before the first line fires (default 0) */
   baseDelayMs?: number;
+  /** Wrapper element to render as — e.g. 'h1' for a page hero heading. Defaults to 'div'. */
+  as?: React.ElementType;
 }
 
 /**
@@ -25,8 +27,9 @@ export const TextReveal = ({
   lineClassName = '',
   staggerMs = 120,
   baseDelayMs = 0,
+  as: Wrapper = 'div',
 }: TextRevealProps) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -46,7 +49,7 @@ export const TextReveal = ({
   }, []);
 
   return (
-    <div ref={ref} className={className}>
+    <Wrapper ref={ref} className={className}>
       {lines.map((line, i) => (
         <div key={i} className="overflow-hidden">
           <div
@@ -62,6 +65,6 @@ export const TextReveal = ({
           </div>
         </div>
       ))}
-    </div>
+    </Wrapper>
   );
 };

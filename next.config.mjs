@@ -62,7 +62,7 @@ const nextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.calendly.com https://sibforms.com",
               "img-src 'self' data: https:",
               "font-src 'self' https://fonts.gstatic.com https://assets.brevo.com",
-              "connect-src 'self' https://api.resend.com https://www.google-analytics.com https://analytics.google.com https://calendly.com https://api.stripe.com",
+              "connect-src 'self' https://api.resend.com https://*.google-analytics.com https://www.google-analytics.com https://*.analytics.google.com https://analytics.google.com https://www.googletagmanager.com https://www.google.com https://calendly.com https://api.stripe.com",
               "frame-src 'self' https://calendly.com https://checkout.stripe.com https://js.stripe.com",
               "base-uri 'self'",
               "form-action 'self' https://b15138b6.sibforms.com https://sibforms.com",

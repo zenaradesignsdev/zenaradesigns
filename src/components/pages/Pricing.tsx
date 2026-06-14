@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { memo, useMemo, useEffect, useRef, useState } from 'react';
-import StructuredData from '@/components/StructuredData';
 import { FadeIn } from '@/components/ui/fade-in';
 import { TextReveal } from '@/components/ui/text-reveal';
 
@@ -275,6 +274,7 @@ const Pricing = () => {
               <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">Web Design Agency — Toronto & GTA</p>
             </FadeIn>
             <TextReveal
+              as="h1"
               className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extralight mb-6 sm:mb-8 text-white leading-[0.95] tracking-[-0.04em]"
               staggerMs={130}
               lines={[
@@ -783,18 +783,7 @@ const Pricing = () => {
         </div>
       </section>
 
-      {/* Structured Data */}
-      <StructuredData 
-        type="product" 
-        products={pricingPlans}
-      />
-      <StructuredData 
-        type="breadcrumb" 
-        breadcrumbs={[
-          { name: 'Home', url: '/' },
-          { name: 'Pricing', url: '/pricing' }
-        ]} 
-      />
+      {/* Product + breadcrumb schema is server-rendered in src/app/pricing/page.tsx */}
     </div>
   );
 };

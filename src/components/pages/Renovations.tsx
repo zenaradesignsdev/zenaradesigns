@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { scrollToTop } from '@/hooks';
 import { memo, useEffect, useRef, useState, useCallback } from 'react';
-import StructuredData from '@/components/StructuredData';
+import { renovationsFaqs as faqs } from '@/lib/industry-content';
 import { generateLocalBusinessSchema, generateServiceSchema } from '@/lib/structured-data';
 import { SafeImage } from '@/components/ui/safe-image';
 const renovationBackyard = '/images/renovation-backyard.png';
@@ -137,36 +137,6 @@ const Renovations = () => {
   ];
 
   // FAQ data
-  const faqs = [
-    {
-      question: "How much revenue do renovation companies lose from bad websites?",
-      answer: "The average GTA renovation firm loses $150,000 to $300,000+ annually in missed project revenue due to a poor web presence. These are high-value contracts going to competitors who simply look more professional online. Contractors with poor websites lose 40-60% of potential leads to the 'back' button. Firms with high-end, professional websites see 3.5x more quote requests than those with basic sites."
-    },
-    {
-      question: "Why is website design so important for renovation company trust and credibility?",
-      answer: "In the renovation business, people aren't just buying a service; they're buying a vision for their home. Research shows that first impressions are formed in just 0.05 seconds, and 94% of those impressions are design-related. 75% of users judge a contractor's reliability based on their website design. If your website looks outdated or 'cheap,' homeowners will assume your finishing work is, too. A sleek, modern site signals that you are organized, professional, and use the latest building technologies."
-    },
-    {
-      question: "How much does a professional renovation company website cost in Ontario?",
-      answer: "A custom, professional website for an Ontario renovation company typically ranges from $4,000 to $10,000, depending on features like project portfolio galleries, quote request systems, service area pages, video testimonials, and local SEO optimization. Zenara Designs provides transparent, fixed-price proposals to ensure budgetary certainty for your business."
-    },
-    {
-      question: "How long does it take to build a renovation company's website?",
-      answer: "A complete custom renovation company website usually takes 5 to 8 weeks from initial discovery to launch. This timeline includes competitive analysis, custom design focused on showcasing craftsmanship, development of essential features like project galleries, and SEO optimization to ensure your company ranks for local searches."
-    },
-    {
-      question: "What features are essential for a renovation company website in 2026?",
-      answer: "Essential features include high-conversion quote request systems, dynamic project portfolios with before/after galleries, client trust and credibility hub (WSIB, insurance, certifications), process roadmap section, local SEO and neighborhood targeting, and video testimonials with social proof. These features build trust, showcase craftsmanship, and convert visitors into high-value project leads."
-    },
-    {
-      question: "Do renovation companies in GTA suburbs need local SEO?",
-      answer: "Absolutely. With 84% of homeowners researching contractors online first, local SEO is critical for acquiring clients. Appearing in Google Map Pack for city-specific terms like 'Markham kitchen renovation' or 'Vaughan basement finishing' is essential for capturing ready-to-buy homeowners searching for renovation services."
-    },
-    {
-      question: "Can a new website help my renovation company get more projects?",
-      answer: "Yes. A professionally designed, SEO-optimized website functions as a 24/7 lead generation engine. Renovation companies with high-quality project portfolios, clear service area pages, video testimonials, and optimized call-to-action triggers see a significant increase in quote requests compared to companies with outdated digital presences. Professional websites also build trust and credibility, which are essential for converting browsers into high-value project clients."
-    }
-  ];
 
   // Inject structured data
   useEffect(() => {
@@ -827,20 +797,7 @@ const Renovations = () => {
         </section>
       </div>
       
-      {/* Structured Data */}
-      <StructuredData 
-        type="faq" 
-        faqs={faqs}
-      />
-      
-      {/* Breadcrumb Schema */}
-      <StructuredData 
-        type="breadcrumb" 
-        breadcrumbs={[
-          { name: 'Home', url: '/' },
-          { name: 'Renovation Company Web Design', url: '/renovations' }
-        ]} 
-      />
+      {/* FAQPage + Breadcrumb schema is server-rendered in src/app/renovations/page.tsx */}
     </div>
   );
 };
