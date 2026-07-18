@@ -95,6 +95,15 @@ const more: TileProject[] = [
     image: '/images/jbloans.png',
     imageAlt: 'JB Loans Mortgage Broker Website — professional mortgage services platform',
   },
+  {
+    name: 'IK Smart Solution',
+    tags: ['Web Design', 'Security & Smart Home'],
+    description:
+      'Website for a Toronto security systems integrator specializing in custom surveillance, access control, and smart home installations for residential and commercial properties.',
+    url: 'https://www.iksmartsolution.ca/',
+    image: '/images/iksmartsolutions.png',
+    imageAlt: 'IK Smart Solution Website — custom security and smart home systems integrator',
+  },
 ];
 
 function useFadeIn(ref: React.RefObject<HTMLElement | null>) {
