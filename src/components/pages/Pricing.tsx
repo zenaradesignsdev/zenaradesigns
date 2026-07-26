@@ -1,13 +1,25 @@
 'use client';
 
 import Link from 'next/link';
-import { Check, ArrowRight, Star, ChevronDown, Layers, Rocket, Gem } from 'lucide-react';
+import { Check, ArrowRight, Star, ChevronDown, Layers, Rocket, Gem, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { memo, useMemo, useEffect, useRef, useState } from 'react';
 import { FadeIn } from '@/components/ui/fade-in';
 import { TextReveal } from '@/components/ui/text-reveal';
+
+interface PricingPlan {
+  name: string;
+  subtitle: string;
+  price: string;
+  originalPrice?: string;
+  savings?: string;
+  description: string;
+  features: string[];
+  cta: string;
+  popular: boolean;
+}
 
 const Pricing = () => {
   const pricingCardsRef = useRef<HTMLDivElement>(null);
@@ -53,11 +65,13 @@ const Pricing = () => {
     return () => observer.disconnect();
   }, []);
 
-  const pricingPlans = useMemo(() => [
+  const pricingPlans = useMemo<PricingPlan[]>(() => [
     {
       name: "Starter",
       subtitle: "Individual",
-      price: "$999",
+      price: "$499",
+      originalPrice: "$999",
+      savings: "$500 OFF",
       description: "Perfect for freelancers and personal brands",
       features: [
         "Up to 3 pages (Home, About, Contact)",
@@ -74,9 +88,11 @@ const Pricing = () => {
       popular: false
     },
     {
-      name: "Small Business", 
+      name: "Small Business",
       subtitle: "Recommended",
-      price: "$1,999",
+      price: "$1,499",
+      originalPrice: "$1,999",
+      savings: "$500 OFF",
       description: "Ideal for small businesses and professionals",
       features: [
         "Up to 6 pages (Home, About, Services, Projects, Pricing, Contact)",
@@ -287,6 +303,20 @@ const Pricing = () => {
                 Choose the plan that fits your needs. No hidden fees, no surprises — just quality work.
               </p>
             </FadeIn>
+            <FadeIn delay={360}>
+              <div className="flex justify-center mt-8 sm:mt-10">
+                <div className="group relative inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 border border-amber-300/30 bg-amber-400/[0.07] backdrop-blur-sm overflow-hidden">
+                  {/* Soft pulsing wash */}
+                  <span className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-400/10 via-amber-300/[0.04] to-amber-400/10 animate-pulse pointer-events-none" />
+                  {/* Shine sweep */}
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-200/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1400ms] pointer-events-none" />
+                  <Sun className="h-4 w-4 text-amber-300 relative z-10 flex-shrink-0" strokeWidth={1.75} />
+                  <span className="relative z-10 text-xs sm:text-sm font-medium text-amber-100/90 tracking-wide">
+                    Summer Offer — <span className="text-amber-300 font-semibold">$500 off</span> Starter &amp; Small Business plans
+                  </span>
+                </div>
+              </div>
+            </FadeIn>
           </div>
 
           <div ref={pricingCardsRef} className="pricing-grid grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8 max-w-6xl mx-auto">
@@ -306,7 +336,15 @@ const Pricing = () => {
                   </div>
                 )}
                 
-                <div className={`pricing-card pricing-card-container bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border shadow-2xl transition-all duration-500 min-h-[600px] flex flex-col relative overflow-hidden group-hover:-translate-y-2 ${plan.popular ? 'border-cyan-500/50 shadow-cyan-500/20' : 'border-slate-800/50'}`}>
+                <div className={`pricing-card pricing-card-container bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 border shadow-2xl transition-all duration-500 min-h-[600px] flex flex-col relative overflow-hidden group-hover:-translate-y-2 ${plan.popular ? 'border-cyan-500/50 shadow-cyan-500/20' : 'border-slate-800/50'} ${plan.savings ? 'ring-1 ring-amber-300/20' : ''}`}>
+                  {/* Promo corner ribbon */}
+                  {plan.savings && (
+                    <div className="absolute top-0 right-0 z-20 h-24 w-24 overflow-hidden pointer-events-none" aria-hidden="true">
+                      <div className="absolute top-[20px] right-[-38px] w-[150px] rotate-45 bg-gradient-to-r from-amber-400 to-orange-500 py-1 text-center text-[10px] font-bold uppercase tracking-wider text-slate-950 shadow-lg">
+                        {plan.savings}
+                      </div>
+                    </div>
+                  )}
                   {/* Box glow */}
                   <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
                   
@@ -317,6 +355,14 @@ const Pricing = () => {
                     <div className="text-center mb-6 sm:mb-8 flex-shrink-0">
                       <h2 className="text-2xl sm:text-3xl font-semibold mb-2 text-white tracking-tight">{plan.name}</h2>
                       <p className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-light mb-3 sm:mb-4 text-sm sm:text-base">{plan.subtitle}</p>
+                      {plan.originalPrice && (
+                        <div className="flex items-center justify-center gap-2.5 mb-1">
+                          <span className="text-xl sm:text-2xl font-light text-white/35 line-through decoration-amber-300/50">{plan.originalPrice}</span>
+                          <span className="inline-flex items-center rounded-full bg-amber-400/15 border border-amber-300/35 px-2.5 py-0.5 text-[11px] sm:text-xs font-semibold text-amber-300 tracking-wide">
+                            {plan.savings}
+                          </span>
+                        </div>
+                      )}
                       <div className="text-4xl sm:text-5xl font-light mb-3 sm:mb-4 text-white">{plan.price}</div>
                       <p className="text-white/60 text-base sm:text-lg font-light">{plan.description}</p>
                     </div>
