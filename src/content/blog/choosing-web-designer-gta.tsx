@@ -38,7 +38,7 @@ const ChoosingWebDesignerGtaContent = () => {
         how a project moves from concept to launch, that&apos;s a red flag. Key questions to ask:
       </p>
       <ul className="list-disc list-inside text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6 space-y-2 ml-4">
-        <li><strong className="text-cyan-300 font-semibold">What does the timeline look like?</strong> Most professional websites take 4–8 weeks. Anyone promising a custom site in a few days is likely using a template.</li>
+        <li><strong className="text-cyan-300 font-semibold">What does the timeline look like?</strong> Template shops turn sites around in days; traditional agencies often take two to three months. A focused custom build should land in one to two weeks. Ask what drives the number — if the answer is vague, the timeline probably is too.</li>
         <li><strong className="text-cyan-300 font-semibold">How many revision rounds are included?</strong> Two to three rounds is standard. Unlimited revisions often means undefined scope.</li>
         <li><strong className="text-cyan-300 font-semibold">Who provides the content?</strong> Clarify whether copywriting and photography are included or your responsibility.</li>
         <li><strong className="text-cyan-300 font-semibold">What technology do they use?</strong> Understand whether they build on WordPress, custom code, or website builders—each has trade-offs.</li>
@@ -84,7 +84,7 @@ const ChoosingWebDesignerGtaContent = () => {
       <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
         A designer who builds your site and disappears leaves you vulnerable. Look for partners who offer
         ongoing{' '}
-        <Link href="/security" className="text-cyan-300 underline hover:text-cyan-200">security and support</Link>{' '}
+        <Link href="/services/website-maintenance" className="text-cyan-300 underline hover:text-cyan-200">security and support</Link>{' '}
         as part of their services.
       </p>
 
@@ -108,6 +108,19 @@ const ChoosingWebDesignerGtaContent = () => {
         to see what transparent, honest web design pricing looks like.
       </p>
 
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
+        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Choosing a Designer in the GTA</span>
+      </h2>
+      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
+        The suburbs have a real advantage over downtown: those markets are served mostly by small shops,
+        which means a business that invests in a genuinely good site can rank — and stay ranked — in a
+        way that is far harder in Toronto. Ask any designer you shortlist whether they build
+        city-specific pages for Markham, Stouffville, and Scarborough, or whether they will hand you one
+        generic &quot;serving the GTA&quot; page and call it local SEO. We build for
+        <Link href="/renovations" className="text-cyan-300 underline hover:text-cyan-200">contractors and trades</Link>, <Link href="/clinics" className="text-cyan-300 underline hover:text-cyan-200">physio and wellness clinics</Link>,
+        <Link href="/accountants" className="text-cyan-300 underline hover:text-cyan-200">accountants and mortgage brokers</Link>, and
+        <Link href="/lawyers" className="text-cyan-300 underline hover:text-cyan-200">law firms</Link> across the region.
+      </p>
       <div className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 mt-10 sm:mt-12 mb-6 border border-slate-800/50 relative overflow-hidden">
         <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
         <h3 className="text-xl sm:text-2xl font-semibold text-white mb-4 relative z-10 tracking-tight">

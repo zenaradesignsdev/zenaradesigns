@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useEffect, useRef, memo } from 'react';
+import { memo } from 'react';
 import { TextReveal } from '@/components/ui/text-reveal';
 import { FadeIn } from '@/components/ui/fade-in';
 
@@ -28,41 +28,6 @@ const PARTNERS = [
 ];
 
 const AgencyPartnersSection = () => {
-  const [yearsExperience, setYearsExperience] = useState(0);
-  const yearsRef = useRef<HTMLDivElement>(null);
-  const yearsAnimatedRef = useRef(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !yearsAnimatedRef.current) {
-            yearsAnimatedRef.current = true;
-            const duration = 2000;
-            const steps = 60;
-            const stepDuration = duration / steps;
-            const target = 6;
-            let step = 0;
-            const timer = setInterval(() => {
-              step++;
-              setYearsExperience(Math.floor(target * (step / steps)));
-              if (step >= steps) {
-                clearInterval(timer);
-                setYearsExperience(target);
-              }
-            }, stepDuration);
-          }
-        });
-      },
-      { threshold: 0.3 }
-    );
-
-    if (yearsRef.current) observer.observe(yearsRef.current);
-    return () => {
-      if (yearsRef.current) observer.unobserve(yearsRef.current);
-    };
-  }, []);
-
   return (
     <section className="py-16 sm:py-20 md:py-24 lg:py-32 relative overflow-hidden bg-black" aria-label="About Zenara">
       {/* Space Background Elements */}
@@ -162,15 +127,17 @@ const AgencyPartnersSection = () => {
             </FadeIn>
           </div>
 
-          <div className="text-center" ref={yearsRef}>
-            <div className="inline-block">
-              <div className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient leading-none">
-                {yearsExperience}+
+          <div className="text-center">
+            <FadeIn delay={260}>
+              <div className="inline-block">
+                <div className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-bold bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient leading-none">
+                  6+
+                </div>
+                <div className="text-lg sm:text-xl md:text-2xl font-bold text-white/80 mt-2 sm:mt-4 tracking-wide">
+                  Years of Experience
+                </div>
               </div>
-              <div className="text-lg sm:text-xl md:text-2xl font-bold text-white/80 mt-2 sm:mt-4 tracking-wide">
-                Years of Experience
-              </div>
-            </div>
+            </FadeIn>
           </div>
         </div>
 
@@ -181,14 +148,14 @@ const AgencyPartnersSection = () => {
           </div>
         </div>
 
-        {/* Our Trusted Partners */}
+        {/* Technology We Work With */}
         <div className="text-center mb-12 sm:mb-16">
           <TextReveal
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white mb-4 leading-[0.95] tracking-[-0.04em]"
             lines={[
               <span key="l1">
-                <span className="font-light">Our Trusted </span>
-                <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Partners</span>
+                <span className="font-light">Technology We </span>
+                <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Work With</span>
               </span>,
             ]}
           />

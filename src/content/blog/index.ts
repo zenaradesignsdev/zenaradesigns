@@ -5,6 +5,7 @@ import { seoGuideTorontoPost } from './seo-guide-small-business-toronto';
 import { websiteVsSocialMediaPost } from './website-vs-social-media-business';
 import { choosingWebDesignerGtaPost } from './choosing-web-designer-gta';
 import { badWebsiteCostingMoneyPost } from './bad-website-costing-business-money';
+import { websiteLaunchChecklistPost } from './website-launch-checklist';
 
 const discoveryImage = '/images/zenara-discovery.jpg';
 const prototypingImage = '/images/zenara-prototyping.jpg';
@@ -36,6 +37,10 @@ export const blogPosts: BlogPost[] = [
   {
     ...badWebsiteCostingMoneyPost,
     featuredImage: buildImage,
+  },
+  {
+    ...websiteLaunchChecklistPost,
+    featuredImage: discoveryImage,
   },
 ].sort((a, b) => b.publishedAt.getTime() - a.publishedAt.getTime());
 

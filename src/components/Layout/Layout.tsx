@@ -1,5 +1,5 @@
-'use client';
-
+// Server Component. It holds no state — Navbar, Footer and SkipLinks are each
+// client components already, and a Server Component can render them.
 import { ReactNode } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';

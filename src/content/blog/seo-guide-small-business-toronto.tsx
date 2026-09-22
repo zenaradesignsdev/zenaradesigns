@@ -94,7 +94,7 @@ const SeoGuideTorontoContent = () => {
         phone, you&apos;re losing both rankings and customers. Key mobile optimization factors include fast
         load times under three seconds, tap-friendly buttons, readable text without zooming, and streamlined
         navigation. Learn more about our approach to{' '}
-        <Link href="/mobile" className="text-cyan-300 underline hover:text-cyan-200">mobile optimization</Link>.
+        <Link href="/services/web-design" className="text-cyan-300 underline hover:text-cyan-200">mobile optimization</Link>.
       </p>
 
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
@@ -115,6 +115,18 @@ const SeoGuideTorontoContent = () => {
         maintain their technical foundation, and build local citations will steadily climb the rankings.
       </p>
 
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
+        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Local SEO for GTA Businesses</span>
+      </h2>
+      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
+        Everything above applies in the suburbs, with one significant difference: the competition is
+        thinner. Ranking for &quot;web design Stouffville&quot; or &quot;physiotherapy Markham&quot; is a
+        genuinely achievable goal for a small business, where the equivalent Toronto term is contested
+        by agencies with twenty-year backlink profiles. Focus your effort on a Google Business Profile
+        with real reviews, citations with local organizations like the Markham Board of Trade and your
+        municipal chamber of commerce, and one properly-built page per city you actually serve.
+        See our <Link href="/services/seo" className="text-cyan-300 underline hover:text-cyan-200">SEO services</Link> or the <Link href="/locations" className="text-cyan-300 underline hover:text-cyan-200">areas we cover</Link>.
+      </p>
       <div className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 mt-10 sm:mt-12 mb-6 border border-slate-800/50 relative overflow-hidden">
         <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
         <h3 className="text-xl sm:text-2xl font-semibold text-white mb-4 relative z-10 tracking-tight">

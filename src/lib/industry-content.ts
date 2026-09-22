@@ -18,8 +18,8 @@ export interface IndustryEntry {
 
 export const lawyersFaqs: IndustryFaq[] = [
   {
-    question: "How much revenue do law firms lose from bad websites?",
-    answer: "The average law firm loses $50,000 to $100,000+ annually in missed opportunities from poor web presence. This includes lost consultation requests, clients who choose competitors, reduced referral rates, and the 40-60% of potential clients who bounce from outdated or poorly designed sites. Firms with professional websites see 3x more consultation requests, making the ROI of professional web design clear."
+    question: "How does a bad website cost my law firm business?",
+    answer: "An outdated, template, or poorly designed website quietly costs law firms real business — visitors who arrive, don't find what they need, and leave for a competitor with a more professional online presence. That means missed consultation requests, clients who choose someone else, and weaker referral conversion. A professional, well-designed website is built to keep visitors engaged and turn more of them into consultation requests."
   },
   {
     question: "Why is website design so important for trust and credibility?",
@@ -31,7 +31,7 @@ export const lawyersFaqs: IndustryFaq[] = [
   },
   {
     question: "How long does it take to build a lawyer's website?",
-    answer: "A complete custom law firm website usually takes 5 to 8 weeks from initial discovery to launch. This timeline includes competitive analysis, custom design focused on trust and credibility, development of essential features, and SEO optimization to ensure your firm ranks for local searches."
+    answer: "A complete custom law firm website usually takes 2 to 3 weeks from kickoff to launch. Larger builds with custom functionality run 3 to 4 weeks. That timeline includes competitive analysis, custom design focused on trust and credibility, development of essential features, and SEO optimization to ensure your firm ranks for local searches."
   },
   {
     question: "What features are essential for a law firm website in 2026?",
@@ -43,7 +43,7 @@ export const lawyersFaqs: IndustryFaq[] = [
   },
   {
     question: "Can a new website help my law firm get more clients?",
-    answer: "Yes. A professionally designed, SEO-optimized website functions as a 24/7 client acquisition engine. Law firms with authoritative content, clear practice area pages, case studies, and optimized call-to-action triggers see a 72% increase in consultation requests compared to firms with outdated digital presences. Professional websites also build trust and credibility, which are essential for converting visitors into clients."
+    answer: "Yes. A professionally designed, SEO-optimized website functions as a 24/7 client acquisition engine. Law firms with authoritative content, clear practice area pages, case studies, and optimized call-to-action triggers see a significant increase in consultation requests compared to firms with outdated digital presences. Professional websites also build trust and credibility, which are essential for converting visitors into clients."
   },
   {
     question: "Why is Next.js better than WordPress for a law firm?",
@@ -57,8 +57,8 @@ export const lawyersFaqs: IndustryFaq[] = [
 
 export const accountantsFaqs: IndustryFaq[] = [
   {
-    question: "How much revenue do accounting firms lose from bad websites?",
-    answer: "The average mid-sized accounting firm loses $50,000 to $100,000+ annually in missed opportunity costs from a poor web presence. This includes lost advisory discovery calls, high-net-worth clients who choose competitors, reduced referral conversion rates, and the 40-60% of potential clients who bounce from outdated or poorly designed sites. Firms with professional websites see 3x more consultation requests, making the ROI of professional web design clear."
+    question: "How does a bad website cost my accounting firm business?",
+    answer: "An outdated or poorly designed website quietly costs accounting firms real business — visitors, including high-net-worth prospects, who arrive, don't feel confident in your firm, and leave for a more polished competitor. That means missed advisory discovery calls, weaker referral conversion, and lost opportunity. A professional, well-designed website is built to build that confidence and turn more visitors into consultation requests."
   },
   {
     question: "Why is website design so important for accounting firm trust and credibility?",
@@ -70,7 +70,7 @@ export const accountantsFaqs: IndustryFaq[] = [
   },
   {
     question: "How long does it take to build an accounting firm's website?",
-    answer: "A complete custom accounting firm website usually takes 5 to 8 weeks from initial discovery to launch. This timeline includes competitive analysis, custom design focused on trust and security, development of essential features like client portals, and SEO optimization to ensure your firm ranks for local searches."
+    answer: "A complete custom accounting firm website usually takes 2 to 3 weeks from kickoff to launch. Larger builds with client portals or custom integrations run 3 to 4 weeks. That timeline includes competitive analysis, custom design focused on trust and security, development of essential features, and SEO optimization to ensure your firm ranks for local searches."
   },
   {
     question: "What features are essential for an accounting firm website in 2026?",
@@ -88,8 +88,8 @@ export const accountantsFaqs: IndustryFaq[] = [
 
 export const clinicsFaqs: IndustryFaq[] = [
   {
-    question: "How much revenue do wellness clinics lose from bad websites?",
-    answer: "The average multidisciplinary clinic loses $40,000 to $80,000+ annually in missed patient revenue due to a poor web presence. This includes lost initial assessments, reduced retention from patients who can't easily re-book, and a high bounce rate on your service pages. Healthcare sites with poor mobile optimization lose 40-60% of potential patients. Clinics with professional, integrated booking sites see 3x more appointment requests compared to those using static 'contact us' forms."
+    question: "How does a bad website cost my wellness clinic business?",
+    answer: "An outdated or hard-to-use website quietly costs clinics new patients — visitors who arrive, struggle to find information or book an appointment, and leave for a clinic that makes it easier. That means missed initial assessments, weaker patient retention, and lost referral revenue. A professional, well-designed website with integrated booking is built to convert more visitors into appointment requests."
   },
   {
     question: "Why is website design so important for wellness clinic trust and credibility?",
@@ -101,7 +101,7 @@ export const clinicsFaqs: IndustryFaq[] = [
   },
   {
     question: "How long does it take to build a wellness clinic's website?",
-    answer: "A complete custom wellness clinic website usually takes 5 to 8 weeks from initial discovery to launch. This timeline includes competitive analysis, custom design focused on clinical authority and patient trust, development of essential features like booking integration, and SEO optimization to ensure your clinic ranks for local searches."
+    answer: "A complete custom wellness clinic website usually takes 2 to 3 weeks from kickoff to launch. Larger builds with booking integrations run 3 to 4 weeks. That timeline includes competitive analysis, custom design focused on clinical authority and patient trust, development of essential features, and SEO optimization to ensure your clinic ranks for local searches."
   },
   {
     question: "What features are essential for a wellness clinic website in 2026?",
@@ -119,8 +119,8 @@ export const clinicsFaqs: IndustryFaq[] = [
 
 export const renovationsFaqs: IndustryFaq[] = [
   {
-    question: "How much revenue do renovation companies lose from bad websites?",
-    answer: "The average GTA renovation firm loses $150,000 to $300,000+ annually in missed project revenue due to a poor web presence. These are high-value contracts going to competitors who simply look more professional online. Contractors with poor websites lose 40-60% of potential leads to the 'back' button. Firms with high-end, professional websites see 3.5x more quote requests than those with basic sites."
+    question: "How does a bad website cost my renovation company business?",
+    answer: "An outdated or 'under construction' website quietly costs renovation companies high-value projects — homeowners who arrive, aren't inspired by what they see, and request quotes from a competitor with a more polished portfolio instead. A professional, well-designed website with strong project photography is built to build that confidence and turn more visitors into quote requests."
   },
   {
     question: "Why is website design so important for renovation company trust and credibility?",
@@ -132,7 +132,7 @@ export const renovationsFaqs: IndustryFaq[] = [
   },
   {
     question: "How long does it take to build a renovation company's website?",
-    answer: "A complete custom renovation company website usually takes 5 to 8 weeks from initial discovery to launch. This timeline includes competitive analysis, custom design focused on showcasing craftsmanship, development of essential features like project galleries, and SEO optimization to ensure your company ranks for local searches."
+    answer: "A complete custom renovation or contractor website usually takes 2 to 3 weeks from kickoff to launch. Larger builds with extensive project galleries run 3 to 4 weeks. That timeline includes competitive analysis, custom design focused on showcasing craftsmanship, development of essential features, and SEO optimization to ensure your company ranks for local searches."
   },
   {
     question: "What features are essential for a renovation company website in 2026?",

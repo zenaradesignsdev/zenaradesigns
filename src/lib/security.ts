@@ -1,6 +1,6 @@
 // Security configuration and utilities
 import { FORM_LIMITS } from './constants';
-import type { SecurityConfig, SecurityHeaders, CSPConfig } from '@/types';
+import type { SecurityConfig } from '@/types';
 
 // Security constants
 export const SECURITY_CONFIG: SecurityConfig = {
@@ -44,20 +44,6 @@ export const XSS_PATTERNS = {
   META_REFRESH: /<meta\s+http-equiv\s*=\s*["']refresh["']/gi,
 } as const;
 
-// SQL Injection patterns (for future database operations)
-export const SQL_INJECTION_PATTERNS = {
-  UNION: /union\s+select/gi,
-  DROP: /drop\s+table/gi,
-  DELETE: /delete\s+from/gi,
-  INSERT: /insert\s+into/gi,
-  UPDATE: /update\s+set/gi,
-  SELECT: /select\s+.*\s+from/gi,
-  OR_1_1: /or\s+1\s*=\s*1/gi,
-  AND_1_1: /and\s+1\s*=\s*1/gi,
-  SEMICOLON: /;/g,
-  COMMENT: /--/g,
-  QUOTES: /['"]/g,
-} as const;
 
 // Input sanitization functions
 export function sanitizeInput(input: string): string {
@@ -210,115 +196,3 @@ export function generateSecureToken(length: number = SECURITY_CONFIG.CSRF_TOKEN_
   
   return result;
 }
-
-// Generate CSP nonce
-export function generateCSPNonce(): string {
-  return generateSecureToken(SECURITY_CONFIG.CSP_NONCE_LENGTH);
-}
-
-// Validate URL for security
-export function validateUrl(url: string): boolean {
-  if (typeof url !== 'string') return false;
-  
-  try {
-    const parsed = new URL(url);
-    
-    // Only allow http and https protocols
-    if (!['http:', 'https:'].includes(parsed.protocol)) {
-      return false;
-    }
-    
-    // Check for dangerous protocols in the URL
-    if (XSS_PATTERNS.JAVASCRIPT_PROTOCOL.test(url)) return false;
-    if (XSS_PATTERNS.DATA_PROTOCOL.test(url)) return false;
-    if (XSS_PATTERNS.VBSCRIPT.test(url)) return false;
-    
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-// Content Security Policy configuration
-export const CSP_CONFIG: CSPConfig = {
-  'default-src': ["'self'"],
-  'script-src': [
-    "'self'",
-    "'unsafe-inline'", // Note: This should be removed in production with nonces
-    'https://fonts.googleapis.com',
-    'https://www.googletagmanager.com',
-    'https://assets.calendly.com',
-    'https://js.stripe.com',
-  ],
-  'style-src': [
-    "'self'",
-    "'unsafe-inline'", // Note: This should be removed in production with nonces
-    'https://fonts.googleapis.com',
-    'https://assets.calendly.com',
-    'https://sibforms.com',
-  ],
-  'img-src': [
-    "'self'",
-    'data:',
-    'https:',
-  ],
-  'font-src': [
-    "'self'",
-    'https://fonts.gstatic.com',
-  ],
-  'connect-src': [
-    "'self'",
-    'https://api.resend.com',
-    'https://www.google-analytics.com',
-    'https://analytics.google.com',
-    'https://calendly.com',
-    'https://api.stripe.com',
-  ],
-  'frame-src': [
-    "'self'",
-    'https://calendly.com',
-    'https://checkout.stripe.com',
-    'https://js.stripe.com',
-  ],
-  'frame-ancestors': ["'none'"],
-  'base-uri': ["'self'"],
-  'form-action': ["'self'", 'https://b15138b6.sibforms.com', 'https://sibforms.com'],
-  'object-src': ["'none'"],
-  'media-src': ["'self'"],
-  'worker-src': ["'self'"],
-  'manifest-src': ["'self'"],
-  'upgrade-insecure-requests': [],
-} as const;
-
-// Generate CSP header string
-export function generateCSPHeader(nonce?: string): string {
-  const policies = Object.entries(CSP_CONFIG).map(([directive, sources]) => {
-    if (sources.length === 0) {
-      return directive;
-    }
-    
-    let sourceList = sources.join(' ');
-    
-    // Add nonce if provided
-    if (nonce && ['script-src', 'style-src'].includes(directive)) {
-      sourceList += ` 'nonce-${nonce}'`;
-    }
-    
-    return `${directive} ${sourceList}`;
-  });
-  
-  return policies.join('; ');
-}
-
-// Security headers configuration
-export const SECURITY_HEADERS: SecurityHeaders = {
-  'X-Content-Type-Options': 'nosniff',
-  'X-Frame-Options': 'DENY',
-  'X-XSS-Protection': '1; mode=block',
-  'Referrer-Policy': 'strict-origin-when-cross-origin',
-  'Permissions-Policy': 'camera=(), microphone=(), geolocation=(), interest-cohort=()',
-  'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
-  'Cross-Origin-Embedder-Policy': 'unsafe-none',
-  'Cross-Origin-Opener-Policy': 'same-origin',
-  'Cross-Origin-Resource-Policy': 'same-origin',
-} as const;

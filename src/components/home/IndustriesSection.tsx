@@ -6,34 +6,37 @@ import { useEffect, useRef, useState } from 'react';
 import { FadeIn } from '@/components/ui/fade-in';
 import { TextReveal } from '@/components/ui/text-reveal';
 
+// Ordered by campaign priority — contractors lead, law firms last. The GTA
+// pivot deliberately does not lead with legal work; that SERP is held by
+// established Toronto agencies. See DURHAM-PIVOT-PLAN.md §6.1.
 const industries = [
+  {
+    title: 'Renovations & Contractors',
+    href: '/renovations',
+    description:
+      'Project galleries and quote forms that turn browsers into booked estimates. For renovators, roofers, HVAC, electrical, and landscaping across the GTA.',
+    tag: 'Portfolio-Driven',
+  },
+  {
+    title: 'Physio & Wellness Clinics',
+    href: '/clinics',
+    description:
+      'Online booking, practitioner profiles, and insurance info — built for GTA physio, chiro, RMT, and dental clinics.',
+    tag: 'Patient-First',
+  },
+  {
+    title: 'Accountants & Mortgage Brokers',
+    href: '/accountants',
+    description:
+      'Secure, credible platforms with client portals and document intake. For CPAs, bookkeepers, and mortgage brokers in the GTA.',
+    tag: 'Compliance-Ready',
+  },
   {
     title: 'Law Firms',
     href: '/lawyers',
     description:
-      'Build trust and credibility online. We design websites that help GTA law firms convert visitors into clients.',
+      'Trust-first websites for GTA practices — family, real estate, and personal injury firms in Markham, Scarborough, and Richmond Hill.',
     tag: 'Trust-Critical',
-  },
-  {
-    title: 'Accounting Firms',
-    href: '/accountants',
-    description:
-      'Secure, professional platforms with client portals. Designed for CPAs and accounting firms across the GTA.',
-    tag: 'Compliance-Ready',
-  },
-  {
-    title: 'Renovation Companies',
-    href: '/renovations',
-    description:
-      'Showcase your best projects with stunning portfolio websites that capture leads and grow your business.',
-    tag: 'Portfolio-Driven',
-  },
-  {
-    title: 'Wellness Clinics',
-    href: '/clinics',
-    description:
-      'Modern platforms with online booking for massage therapy, chiropractic, physiotherapy, and holistic health.',
-    tag: 'Patient-First',
   },
 ];
 

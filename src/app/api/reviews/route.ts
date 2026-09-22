@@ -12,9 +12,12 @@ interface GooglePlaceReview {
   publishTime: string;
 }
 
+// Places API v1 returns `rating` and `userRatingCount` as sibling top-level
+// fields — exactly as requested in the X-Goog-FieldMask below.
 interface GooglePlaceResponse {
   name: string;
-  rating?: number | { rating?: number; userRatingCount?: number };
+  rating?: number;
+  userRatingCount?: number;
   reviews?: GooglePlaceReview[];
   displayName?: { text: string; languageCode: string };
 }
@@ -118,16 +121,8 @@ export async function GET(request: NextRequest) {
     const data: GooglePlaceResponse = await response.json();
 
     const reviews = data.reviews || [];
-    const rating =
-      typeof data.rating === 'number'
-        ? data.rating
-        : typeof data.rating === 'object' && data.rating !== null && 'rating' in data.rating
-        ? (data.rating as { rating?: number }).rating || 0
-        : 0;
-    const userRatingCount =
-      typeof data.rating === 'object' && data.rating !== null && 'userRatingCount' in data.rating
-        ? (data.rating as { userRatingCount?: number }).userRatingCount || 0
-        : 0;
+    const rating = data.rating ?? 0;
+    const userRatingCount = data.userRatingCount ?? 0;
     const displayName = data.displayName?.text || data.name || '';
 
     const latestReviews = reviews

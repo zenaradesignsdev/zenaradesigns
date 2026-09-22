@@ -6,14 +6,21 @@ import { serviceContent, serviceSchema, faqPageSchema, serviceBreadcrumb } from 
 const entry = serviceContent['seo'];
 
 export const metadata: Metadata = {
-  title: 'SEO Services Toronto | Search Engine Optimization | Zenara Designs',
-  description: 'Professional SEO services for Toronto & GTA businesses. Local SEO, technical optimization, keyword research, and Google ranking improvements. Month-to-month, no contracts.',
+  title: 'SEO Services Markham & GTA | Local SEO | Zenara',
+  description: 'SEO services for GTA businesses. Local SEO, technical optimization, keyword research, and Google ranking improvements. Month-to-month, no contracts.',
   keywords: ['SEO services Toronto', 'local SEO GTA', 'search engine optimization Toronto', 'technical SEO Ontario', 'Google ranking Toronto', 'SEO agency Toronto'],
   alternates: { canonical: 'https://zenaradesigns.com/services/seo' },
   openGraph: {
-    title: 'SEO Services Toronto | Search Engine Optimization | Zenara Designs',
-    description: 'Professional SEO services for Toronto & GTA businesses. Local SEO, technical optimization, keyword research, and Google ranking improvements. Month-to-month, no contracts.',
+    images: ['/opengraph-image'],
+    title: 'SEO Services Markham & GTA | Local SEO | Zenara',
+    description: 'SEO services for GTA businesses. Local SEO, technical optimization, keyword research, and Google ranking improvements. Month-to-month, no contracts.',
     url: 'https://zenaradesigns.com/services/seo',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'SEO Services Markham & GTA | Local SEO | Zenara',
+    description:
+      'SEO services for GTA businesses. Local SEO, technical optimization, keyword research, and Google ranking improvements. Month-to-month, no contracts.',
   },
 };
 

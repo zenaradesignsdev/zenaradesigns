@@ -117,36 +117,6 @@ export interface SecurityConfig {
   MAX_RETRIES: number;
 }
 
-export interface SecurityHeaders {
-  'X-Content-Type-Options': string;
-  'X-Frame-Options': string;
-  'X-XSS-Protection': string;
-  'Referrer-Policy': string;
-  'Permissions-Policy': string;
-  'Strict-Transport-Security': string;
-  'Cross-Origin-Embedder-Policy': string;
-  'Cross-Origin-Opener-Policy': string;
-  'Cross-Origin-Resource-Policy': string;
-}
-
-export interface CSPConfig {
-  'default-src': string[];
-  'script-src': string[];
-  'style-src': string[];
-  'img-src': string[];
-  'font-src': string[];
-  'connect-src': string[];
-  'frame-src': string[];
-  'frame-ancestors': string[];
-  'base-uri': string[];
-  'form-action': string[];
-  'object-src': string[];
-  'media-src': string[];
-  'worker-src': string[];
-  'manifest-src': string[];
-  'upgrade-insecure-requests': string[];
-}
-
 export interface ErrorBoundaryProps {
   children: React.ReactNode;
   fallback?: React.ReactNode;

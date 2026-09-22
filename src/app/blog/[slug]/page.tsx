@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { notFound } from 'next/navigation';
 import { blogPosts, getPostBySlug } from '@/content/blog';
 import BlogPost from '@/components/pages/BlogPost';
 import { generateBlogPostingSchema, generateOrganizationSchema, generateWebSiteSchema } from '@/lib/structured-data';
@@ -6,6 +7,11 @@ import { generateBlogPostingSchema, generateOrganizationSchema, generateWebSiteS
 interface Props {
   params: { slug: string };
 }
+
+// Only these slugs exist. Without `dynamicParams = false` an unknown slug was
+// server-rendered on demand and returned HTTP 200 with a "not found" body — a
+// soft 404 that let Google crawl an unbounded set of /blog/* URLs.
+export const dynamicParams = false;
 
 export function generateStaticParams() {
   return blogPosts.map((post) => ({ slug: post.slug }));
@@ -35,16 +41,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         images: [{ url: `https://zenaradesigns.com${post.featuredImage}` }],
       }),
     },
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      description: post.description,
+    },
   };
 }
 
 export default function BlogPostPage({ params }: Props) {
   const post = getPostBySlug(params.slug);
+  if (!post) notFound();
 
-  // Render structured data as SSR script tags so crawlers see them in initial HTML
-  const schemas = post
-    ? [generateOrganizationSchema(), generateWebSiteSchema(), generateBlogPostingSchema(post)]
-    : [];
+  const schemas = [
+    generateOrganizationSchema(),
+    generateWebSiteSchema(),
+    generateBlogPostingSchema(post),
+  ];
 
   return (
     <>

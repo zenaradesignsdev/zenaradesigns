@@ -3,11 +3,11 @@
 import Link from 'next/link';
 import { Check, ArrowRight, Star, ChevronDown, Layers, Rocket, Gem, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { memo, useMemo, useEffect, useRef, useState } from 'react';
 import { FadeIn } from '@/components/ui/fade-in';
 import { TextReveal } from '@/components/ui/text-reveal';
+import { pricingPageFaqs } from '@/lib/faq-data';
 
 interface PricingPlan {
   name: string;
@@ -72,7 +72,7 @@ const Pricing = () => {
       price: "$499",
       originalPrice: "$999",
       savings: "$500 OFF",
-      description: "Perfect for freelancers and personal brands",
+      description: "Affordable web design for freelancers and personal brands",
       features: [
         "Up to 3 pages (Home, About, Contact)",
         "Modern portfolio-style design",
@@ -81,7 +81,7 @@ const Pricing = () => {
         "SEO setup (titles/meta, indexing, analytics)",
         "1 month free hosting",
         "SSL + baseline security included",
-        "1-week turnaround (once content is received)",
+        "3–5 day turnaround (once content is received)",
         "14 days post-launch support (bug fixes + minor edits)"
       ],
       cta: "Choose Starter",
@@ -93,7 +93,7 @@ const Pricing = () => {
       price: "$1,499",
       originalPrice: "$1,999",
       savings: "$500 OFF",
-      description: "Ideal for small businesses and professionals",
+      description: "Professional web design for small businesses and growing brands",
       features: [
         "Up to 6 pages (Home, About, Services, Projects, Pricing, Contact)",
         "Custom sections and layouts",
@@ -102,7 +102,7 @@ const Pricing = () => {
         "Mobile-first responsive design",
         "Basic animations",
         "2 rounds of revisions included",
-        "2–3 week turnaround (once content is received)",
+        "1–2 week turnaround (once content is received)",
         "SSL + baseline security included",
         "Performance optimization (images + speed)",
         "30 days post-launch support (bug fixes + minor edits)"
@@ -114,7 +114,7 @@ const Pricing = () => {
       name: "Pro",
       subtitle: "Fully Custom", 
       price: "$4,999+",
-      description: "For businesses needing advanced functionality",
+      description: "Fully custom, premium web design for businesses needing advanced functionality",
       features: [
         "Everything in Small Business",
         "Multi-page site (10+ pages) with custom sections",
@@ -135,21 +135,52 @@ const Pricing = () => {
   // Additional services pricing for comprehensive coverage
   const additionalServices = useMemo(() => [
     {
-      category: "Business Card Design & Logo Design - Tailored for Toronto & GTA",
+      category: "Grow Beyond the Launch — SEO, Redesigns & AI Search",
+      services: [
+        {
+          name: "Website Redesign",
+          price: "Custom Quote",
+          description: "Modernize an outdated site with a fixed-price, fast rebuild — SEO equity migrated, not lost.",
+          features: ["Free audit before quoting", "SEO equity migration", "Mobile-first rebuild", "Fixed price, known timeline"],
+          idealFor: "Businesses with an outdated or underperforming website",
+          href: "/services/website-redesign"
+        },
+        {
+          name: "SEO Services",
+          price: "Custom Quote",
+          description: "Ongoing local SEO — technical fixes, content strategy, and monthly ranking reports, month-to-month.",
+          features: ["Local + technical SEO", "Keyword research", "Monthly ranking reports", "No lock-in contracts"],
+          idealFor: "Businesses ready to rank higher in the GTA",
+          href: "/services/seo"
+        },
+        {
+          name: "GEO & AI Search",
+          price: "Custom Quote",
+          description: "Get found and cited by ChatGPT, Perplexity, and Gemini — not just Google.",
+          features: ["AI-readable structured content", "Server-rendered schema", "Monthly AI visibility tracking", "Built alongside your SEO"],
+          idealFor: "Businesses that want to show up in AI search answers",
+          href: "/services/geo"
+        }
+      ]
+    },
+    {
+      category: "Business Card Design & Logo Design - Tailored for the GTA",
       services: [
         {
           name: "Professional Business Cards",
           price: "$149 - $399",
           description: "High-quality business card design and printing",
           features: ["Custom design", "Premium printing", "Digital files", "2-3 day turnaround"],
-          idealFor: "Professionals, consultants, service providers, small business owners, executives, lawyers, doctors, financial advisors, luxury brands"
+          idealFor: "Professionals, consultants, service providers, small business owners, executives, lawyers, doctors, financial advisors, luxury brands",
+          href: "/services/branding"
         },
         {
           name: "Basic Logo Design",
-          price: "$99 - $199", 
+          price: "$99 - $199",
           description: "Simple logo design for small businesses",
           features: ["3 initial concepts", "2 revisions", "Vector files", "1 week delivery"],
-          idealFor: "Startups, freelancers, small businesses, entrepreneurs"
+          idealFor: "Startups, freelancers, small businesses, entrepreneurs",
+          href: "/services/branding"
         }
       ]
     }
@@ -206,48 +237,10 @@ const Pricing = () => {
     }
   ], []);
 
-  const faqs = useMemo(() => [
-    {
-      question: "What are your web design packages and pricing?",
-      answer: "We offer three main packages: Starter ($999) for individuals with 1-3 pages and 1 week turnaround, Small Business ($1,999) for businesses with up to 6 pages and 2-3 weeks turnaround, and Pro ($4,999+) for advanced functionality with unlimited pages and 3-4 weeks turnaround."
-    },
-    {
-      question: "Do you offer payment plans?",
-      answer: "Yes! We offer 50% upfront and 50% on completion for all projects. For Pro projects over $10k, we can discuss custom payment schedules. We accept e-transfers, cheques, and credit cards."
-    },
-    {
-      question: "How long does it take to build a website?",
-      answer: "Our timelines are: Starter (1 week), Small Business (2-3 weeks), and Pro (3-4 weeks). These timelines include design, development, testing, and launch. We work efficiently while ensuring quality results."
-    },
-    {
-      question: "What's included in each pricing plan?",
-      answer: "Starter includes 1-3 pages and basic features. Small Business includes up to 6 pages with custom sections and 2 revisions. Pro includes unlimited pages, advanced integrations, and priority support. All plans include mobile optimization, SEO basics, SSL security, and hosting."
-    },
-    {
-      question: "Do you provide business card design services?",
-      answer: "Yes! We offer professional business card design services across the GTA. Our packages range from $149-$399 for professional cards and $299-$599 for executive cards with premium finishes like foil stamping and embossing."
-    },
-    {
-      question: "Can you help with e-commerce development?",
-      answer: "Yes! We specialize in e-commerce development using platforms like Shopify, WooCommerce, and custom solutions. Small e-commerce stores start at $2,999-$4,999, with enterprise solutions available by quote."
-    },
-    {
-      question: "Are there any hidden costs?",
-      answer: "No hidden costs! Our pricing is transparent and includes everything listed. The only additional costs would be if you request features beyond what's included in your chosen plan, and we'll always discuss these upfront."
-    },
-    {
-      question: "Do you handle hosting and domain setup?",
-      answer: "Yes! We can handle hosting internally for $10-$30/month (SSL included) or help you set up with external providers. We also assist with domain registration and DNS setup."
-    },
-    {
-      question: "What happens if I'm not satisfied with the design?",
-      answer: "We work closely with you throughout the process to ensure you love the result. If you're not satisfied, we'll work with you to make it right. Our goal is your success and satisfaction."
-    },
-    {
-      question: "Can I upgrade my plan during the project?",
-      answer: "Absolutely! You can upgrade from Starter to Small Business or Pro at any time. We'll adjust the pricing accordingly and add the new features to your project."
-    }
-  ], []);
+  // Price/value FAQ content — imported from the shared FAQ data module so
+  // this page can never drift out of sync with the figures on /faq.
+  const faqs = pricingPageFaqs;
+  const faqMidpoint = Math.ceil(faqs.length / 2);
 
   return (
     <div className="min-h-screen" role="main" aria-label="Pricing page">
@@ -287,7 +280,7 @@ const Pricing = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 pt-16 sm:pt-20 md:pt-24">
           <div className="text-center mb-12 sm:mb-16">
             <FadeIn>
-              <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">Web Design Agency — Toronto & GTA</p>
+              <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">Web Design Agency — the GTA</p>
             </FadeIn>
             <TextReveal
               as="h1"
@@ -295,12 +288,12 @@ const Pricing = () => {
               staggerMs={130}
               lines={[
                 <span key="l1" className="block font-light">Simple,</span>,
-                <span key="l2" className="block bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Transparent Pricing.</span>,
+                <span key="l2" className="block bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Affordable Pricing.</span>,
               ]}
             />
             <FadeIn delay={260}>
               <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-4xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
-                Choose the plan that fits your needs. No hidden fees, no surprises — just quality work.
+                Fast, professional web design at affordable, competitive prices — no hidden fees, no surprises. Just transparent pricing and quality work, built for GTA businesses.
               </p>
             </FadeIn>
             <FadeIn delay={360}>
@@ -309,7 +302,7 @@ const Pricing = () => {
                   {/* Soft pulsing wash */}
                   <span className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-400/10 via-amber-300/[0.04] to-amber-400/10 animate-pulse pointer-events-none" />
                   {/* Shine sweep */}
-                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-200/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1400ms] pointer-events-none" />
+                  <span className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-200/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform [transition-duration:1400ms] pointer-events-none" />
                   <Sun className="h-4 w-4 text-amber-300 relative z-10 flex-shrink-0" strokeWidth={1.75} />
                   <span className="relative z-10 text-xs sm:text-sm font-medium text-amber-100/90 tracking-wide">
                     Summer Offer — <span className="text-amber-300 font-semibold">$500 off</span> Starter &amp; Small Business plans
@@ -371,7 +364,7 @@ const Pricing = () => {
                       {plan.features.map((feature, featureIndex) => (
                         <li key={featureIndex} className="flex items-start space-x-2 sm:space-x-3">
                           <Check className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400 flex-shrink-0 mt-0.5" />
-                          <span className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">{feature}</span>
+                          <span className="text-white/70 text-sm sm:text-base leading-relaxed font-light">{feature}</span>
                         </li>
                       ))}
                     </ul>
@@ -430,6 +423,82 @@ const Pricing = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Small Business Launch Package — featured all-in-one bundle */}
+      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-black">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-purple-900/40 to-black" />
+          <div className="absolute inset-0 bg-gradient-to-tl from-black via-cyan-900/30 to-black" />
+          <div className="bg-star" style={{ top: '6%', left: '8%' }} />
+          <div className="bg-star" style={{ top: '10%', left: '30%' }} />
+          <div className="bg-star" style={{ top: '5%', left: '55%' }} />
+          <div className="bg-star" style={{ top: '13%', left: '80%' }} />
+          <div className="bg-star" style={{ top: '8%', left: '95%' }} />
+        </div>
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+          <FadeIn>
+            <div className="relative rounded-[2rem] overflow-hidden border border-cyan-500/25">
+              <div className="absolute inset-0 bg-slate-950/90 backdrop-blur-sm" />
+              <div className="absolute top-0 left-0 w-96 h-96 bg-gradient-to-br from-cyan-500/20 via-cyan-400/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-purple-500/20 via-purple-400/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-400/50 to-transparent" />
+
+              <div className="relative z-10 grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-6 px-6 sm:px-10 md:px-14 py-12 sm:py-16">
+                {/* Pitch */}
+                <div className="lg:col-span-2 flex flex-col justify-center">
+                  <div className="inline-flex items-center rounded-full px-4 py-1.5 border border-cyan-400/30 bg-cyan-400/[0.08] w-fit mb-6">
+                    <span className="text-xs font-semibold tracking-[0.2em] uppercase text-cyan-200">All-In-One Bundle</span>
+                  </div>
+                  <h2 className="text-3xl sm:text-4xl md:text-5xl font-light text-white leading-[1.05] tracking-[-0.03em] mb-4">
+                    Small Business <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Launch Package</span>
+                  </h2>
+                  <p className="text-white/55 text-base sm:text-lg font-light leading-relaxed mb-6">
+                    Everything a small business needs to launch a professional online presence — website, branding, Google Business, social, hosting, and local SEO — for one fast, affordable, transparent price.
+                  </p>
+                  <div className="flex items-baseline gap-3 mb-2">
+                    <span className="text-5xl sm:text-6xl font-light text-white">$2,000</span>
+                    <span className="text-white/40 text-sm font-light">one-time</span>
+                  </div>
+                  <p className="text-white/40 text-xs sm:text-sm font-light mb-8">
+                    + $70/month for hosting &amp; care after your first free month
+                  </p>
+                  <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 w-fit">
+                    <Button asChild className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-8 py-4 text-sm sm:text-base font-semibold group">
+                      <Link href="/contact">
+                        <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full" />
+                        <span className="flex items-center justify-center relative z-10 group-hover:text-white">
+                          Get the Launch Package
+                          <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+                        </span>
+                      </Link>
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Checklist */}
+                <div className="lg:col-span-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    {[
+                      'Full custom small business website',
+                      'Logo design + business card design',
+                      'Google Business Profile setup & optimization',
+                      'Instagram setup (if needed) + 3 starter posts',
+                      '1 month of free hosting + site care (then $70/mo)',
+                      'Local SEO optimization — 5 service areas',
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-start gap-3 bg-white/[0.03] border border-white/8 rounded-xl px-4 py-3.5">
+                        <Check className="h-5 w-5 text-cyan-400 flex-shrink-0 mt-0.5" />
+                        <span className="text-white/70 text-sm sm:text-base font-light leading-snug">{item}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -520,7 +589,7 @@ const Pricing = () => {
                         {plan.features.map((feature, featureIndex) => (
                           <li key={featureIndex} className="flex items-start space-x-2 sm:space-x-3">
                             <Check className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0 mt-0.5 text-cyan-400" />
-                            <span className="text-white/60 text-xs sm:text-sm leading-relaxed font-light">{feature}</span>
+                            <span className="text-white/70 text-sm sm:text-base leading-relaxed font-light">{feature}</span>
                           </li>
                         ))}
                       </ul>
@@ -583,7 +652,7 @@ const Pricing = () => {
             />
             <FadeIn delay={240}>
               <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-4xl mx-auto leading-[1.7] font-light tracking-[0.01em]">
-                Complete pricing for all our web design, business card, and logo design services in Toronto &amp; GTA
+                Transparent pricing for growth services, business cards, and logo design — everything to launch and grow your GTA business.
               </p>
             </FadeIn>
           </div>
@@ -599,45 +668,62 @@ const Pricing = () => {
                     {category.category}
                   </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {category.services.map((service, serviceIndex) => (
-                      <div
-                        key={serviceIndex}
-                        className="relative flex flex-col bg-slate-800/40 backdrop-blur-sm rounded-xl overflow-hidden border border-cyan-500/15 hover:border-cyan-400/40 transition-all duration-300 hover:-translate-y-1 group/card"
-                      >
-                        {/* Gradient top border accent */}
-                        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-500/60 via-purple-500/60 to-cyan-500/60" />
+                    {category.services.map((service, serviceIndex) => {
+                      const cardClassName = "relative flex flex-col bg-slate-800/40 backdrop-blur-sm rounded-xl overflow-hidden border border-cyan-500/15 hover:border-cyan-400/40 transition-all duration-300 hover:-translate-y-1 group/card";
+                      const cardContent = (
+                        <>
+                          {/* Gradient top border accent */}
+                          <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-cyan-500/60 via-purple-500/60 to-cyan-500/60" />
 
-                        <div className="p-6 flex flex-col flex-1">
-                          {/* Price — prominent at top */}
-                          <p className="text-2xl sm:text-3xl font-light mb-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
-                            {service.price}
-                          </p>
-                          <h4 className="text-lg sm:text-xl font-semibold text-white mb-2 tracking-tight group-hover/card:text-cyan-300 transition-colors duration-300">
-                            {service.name}
-                          </h4>
-                          <p className="text-white/55 mb-5 text-sm font-light leading-relaxed flex-grow">
-                            {service.description}
-                          </p>
-                          <ul className="space-y-2 mb-5">
-                            {service.features.map((feature, featureIndex) => (
-                              <li key={featureIndex} className="flex items-center text-white/60 text-sm font-light">
-                                <Check className="h-4 w-4 mr-2 flex-shrink-0 text-cyan-400" />
-                                {feature}
-                              </li>
-                            ))}
-                          </ul>
-                          {/* Ideal for tag chip */}
-                          {service.idealFor && (
-                            <div className="mt-auto pt-4 border-t border-white/6">
-                              <span className="inline-block px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300/70 text-xs font-light tracking-wide">
-                                Ideal for: {service.idealFor.split(',')[0].trim()}
-                                {service.idealFor.split(',').length > 1 ? ' & more' : ''}
-                              </span>
-                            </div>
-                          )}
+                          <div className="p-6 flex flex-col flex-1">
+                            {/* Price — prominent at top */}
+                            <p className="text-2xl sm:text-3xl font-light mb-2 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
+                              {service.price}
+                            </p>
+                            <h4 className="text-lg sm:text-xl font-semibold text-white mb-2 tracking-tight group-hover/card:text-cyan-300 transition-colors duration-300">
+                              {service.name}
+                            </h4>
+                            <p className="text-white/55 mb-5 text-sm font-light leading-relaxed flex-grow">
+                              {service.description}
+                            </p>
+                            <ul className="space-y-2 mb-5">
+                              {service.features.map((feature, featureIndex) => (
+                                <li key={featureIndex} className="flex items-center text-white/60 text-sm font-light">
+                                  <Check className="h-4 w-4 mr-2 flex-shrink-0 text-cyan-400" />
+                                  {feature}
+                                </li>
+                              ))}
+                            </ul>
+                            {/* Ideal for tag + learn more link */}
+                            {(service.idealFor || 'href' in service) && (
+                              <div className="mt-auto pt-4 border-t border-white/6 flex items-center justify-between gap-3 flex-wrap">
+                                {service.idealFor && (
+                                  <span className="inline-block px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-300/70 text-xs font-light tracking-wide">
+                                    Ideal for: {service.idealFor.split(',')[0].trim()}
+                                    {service.idealFor.split(',').length > 1 ? ' & more' : ''}
+                                  </span>
+                                )}
+                                {'href' in service && (
+                                  <span className="inline-flex items-center text-xs font-medium text-cyan-300/80 group-hover/card:text-cyan-300 transition-colors duration-300 whitespace-nowrap">
+                                    Learn more <ArrowRight className="ml-1 h-3.5 w-3.5 group-hover/card:translate-x-1 transition-transform" />
+                                  </span>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        </>
+                      );
+
+                      return 'href' in service ? (
+                        <Link key={serviceIndex} href={service.href} className={cardClassName}>
+                          {cardContent}
+                        </Link>
+                      ) : (
+                        <div key={serviceIndex} className={cardClassName}>
+                          {cardContent}
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -712,7 +798,7 @@ const Pricing = () => {
                   {
                     number: '02',
                     label: 'Fast Delivery',
-                    body: '1–4 week turnaround once content is received.',
+                    body: '3 days to 4 weeks, depending on your plan, once content is received.',
                   },
                   {
                     number: '03',
@@ -722,7 +808,7 @@ const Pricing = () => {
                   {
                     number: '04',
                     label: 'Local & Accessible',
-                    body: "GTA-based team. We\u2019re easy to reach and quick to respond.",
+                    body: "Local team, one time zone. We\u2019re easy to reach and quick to respond.",
                   },
                 ].map((item, i) => (
                   <FadeIn key={item.label} delay={i * 100}>
@@ -772,16 +858,21 @@ const Pricing = () => {
               className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[0.95] tracking-[-0.04em] text-center"
               staggerMs={120}
               lines={[
-                <span key="l1" className="block bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Frequently Asked</span>,
-                <span key="l2" className="block font-light opacity-90 mt-2">Questions</span>,
+                <span key="l1" className="block bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Pricing &amp;</span>,
+                <span key="l2" className="block font-light opacity-90 mt-2">Value Questions</span>,
               ]}
             />
+            <FadeIn delay={240}>
+              <p className="text-base sm:text-lg text-white/55 max-w-2xl mx-auto leading-[1.7] font-light tracking-[0.01em] mt-6">
+                What our pricing includes, how it stays affordable, and why it&apos;s transparent from the first quote.
+              </p>
+            </FadeIn>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:items-start">
             {/* Left Column Accordion */}
             <Accordion type="single" collapsible className="w-full space-y-3 flex flex-col">
-              {faqs.slice(0, 5).map((faq, index) => (
+              {faqs.slice(0, faqMidpoint).map((faq, index) => (
                 <AccordionItem
                   key={`left-item-${index + 1}`}
                   value={`left-item-${index + 1}`}
@@ -801,7 +892,7 @@ const Pricing = () => {
 
             {/* Right Column Accordion */}
             <Accordion type="single" collapsible className="w-full space-y-3 flex flex-col">
-              {faqs.slice(5, 10).map((faq, index) => (
+              {faqs.slice(faqMidpoint).map((faq, index) => (
                 <AccordionItem
                   key={`right-item-${index + 1}`}
                   value={`right-item-${index + 1}`}
@@ -819,7 +910,20 @@ const Pricing = () => {
               ))}
             </Accordion>
           </div>
-          
+
+          {/* More FAQs CTA */}
+          <div className="text-center mt-10 sm:mt-12">
+            <p className="text-white/45 text-sm sm:text-base font-light mb-4">
+              Have a question about our process, timelines, or the GTA specifically?
+            </p>
+            <Link
+              href="/faq"
+              className="inline-flex items-center text-sm sm:text-base font-medium text-white/60 hover:text-white transition-colors duration-300 group"
+            >
+              Browse the full FAQ <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+
           {/* Last Updated Date */}
           <div className="text-center mt-12">
             <p className="text-white/40 text-sm font-light">

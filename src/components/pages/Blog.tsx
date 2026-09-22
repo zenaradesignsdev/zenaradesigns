@@ -7,7 +7,6 @@ import { BookOpen, Sparkles, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
-import StructuredData from '@/components/StructuredData';
 import { SafeImage } from '@/components/ui/safe-image';
 
 const Blog = () => {
@@ -39,12 +38,10 @@ const Blog = () => {
       if (ref) observer.observe(ref);
     });
 
-    return () => {
-      cardRefs.current.forEach((ref) => {
-        if (ref) observer.unobserve(ref);
-      });
-    };
-  }, [handleCardIntersection, blogPosts.length]);
+    // disconnect() drops every observation this observer holds, so it does not
+    // depend on cardRefs.current still pointing at the same nodes at teardown.
+    return () => observer.disconnect();
+  }, [handleCardIntersection]);
 
   // Get featured post (most recent)
   const featuredPost = blogPosts.length > 0 ? blogPosts[0] : null;
@@ -264,14 +261,6 @@ const Blog = () => {
         </section>
       )}
       
-      {/* Breadcrumb Schema */}
-      <StructuredData 
-        type="breadcrumb" 
-        breadcrumbs={[
-          { name: 'Home', url: '/' },
-          { name: 'Blog', url: '/blog' }
-        ]} 
-      />
     </div>
   );
 };

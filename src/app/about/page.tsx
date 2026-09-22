@@ -32,7 +32,7 @@ const organizationSchema = {
   '@id': ORG_ID,
   name: 'Zenara Designs',
   url: 'https://zenaradesigns.com',
-  description: 'Toronto web design agency building fast, modern, conversion-focused websites for GTA businesses.',
+  description: 'the GTA web design agency building fast, modern, conversion-focused websites for local service businesses.',
   foundingDate: '2024',
   founder: team
     .filter((m) => m.founder)
@@ -54,15 +54,22 @@ const aboutBreadcrumb = breadcrumbSchema('/about', [
 ]);
 
 export const metadata: Metadata = {
-  title: 'Meet the Team Behind Zenara — Toronto Web Design Agency | Zenara',
+  title: 'Meet the Team Behind Zenara — Markham Web Design | Zenara',
   description:
     'Zenara Designs is a Toronto web design agency built by engineers from Waterloo and Ottawa. We build fast, modern websites for law firms, clinics, and GTA businesses. See our team and process.',
   alternates: { canonical: 'https://zenaradesigns.com/about' },
   openGraph: {
-    title: 'Meet the Team Behind Zenara — Toronto Web Design Agency | Zenara',
+    images: ['/opengraph-image'],
+    title: 'Meet the Team Behind Zenara — Markham Web Design | Zenara',
     description:
       'Zenara Designs is a Toronto web design agency built by engineers from Waterloo and Ottawa. We build fast, modern websites for law firms, clinics, and GTA businesses. See our team and process.',
     url: 'https://zenaradesigns.com/about',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Meet the Team Behind Zenara — Markham Web Design | Zenara',
+    description:
+      'Zenara Designs is a Toronto web design agency built by engineers from Waterloo and Ottawa. We build fast, modern websites for law firms, clinics, and GTA businesses. See our team and process.',
   },
 };
 

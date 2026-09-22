@@ -42,7 +42,13 @@ function sanitizeInput(input: string): string {
     .substring(0, 10000);
 }
 
-function sanitizeForXSS(input: string): string {
+// Strips active content (script tags, javascript:/vbscript: URLs, inline event
+// handlers) as defence in depth. It deliberately does NOT HTML-escape: escaping
+// is applied once, at the HTML render boundary, by escapeHtml(). Escaping here
+// too would double-encode — an apostrophe became "&amp;#x27;" in the HTML part
+// and leaked raw as "&#x27;" into the plain-text part — and would also inflate
+// the string ahead of the length checks below.
+function stripDangerousPatterns(input: string): string {
   let sanitized = sanitizeInput(input);
   const dangerousPatterns = [
     /<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi,
@@ -52,13 +58,7 @@ function sanitizeForXSS(input: string): string {
     /vbscript:/gi,
   ];
   dangerousPatterns.forEach((p) => { sanitized = sanitized.replace(p, ''); });
-  return sanitized
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#x27;')
-    .replace(/\//g, '&#x2F;');
+  return sanitized;
 }
 
 function escapeHtml(text: string): string {
@@ -118,14 +118,14 @@ export async function POST(request: NextRequest) {
   const { name, email, phone, company, projectType, budget, timeline, message } = body as Record<string, string>;
 
   const sanitized = {
-    name: sanitizeForXSS(sanitizeInput(name || '')),
+    name: stripDangerousPatterns(name || ''),
     email: sanitizeInput(email || ''),
-    phone: phone ? sanitizeForXSS(sanitizeInput(phone)) : '',
-    company: company ? sanitizeForXSS(sanitizeInput(company)) : '',
-    projectType: sanitizeForXSS(sanitizeInput(projectType || '')),
-    budget: sanitizeForXSS(sanitizeInput(budget || '')),
-    timeline: sanitizeForXSS(sanitizeInput(timeline || '')),
-    message: sanitizeForXSS(sanitizeInput(message || '')),
+    phone: phone ? stripDangerousPatterns(phone) : '',
+    company: company ? stripDangerousPatterns(company) : '',
+    projectType: stripDangerousPatterns(projectType || ''),
+    budget: stripDangerousPatterns(budget || ''),
+    timeline: stripDangerousPatterns(timeline || ''),
+    message: stripDangerousPatterns(message || ''),
   };
 
   if (!sanitized.name || !sanitized.email || !sanitized.projectType || !sanitized.budget || !sanitized.timeline || !sanitized.message) {

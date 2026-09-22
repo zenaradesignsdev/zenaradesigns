@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Star, CheckCircle, ArrowUpRight, ChevronDown, Globe, ShoppingCart, Paintbrush, CreditCard, Search, Server, Shield, Zap } from 'lucide-react';
+import { Star, CheckCircle, ArrowUpRight, ChevronDown, Globe, ShoppingCart, Paintbrush, Search, Server, Shield, Zap, Sparkles, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { scrollToTop } from '@/hooks';
@@ -25,7 +25,7 @@ const SERVICES = [
     description: 'Complete web solutions built for performance and conversion.',
     tag: 'Core Service',
     image: realEstateWebImage,
-    imageAlt: 'Real Estate Website Design Toronto — Professional Property Showcase',
+    imageAlt: 'Real Estate Website Design GTA — Professional Property Showcase',
     gradient: 'from-cyan-500/20 to-purple-500/20',
     features: [
       'Dedicated web designer and mock-ups made for customers',
@@ -44,7 +44,7 @@ const SERVICES = [
     description: 'Enterprise-grade hosting with built-in security and monitoring.',
     tag: 'Infrastructure',
     image: rocketWebImage,
-    imageAlt: 'Tech Startup Website Design Toronto — Modern Platform Example',
+    imageAlt: 'Tech Startup Website Design GTA — Modern Platform Example',
     gradient: 'from-purple-500/20 to-cyan-500/20',
     features: [
       'Affordable plans that fit your budget',
@@ -84,7 +84,7 @@ const SERVICES = [
     description: 'Complete brand identity and marketing materials.',
     tag: 'Brand Identity',
     image: travelWebImage,
-    imageAlt: 'Travel Agency Website Design Toronto — Adventure Booking Platform Example',
+    imageAlt: 'Travel Agency Website Design GTA — Adventure Booking Platform Example',
     gradient: 'from-pink-500/20 to-cyan-500/20',
     features: [
       'Custom logo design and comprehensive brand guidelines',
@@ -101,10 +101,11 @@ const SERVICES = [
 const SUB_SERVICES = [
   { icon: Globe, title: 'Web Design', href: '/services/web-design', desc: 'Custom websites built for performance, SEO, and conversions.' },
   { icon: ShoppingCart, title: 'E-Commerce', href: '/services/ecommerce', desc: 'Online stores with Shopify, payment integration, and product management.' },
-  { icon: Paintbrush, title: 'Logo Design', href: '/services/logo-design', desc: 'Custom brand identity, color palettes, and comprehensive guidelines.' },
-  { icon: CreditCard, title: 'Business Cards', href: '/services/business-cards', desc: 'Premium print-ready designs that make lasting first impressions.' },
+  { icon: Paintbrush, title: 'Branding', href: '/services/branding', desc: 'Custom logo design and print-ready business cards, designed as one identity.' },
   { icon: Search, title: 'SEO', href: '/services/seo', desc: 'Local SEO, technical optimization, and content strategy for visibility.' },
-  { icon: Server, title: 'Hosting & Maintenance', href: '/services/hosting', desc: 'Managed hosting with 99.9% uptime, SSL, CDN, and priority support.' },
+  { icon: Server, title: 'Website Maintenance', href: '/services/website-maintenance', desc: 'Managed hosting, 99.9% uptime, and a monthly analytics report — from $45/month.' },
+  { icon: Sparkles, title: 'GEO', href: '/services/geo', desc: 'Get cited by ChatGPT, Perplexity, and AI search — the channel replacing "10 blue links".' },
+  { icon: RefreshCw, title: 'Website Redesign', href: '/services/website-redesign', desc: 'Rebuild an ageing site into something fast, modern, and built to convert.' },
 ];
 
 const INDUSTRIES = [
@@ -126,7 +127,7 @@ const TESTIMONIALS = [
 ];
 
 const FAQ_LEFT = [
-  { value: 'l1', question: 'How long does it take to build a website?', answer: 'Most websites are completed within 2–4 weeks, depending on complexity and requirements. Simple sites can be ready in 1–2 weeks, while more complex projects with custom features may take 3–4 weeks. We work efficiently while ensuring quality results.' },
+  { value: 'l1', question: 'How long does it take to build a website?', answer: 'Most websites are completed within 1–4 weeks, depending on complexity and requirements. Starter sites can be ready in 3–5 days, while more complex projects with custom features may take 3–4 weeks. We work efficiently while ensuring quality results.' },
   { value: 'l2', question: "What's included in your web design package?", answer: 'Our packages include custom design, fully responsive development, SEO optimization, SSL security setup, performance optimization, and post-launch support. We also provide brand guidelines, logo design options, and business card design as part of our comprehensive service.' },
   { value: 'l3', question: 'Do you provide hosting and maintenance?', answer: "Yes! We offer comprehensive hosting solutions with 99.9% uptime guarantee, automated backups, and ongoing maintenance support. Our hosting plans include SSL certificates, CDN integration, and 24/7 monitoring. We also provide monthly maintenance packages for updates and support." },
   { value: 'l4', question: 'Can you help with existing websites?', answer: 'We can assist with existing websites if they use a similar technology stack to our preferred modern frameworks. If your current site uses a different technology stack, we typically recommend building a new site with our modern approach for optimal performance and maintainability.' },
@@ -141,18 +142,21 @@ const FAQ_RIGHT = [
   { value: 'r5', question: 'How do I get started?', answer: "Getting started is easy! Simply contact us through our contact form or schedule a free consultation. We'll discuss your project goals, timeline, and budget, then provide a detailed proposal. Once approved, we'll begin the design process and keep you involved every step of the way." },
 ];
 
+// Marquee rows — each city listed twice so the strip loops seamlessly.
 const CITIES_TOP = [
-  'Toronto', 'Mississauga', 'Brampton', 'Vaughan', 'Markham',
-  'Richmond Hill', 'Oakville', 'Burlington', 'Hamilton', 'Ajax',
-  'Toronto', 'Mississauga', 'Brampton', 'Vaughan', 'Markham',
-  'Richmond Hill', 'Oakville', 'Burlington', 'Hamilton', 'Ajax',
+  'Markham', 'Stouffville', 'Scarborough', 'Toronto',
+  'Mississauga', 'Richmond Hill', 'Vaughan', 'Pickering',
+  'Markham', 'Stouffville', 'Scarborough', 'Toronto',
+  'Mississauga', 'Richmond Hill', 'Vaughan', 'Pickering',
 ];
 
+// Communities and neighbourhoods within the service area — these are places we
+// serve, not cities with their own landing pages.
 const CITIES_BOTTOM = [
-  'Pickering', 'Whitby', 'Oshawa', 'Newmarket', 'Aurora',
-  'Milton', 'Caledon', 'Halton Hills', 'Georgina', 'Clarington',
-  'Pickering', 'Whitby', 'Oshawa', 'Newmarket', 'Aurora',
-  'Milton', 'Caledon', 'Halton Hills', 'Georgina', 'Clarington',
+  'Unionville', 'Thornhill', 'Agincourt', 'Woodbridge', 'Ballantrae',
+  'Oak Ridges', 'Port Credit', 'Streetsville',
+  'Unionville', 'Thornhill', 'Agincourt', 'Woodbridge', 'Ballantrae',
+  'Oak Ridges', 'Port Credit', 'Streetsville',
 ];
 
 const Services = () => {
@@ -375,7 +379,7 @@ const Services = () => {
                           src={service.image}
                           alt={service.imageAlt}
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                          quality={60}
+                          quality={85}
                           sizes="(max-width: 768px) calc(100vw - 64px), (max-width: 1280px) calc(50vw - 80px), 560px"
                         />
                       </div>
@@ -594,7 +598,7 @@ const Services = () => {
               staggerMs={130}
               lines={[
                 <span key="l1" className="block font-light opacity-90 pb-2">Serving the</span>,
-                <span key="l2" className="block mt-1 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Greater Toronto Area</span>,
+                <span key="l2" className="block mt-1 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">the GTA</span>,
               ]}
             />
             <FadeIn delay={280}>

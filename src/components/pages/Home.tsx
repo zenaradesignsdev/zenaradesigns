@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic';
-import StructuredData from '@/components/StructuredData';
 import HeroSection from '@/components/home/HeroSection';
 import AgencyPartnersSection from '@/components/home/AgencyPartnersSection';
 import PortfolioSection from '@/components/home/PortfolioSection';
@@ -25,14 +24,7 @@ const Home = () => {
       <GoogleReviews />
       <CTABand />
 
-      {/* Structured Data for SEO Sitelinks */}
-      <StructuredData type="siteNavigation" />
 
-      {/* Breadcrumb Schema */}
-      <StructuredData
-        type="breadcrumb"
-        breadcrumbs={[{ name: 'Home', url: '/' }]}
-      />
     </div>
   );
 };

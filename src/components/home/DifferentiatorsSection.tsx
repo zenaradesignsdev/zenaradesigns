@@ -213,9 +213,9 @@ const DifferentiatorsSection = () => {
                     <div className="absolute inset-0 border-2 border-purple-500 rounded-2xl transform rotate-12 opacity-60"></div>
                     <Star className="h-8 w-8 text-cyan-400 relative z-10" />
                   </div>
-                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 tracking-tight">Toronto Focused</h3>
+                  <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 tracking-tight">the GTA Focused</h3>
                   <p className="text-white/60 text-sm sm:text-base leading-[1.6] font-light tracking-[0.01em]">
-                    Local expertise for GTA businesses. We understand your market, your customers, and your goals.
+                    We work with businesses in Markham, Stouffville, and Scarborough — not a national agency treating the GTA as one undifferentiated market.
                   </p>
                 </div>
               </div>

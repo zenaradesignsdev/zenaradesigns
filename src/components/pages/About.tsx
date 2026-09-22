@@ -5,16 +5,14 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useState, useEffect, useRef, memo } from 'react';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
-import type { ProcessStep, Position } from '@/types';
+import type { Position } from '@/types';
+import { processPhases } from '@/lib/process-data';
 import { SafeImage } from '@/components/ui/safe-image';
 import { team } from '@/lib/team';
 import { TextReveal } from '@/components/ui/text-reveal';
 import { FadeIn } from '@/components/ui/fade-in';
 
 const saturnImage = '/images/saturn.png';
-const discoveryImage = '/images/zenara-discovery.jpg';
-const prototypingImage = '/images/zenara-prototyping.jpg';
-const buildImage = '/images/zenara-build.jpg';
 
 
 const stackItems = [
@@ -29,32 +27,7 @@ const stackItems = [
 ];
 
 
-const process: ProcessStep[] = [
-  {
-    phase: 'Discovery',
-    details: ['Business goals analysis', 'Target audience research', 'Competitive landscape review', 'Technical requirements gathering'],
-  },
-  {
-    phase: 'Prototyping',
-    details: ['Mock-up designs', 'Button/links design flow', 'Image/video placement design', 'Systems design and software architecture'],
-  },
-  {
-    phase: 'Build',
-    details: ['Modern development practices', 'Component-based architecture', 'Performance optimization', 'Cross-browser testing'],
-  },
-  {
-    phase: 'Quality Testing',
-    details: ['Performance testing', 'Device compatibility check', 'SEO optimization', 'Mobile responsiveness and optimization', 'Custom functionality testing'],
-  },
-  {
-    phase: 'Launch',
-    details: ['DNS setup & SSL', 'CDN configuration', 'Analytics integration', 'Domain hookup', 'Email notification config'],
-  },
-  {
-    phase: 'Support',
-    details: ['Monthly maintenance', 'Content updates', 'Security patches', 'Performance monitoring'],
-  },
-];
+const process = processPhases;
 
 const About = () => {
   const [visibleTimelineItems, setVisibleTimelineItems] = useState<number[]>([]);
@@ -140,7 +113,7 @@ const About = () => {
           <div className="max-w-4xl">
             <FadeIn delay={0}>
               <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-cyan-400/70 mb-6 font-medium">
-                Toronto Web Design Agency
+                Markham Web Design
               </p>
             </FadeIn>
 
@@ -160,7 +133,7 @@ const About = () => {
 
             <FadeIn delay={340}>
               <p className="mt-8 sm:mt-10 text-base sm:text-lg md:text-xl text-white/55 max-w-2xl leading-[1.7] font-light tracking-[0.01em]">
-                We&apos;re a two-engineer web design agency from Toronto. We use modern tooling
+                We&apos;re a two-engineer web design agency based in Markham, serving the GTA. We use modern tooling
                 and AI-assisted workflows to build better websites, faster — and we charge fairly for it.
               </p>
             </FadeIn>
@@ -224,7 +197,7 @@ const About = () => {
               <div className="mt-8 space-y-5 text-white/55 text-base sm:text-lg leading-[1.8] font-light">
                 <FadeIn delay={200}>
                   <p>
-                    Small businesses in Toronto were routinely paying $10,000–$50,000 to traditional agencies — then waiting
+                    Small businesses were routinely paying $10,000–$50,000 to traditional agencies — then waiting
                     three to six months for a website that looked like every other agency template on the internet.
                   </p>
                 </FadeIn>
@@ -256,7 +229,7 @@ const About = () => {
                 {/* 2×2 stat grid */}
                 <div className="relative grid grid-cols-2 divide-x divide-y divide-white/6">
                   {[
-                    { value: '2024', label: 'Year founded', sub: 'Toronto, Ontario' },
+                    { value: '2024', label: 'Year founded', sub: 'Markham, Ontario' },
                     { value: '1–2', label: 'Weeks to launch', sub: 'From first call to live' },
                     { value: '3', label: 'Person team', sub: 'Engineers + designer' },
                     { value: '90+', label: 'Lighthouse score', sub: 'On every site we ship' },
@@ -459,9 +432,9 @@ const About = () => {
           {/* Steps 1–3: alternating image + content panels */}
           <div className="relative space-y-6 sm:space-y-8">
             {([
-              { img: discoveryImage, alt: 'Discovery workspace' },
-              { img: prototypingImage, alt: 'Prototyping workspace' },
-              { img: buildImage, alt: 'Build workspace' },
+              { img: process[0].image, alt: process[0].imageAlt },
+              { img: process[1].image, alt: process[1].imageAlt },
+              { img: process[2].image, alt: process[2].imageAlt },
             ] as const).map(({ img, alt }, index) => {
               const isEven = index % 2 === 1;
               const isVisible = visibleTimelineItems.includes(index);
@@ -594,6 +567,28 @@ const About = () => {
                 );
               })}
             </div>
+
+            {/* Section footer links */}
+            <FadeIn delay={120}>
+              <div className="mt-14 sm:mt-16 md:mt-20 pt-8 sm:pt-10 border-t border-white/8 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 text-center">
+                <span className="text-sm sm:text-base text-white/40 font-light">Want the details?</span>
+                <div className="flex items-center gap-4 sm:gap-6">
+                  <Link
+                    href="/process"
+                    className="inline-flex items-center text-sm sm:text-base font-medium text-white/70 hover:text-cyan-300 transition-colors duration-300 group"
+                  >
+                    Full process breakdown <ArrowRight className="ml-1.5 h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <span className="w-1 h-1 rounded-full bg-white/20" />
+                  <Link
+                    href="/faq"
+                    className="inline-flex items-center text-sm sm:text-base font-medium text-white/70 hover:text-purple-300 transition-colors duration-300 group"
+                  >
+                    FAQ <ArrowRight className="ml-1.5 h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              </div>
+            </FadeIn>
           </div>
         </div>
       </section>

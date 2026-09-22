@@ -2,15 +2,22 @@ import type { Metadata } from 'next';
 import Services from '@/components/pages/Services';
 
 export const metadata: Metadata = {
-  title: 'Web Design, SEO, Logo & Business Cards — All Services | Zenara',
+  title: 'Web Design, SEO & Branding — All Services | Zenara',
   description:
-    'Everything your Toronto business needs online: custom websites, e-commerce, SEO, logo design, business cards, and managed hosting. See all 6 services with pricing and examples.',
+    'Everything your Markham or GTA business needs online: websites, e-commerce, branding, SEO, GEO, redesigns, and managed maintenance. All 7 services with pricing.',
   alternates: { canonical: 'https://zenaradesigns.com/services' },
   openGraph: {
-    title: 'Web Design, SEO, Logo & Business Cards — All Services | Zenara',
+    images: ['/opengraph-image'],
+    title: 'Web Design, SEO & Branding — All Services | Zenara',
     description:
-      'Everything your Toronto business needs online: custom websites, e-commerce, SEO, logo design, business cards, and managed hosting. See all 6 services with pricing and examples.',
+      'Everything your Markham or GTA business needs online: websites, e-commerce, branding, SEO, GEO, redesigns, and managed maintenance. All 7 services with pricing.',
     url: 'https://zenaradesigns.com/services',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Web Design, SEO & Branding — All Services | Zenara',
+    description:
+      'Everything your Markham or GTA business needs online: websites, e-commerce, branding, SEO, GEO, redesigns, and managed maintenance. All 7 services with pricing.',
   },
 };
 

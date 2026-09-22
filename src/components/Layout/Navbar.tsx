@@ -5,9 +5,9 @@ import { createPortal } from 'react-dom';
 import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
-import { X, ArrowRight } from 'lucide-react';
+import { X, ArrowRight, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { NAVIGATION_LINKS } from '@/lib/constants';
+import { NAVIGATION_LINKS, BUSINESS_PHONE_E164, BUSINESS_PHONE } from '@/lib/constants';
 
 const logo = '/images/zenara-logo-v5.svg';
 
@@ -366,7 +366,6 @@ const Navbar = () => {
                 }}
                 width={32}
                 height={32}
-                priority
               />
           </Link>
 
@@ -441,10 +440,23 @@ const Navbar = () => {
                   </div>
                 </div>
 
+            {/* Tap-to-call — high-intent mobile visitors arriving from search
+                previously had to open the menu, reach /contact and scroll, or
+                scroll to the footer, before they could find a phone number. */}
+            {!isMobileMenuOpen && (
+              <a
+                href={`tel:${BUSINESS_PHONE_E164}`}
+                className="lg:hidden w-11 h-11 flex items-center justify-center rounded-full text-white hover:text-cyan-300 active:scale-95 transition-all duration-200 touch-manipulation"
+                aria-label={`Call Zenara Designs at ${BUSINESS_PHONE}`}
+              >
+                <Phone className="w-5 h-5" aria-hidden="true" />
+              </a>
+            )}
+
             {/* Mobile Menu Button */}
             {!isMobileMenuOpen && (
               <button
-                className="lg:hidden relative w-10 h-10 flex flex-col items-center justify-center space-y-1.5 z-50 group touch-manipulation active:scale-95 transition-transform duration-200"
+                className="lg:hidden relative w-11 h-11 flex flex-col items-center justify-center space-y-1.5 z-50 group touch-manipulation active:scale-95 transition-transform duration-200"
                 onClick={openMobileMenu}
                 aria-label="Open navigation menu"
                 aria-expanded={isMobileMenuOpen}

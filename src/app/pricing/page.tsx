@@ -2,12 +2,14 @@ import type { Metadata } from 'next';
 import Pricing from '@/components/pages/Pricing';
 import { JsonLd } from '@/components/JsonLd';
 import { breadcrumbSchema } from '@/lib/service-content';
+import { pricingPageFaqSchema } from '@/lib/faq-data';
 
 const PRICING_URL = 'https://zenaradesigns.com/pricing';
 
 const PLANS = [
-  { id: 'starter', name: 'Starter', price: '999', description: 'Web design for freelancers and personal brands — up to 3 pages, mobile-responsive, SEO setup, 1-week turnaround.' },
-  { id: 'small-business', name: 'Small Business', price: '1999', description: 'Web design for small businesses and professionals — up to 6 pages, custom layouts, forms, and SEO. 2–3 week turnaround.' },
+  { id: 'starter', name: 'Starter', price: '999', description: 'Affordable web design for freelancers and personal brands — up to 3 pages, mobile-responsive, SEO setup, 1-week turnaround.' },
+  { id: 'small-business', name: 'Small Business', price: '1999', description: 'Professional web design for small businesses — up to 6 pages, custom layouts, forms, and SEO. 1–2 week turnaround.' },
+  { id: 'small-business-launch', name: 'Small Business Launch Package', price: '2000', description: 'All-in-one launch bundle — custom website, logo and business card design, Google Business Profile setup, Instagram setup, 1 month free hosting, and local SEO for 5 service areas.' },
   { id: 'pro', name: 'Pro', price: '4999', description: 'Fully custom web design with advanced integrations, e-commerce, and premium animations for businesses needing more.' },
 ];
 
@@ -35,15 +37,22 @@ const pricingBreadcrumb = breadcrumbSchema('/pricing', [
 ]);
 
 export const metadata: Metadata = {
-  title: 'Web Design Pricing from $999 — Compare Plans & Packages | Zenara',
+  title: 'Affordable, Transparent Web Design Pricing from $999 | Zenara',
   description:
-    "Compare 3 web design packages with transparent pricing for Toronto & GTA businesses. See exactly what's included at every tier — no hidden fees. Free custom quote within 24 hours.",
+    "Fast, professional web design at fair, transparent prices — no hidden fees. Compare packages for Toronto & GTA businesses, including our $2,000 Small Business Launch Package. Free custom quote within 24 hours.",
   alternates: { canonical: 'https://zenaradesigns.com/pricing' },
   openGraph: {
-    title: 'Web Design Pricing from $999 — Compare Plans & Packages | Zenara',
+    images: ['/opengraph-image'],
+    title: 'Affordable, Transparent Web Design Pricing from $999 | Zenara',
     description:
-      "Compare 3 web design packages with transparent pricing for Toronto & GTA businesses. See exactly what's included at every tier — no hidden fees. Free custom quote within 24 hours.",
+      "Fast, professional web design at fair, transparent prices — no hidden fees. Compare packages for Toronto & GTA businesses, including our $2,000 Small Business Launch Package. Free custom quote within 24 hours.",
     url: 'https://zenaradesigns.com/pricing',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Affordable, Transparent Web Design Pricing from $999 | Zenara',
+    description:
+      "Fast, professional web design at fair, transparent prices — no hidden fees. Compare packages for Toronto & GTA businesses, including our $2,000 Small Business Launch Package. Free custom quote within 24 hours.",
   },
 };
 
@@ -54,6 +63,7 @@ export default function PricingPage() {
       {productSchemas.map((schema) => (
         <JsonLd key={(schema['@id'] as string)} schema={schema} />
       ))}
+      <JsonLd schema={pricingPageFaqSchema} />
       <Pricing />
     </>
   );

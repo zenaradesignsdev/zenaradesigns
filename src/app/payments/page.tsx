@@ -7,6 +7,12 @@ export const metadata: Metadata = {
     'Choose your hosting and maintenance plan. Zenara Core ($45/mo), Grow ($70/mo), or Prime ($150/mo). Secure, reliable, and fully managed.',
   alternates: { canonical: 'https://zenaradesigns.com/payments' },
   robots: { index: false, follow: false },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Subscription Plans | Hosting & Maintenance | Zenara Designs',
+    description:
+      'Choose your hosting and maintenance plan. Zenara Core ($45/mo), Grow ($70/mo), or Prime ($150/mo). Secure, reliable, and fully managed.',
+  },
 };
 
 export default function PaymentsPage() {

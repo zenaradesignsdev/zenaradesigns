@@ -1,9 +1,8 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { ArrowUpRight, ArrowRight } from 'lucide-react';
+import { ArrowUpRight, ArrowRight, Hammer, Stethoscope, Calculator, Scale, type LucideIcon } from 'lucide-react';
 import { SafeImage } from '@/components/ui/safe-image';
-import StructuredData from '@/components/StructuredData';
 import { TextReveal } from '@/components/ui/text-reveal';
 import { FadeIn } from '@/components/ui/fade-in';
 import Link from 'next/link';
@@ -27,57 +26,15 @@ interface TileProject {
   url: string;
   image: string;
   imageAlt: string;
+  whyText: string;
+  industryLabel: string;
+  industryHref: string;
+  industryIcon: LucideIcon;
 }
 
 const featured: FeaturedProject[] = [
   {
     number: '01',
-    name: 'Luxury Renovation',
-    tags: ['Web Design', 'Toronto'],
-    description:
-      'Luxury renovation and construction services website designed for Toronto businesses. Modern, responsive design with seamless user experience. Showcasing premium craftsmanship and attention to detail.',
-    url: 'https://projectone.zenaradesigns.com',
-    image: '/images/reno-project.png',
-    imageAlt: 'Luxury Renovation Website — professional renovation and construction services',
-    flip: false,
-  },
-  {
-    number: '02',
-    name: 'Nova Motion Physio',
-    tags: ['Web Design', 'Wellness'],
-    description:
-      'Professional physiotherapy and wellness clinic website designed to showcase services and enable online appointment booking. Modern, clean design that builds trust and converts visitors into clients.',
-    url: 'https://projectthree.zenaradesigns.com',
-    image: '/images/nova-motion-physio.png',
-    imageAlt: 'Nova Motion Physio Website — physiotherapy and wellness clinic platform',
-    flip: true,
-  },
-  {
-    number: '03',
-    name: 'Accounting Firm',
-    tags: ['Web Design', 'Accounting'],
-    description:
-      'Professional accounting firm website designed to showcase tax preparation, bookkeeping, and advisory services. Secure platform with client portal integration and modern design that builds credibility.',
-    url: 'https://projectfour.zenaradesigns.com',
-    image: '/images/accounting-firm-project.png',
-    imageAlt: 'Accounting Firm Website — professional accounting and tax services platform',
-    flip: false,
-  },
-  {
-    number: '04',
-    name: 'Pickering Law Firm',
-    tags: ['Web Design', 'Legal'],
-    description:
-      'Professional law firm website designed to showcase legal expertise and build client trust. Modern, authoritative design with clear navigation and comprehensive service information.',
-    url: 'https://projecttwo.zenaradesigns.com/',
-    image: '/images/project2.png',
-    imageAlt: 'Pickering Law Firm Website — professional legal services website design',
-    flip: true,
-  },
-];
-
-const more: TileProject[] = [
-  {
     name: 'AshCam Cutting Solutions',
     tags: ['E-commerce', 'Construction'],
     description:
@@ -85,8 +42,21 @@ const more: TileProject[] = [
     url: 'https://ashcamcuttingsolution.ca/',
     image: '/images/ashcam-site.png',
     imageAlt: 'AshCam Cutting Solutions Website — construction blades and equipment platform',
+    flip: false,
   },
   {
+    number: '02',
+    name: 'FunGen Events',
+    tags: ['Web Design', 'Events'],
+    description:
+      'Website for FunGen Events, built to showcase their event planning services and offerings with a polished, professional online presence.',
+    url: 'https://fungenevents.ca/',
+    image: '/images/fungen-events.png',
+    imageAlt: 'FunGen Events Website — event planning business website design',
+    flip: true,
+  },
+  {
+    number: '03',
     name: 'JB Loans',
     tags: ['Web Design', 'Mortgage Broker'],
     description:
@@ -94,8 +64,10 @@ const more: TileProject[] = [
     url: 'https://jbloans.ca/',
     image: '/images/jbloans.png',
     imageAlt: 'JB Loans Mortgage Broker Website — professional mortgage services platform',
+    flip: false,
   },
   {
+    number: '04',
     name: 'IK Smart Solution',
     tags: ['Web Design', 'Security & Smart Home'],
     description:
@@ -103,6 +75,84 @@ const more: TileProject[] = [
     url: 'https://www.iksmartsolution.ca/',
     image: '/images/iksmartsolutions.png',
     imageAlt: 'IK Smart Solution Website — custom security and smart home systems integrator',
+    flip: true,
+  },
+  {
+    number: '05',
+    name: "Patty's Delights",
+    tags: ['Web Design', 'Food & Beverage'],
+    description:
+      "Website for Patty's Delights, built to showcase their menu and bring customers in the door with a warm, appetizing online presence.",
+    url: 'https://pattysdelights.com/',
+    image: '/images/pattys-delights.png',
+    imageAlt: "Patty's Delights Website — food and beverage business website design",
+    flip: false,
+  },
+  {
+    number: '06',
+    name: 'Heroes Catering',
+    tags: ['Web Design', 'Food & Beverage'],
+    description:
+      'Website for Heroes Catering, built to showcase their catering services and menu offerings with a clean, appetizing online presence.',
+    url: 'https://heroes-catering.com/',
+    image: '/images/heroes-catering.png',
+    imageAlt: 'Heroes Catering Website — catering business website design',
+    flip: true,
+  },
+];
+
+const more: TileProject[] = [
+  {
+    name: 'Luxury Renovation',
+    tags: ['Web Design', 'Toronto'],
+    description:
+      'Luxury renovation and construction services website designed for Toronto businesses. Modern, responsive design with seamless user experience. Showcasing premium craftsmanship and attention to detail.',
+    url: 'https://projectone.zenaradesigns.com',
+    image: '/images/reno-project.png',
+    imageAlt: 'Luxury Renovation Website — professional renovation and construction services',
+    whyText: 'Renovation clients scroll through project photos before they ever call. A polished portfolio site showcases finished work and captures leads before your competitors do.',
+    industryLabel: 'Renovation Companies',
+    industryHref: '/renovations',
+    industryIcon: Hammer,
+  },
+  {
+    name: 'Nova Motion Physio',
+    tags: ['Web Design', 'Wellness'],
+    description:
+      'Professional physiotherapy and wellness clinic website designed to showcase services and enable online appointment booking. Modern, clean design that builds trust and converts visitors into clients.',
+    url: 'https://projectthree.zenaradesigns.com',
+    image: '/images/nova-motion-physio.png',
+    imageAlt: 'Nova Motion Physio Website — physiotherapy and wellness clinic platform',
+    whyText: 'A modern, booking-ready site builds a patient’s trust before they ever walk through your door.',
+    industryLabel: 'Wellness Clinics',
+    industryHref: '/clinics',
+    industryIcon: Stethoscope,
+  },
+  {
+    name: 'Accounting Firm',
+    tags: ['Web Design', 'Accounting'],
+    description:
+      'Professional accounting firm website designed to showcase tax preparation, bookkeeping, and advisory services. Secure platform with client portal integration and modern design that builds credibility.',
+    url: 'https://projectfour.zenaradesigns.com',
+    image: '/images/accounting-firm-project.png',
+    imageAlt: 'Accounting Firm Website — professional accounting and tax services platform',
+    whyText: 'A secure, compliant platform with client portals reads as professional from the very first click.',
+    industryLabel: 'Accounting Agencies',
+    industryHref: '/accountants',
+    industryIcon: Calculator,
+  },
+  {
+    name: 'Pickering Law Firm',
+    tags: ['Web Design', 'Legal'],
+    description:
+      'Professional law firm website designed to showcase legal expertise and build client trust. Modern, authoritative design with clear navigation and comprehensive service information.',
+    url: 'https://projecttwo.zenaradesigns.com/',
+    image: '/images/project2.png',
+    imageAlt: 'Pickering Law Firm Website — professional legal services website design',
+    whyText: '78% of clients research a law firm online before calling — make that first impression count.',
+    industryLabel: 'Law Firms',
+    industryHref: '/lawyers',
+    industryIcon: Scale,
   },
 ];
 
@@ -227,6 +277,7 @@ function FeaturedRow({ project, index }: FeaturedRowProps) {
             href={project.url}
             target="_blank"
             rel="noopener noreferrer"
+            aria-label={`View the ${project.name} live site — opens in a new tab`}
             className="inline-flex items-center gap-3 self-start group/btn"
           >
             <span className="relative flex items-center justify-center w-12 h-12 rounded-full border border-cyan-400/40 text-cyan-400 group-hover/btn:bg-cyan-400/10 group-hover/btn:border-cyan-400/70 transition-all duration-300">
@@ -248,59 +299,90 @@ interface TileCardProps {
 
 function TileCard({ project }: TileCardProps) {
   return (
-    <a
-      href={project.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group relative flex flex-col rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-500/15"
-    >
+    <div className="group relative flex flex-col rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-cyan-500/15">
       {/* Gradient border via inset pseudo-layer */}
       <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-500/20 via-white/5 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0" />
       <div className="absolute inset-[1px] rounded-[calc(1rem-1px)] bg-slate-950 z-[1]" />
 
       <div className="relative z-[2] flex flex-col flex-1 border border-white/8 group-hover:border-white/0 rounded-2xl overflow-hidden transition-colors duration-500">
-        <div className="aspect-[16/10] relative overflow-hidden bg-slate-900">
-          {/* Shine sweep */}
-          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/8 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10 pointer-events-none" />
-          {/* Bottom fade */}
-          <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-slate-950/60 to-transparent z-10 pointer-events-none" />
-          <SafeImage
-            src={project.image}
-            alt={project.imageAlt}
-            className="w-full h-full object-contain group-hover:scale-[1.03] transition-transform duration-700 project-image"
-            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 620px"
-            quality={80}
-          />
-        </div>
-        <div className="p-6 sm:p-7 flex flex-col flex-1">
-          <div className="flex items-start justify-between gap-3 mb-3">
-            <h3 className="text-white font-medium text-lg group-hover:text-cyan-300 transition-colors duration-300 leading-snug">
-              {project.name}
-            </h3>
-            <span className="flex-shrink-0 flex items-center justify-center w-9 h-9 rounded-full border border-white/10 text-white/30 group-hover:border-cyan-400/50 group-hover:text-cyan-400 group-hover:bg-cyan-400/8 transition-all duration-300">
-              <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+        <a
+          href={project.url}
+          target="_blank"
+          rel="nofollow noopener noreferrer"
+          aria-label={`Visit ${project.name} — opens in a new tab`}
+          className="flex flex-col flex-1"
+        >
+          <div className="aspect-[16/10] relative overflow-hidden bg-slate-900">
+            {/* Shine sweep */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/8 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000 z-10 pointer-events-none" />
+            {/* Bottom fade */}
+            <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-slate-950/60 to-transparent z-10 pointer-events-none" />
+            {/* Concept/demo label — distinguishes this from real client work */}
+            <span className="absolute top-3 right-3 z-20 px-2.5 py-1 text-[10px] font-mono font-medium uppercase tracking-[0.1em] rounded-full border border-white/15 bg-slate-950/70 backdrop-blur-sm text-white/70">
+              Concept Project
+            </span>
+            <SafeImage
+              src={project.image}
+              alt={project.imageAlt}
+              className="w-full h-full object-contain group-hover:scale-[1.03] transition-transform duration-700 project-image"
+              sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 620px"
+              quality={80}
+            />
+          </div>
+          <div className="px-6 sm:px-7 pt-6 sm:pt-7 flex flex-col flex-1">
+            <div className="flex items-start justify-between gap-3 mb-3">
+              <h3 className="text-white font-medium text-lg group-hover:text-cyan-300 transition-colors duration-300 leading-snug">
+                {project.name}
+              </h3>
+              <span className="flex-shrink-0 flex items-center justify-center w-9 h-9 rounded-full border border-white/10 text-white/30 group-hover:border-cyan-400/50 group-hover:text-cyan-400 group-hover:bg-cyan-400/8 transition-all duration-300">
+                <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </span>
+            </div>
+            <p className="text-white/50 text-sm leading-relaxed font-light flex-1 mb-5">
+              {project.description}
+            </p>
+            <div className="flex flex-wrap gap-1.5">
+              {project.tags.map((tag, ti) => (
+                <span
+                  key={tag}
+                  className={`px-2.5 py-0.5 text-xs rounded-full border transition-colors duration-300 ${
+                    ti % 2 === 0
+                      ? 'border-cyan-500/20 text-cyan-300/55 bg-cyan-500/6 group-hover:border-cyan-400/40 group-hover:text-cyan-300/75'
+                      : 'border-purple-500/20 text-purple-300/55 bg-purple-500/6 group-hover:border-purple-400/40 group-hover:text-purple-300/75'
+                  }`}
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+        </a>
+
+        {/* Industry cross-link footer — separate destination, not nested inside the live-site link */}
+        <div className="px-6 sm:px-7 pb-6 sm:pb-7 pt-5 mt-5 border-t border-white/8">
+          <div className="flex items-center gap-2 mb-3">
+            <project.industryIcon className="w-3.5 h-3.5 text-cyan-400/70" strokeWidth={2} />
+            <span className="text-[10px] font-mono uppercase tracking-[0.15em] text-white/35">
+              Built for {project.industryLabel}
             </span>
           </div>
-          <p className="text-white/50 text-sm leading-relaxed font-light flex-1 mb-5">
-            {project.description}
+          <p className="text-white/50 text-sm leading-relaxed font-light mb-4">
+            {project.whyText}
           </p>
-          <div className="flex flex-wrap gap-1.5">
-            {project.tags.map((tag, ti) => (
-              <span
-                key={tag}
-                className={`px-2.5 py-0.5 text-xs rounded-full border transition-colors duration-300 ${
-                  ti % 2 === 0
-                    ? 'border-cyan-500/20 text-cyan-300/55 bg-cyan-500/6 group-hover:border-cyan-400/40 group-hover:text-cyan-300/75'
-                    : 'border-purple-500/20 text-purple-300/55 bg-purple-500/6 group-hover:border-purple-400/40 group-hover:text-purple-300/75'
-                }`}
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
+          <Link
+            href={project.industryHref}
+            className="group/cta flex items-center justify-between gap-3 w-full rounded-xl border border-white/10 bg-white/[0.03] pl-4 pr-2 py-2 transition-all duration-300 hover:border-cyan-400/40 hover:bg-cyan-400/[0.06]"
+          >
+            <span className="text-sm font-medium text-white/75 group-hover/cta:text-cyan-300 transition-colors duration-300">
+              See {project.industryLabel} sites
+            </span>
+            <span className="flex-shrink-0 flex items-center justify-center w-8 h-8 rounded-full bg-white/5 text-white/40 transition-all duration-300 group-hover/cta:bg-cyan-400/15 group-hover/cta:text-cyan-300 group-hover/cta:translate-x-0.5">
+              <ArrowRight className="w-4 h-4" />
+            </span>
+          </Link>
         </div>
       </div>
-    </a>
+    </div>
   );
 }
 
@@ -387,7 +469,7 @@ const Projects = () => {
                 />
                 <FadeIn delay={260}>
                   <p className="text-base sm:text-lg text-white/50 font-light leading-relaxed max-w-xl">
-                    Custom websites built for businesses across Toronto and the GTA. Each one designed from scratch, never from a template.
+                    Custom websites built for businesses across the GTA and the eastern GTA. Each one designed from scratch, never from a template.
                   </p>
                 </FadeIn>
 
@@ -504,17 +586,22 @@ const Projects = () => {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
               <FadeIn>
                 <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-5 font-medium">
-                  More Work
+                  Concept Work
                 </p>
               </FadeIn>
               <TextReveal
-                className="text-4xl sm:text-5xl md:text-6xl font-extralight text-white leading-[1] tracking-[-0.04em] mb-12"
+                className="text-4xl sm:text-5xl md:text-6xl font-extralight text-white leading-[1] tracking-[-0.04em] mb-6"
                 staggerMs={120}
                 lines={[
-                  <span key="l1" className="block font-light">More Projects</span>,
-                  <span key="l2" className="block mt-1 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">We&apos;re Proud Of.</span>,
+                  <span key="l1" className="block font-light">See What We&apos;d</span>,
+                  <span key="l2" className="block mt-1 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Build for You.</span>,
                 ]}
               />
+              <FadeIn delay={220}>
+                <p className="text-white/50 text-base sm:text-lg font-light leading-relaxed max-w-xl mb-12">
+                  Concept builds across the industries we specialize in — tap yours to see the full experience.
+                </p>
+              </FadeIn>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
                 {more.map((project) => (
                   <TileCard key={project.name} project={project} />
@@ -591,13 +678,6 @@ const Projects = () => {
           </section>
         </div>
 
-        <StructuredData
-          type="breadcrumb"
-          breadcrumbs={[
-            { name: 'Home', url: '/' },
-            { name: 'Projects', url: '/projects' },
-          ]}
-        />
       </div>
     </>
   );

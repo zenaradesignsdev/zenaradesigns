@@ -45,7 +45,7 @@ const BadWebsiteCostingMoneyContent = () => {
         Google also uses mobile-first indexing, which means the mobile version of your site determines
         your search rankings. A non-mobile-friendly site doesn&apos;t just frustrate users—it actively
         pushes you down in search results. Learn about our approach to{' '}
-        <Link href="/mobile" className="text-cyan-300 underline hover:text-cyan-200">mobile-first design</Link>{' '}
+        <Link href="/services/web-design" className="text-cyan-300 underline hover:text-cyan-200">mobile-first design</Link>{' '}
         that ensures every visitor has a seamless experience regardless of device.
       </p>
 
@@ -116,11 +116,22 @@ const BadWebsiteCostingMoneyContent = () => {
       </p>
       <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
         An outdated site also raises{' '}
-        <Link href="/security" className="text-cyan-300 underline hover:text-cyan-200">security concerns</Link>.
+        <Link href="/services/website-maintenance" className="text-cyan-300 underline hover:text-cyan-200">security concerns</Link>.
         Older websites built on unmaintained platforms are prime targets for hackers. A security breach
         doesn&apos;t just cost money to fix—it destroys customer trust permanently.
       </p>
 
+      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
+        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">What This Looks Like in the GTA</span>
+      </h2>
+      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
+        The pattern is consistent across the GTA: a contractor in Stouffville or a clinic in Markham with solid
+        word-of-mouth, a five-year-old website that loads slowly on a phone, and no idea how many
+        quote requests never arrived. Homeowners and patients now check the site before calling, and a
+        slow or dated one quietly filters out the higher-value enquiries first. We build for
+        <Link href="/renovations" className="text-cyan-300 underline hover:text-cyan-200">contractors and trades</Link> and
+        <Link href="/clinics" className="text-cyan-300 underline hover:text-cyan-200">clinics</Link> across Markham, Stouffville, and Scarborough.
+      </p>
       <div className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 mt-10 sm:mt-12 mb-6 border border-slate-800/50 relative overflow-hidden">
         <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
         <h3 className="text-xl sm:text-2xl font-semibold text-white mb-4 relative z-10 tracking-tight">

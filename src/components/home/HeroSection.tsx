@@ -102,9 +102,9 @@ const HeroSection = () => {
       </div>
 
       {/* Space-Themed Hero Section */}
-      <section ref={heroRef} className="hero-section h-screen flex items-center justify-center relative overflow-hidden bg-black cursor-glow z-10" role="banner" aria-label="Hero section">
+      <section ref={heroRef} className="hero-section min-h-screen flex items-center justify-center relative bg-black cursor-glow z-10" role="banner" aria-label="Hero section">
         {/* Gradient Background Layers */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
           <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
           <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20"></div>
@@ -112,7 +112,7 @@ const HeroSection = () => {
         </div>
 
         {/* Animated Background Elements */}
-        <div className="absolute inset-0">
+        <div className="absolute inset-0 overflow-hidden">
           <div className="shooting-star shooting-star-1"></div>
           <div className="shooting-star shooting-star-2"></div>
           <div className="shooting-star shooting-star-3"></div>
@@ -134,19 +134,19 @@ const HeroSection = () => {
           <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-r from-cyan-900/25 to-cyan-300/15 rounded-full blur-3xl"></div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 h-full flex items-center pt-16 sm:pt-20 md:pt-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 w-full flex items-center pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16 md:pb-20">
           <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 sm:gap-10 lg:gap-12 items-center w-full">
             <div className="fade-in order-2 lg:order-1 text-center lg:text-left">
               <h1 className="text-5xl xs:text-6xl sm:text-7xl md:text-7xl lg:text-8xl xl:text-8xl font-light mb-4 sm:mb-6 leading-[1.1] text-white tracking-[-0.02em] hero-text-fade">
                 <span className="block pb-1">
-                  Modern Web Design.{' '}
+                  Markham &amp; GTA Web Design.{' '}
                   <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
                     <span key={currentSlogan} className="cool-text-animation">{SLOGANS[currentSlogan]}</span>
                   </span>
                 </span>
               </h1>
               <p className="text-base sm:text-lg md:text-xl text-white/70 mb-8 leading-[1.7] font-light tracking-[0.01em] max-w-2xl mx-auto lg:mx-0">
-                Zenara Designs creates high-performing websites for Toronto &amp; GTA businesses and professionals using modern development workflows.
+                Lead-focused websites for small businesses across Markham, Stouffville, and Scarborough &mdash; contractors, clinics, trades, and professional firms. Fixed pricing, direct access to the developers, live in 1&ndash;2 weeks.
               </p>
               <div className="flex justify-center lg:justify-start hero-button-slide">
                 <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
@@ -171,13 +171,12 @@ const HeroSection = () => {
                 <div className="relative z-10 group hero-logo-zoom">
                   <Image
                     src={logo}
-                    alt="Zenara Designs - Professional Web Design Agency Toronto Logo"
+                    alt="Zenara Designs - Professional Web Design Agency Markham Logo"
                     className="w-full max-w-[180px] xs:max-w-[200px] sm:max-w-[280px] md:max-w-[320px] lg:max-w-[350px] h-auto object-contain animate-float animate-spin-slow"
                     style={{ filter: 'drop-shadow(0 0 20px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 40px rgba(0, 0, 0, 0.3))' }}
                     width={350}
                     height={350}
                     sizes="(max-width: 480px) 180px, (max-width: 640px) 200px, (max-width: 768px) 280px, (max-width: 1024px) 320px, 350px"
-                    priority={true}
                   />
                   <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 to-purple-500/0 rounded-full blur-xl group-hover:from-teal-500/20 group-hover:to-purple-500/20 transition-all duration-500"></div>
                 </div>

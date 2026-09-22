@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Mail, Phone, CheckCircle, Instagram } from 'lucide-react';
-import { BUSINESS_EMAIL, BUSINESS_PHONE, BUSINESS_PHONE_E164, NAVIGATION_LINKS, FOOTER_ADDITIONAL_LINKS, SERVICE_LINKS } from '@/lib/constants';
+import { BUSINESS_EMAIL, BUSINESS_PHONE, BUSINESS_PHONE_E164, NAVIGATION_LINKS, FOOTER_ADDITIONAL_LINKS, SERVICE_LINKS, SERVICE_AREA_LINKS } from '@/lib/constants';
 import { useState, FormEvent } from 'react';
 
 const logo = '/images/zenara-logo-v5.svg';
@@ -157,7 +157,7 @@ const Footer = () => {
             {/* Brand */}
             <div className="col-span-2 md:col-span-2 lg:col-span-1 space-y-4">
               <div className="flex items-center space-x-3">
-                <Image src={logo} alt="Zenara Designs - Professional Web Design Agency Toronto" className="h-8 w-auto" width={32} height={32} />
+                <Image src={logo} alt="Zenara Designs - Professional Web Design Agency Markham" className="h-8 w-auto" width={32} height={32} />
                 <span className="font-light text-base sm:text-lg text-white">Zenara Designs</span>
               </div>
               <p className="text-slate-300 max-w-md font-light text-xs sm:text-sm">
@@ -230,32 +230,32 @@ const Footer = () => {
               <h2 className="font-light mb-4 text-white text-sm sm:text-base">Industries</h2>
               <div className="grid grid-cols-1 gap-x-1 gap-y-2">
                 <Link
-                  href="/lawyers"
-                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                  className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
-                >
-                  Law Firms
-                </Link>
-                <Link
-                  href="/accountants"
-                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                  className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
-                >
-                  Accounting Agencies
-                </Link>
-                <Link
                   href="/renovations"
                   onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                 >
-                  Renovation Companies
+                  Renovations &amp; Contractors
                 </Link>
                 <Link
                   href="/clinics"
                   onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                 >
-                  Wellness Clinics
+                  Physio &amp; Wellness Clinics
+                </Link>
+                <Link
+                  href="/accountants"
+                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                  className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
+                >
+                  Accountants &amp; Brokers
+                </Link>
+                <Link
+                  href="/lawyers"
+                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                  className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
+                >
+                  Law Firms
                 </Link>
               </div>
             </div>
@@ -275,6 +275,23 @@ const Footer = () => {
                   </Link>
                 ))}
               </div>
+            </div>
+          </div>
+
+          {/* Service areas — Markham-first internal link mesh for crawl discovery */}
+          <div className="border-t border-cyan-400/20 pt-6 pb-8">
+            <h2 className="font-light mb-3 text-white text-sm sm:text-base">Areas We Serve</h2>
+            <div className="flex flex-wrap gap-x-4 gap-y-2">
+              {SERVICE_AREA_LINKS.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+                  className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
+                >
+                  {link.label}
+                </Link>
+              ))}
             </div>
           </div>
 

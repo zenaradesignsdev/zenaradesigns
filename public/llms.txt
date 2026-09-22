@@ -1,12 +1,12 @@
 # Zenara Designs
 
-> Web design and development agency serving Toronto and the Greater Toronto Area (GTA). We build modern, fast, secure, conversion-focused websites for small businesses and professionals — law firms, accounting firms, clinics, renovation companies, and more.
+> Web design and development agency based in Markham, Ontario, serving the Greater Toronto Area. We build modern, fast, secure, conversion-focused websites for small businesses and professionals — renovation companies and trades, clinics, accounting firms, law firms, and more.
 
 ## About
 
 - Name: Zenara Designs
 - Type: Web design & development agency (service-area business, no physical storefront)
-- Service area: Toronto, Mississauga, Brampton, Vaughan, Markham, Richmond Hill, Oakville, Burlington, Hamilton, Scarborough, North York, Etobicoke, Pickering, Ajax, Whitby, Oshawa, Newmarket, Aurora, Stouffville
+- Service area: Markham (home base), Stouffville, Scarborough, Toronto, Mississauga, Richmond Hill, Vaughan, Pickering
 - Email: info@zenaradesigns.com
 - Phone: (647) 835-1077
 - Website: https://zenaradesigns.com
@@ -19,11 +19,14 @@
 - Business card design: https://zenaradesigns.com/services/business-cards
 - SEO services: https://zenaradesigns.com/services/seo
 - Hosting & maintenance: https://zenaradesigns.com/services/hosting
+- GEO / AI search optimization (ChatGPT, Perplexity, Gemini, AI Overviews): https://zenaradesigns.com/services/geo
+- Website care, analytics & monthly reporting: https://zenaradesigns.com/services/website-care
+- Website redesign & migration: https://zenaradesigns.com/services/website-redesign
 
 ## Pricing
 
-- Starter: $999 (1–3 pages, ~1 week)
-- Small Business: $1,999 (up to 6 pages, 2–3 weeks)
+- Starter: $999 (1–3 pages, 3–5 days)
+- Small Business: $1,999 (up to 6 pages, 1–2 weeks)
 - Pro: $4,999+ (advanced functionality, unlimited pages, 3–4 weeks)
 - All plans include mobile-responsive design, SEO optimization, and SSL security.
 - Details: https://zenaradesigns.com/pricing
@@ -34,6 +37,24 @@
 - Accounting firms: https://zenaradesigns.com/accountants
 - Renovation companies: https://zenaradesigns.com/renovations
 - Wellness clinics: https://zenaradesigns.com/clinics
+
+## Practice areas
+
+- Family law website design: https://zenaradesigns.com/industries/family-law
+- Real estate law website design: https://zenaradesigns.com/industries/real-estate-law
+- Physiotherapy website design: https://zenaradesigns.com/industries/physiotherapy
+- Dental website design: https://zenaradesigns.com/industries/dental
+
+## Client work
+
+Portfolio: https://zenaradesigns.com/projects
+
+- AshCam Cutting Solutions (industrial e-commerce): https://ashcamcuttingsolution.ca/
+- FunGen Events (event planning): https://fungenevents.ca/
+- JB Loans (mortgage brokerage): https://jbloans.ca/
+- IK Smart Solution (security & smart home): https://www.iksmartsolution.ca/
+- Patty's Delights (food & beverage): https://pattysdelights.com/
+- Heroes Catering (catering): https://heroes-catering.com/
 
 ## Key pages
 

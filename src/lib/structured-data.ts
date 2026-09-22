@@ -8,19 +8,20 @@ export const BUSINESS_INFO = {
   phone: BUSINESS_PHONE,
   url: 'https://zenaradesigns.com',
   logo: 'https://zenaradesigns.com/logo-seo.svg',
-  description: 'Professional web design and development agency serving Toronto and the Greater Toronto Area. We create modern, fast, and secure websites for small businesses and professionals.',
+  description: 'Professional web design and development agency based in Markham, Ontario, serving the Greater Toronto Area. We create modern, fast, and secure websites for small businesses and professionals.',
   
   // Address information (service-area business — no physical storefront)
   address: {
-    addressLocality: 'Toronto',
+    addressLocality: 'Markham',
     addressRegion: 'ON',
     addressCountry: 'CA'
   },
   
-  // Geographic coordinates for Toronto
+  // Markham civic centroid — the municipality, deliberately not a street
+  // address (this is a service-area business run from a residential address).
   geo: {
-    latitude: 43.6532,
-    longitude: -79.3832
+    latitude: 43.8561,
+    longitude: -79.3370
   },
   
   // Business hours (Monday to Friday, 9 AM to 6 PM EST)
@@ -34,16 +35,15 @@ export const BUSINESS_INFO = {
   
   // Service areas
   areaServed: [
+    'Markham',
+    'Stouffville',
+    'Scarborough',
     'Toronto',
     'Mississauga',
-    'Brampton',
-    'Markham',
-    'Vaughan',
     'Richmond Hill',
-    'Oakville',
-    'Burlington',
-    'Hamilton',
-    'Greater Toronto Area'
+    'Vaughan',
+    'Pickering',
+    'Greater Toronto Area',
   ],
   
   // Services offered
@@ -280,23 +280,6 @@ export const generateServiceSchema = (serviceName: string, serviceDescription: s
   };
 };
 
-// Utility function to inject JSON-LD into document head
-export const injectStructuredData = (schema: object) => {
-  // Remove existing structured data script
-  const existingScript = document.querySelector('script[type="application/ld+json"]');
-  if (existingScript) {
-    existingScript.remove();
-  }
-  
-  // Create new script element
-  const script = document.createElement('script');
-  script.type = 'application/ld+json';
-  script.textContent = JSON.stringify(schema, null, 2);
-  
-  // Add to document head
-  document.head.appendChild(script);
-};
-
 // Generate BlogPosting schema for blog posts
 export const generateBlogPostingSchema = (post: { slug: string; title: string; description: string; author: string; publishedAt: Date; updatedAt?: Date; featuredImage?: string }) => {
   const baseUrl = 'https://zenaradesigns.com';
@@ -362,16 +345,28 @@ export const generateBreadcrumbSchema = (items: Array<{ name: string; url: strin
 };
 
 // Utility function to inject multiple schemas
-export const injectMultipleSchemas = (schemas: object[]) => {
-  // Remove existing structured data scripts
-  const existingScripts = document.querySelectorAll('script[type="application/ld+json"]');
-  existingScripts.forEach(script => script.remove());
-  
-  // Inject each schema
+// `groupId` scopes an injection to one caller. Without it this cleared *every*
+// client-injected ld+json script before writing its own, so two StructuredData
+// components on the same page (e.g. siteNavigation + breadcrumb on the home
+// page) silently wiped each other and only the last one to run survived.
+export const injectMultipleSchemas = (schemas: object[], groupId: string) => {
+  removeSchemaGroup(groupId);
+
   schemas.forEach(schema => {
     const script = document.createElement('script');
     script.type = 'application/ld+json';
+    script.dataset.schemaGroup = groupId;
     script.textContent = JSON.stringify(schema, null, 2);
     document.head.appendChild(script);
   });
+};
+
+// Matched on the dataset rather than an attribute selector: React's useId()
+// produces ids containing colons, which are not valid in an unescaped selector.
+export const removeSchemaGroup = (groupId: string) => {
+  document
+    .querySelectorAll<HTMLScriptElement>('script[type="application/ld+json"][data-schema-group]')
+    .forEach(script => {
+      if (script.dataset.schemaGroup === groupId) script.remove();
+    });
 };

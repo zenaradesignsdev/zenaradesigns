@@ -1,35 +1,20 @@
 import type { MetadataRoute } from 'next';
 import { blogPosts } from '@/content/blog';
 import { citySlugs } from '@/lib/city-content';
+import { industryVerticalSlugs } from '@/lib/industry-verticals';
 
 const baseUrl = 'https://zenaradesigns.com';
-// Build/deploy time — keeps the lastmod signal fresh on every deploy rather
-// than emitting a hardcoded, increasingly stale date.
-const lastModified = new Date();
+// A real content date, NOT `new Date()`. Using build time stamped all ~50 URLs
+// as "modified now" on every deploy, which teaches search engines to discount
+// lastmod entirely — including for pages that genuinely did change. Bump this
+// when site-wide copy changes; per-page dates (blog) override it below.
+const lastModified = new Date('2026-09-22T00:00:00Z');
 
-const locations = [
-  'markham',
-  'vaughan',
-  'pickering',
-  'ajax',
-  'oshawa',
-  'whitby',
-  'richmond-hill',
-  'newmarket',
-  'aurora',
-  'stouffville',
-  'toronto',
-  'mississauga',
-  'brampton',
-  'oakville',
-  'burlington',
-  'hamilton',
-  'scarborough',
-  'north-york',
-  'etobicoke',
-];
-
-const industries = ['lawyers', 'accountants', 'renovations', 'clinics'];
+// Markham (home base), Stouffville and Scarborough lead the campaign, so they
+// outrank the other city pages in priority. The full set of city slugs comes
+// from cityContent; retired cities 301 elsewhere — see RETIRED_CITIES in
+// next.config.mjs.
+const primaryCities = new Set(['markham', 'stouffville', 'scarborough']);
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
@@ -37,10 +22,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/services`, lastModified, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/services/web-design`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/services/ecommerce`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/services/logo-design`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/services/business-cards`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/services/branding`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/services/seo`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
-    { url: `${baseUrl}/services/hosting`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/services/website-maintenance`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/services/geo`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${baseUrl}/services/website-redesign`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/pricing`, lastModified, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/contact`, lastModified, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/projects`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
@@ -54,24 +40,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/contact/schedule`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/faq`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/process`, lastModified, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${baseUrl}/security`, lastModified, changeFrequency: 'monthly', priority: 0.6 },
-    { url: `${baseUrl}/mobile`, lastModified, changeFrequency: 'monthly', priority: 0.6 },
   ];
-
-  const industryLocationRoutes: MetadataRoute.Sitemap = industries.flatMap((industry) =>
-    locations.map((location) => ({
-      url: `${baseUrl}/${industry}/${location}`,
-      lastModified,
-      changeFrequency: 'monthly' as const,
-      priority: 0.7,
-    }))
-  );
 
   const webDesignCityRoutes: MetadataRoute.Sitemap = citySlugs.map((city) => ({
     url: `${baseUrl}/web-design/${city}`,
     lastModified,
     changeFrequency: 'monthly' as const,
-    priority: 0.8,
+    priority: primaryCities.has(city) ? 0.9 : 0.7,
+  }));
+
+  const industryVerticalRoutes: MetadataRoute.Sitemap = industryVerticalSlugs.map((slug) => ({
+    url: `${baseUrl}/industries/${slug}`,
+    lastModified,
+    changeFrequency: 'monthly' as const,
+    priority: 0.7,
   }));
 
   const blogRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({
@@ -81,5 +63,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
-  return [...staticRoutes, ...webDesignCityRoutes, ...industryLocationRoutes, ...blogRoutes];
+  return [
+    ...staticRoutes,
+    ...webDesignCityRoutes,
+    ...industryVerticalRoutes,
+    ...blogRoutes,
+  ];
 }

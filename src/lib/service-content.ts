@@ -21,8 +21,8 @@ export interface ServiceEntry {
 }
 
 const AREA_SERVED = [
-  'Toronto', 'Mississauga', 'Brampton', 'Vaughan', 'Markham',
-  'Richmond Hill', 'Oakville', 'Burlington', 'Hamilton', 'GTA',
+  'Markham', 'Stouffville', 'Scarborough', 'Toronto',
+  'Mississauga', 'Richmond Hill', 'Vaughan', 'Pickering', 'GTA',
 ].map((name) => ({ '@type': 'City', name }));
 
 const PROVIDER = {
@@ -34,7 +34,7 @@ const PROVIDER = {
   priceRange: '$$',
   address: {
     '@type': 'PostalAddress',
-    addressLocality: 'Toronto',
+    addressLocality: 'Markham',
     addressRegion: 'ON',
     addressCountry: 'CA',
   },
@@ -109,35 +109,40 @@ export function serviceBreadcrumb(entry: ServiceEntry) {
 
 export const webDesignFaqs: ServiceFaq[] = [
   {
-    question: 'How much does a custom website cost in Toronto?',
+    question: 'How much does a custom website cost?',
     answer:
-      'Custom websites built with Next.js typically range from $2,500–$10,000+ depending on complexity, number of pages, and features required. We provide fixed-price quotes upfront — no hourly billing surprises. Book a free consultation to get an accurate estimate for your project.',
+      'Our web design packages are priced to stay affordable — starting at $999 for a focused starter site, $1,999 for a standard small-business build of up to six pages, and $4,999+ for advanced custom functionality — each with fixed, transparent pricing agreed before we start. Starter and Small Business are currently $500 off for a limited time. See the full breakdown, including what\'s included at every tier, on our pricing page.',
   },
   {
     question: 'How long does it take to build a website?',
     answer:
-      'Most small business websites take 3–6 weeks from kickoff to launch. This includes discovery, design, development, revisions, and QA. Complex projects with custom functionality or e-commerce can take 8–12 weeks. We provide a detailed timeline before starting every project.',
+      'Most small business websites launch in 1–2 weeks from kickoff, including discovery, design, development, and testing. A focused starter site can be ready in 3–5 days; larger builds with custom functionality take 3–4 weeks. We provide a clear timeline before starting every project.',
   },
   {
     question: 'Why Next.js instead of WordPress?',
     answer:
-      'Next.js delivers significantly faster load times (often 2–5x), better SEO through server-side rendering, stronger security (no plugin vulnerabilities), and a modern development experience. For professional service businesses in the GTA, the performance and SEO advantages translate directly into more leads.',
+      'Next.js delivers significantly faster load times, better SEO through server-side rendering, stronger security with no plugin vulnerabilities, and a modern development experience. For professional service businesses in the GTA, the performance and SEO advantages translate directly into more leads.',
   },
   {
-    question: 'Do you work with businesses outside of Toronto?',
+    question: 'Can I see examples of websites you\'ve actually built?',
     answer:
-      'Yes. While we specialize in Toronto and GTA businesses, we work with clients across Ontario and Canada. All consultations, design reviews, and project communication happen remotely via video call — location is never a barrier to great work.',
+      'Yes — see the Featured Work above for a few recent builds, each linking to the live site, or browse our complete portfolio of live client sites.',
+  },
+  {
+    question: 'Do you work with businesses outside the GTA?',
+    answer:
+      'Yes. We\'re based in Markham and specialize in the GTA — Markham, Stouffville, Scarborough, and the surrounding cities — and also work with clients further out. Consultations, design reviews, and project communication happen over video call, so location is never a barrier.',
   },
   {
     question: 'Will my website be mobile-friendly?',
     answer:
-      'Every website we build is mobile-first by default. We design for small screens first, then scale up for tablets and desktops. All sites are tested across iOS, Android, and major browsers before launch to ensure a flawless experience on every device.',
+      'Every website we build is mobile-first by default. We design for small screens first, then scale up for tablets and desktops, and test across iOS, Android, and major browsers before launch.',
   },
 ];
 
 export const ecommerceFaqs: ServiceFaq[] = [
   {
-    question: 'How much does a Shopify store cost to build in Toronto?',
+    question: 'How much does a Shopify store cost to build in the GTA?',
     answer:
       'Shopify store builds typically range from $3,000–$12,000+ depending on the number of products, custom theme requirements, and app integrations. We provide a fixed-price quote after a free discovery call. Monthly Shopify subscription fees are separate and billed directly by Shopify.',
   },
@@ -163,21 +168,21 @@ export const ecommerceFaqs: ServiceFaq[] = [
   },
 ];
 
-export const logoDesignFaqs: ServiceFaq[] = [
+export const brandingFaqs: ServiceFaq[] = [
   {
-    question: 'How much does a professional logo design cost in Toronto?',
+    question: 'How much does a logo and business cards cost in the GTA?',
     answer:
-      'Professional logo design at Zenara Designs starts at $500 for a standalone logo and ranges to $2,500+ for a complete brand identity package including guidelines, colour palette, and typography system. We provide fixed-price quotes after a free consultation — no hourly billing.',
+      'Logo design starts at $99–$199 (3 initial concepts, 2 rounds of revisions, vector files, delivered within a week) and business cards start at $149–$399 (custom design, premium printing, digital files, 2–3 day turnaround). Pricing depends on scope — see the full breakdown on our pricing page.',
   },
   {
-    question: 'How many logo concepts will I receive?',
+    question: 'How many logo concepts and revisions do I get?',
     answer:
-      'We present 3–4 distinct logo concepts per project, each exploring a different visual direction. After you choose a direction, we refine through unlimited revision rounds until you are completely satisfied. You won\'t be locked into a concept that doesn\'t feel right.',
+      'Every logo project starts with 3 initial concepts exploring different directions. Once you pick one to move forward with, it goes through 2 rounds of revisions. If your project needs more exploration than that, we\'ll scope a larger package during your consultation rather than surprise you with extra charges mid-project.',
   },
   {
-    question: 'What file formats are included with my logo?',
+    question: 'What file formats do I receive for my logo and cards?',
     answer:
-      'You receive every file format you will ever need: SVG, PNG (transparent & white backgrounds), PDF, EPS, and AI source files. We also provide light and dark variants, with and without tagline, and social media-optimized sizes for profile pictures and cover photos.',
+      'Your logo comes as SVG, PNG (transparent and white background), PDF, and EPS, with light and dark variants and social-ready sizes. Business cards are delivered as print-ready PDFs with crop marks and bleed, CMYK-optimized at 300 DPI, plus PNG exports — production-ready for any professional printer.',
   },
   {
     question: 'Can my logo be trademarked?',
@@ -185,55 +190,32 @@ export const logoDesignFaqs: ServiceFaq[] = [
       'Yes. Every logo we design is 100% original — no stock icons, no clip art, no templates. Original custom logos are eligible for trademark registration in Canada through the Canadian Intellectual Property Office (CIPO). We recommend consulting a trademark lawyer for formal registration.',
   },
   {
-    question: 'Do you also design business cards and websites to match?',
+    question: 'Can you design my logo and business cards together as one identity?',
     answer:
-      'Yes — brand consistency across every touchpoint is our specialty. Once your logo is finalized, we can extend the identity to business cards, letterhead, email signatures, and your full website. Everything will share the same visual language and feel like one unified brand.',
-  },
-];
-
-export const businessCardsFaqs: ServiceFaq[] = [
-  {
-    question: 'How much does professional business card design cost in Toronto?',
-    answer:
-      'Business card design at Zenara Designs starts at $150 for a single-sided card and ranges to $400+ for a double-sided premium design with multiple concepts. Print costs are separate and depend on quantity, stock, and finishing options. We can coordinate with GTA print vendors on your behalf.',
+      'Yes — that\'s how most branding projects work here. We design the logo first, then extend the same colours, typography, and visual language directly into your business cards, so nothing feels like an afterthought. If you\'re also building a website with us, the same identity carries through there too.',
   },
   {
-    question: 'What file formats do I receive for printing?',
+    question: 'Do you offer premium print finishes like spot UV or foil?',
     answer:
-      'You receive print-ready PDF files with crop marks and bleed, CMYK-optimized files at 300 DPI, and full-resolution PNG exports. We also provide all source files (AI, PSD) so you own your design forever and can reprint or update contact information at any time.',
-  },
-  {
-    question: 'Can you match my existing brand colours and fonts?',
-    answer:
-      'Absolutely. Every card we design is built on your existing brand identity — matching exact Pantone/CMYK colour codes, typefaces, logo usage, and visual style. If you don\'t have brand guidelines yet, we can develop your full identity alongside the card design.',
-  },
-  {
-    question: 'How fast can you design my business cards?',
-    answer:
-      'Design concepts are typically delivered within 3–5 business days. Rush turnaround (24–48 hours) is available for time-sensitive events like conferences or networking functions. Reach out with your deadline and we will confirm availability before booking.',
-  },
-  {
-    question: 'Do you offer premium finishes like spot UV or foil?',
-    answer:
-      'Yes. We design for premium finishing options including spot UV coating, foil stamping (gold, silver, rose gold), soft-touch lamination, embossing, debossing, edge painting, and letterpress. We guide you through the options that will best complement your brand and budget.',
+      'Yes, as an add-on beyond the standard business card package — spot UV coating, foil stamping, soft-touch lamination, and letterpress are all available. We\'ll quote the finish separately once we know which print vendor and stock you want to use.',
   },
 ];
 
 export const seoFaqs: ServiceFaq[] = [
   {
-    question: 'How long does SEO take to show results in Toronto?',
+    question: 'How long does SEO take to show results in the GTA?',
     answer:
-      'Most Toronto businesses start seeing meaningful ranking improvements within 3–6 months of starting SEO. Local SEO and Google Business Profile optimization can show results faster — sometimes within 4–8 weeks. Technical fixes like site speed and structured data improvements can have an immediate positive impact on Core Web Vitals scores.',
+      'Most GTA businesses start seeing meaningful ranking improvements within 3–6 months of starting SEO. Local SEO and Google Business Profile optimization can show results faster — sometimes within 4–8 weeks. Technical fixes like site speed and structured data improvements can have an immediate positive impact on Core Web Vitals scores.',
   },
   {
     question: 'Do you offer local SEO for GTA businesses?',
     answer:
-      'Yes — local SEO is our specialty. We optimize your Google Business Profile, build local citations on Canadian directories, create geo-targeted landing pages, and implement LocalBusiness schema markup. Our strategies are built specifically for Toronto, Mississauga, Brampton, Vaughan, Markham, and surrounding GTA markets.',
+      'Yes — local SEO is our specialty. We optimize your Google Business Profile, build local citations on Canadian directories, create geo-targeted landing pages, and implement LocalBusiness schema markup. Our strategies are built specifically for Markham, Stouffville, Scarborough, and the surrounding GTA markets.',
   },
   {
     question: 'What is included in a free SEO audit?',
     answer:
-      'Our free SEO audit covers technical health (crawlability, site speed, Core Web Vitals, mobile usability), on-page factors (title tags, meta descriptions, heading structure), local SEO signals (Google Business Profile, citations), and a keyword gap analysis against your top 3 Toronto competitors. You receive a written report with prioritized action items.',
+      'Our free SEO audit covers technical health (crawlability, site speed, Core Web Vitals, mobile usability), on-page factors (title tags, meta descriptions, heading structure), local SEO signals (Google Business Profile, citations), and a keyword gap analysis against your top 3 local competitors. You receive a written report with prioritized action items.',
   },
   {
     question: 'Do you require long-term SEO contracts?',
@@ -247,11 +229,39 @@ export const seoFaqs: ServiceFaq[] = [
   },
 ];
 
-export const hostingFaqs: ServiceFaq[] = [
+export const geoFaqs: ServiceFaq[] = [
   {
-    question: 'How much does managed web hosting cost in Toronto?',
+    question: 'What is GEO, and how is it different from SEO?',
     answer:
-      'Managed hosting plans at Zenara Designs start at $45/month and include SSL, CDN, daily backups, uptime monitoring, and priority support. Higher tiers add more storage, performance tuning, and enhanced SLAs. All plans are month-to-month with no annual price hikes or hidden bandwidth fees.',
+      'SEO gets you ranked in a list of blue links. GEO — generative engine optimization — gets you cited inside an answer written by ChatGPT, Perplexity, Google AI Overviews, or Gemini. The mechanics differ: AI systems favour content with clear factual statements, explicit entity information, structured data they can parse without running JavaScript, and sources they can attribute. Both matter, and the work overlaps, but optimising only for one leaves the other on the table.',
+  },
+  {
+    question: 'Do AI search engines actually send traffic?',
+    answer:
+      'Less than traditional search does today, and the referral volume is genuinely hard to measure because not every assistant passes a referrer. What they send is different: fewer visits, but visitors who arrive already having read a summary of what you do. The stronger argument right now is defensive — if an assistant is answering "who does web design in Markham" and you are not in the answer, a competitor is.',
+  },
+  {
+    question: 'What do you actually change on my site?',
+    answer:
+      'We make your business facts machine-readable: server-rendered JSON-LD so crawlers that do not execute JavaScript still see your data, an llms.txt file stating who you are and what you sell, entity consistency across your site, Google Business Profile and citations, and content restructured to answer real questions directly rather than burying the answer in marketing copy. We also add clear, quotable factual statements — the kind an assistant can lift and attribute.',
+  },
+  {
+    question: 'Can you guarantee I will show up in ChatGPT or Perplexity?',
+    answer:
+      'No, and be sceptical of anyone who does. These systems do not publish ranking criteria, their outputs vary between users and sessions, and they change without notice. What we can do is make your site as easy to read, parse, and cite as it can be, and track mentions over time so you can see whether it is working.',
+  },
+  {
+    question: 'Is GEO available on its own, or only bundled with SEO?',
+    answer:
+      'It can be scoped on its own, but the two overlap in practice — clean structured data and answer-shaped content help conventional rankings too. Most clients add GEO alongside an existing SEO engagement rather than running it in isolation, and we\'ll say so upfront if that\'s the better starting point for your site.',
+  },
+];
+
+export const websiteMaintenanceFaqs: ServiceFaq[] = [
+  {
+    question: 'How much does managed hosting and website care cost?',
+    answer:
+      'Plans start at $45/month (Core) for managed hosting, SSL, and daily backups. Grow ($70/month) adds GA4 setup, a monthly traffic report, and more included update time. Prime ($150/month) adds advanced performance tuning and same-day support. All plans are month-to-month — see the full breakdown, including annual pricing, on our pricing page.',
   },
   {
     question: 'What is included in managed hosting versus a regular host?',
@@ -259,75 +269,122 @@ export const hostingFaqs: ServiceFaq[] = [
       'With managed hosting, our team handles everything: server configuration, security patches, software updates, SSL renewals, performance monitoring, and daily backups. Unlike shared hosting providers (GoDaddy, Bluehost), you don\'t need to touch a control panel or manage technical issues. We handle it so you can focus on your business.',
   },
   {
+    question: 'What is in the monthly traffic report?',
+    answer:
+      'Sessions and users with the month-over-month change, which pages people actually landed on, where they came from (organic, direct, social, referral), and how many form submissions and calls came through. Written in plain English with a short read on what changed and what we suggest doing next. Included from the Grow plan up.',
+  },
+  {
+    question: 'Do you set up Google Analytics and Search Console for me?',
+    answer:
+      'Yes, on the Grow and Prime plans — both set up properly and verified, in accounts you own, plus conversion tracking on your forms and click-to-call links so enquiries are actually measured. If you already have GA4 running, we audit the setup first; a misconfigured property produces numbers that look fine and mean nothing.',
+  },
+  {
     question: 'What is your uptime guarantee?',
     answer:
-      'We offer a 99.9% uptime SLA, which equals less than 9 hours of unplanned downtime per year. Our infrastructure includes redundant servers, automatic failover, and 24/7 monitoring with instant alerts. In practice, most hosted sites experience zero unplanned downtime in a given year.',
+      'We offer a 99.9% uptime SLA — less than 9 hours of unplanned downtime a year — backed by 24/7 automated monitoring that alerts us the moment something breaks. How fast a human responds depends on your plan: same-day on Prime, 1 business day on Grow, 1–2 business days on Core.',
   },
   {
     question: 'Can you migrate my website from another host?',
     answer:
-      'Yes, migration is included at no extra cost. We handle the full transfer — DNS configuration, SSL setup, file migration, database migration, and email migration if applicable — with zero downtime. The cutover happens during a low-traffic window so your visitors never notice the transition.',
+      'Yes, migration is included at no extra cost on every plan. We handle DNS, SSL, file and database migration, and email migration if applicable, with the cutover timed for a low-traffic window so visitors never notice.',
   },
   {
-    question: 'Is your hosting optimized for Next.js and React?',
+    question: 'Can I cancel?',
     answer:
-      'Yes. Our infrastructure is purpose-built for Next.js applications deployed on Vercel\'s edge network — not a generic shared hosting environment. This means server-side rendering, ISR (Incremental Static Regeneration), edge functions, and image optimization all perform at their peak, giving you the fastest possible load times.',
+      'Yes. Every plan is month to month with no lock-in contract. You keep your analytics accounts, your data, and your site.',
+  },
+];
+
+export const websiteRedesignFaqs: ServiceFaq[] = [
+  {
+    question: 'How do I know if I need a redesign or just a refresh?',
+    answer:
+      'If the site loads slowly on a phone, is difficult to update, was built on a platform you no longer have access to, or has not converted an enquiry in months, a rebuild usually costs less than repeated patching. If the structure works and the problem is dated visuals or thin copy, a refresh is enough. We will tell you which one you need before quoting — including when the answer is that you do not need us yet.',
+  },
+  {
+    question: 'Will a redesign hurt my existing search rankings?',
+    answer:
+      'It can, if the migration is careless. The usual causes are broken URL structures with no redirects, lost page content, and metadata that was never carried across. We map every existing URL to its new destination, 301 anything that moves, preserve the content that already earns impressions, and re-submit the sitemap. Rankings can still move in the first few weeks while Google re-crawls; that settles.',
+  },
+  {
+    question: 'Can you keep my existing branding?',
+    answer:
+      'Yes. Plenty of redesigns are structural — same logo, same colours, better structure, faster load, clearer conversion path. If the brand itself is the problem we will say so, and logo and identity work is quoted separately.',
+  },
+  {
+    question: 'What happens to my old content?',
+    answer:
+      'We audit it first. Pages that earn impressions or serve a real purpose get carried across and improved; thin or duplicate pages get consolidated or retired with redirects. Cutting dead weight is often the single highest-impact part of a redesign — a smaller site of genuinely useful pages outperforms a large one of near-identical ones.',
+  },
+  {
+    question: 'How much does a redesign cost, and how long does it take?',
+    answer:
+      'Quoted up front from the audit, not billed hourly against a moving scope — pricing depends on how much content needs migrating and how much is changing structurally. Most redesigns land in one to two weeks; larger rebuilds with custom functionality run three to four.',
   },
 ];
 
 export const serviceContent: Record<string, ServiceEntry> = {
+  geo: {
+    path: '/services/geo',
+    breadcrumbLabel: 'GEO / AI Search',
+    schemaName: 'Generative Engine Optimization (GEO) — Markham & the GTA',
+    schemaDescription:
+      'Generative engine optimization for GTA businesses. Get cited by ChatGPT, Perplexity, Google AI Overviews, and Gemini with server-rendered structured data, entity consistency, and answer-shaped content.',
+    features: ['AI Search Visibility Audit', 'Server-Rendered Structured Data', 'llms.txt & Entity Signals', 'Answer-Shaped Content', 'Citation & Mention Tracking', 'Google Business Profile'],
+    faqs: geoFaqs,
+  },
+  'website-redesign': {
+    path: '/services/website-redesign',
+    breadcrumbLabel: 'Website Redesign',
+    schemaName: 'Website Redesign & Migration — Markham & the GTA',
+    schemaDescription:
+      'Website redesign and migration for GTA businesses. Rebuild dated or slow sites on Next.js without losing search rankings — full URL mapping, 301 redirects, and content migration included.',
+    features: ['Content & URL Audit', 'SEO-Safe Migration', 'Rebuild on Next.js', 'Conversion Path Redesign', 'Performance Overhaul', 'Redirect Mapping'],
+    faqs: websiteRedesignFaqs,
+  },
   'web-design': {
     path: '/services/web-design',
     breadcrumbLabel: 'Web Design',
-    schemaName: 'Custom Web Design Toronto',
+    schemaName: 'Custom Web Design Markham & GTA',
     schemaDescription:
-      'Professional custom website design and development for Toronto & GTA businesses. Built with Next.js for performance, SEO, and modern user experiences.',
+      'Professional custom website design and development for GTA businesses. Built with Next.js for performance, SEO, and modern user experiences.',
     features: ['Custom UI/UX Design', 'Responsive Development', 'Performance Optimization', 'SEO Integration', 'Clean Code Architecture', 'Security & Accessibility'],
     faqs: webDesignFaqs,
   },
   ecommerce: {
     path: '/services/ecommerce',
     breadcrumbLabel: 'E-Commerce',
-    schemaName: 'E-Commerce Web Design Toronto',
+    schemaName: 'E-Commerce Web Design Markham & GTA',
     schemaDescription:
-      'Professional e-commerce website design and development for Toronto & GTA businesses. Shopify stores, custom storefronts, payment integration, and conversion optimization.',
+      'Professional e-commerce website design and development for GTA businesses. Shopify stores, custom storefronts, payment integration, and conversion optimization.',
     features: ['Shopify Development', 'Payment Integration', 'Product Management', 'Conversion Optimization', 'Analytics & Reporting', 'Multi-Currency & Tax'],
     faqs: ecommerceFaqs,
   },
-  'logo-design': {
-    path: '/services/logo-design',
-    breadcrumbLabel: 'Logo Design',
-    schemaName: 'Logo Design & Brand Identity Toronto',
+  branding: {
+    path: '/services/branding',
+    breadcrumbLabel: 'Branding',
+    schemaName: 'Logo Design & Business Cards — Markham & the GTA',
     schemaDescription:
-      'Professional logo design and brand identity for Toronto & GTA businesses. Custom logos, colour palettes, typography, and complete brand guidelines with unlimited revisions.',
-    features: ['Custom Logo Creation', 'Color Psychology', 'Typography Selection', 'Brand Guidelines', 'Visual Identity System', 'Multi-Format Delivery'],
-    faqs: logoDesignFaqs,
-  },
-  'business-cards': {
-    path: '/services/business-cards',
-    breadcrumbLabel: 'Business Cards',
-    schemaName: 'Business Card Design Toronto',
-    schemaDescription:
-      'Professional business card design for Toronto & GTA professionals. Premium print-ready designs with spot UV, foil, and soft-touch options. 3–5 day turnaround.',
-    features: ['Print-Ready Files', 'Premium Materials', 'Brand-Consistent Design', 'Fast Turnaround', 'Double-Sided Layouts', 'Finishing Options'],
-    faqs: businessCardsFaqs,
+      'Logo design and business card design for GTA businesses. Custom logo concepts, colour and typography systems, and print-ready business cards, priced fixed and affordable.',
+    features: ['Custom Logo Design', 'Colour & Typography System', 'Print-Ready Business Cards', 'Multi-Format File Delivery', 'Print Vendor Coordination', 'Original, Trademark-Eligible Marks'],
+    faqs: brandingFaqs,
   },
   seo: {
     path: '/services/seo',
     breadcrumbLabel: 'SEO Services',
-    schemaName: 'SEO Services Toronto',
+    schemaName: 'SEO Services — Markham & the GTA',
     schemaDescription:
-      'Professional SEO services for Toronto & GTA businesses. Local SEO, technical optimization, keyword research, and Google ranking improvements. Month-to-month, no contracts.',
+      'Professional SEO services for GTA businesses. Local SEO, technical optimization, keyword research, and Google ranking improvements. Month-to-month, no contracts.',
     features: ['Local SEO', 'Technical SEO', 'Content Strategy', 'Keyword Research', 'On-Page Optimization', 'Link Building'],
     faqs: seoFaqs,
   },
-  hosting: {
-    path: '/services/hosting',
-    breadcrumbLabel: 'Web Hosting',
-    schemaName: 'Managed Web Hosting Toronto',
+  'website-maintenance': {
+    path: '/services/website-maintenance',
+    breadcrumbLabel: 'Website Maintenance',
+    schemaName: 'Website Maintenance, Hosting & Analytics — Markham & the GTA',
     schemaDescription:
-      'Managed web hosting and maintenance for Toronto businesses. 99.9% uptime SLA, SSL, global CDN, daily backups, and priority support. Plans from $45/month. Migration included.',
-    features: ['Managed Hosting', 'SSL & Security', 'Daily Backups', 'Global CDN', 'Uptime Monitoring', 'Priority Support'],
-    faqs: hostingFaqs,
+      'Managed hosting, uptime monitoring, and monthly analytics reporting for GTA businesses. 99.9% uptime SLA, SSL, daily backups, GA4 setup, and plain-English traffic reports. Plans from $45/month.',
+    features: ['Managed Hosting & SSL', 'Daily Backups', 'Uptime & Error Monitoring', 'GA4 & Search Console Setup', 'Monthly Traffic Report', 'Content Updates'],
+    faqs: websiteMaintenanceFaqs,
   },
 };

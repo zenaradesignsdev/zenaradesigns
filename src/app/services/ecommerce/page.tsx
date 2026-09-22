@@ -6,14 +6,21 @@ import { serviceContent, serviceSchema, faqPageSchema, serviceBreadcrumb } from 
 const entry = serviceContent['ecommerce'];
 
 export const metadata: Metadata = {
-  title: 'E-Commerce Web Design Toronto | Shopify & Custom Stores | Zenara',
-  description: 'Professional e-commerce website design in Toronto & GTA. Shopify stores, custom storefronts, payment integration, and conversion optimization. Launch your online store today.',
+  title: 'E-Commerce Web Design Markham & GTA | Zenara',
+  description: 'E-commerce website design for GTA businesses. Shopify stores, custom storefronts, payment integration, and conversion optimization. Fixed pricing.',
   keywords: ['ecommerce web design Toronto', 'Shopify development GTA', 'online store design Toronto', 'custom ecommerce development', 'Shopify store Toronto', 'headless commerce Next.js'],
   alternates: { canonical: 'https://zenaradesigns.com/services/ecommerce' },
   openGraph: {
-    title: 'E-Commerce Web Design Toronto | Shopify & Custom Stores | Zenara',
-    description: 'Professional e-commerce website design in Toronto & GTA. Shopify stores, custom storefronts, payment integration, and conversion optimization. Launch your online store today.',
+    images: ['/opengraph-image'],
+    title: 'E-Commerce Web Design Markham & GTA | Zenara',
+    description: 'E-commerce website design for GTA businesses. Shopify stores, custom storefronts, payment integration, and conversion optimization. Fixed pricing.',
     url: 'https://zenaradesigns.com/services/ecommerce',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'E-Commerce Web Design Markham & GTA | Zenara',
+    description:
+      'E-commerce website design for GTA businesses. Shopify stores, custom storefronts, payment integration, and conversion optimization. Fixed pricing.',
   },
 };
 

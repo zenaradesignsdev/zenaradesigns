@@ -2,6 +2,7 @@
 
 import { Compass, Palette, BarChart, ArrowUpRight } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { TextReveal } from '@/components/ui/text-reveal';
 import { FadeIn } from '@/components/ui/fade-in';
 
@@ -105,7 +106,7 @@ const ProcessSection = () => {
           {/* Card 1: Discovery & Planning */}
           <div
             data-process-card="0"
-            className={`group relative bg-slate-900/90 backdrop-blur-sm rounded-xl p-5 sm:p-6 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-700 cursor-pointer overflow-hidden ${visibleCards.has(0) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            className={`group relative bg-slate-900/90 backdrop-blur-sm rounded-xl p-5 sm:p-6 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-700 overflow-hidden ${visibleCards.has(0) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
             style={{ transitionDelay: visibleCards.has(0) ? '0ms' : '0ms', transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
           >
             <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/15 via-cyan-500/8 to-cyan-500/15 blur-2xl opacity-60 animate-pulse"></div>
@@ -117,7 +118,6 @@ const ProcessSection = () => {
                   <div className="absolute inset-0 rounded-lg bg-cyan-400/10 blur-sm"></div>
                   <Compass className="h-5 w-5 text-cyan-400 relative z-10 drop-shadow-[0_0_8px_rgba(103,232,249,0.5)]" />
                 </div>
-                <ArrowUpRight className="h-4 w-4 text-white/30 group-hover:text-cyan-400 transition-colors" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 tracking-tight">Discovery &amp; Planning</h3>
               <p className="text-white/60 text-xs sm:text-sm leading-[1.6] font-light tracking-[0.01em]">
@@ -129,7 +129,7 @@ const ProcessSection = () => {
           {/* Card 2: Design & Development */}
           <div
             data-process-card="1"
-            className={`group relative bg-slate-900/90 backdrop-blur-sm rounded-xl p-5 sm:p-6 border border-slate-800/50 hover:border-purple-500/30 transition-all duration-700 cursor-pointer overflow-hidden ${visibleCards.has(1) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            className={`group relative bg-slate-900/90 backdrop-blur-sm rounded-xl p-5 sm:p-6 border border-slate-800/50 hover:border-purple-500/30 transition-all duration-700 overflow-hidden ${visibleCards.has(1) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
             style={{ transitionDelay: visibleCards.has(1) ? '120ms' : '0ms', transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
           >
             <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-purple-500/15 via-purple-500/8 to-purple-500/15 blur-2xl opacity-60 animate-pulse"></div>
@@ -141,7 +141,6 @@ const ProcessSection = () => {
                   <div className="absolute inset-0 rounded-lg bg-purple-400/10 blur-sm"></div>
                   <Palette className="h-5 w-5 text-purple-400 relative z-10 drop-shadow-[0_0_8px_rgba(196,181,253,0.5)]" />
                 </div>
-                <ArrowUpRight className="h-4 w-4 text-white/30 group-hover:text-purple-400 transition-colors" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 tracking-tight">Design &amp; Development</h3>
               <p className="text-white/60 text-xs sm:text-sm leading-[1.6] font-light tracking-[0.01em]">
@@ -153,7 +152,7 @@ const ProcessSection = () => {
           {/* Card 3: Launch & Optimize */}
           <div
             data-process-card="2"
-            className={`group relative bg-slate-900/90 backdrop-blur-sm rounded-xl p-5 sm:p-6 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-700 cursor-pointer overflow-hidden ${visibleCards.has(2) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+            className={`group relative bg-slate-900/90 backdrop-blur-sm rounded-xl p-5 sm:p-6 border border-slate-800/50 hover:border-cyan-500/30 transition-all duration-700 overflow-hidden ${visibleCards.has(2) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
             style={{ transitionDelay: visibleCards.has(2) ? '240ms' : '0ms', transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)' }}
           >
             <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/15 via-cyan-500/8 to-cyan-500/15 blur-2xl opacity-60 animate-pulse"></div>
@@ -165,7 +164,6 @@ const ProcessSection = () => {
                   <div className="absolute inset-0 rounded-lg bg-cyan-400/10 blur-sm"></div>
                   <BarChart className="h-5 w-5 text-cyan-400 relative z-10 drop-shadow-[0_0_8px_rgba(103,232,249,0.5)]" />
                 </div>
-                <ArrowUpRight className="h-4 w-4 text-white/30 group-hover:text-cyan-400 transition-colors" />
               </div>
               <h3 className="text-lg sm:text-xl font-semibold text-white mb-2 tracking-tight">Launch &amp; Optimize</h3>
               <p className="text-white/60 text-xs sm:text-sm leading-[1.6] font-light tracking-[0.01em]">
@@ -174,6 +172,23 @@ const ProcessSection = () => {
             </div>
           </div>
         </div>
+
+        {/* Section CTA — the cards no longer link out, so the path to the full
+            process lives here instead. */}
+        <FadeIn delay={200}>
+          <div className="mt-10 sm:mt-12 flex justify-center relative z-20">
+            <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
+              <Link
+                href="/process"
+                className="relative flex items-center justify-center overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-7 py-3.5 sm:px-9 sm:py-4 text-base sm:text-lg font-semibold group"
+              >
+                <span className="relative z-10 group-hover:text-white">See How We Work</span>
+                <ArrowUpRight className="ml-2 h-5 w-5 relative z-10 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full"></span>
+              </Link>
+            </div>
+          </div>
+        </FadeIn>
       </div>
     </section>
   );

@@ -4,7 +4,6 @@ import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
-import StructuredData from '@/components/StructuredData';
 
 declare global {
   interface Window {
@@ -163,15 +162,6 @@ const Schedule = () => {
         </div>
       </section>
 
-      {/* Breadcrumb Schema */}
-      <StructuredData 
-        type="breadcrumb" 
-        breadcrumbs={[
-          { name: 'Home', url: '/' },
-          { name: 'Contact', url: '/contact' },
-          { name: 'Schedule a Meeting', url: '/contact/schedule' }
-        ]} 
-      />
     </div>
   );
 };

@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Rocket } from 'lucide-react';
+import { Rocket, ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SafeImage } from '@/components/ui/safe-image';
 import { memo } from 'react';
@@ -14,10 +14,10 @@ const gardenWebImage = '/images/website-example-garden.png';
 const travelWebImage = '/images/website-example-travel.png';
 
 const PORTFOLIO_ITEMS = [
-  { src: realEstateWebImage, alt: 'Real Estate Website Design Toronto - Professional Property Showcase Platform', title: 'Real Estate', desc: 'Property showcase platform', gradient: 'from-cyan-500/20 to-purple-500/20' },
-  { src: rocketWebImage, alt: 'Rocket Launch Website Design Toronto - Modern Tech Startup Platform', title: 'Tech Startup', desc: 'Innovative tech platform', gradient: 'from-purple-500/20 to-pink-500/20' },
+  { src: realEstateWebImage, alt: 'Real Estate Website Design GTA - Professional Property Showcase Platform', title: 'Real Estate', desc: 'Property showcase platform', gradient: 'from-cyan-500/20 to-purple-500/20' },
+  { src: rocketWebImage, alt: 'Rocket Launch Website Design GTA - Modern Tech Startup Platform', title: 'Tech Startup', desc: 'Innovative tech platform', gradient: 'from-purple-500/20 to-pink-500/20' },
   { src: gardenWebImage, alt: 'Garden & Landscaping Website Design GTA - Professional Horticulture Business Platform', title: 'Garden Center', desc: 'Eco-friendly business site', gradient: 'from-pink-500/20 to-cyan-500/20' },
-  { src: travelWebImage, alt: 'Travel & Tourism Website Design Toronto - Adventure Booking Platform', title: 'Travel Agency', desc: 'Adventure booking platform', gradient: 'from-teal-500/20 to-purple-500/20' },
+  { src: travelWebImage, alt: 'Travel & Tourism Website Design GTA - Adventure Booking Platform', title: 'Travel Agency', desc: 'Adventure booking platform', gradient: 'from-teal-500/20 to-purple-500/20' },
 ];
 
 const PortfolioSection = () => {
@@ -95,13 +95,22 @@ const PortfolioSection = () => {
               </p>
             </FadeIn>
             <FadeIn delay={360}>
-            <div className="flex justify-center lg:justify-start">
+            <div className="flex flex-col sm:flex-row justify-center lg:justify-start items-center gap-4">
               <div className="relative inline-block rounded-full p-[3.5px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
                 <Button asChild className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-7 py-5 sm:px-9 sm:py-6 text-lg sm:text-xl font-semibold group">
                   <Link href="/services" className="flex items-center justify-center relative z-10 group-hover:text-white">
                     <span className="relative z-10">Our Services</span>
                     <Rocket className="ml-2 h-6 w-6 transition-all duration-300 group-hover:text-cyan-400 group-hover:scale-125 relative z-10" />
                     <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full"></span>
+                  </Link>
+                </Button>
+              </div>
+              <div className="relative inline-block rounded-full p-[3.5px] bg-gradient-to-r from-slate-600 via-slate-500 to-slate-600">
+                <Button asChild className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-7 py-5 sm:px-9 sm:py-6 text-lg sm:text-xl font-semibold group">
+                  <Link href="/projects" className="flex items-center justify-center relative z-10 group-hover:text-white">
+                    <span className="relative z-10">See What We Built</span>
+                    <ArrowUpRight className="ml-2 h-6 w-6 transition-all duration-300 group-hover:text-cyan-400 group-hover:scale-125 relative z-10" />
+                    <span className="absolute inset-0 bg-gradient-to-r from-slate-600 via-slate-500 to-slate-600 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full"></span>
                   </Link>
                 </Button>
               </div>
@@ -123,7 +132,7 @@ const PortfolioSection = () => {
                           alt={item.alt}
                           className="w-full h-full object-cover"
                           priority={index === 0}
-                          quality={60}
+                          quality={85}
                           sizes="(max-width: 640px) calc(100vw - 112px), (max-width: 1024px) calc(50vw - 80px), 540px"
                         />
                       </div>

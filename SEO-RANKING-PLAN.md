@@ -25,8 +25,11 @@
 - ✅ **Lint fix** — `NotFound.tsx` `<a>` → `<Link>` (the one pre-existing lint error).
 - ✅ Sitemap `lastModified` → build-time; FAQ data extracted to `src/lib/faq-data.ts`.
 
+**Shipped & verified locally (cont'd, 2026-08-23):**
+- ✅ **Phase 0.1 (labeling)** — added a "Concept Project" badge to each demo tile in `Projects.tsx` (`projectone/two/three/four.zenaradesigns.com`) so they read as demos at the card level, not just via the section header.
+
 **Remaining / not done (needs your input or lower value):**
-- ⏳ **Phase 0.1 infra** — noindex `project*.zenaradesigns.com` at their Vercel source + GSC Removals (can't do from this repo).
+- ⏳ **Phase 0.1 infra** — noindex `project*.zenaradesigns.com` at their Vercel source + GSC Removals (can't do from this repo — see the checklist below).
 - ⏳ **Indexing** — resubmit sitemap, Request Indexing for orphans; export the "17 not indexed" list (§2).
 - ⏳ **`/about` E-E-A-T** — needs real founder names/credentials.
 - ⏳ **Per-city content** — 19 pages drafted from real GTA knowledge; **human review recommended** before relying on them (§11).

@@ -7,13 +7,13 @@ import { fontSans } from '@/lib/fonts';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Web Design Toronto | Business Cards & Logo Design | Zenara',
+    default: 'Markham Web Design | Websites for GTA Businesses | Zenara',
     // Page titles already include the brand, so the template must not append it
     // again (was producing "… | Zenara | Zenara Designs").
     template: '%s',
   },
   description:
-    "Toronto's leading web design agency. Professional websites, business cards & logo design for GTA businesses. Modern, fast, secure solutions.",
+    'Custom, lead-focused websites for GTA service businesses, built from our Markham base. Fixed pricing, direct developer access, launch in 1–2 weeks.',
   metadataBase: new URL('https://zenaradesigns.com'),
   alternates: {
     canonical: 'https://zenaradesigns.com',
@@ -27,19 +27,19 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Web Design Toronto | Business Cards & Logo Design | Zenara',
+    title: 'Markham Web Design | Websites for GTA Businesses | Zenara',
     description:
-      "Toronto's leading web design agency. Professional websites, business cards & logo design for GTA businesses. Modern, fast, secure solutions.",
+      'Custom, lead-focused websites for GTA service businesses, built from our Markham base. Fixed pricing, direct developer access, launch in 1–2 weeks.',
     type: 'website',
     url: 'https://zenaradesigns.com',
     siteName: 'Zenara Designs',
     locale: 'en_CA',
     images: [
       {
-        url: 'https://zenaradesigns.com/web-app-manifest-512x512.png',
-        width: 512,
-        height: 512,
-        alt: 'Zenara Designs - Web Design Toronto',
+        url: '/opengraph-image',
+        width: 1200,
+        height: 630,
+        alt: 'Zenara Designs — web design for Markham and the GTA',
       },
     ],
   },
@@ -47,12 +47,12 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     site: '@zenaradesigns',
     creator: '@zenaradesigns',
-    title: 'Web Design Toronto | Business Cards & Logo Design | Zenara',
+    title: 'Markham Web Design | Websites for GTA Businesses | Zenara',
     description:
-      "Toronto's leading web design agency. Professional websites, business cards & logo design for GTA businesses. Modern, fast, secure solutions.",
+      'Custom, lead-focused websites for GTA service businesses, built from our Markham base. Fixed pricing, direct developer access, launch in 1–2 weeks.',
     images: {
-      url: 'https://zenaradesigns.com/web-app-manifest-512x512.png',
-      alt: 'Zenara Designs - Web Design Toronto',
+      url: '/opengraph-image',
+      alt: 'Zenara Designs — Web Design, Markham & the GTA',
     },
   },
   icons: {
@@ -79,29 +79,30 @@ const localBusinessJsonLd = {
   '@type': 'LocalBusiness',
   name: 'Zenara Designs',
   description:
-    'Leading web design & development agency in Toronto & GTA. Professional business cards, logo design, and custom websites for small businesses.',
+    'Web design and development agency based in Markham, serving the GTA. Custom websites, branding, SEO and managed maintenance for small businesses.',
   url: 'https://zenaradesigns.com',
   logo: 'https://zenaradesigns.com/logo-seo.svg',
   image: 'https://zenaradesigns.com/web-app-manifest-512x512.png',
   email: 'info@zenaradesigns.com',
   areaServed: [
+    { '@type': 'City', name: 'Markham' },
+    { '@type': 'City', name: 'Stouffville' },
+    { '@type': 'City', name: 'Scarborough' },
     { '@type': 'City', name: 'Toronto' },
     { '@type': 'City', name: 'Mississauga' },
-    { '@type': 'City', name: 'Brampton' },
-    { '@type': 'City', name: 'Vaughan' },
-    { '@type': 'City', name: 'Markham' },
     { '@type': 'City', name: 'Richmond Hill' },
-    { '@type': 'City', name: 'Oakville' },
-    { '@type': 'City', name: 'Burlington' },
+    { '@type': 'City', name: 'Vaughan' },
+    { '@type': 'City', name: 'Pickering' },
   ],
+
   serviceArea: {
     '@type': 'GeoCircle',
     geoMidpoint: {
       '@type': 'GeoCoordinates',
-      latitude: '43.6532',
-      longitude: '-79.3832',
+      latitude: '43.8561',
+      longitude: '-79.3370',
     },
-    geoRadius: '50000',
+    geoRadius: '45000',
   },
   openingHours: 'Mo-Fr 09:00-18:00',
   priceRange: '$$',
@@ -120,24 +121,63 @@ const localBusinessJsonLd = {
         '@type': 'Offer',
         itemOffered: {
           '@type': 'Service',
-          name: 'Web Design Toronto',
-          description: 'Custom website design and development for Toronto businesses',
+          name: 'Web Design',
+          description: 'Custom website design and development for Markham and GTA businesses',
+          url: 'https://zenaradesigns.com/services/web-design',
         },
       },
       {
         '@type': 'Offer',
         itemOffered: {
           '@type': 'Service',
-          name: 'Business Cards Design',
-          description: 'Professional business card design and printing services',
+          name: 'Branding',
+          description: 'Logo design and print-ready business cards, designed as one identity',
+          url: 'https://zenaradesigns.com/services/branding',
         },
       },
       {
         '@type': 'Offer',
         itemOffered: {
           '@type': 'Service',
-          name: 'Logo Design GTA',
-          description: 'Custom logo design for businesses across the Greater Toronto Area',
+          name: 'SEO',
+          description: 'Local SEO, technical optimization and content strategy',
+          url: 'https://zenaradesigns.com/services/seo',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'GEO',
+          description: 'Generative engine optimization for AI search visibility',
+          url: 'https://zenaradesigns.com/services/geo',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'E-Commerce',
+          description: 'Online stores with payment integration and product management',
+          url: 'https://zenaradesigns.com/services/ecommerce',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Website Maintenance',
+          description: 'Managed hosting, uptime monitoring and monthly analytics reporting',
+          url: 'https://zenaradesigns.com/services/website-maintenance',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Website Redesign',
+          description: 'Rebuilds of ageing sites for speed, modern design and conversion',
+          url: 'https://zenaradesigns.com/services/website-redesign',
         },
       },
     ],
@@ -151,7 +191,7 @@ const organizationJsonLd = {
   url: 'https://zenaradesigns.com',
   logo: 'https://zenaradesigns.com/logo-seo.svg',
   description:
-    'Leading web design & development agency in Toronto & GTA specializing in custom websites, business cards, and logo design.',
+    'Web design agency in Markham serving the GTA, specializing in custom websites, branding, SEO and website maintenance for small businesses.',
   foundingDate: '2024',
   contactPoint: {
     '@type': 'ContactPoint',
@@ -172,7 +212,7 @@ const websiteJsonLd = {
   name: 'Zenara Designs',
   url: 'https://zenaradesigns.com',
   description:
-    'Leading web design & development agency in Toronto & GTA. Professional business cards, logo design, and custom websites for small businesses.',
+    'Web design and development agency based in Markham, serving the GTA. Custom websites, branding, SEO and managed maintenance for small businesses.',
   publisher: { '@type': 'Organization', name: 'Zenara Designs' },
 };
 

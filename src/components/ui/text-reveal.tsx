@@ -17,6 +17,15 @@ interface TextRevealProps {
 }
 
 /**
+ * An `h1` is the hero heading and therefore the LCP element on these
+ * text-led pages. Gating it behind hydration + IntersectionObserver + a 700ms
+ * transition delays LCP by exactly that chain, and — because the server-rendered
+ * state is `opacity-0` — leaves the heading permanently invisible if JS fails.
+ * So headings render immediately; only decorative, below-the-fold text animates.
+ */
+const rendersImmediately = (as: React.ElementType) => as === 'h1';
+
+/**
  * Webflow-style clip-slide-up reveal.
  * Each line starts hidden below an overflow:hidden clip and slides into view
  * when the component enters the viewport.
@@ -41,9 +50,11 @@ export const TextReveal = ({
   as: Wrapper = 'div',
 }: TextRevealProps) => {
   const ref = useRef<HTMLElement>(null);
-  const [visible, setVisible] = useState(false);
+  const immediate = rendersImmediately(Wrapper);
+  const [visible, setVisible] = useState(immediate);
 
   useEffect(() => {
+    if (immediate) return;
     const el = ref.current;
     if (!el) return;
     const observer = new IntersectionObserver(
@@ -57,7 +68,7 @@ export const TextReveal = ({
     );
     observer.observe(el);
     return () => observer.disconnect();
-  }, []);
+  }, [immediate]);
 
   return (
     /* flex-col stops each line's negative margin collapsing out into the
@@ -66,13 +77,21 @@ export const TextReveal = ({
       {lines.map((line, i) => (
         <div key={i} className="overflow-hidden pb-[0.25em] -mb-[0.25em]">
           <div
-            className={`transition-[opacity,transform] duration-700 ${lineClassName} ${
-              visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[155%]'
-            }`}
-            style={{
-              transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
-              transitionDelay: visible ? `${baseDelayMs + i * staggerMs}ms` : '0ms',
-            }}
+            className={
+              immediate
+                ? `${lineClassName} opacity-100 translate-y-0`
+                : `transition-[opacity,transform] duration-700 ${lineClassName} ${
+                    visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[155%]'
+                  }`
+            }
+            style={
+              immediate
+                ? undefined
+                : {
+                    transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+                    transitionDelay: visible ? `${baseDelayMs + i * staggerMs}ms` : '0ms',
+                  }
+            }
           >
             {line}
           </div>

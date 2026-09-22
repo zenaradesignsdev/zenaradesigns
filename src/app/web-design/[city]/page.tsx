@@ -7,6 +7,11 @@ interface Props {
   params: { city: string };
 }
 
+// Without this, an unknown slug is server-rendered on demand and notFound()
+// returns the 404 body with a 200 status — a soft 404 Google will happily
+// index. Same guard as /industries/[slug].
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return citySlugs.map((city) => ({ city }));
 }
@@ -21,10 +26,16 @@ export function generateMetadata({ params }: Props): Metadata {
     description: content.metaDescription,
     alternates: { canonical: url },
     openGraph: {
+      images: ['/opengraph-image'],
       title: content.metaTitle,
       description: content.metaDescription,
       url,
       type: 'website',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: content.metaTitle,
+      description: content.metaDescription,
     },
   };
 }

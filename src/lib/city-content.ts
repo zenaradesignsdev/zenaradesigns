@@ -33,27 +33,334 @@ export interface CityContent {
   whyPoints: CityWhyPoint[];
   industries: CityIndustry[];
   faqs: CityFaq[];
+  /** Optional — populated as each city page gets the full visual redesign. */
+  heroImage?: string;
+  heroImageAlt?: string;
+  /** 2–3 sentences on why local SEO matters specifically in this city. */
+  localSeoBody?: string;
+  /** 1–2 sentences on local GEO / AI-search visibility for this city. */
+  geoBody?: string;
+  /** Short callout for small businesses, shown in the industries section. */
+  smallBusinessNote?: string;
+  /** Short list of the city's core industry sectors, drawn from `economy`. */
+  focusAreas?: string[];
+  /** 3 slugs from `allProjects`, chosen per city for thematic fit and order. */
+  featuredProjectSlugs?: string[];
+  /**
+   * Render order for the 5 reorderable middle sections (Hero and the final
+   * CTA are always first/last). Falls back to DEFAULT_SECTION_ORDER when
+   * omitted, so cities without a redesign yet still render correctly.
+   */
+  sectionOrder?: SectionKey[];
 }
 
-// Industry pages exist for every slug below, so every city links to all four.
-const industriesFor = (slug: string): CityIndustry[] => [
-  { label: 'Law firms', href: `/lawyers/${slug}` },
-  { label: 'Accounting firms', href: `/accountants/${slug}` },
-  { label: 'Renovation companies', href: `/renovations/${slug}` },
-  { label: 'Wellness clinics', href: `/clinics/${slug}` },
+export type SectionKey = 'advantage' | 'whatYouGet' | 'recentWork' | 'industries' | 'faq';
+
+export const DEFAULT_SECTION_ORDER: SectionKey[] = ['advantage', 'whatYouGet', 'recentWork', 'industries', 'faq'];
+
+// The per-city industry pages (/lawyers/markham and friends) were retired — 33
+// of them were ~90% identical to one another and produced zero clicks — and now
+// 301 to their hub. Every city page links to the four hubs instead, which carry
+// the real vertical content.
+const INDUSTRY_LINKS: CityIndustry[] = [
+  { label: 'Law firms', href: '/lawyers' },
+  { label: 'Accounting firms', href: '/accountants' },
+  { label: 'Renovation companies', href: '/renovations' },
+  { label: 'Wellness clinics', href: '/clinics' },
+];
+
+export interface RecentWorkProject {
+  name: string;
+  tag: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  slug: string;
+  url: string;
+}
+
+// The full pool of real client projects. Each city page features 3 of
+// these, chosen and ordered per city for thematic fit, so no two city pages
+// show the same trio in the same order. None are tied to a specific GTA city,
+// so city pages frame this honestly as recent work, not local case studies.
+export const allProjects: RecentWorkProject[] = [
+  {
+    name: 'AshCam Cutting Solutions',
+    tag: 'E-commerce & Construction',
+    description: 'A modern e-commerce platform for a construction supplier, built for industrial customers who order online.',
+    image: '/images/ashcam-site.png',
+    imageAlt: 'AshCam Cutting Solutions website — construction blades and equipment e-commerce platform',
+    slug: 'ashcam-cutting-solutions',
+    url: 'https://ashcamcuttingsolution.ca/',
+  },
+  {
+    name: 'JB Loans',
+    tag: 'Mortgage Broker',
+    description: 'A professional mortgage broker site helping clients find the right loan with a seamless application process.',
+    image: '/images/jbloans.png',
+    imageAlt: 'JB Loans mortgage broker website — professional mortgage services platform',
+    slug: 'jb-loans',
+    url: 'https://jbloans.ca/',
+  },
+  {
+    name: 'IK Smart Solution',
+    tag: 'Security & Smart Home',
+    description: 'Custom surveillance, access control, and smart home installations for residential and commercial properties.',
+    image: '/images/iksmartsolutions.png',
+    imageAlt: 'IK Smart Solution website — custom security and smart home systems integrator',
+    slug: 'ik-smart-solution',
+    url: 'https://www.iksmartsolution.ca/',
+  },
+  {
+    name: 'FunGen Events',
+    tag: 'Event Planning',
+    description: 'A polished, professional online presence built to showcase an event planning company’s services and offerings.',
+    image: '/images/fungen-events.png',
+    imageAlt: 'FunGen Events website — event planning business website design',
+    slug: 'fungen-events',
+    url: 'https://fungenevents.ca/',
+  },
+  {
+    name: "Patty's Delights",
+    tag: 'Food & Beverage',
+    description: 'A warm, appetizing online presence built to showcase the menu and bring customers in the door.',
+    image: '/images/pattys-delights.png',
+    imageAlt: "Patty's Delights website — food and beverage business website design",
+    slug: 'pattys-delights',
+    url: 'https://pattysdelights.com/',
+  },
+  {
+    name: 'Heroes Catering',
+    tag: 'Catering',
+    description: 'A clean, appetizing online presence showcasing catering services and menu offerings.',
+    image: '/images/heroes-catering.png',
+    imageAlt: 'Heroes Catering website — catering business website design',
+    slug: 'heroes-catering',
+    url: 'https://heroes-catering.com/',
+  },
 ];
 
 export const cityContent: Record<string, CityContent> = {
+  markham: {
+    slug: 'markham',
+    city: 'Markham',
+    region: 'York Region',
+    metaTitle: 'Web Design Markham | Custom Business Websites | Zenara',
+    metaDescription:
+      'Custom web design in Markham — Unionville, Cornell, Downtown Markham. Modern, fast, multilingual-ready sites for a tech-savvy market. Free consultation.',
+    heroIntro: 'Websites built for Markham’s tech-driven, multicultural business community.',
+    intro:
+      'Markham is Canada’s high-tech capital outside Toronto — and customers here judge a business by its website in seconds.',
+    economy:
+      'A tech-literate population that expects polished, credible digital experiences — and rewards the businesses that deliver first.',
+    neighborhoods: [
+      'Downtown Markham',
+      'Unionville',
+      'Cornell',
+      'Milliken',
+      'Markham Village',
+      'Berczy',
+      'Cathedraltown',
+    ],
+    whyPoints: [
+      {
+        title: 'Tech-Savvy Audience',
+        body: 'Fast, modern, credible — builds that feel current in one of Canada’s most digitally literate markets.',
+      },
+      {
+        title: 'Multilingual-Ready',
+        body: 'Large Chinese-Canadian and South Asian communities mean key pages in a second language meaningfully expand your reach.',
+      },
+      {
+        title: 'Hyper-Local Content',
+        body: 'We reference Unionville, Downtown Markham, and the Highway 7 corridor to capture the searches that convert.',
+      },
+    ],
+    industries: INDUSTRY_LINKS,
+    faqs: [
+      {
+        question: 'How much does a website cost in Markham?',
+        answer:
+          'Markham projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds — each including responsive design, SEO, and SSL with transparent pricing.',
+      },
+      {
+        question: 'Do I need a multilingual website?',
+        answer:
+          'Given Markham’s large Chinese-Canadian and South Asian populations, offering key pages in a second language can meaningfully widen your audience and signal that you understand the community you serve. We build sites ready for that.',
+      },
+      {
+        question: 'Can you build a site for a Markham tech startup?',
+        answer:
+          'Yes. We build modern, fast, scalable sites on current frameworks — well suited to startups along the Highway 7 corridor that need a credible presence and room to grow.',
+      },
+      {
+        question: 'How long does it take to build a website?',
+        answer:
+          'Most Markham projects launch in one to two weeks, with a focused starter site ready in 3–5 days.',
+      },
+    ],
+    heroImage: '/images/markham-business-district.jpg',
+    heroImageAlt: 'Modern glass office building in a business district, representing Markham’s Highway 7 tech corridor',
+    localSeoBody:
+      'We optimize your Google Business Profile and build citations with real local organizations — the Markham Board of Trade and your municipal chamber of commerce — instead of running a generic national SEO checklist. Pages that name Unionville or the Highway 7 corridor specifically outrank ones that just say "serving the GTA."',
+    geoBody:
+      'And when someone asks ChatGPT or Perplexity for a web designer near Markham, we want your business in that answer too — not just page one of Google.',
+    smallBusinessNote:
+      'Markham runs on small business as much as it does on tech — the independent clinics, accountants, and shops serving Unionville and Cornell need the same credibility online as the Highway 7 corporates next door. We price and build for that reality.',
+    focusAreas: ['Technology', 'Professional Services', 'Healthcare', 'Retail'],
+    featuredProjectSlugs: ['ik-smart-solution', 'jb-loans', 'ashcam-cutting-solutions'],
+    sectionOrder: DEFAULT_SECTION_ORDER,
+  },
+  stouffville: {
+    slug: 'stouffville',
+    city: 'Stouffville',
+    region: 'York Region',
+    metaTitle: 'Web Design Stouffville | Custom Business Sites | Zenara',
+    metaDescription:
+      'Custom web design in Stouffville for local and commuter-community businesses. Fast, modern, SEO-optimized websites. Free consultation, transparent pricing.',
+    heroIntro: 'Websites for Stouffville businesses serving a fast-growing commuter community.',
+    intro:
+      'Whitchurch-Stouffville has grown rapidly from a small town into a thriving commuter community — and new residents research local businesses online before ever visiting.',
+    economy:
+      'Stouffville’s economy centres on a historic Main Street retail and dining district, personal and professional services, and trades supporting fast residential growth. Its family-oriented, commuter population researches locally online, often from mobile, rewarding businesses with clear, fast, credible websites.',
+    neighborhoods: [
+      'Historic Main Street',
+      'Wheler’s Mill',
+      'Cardinal Point',
+      'Byers Pond',
+      'Hoover Park',
+      'Country Glen',
+      'Ballantrae',
+    ],
+    whyPoints: [
+      {
+        title: 'Grow with a fast-expanding town',
+        body: 'As Stouffville’s population climbs, a strong website helps you capture new local customers early.',
+      },
+      {
+        title: 'Reach commuters on mobile',
+        body: 'Stouffville’s commuter families search on the move — we build fast, mobile-first sites with click-to-call.',
+      },
+      {
+        title: 'Community-credible, affordable design',
+        body: 'Polished, custom sites at small-business prices that read as established and local.',
+      },
+    ],
+    industries: INDUSTRY_LINKS,
+    faqs: [
+      {
+        question: 'Is Stouffville too small a market to justify a professional website?',
+        answer:
+          'The opposite, actually. Whitchurch-Stouffville is one of the fastest-growing towns in York Region, and most of those new residents have no existing loyalty to any local business — they search online to find one. A polished website is how you become their first choice before a competitor does.',
+      },
+      {
+        question: 'My shop already gets regulars from foot traffic — do I still need a site?',
+        answer:
+          'Foot traffic keeps existing customers coming back, but it does nothing for the growing number of new residents who research a business online before ever walking past it. A website extends your reach beyond Main Street to everyone moving into town.',
+      },
+      {
+        question: 'Can you help me compete as national chains move into Stouffville?',
+        answer:
+          "Yes. Big-box competitors win on price and convenience, not on story or craft. We build sites that lead with what makes your business genuinely local — your history on Main Street, your service, the things a chain can't replicate.",
+      },
+      {
+        question: "What's included in the Starter plan for a small Stouffville shop?",
+        answer:
+          'The $999 Starter plan covers up to 3 pages — typically Home, About, and Contact — with mobile-responsive design, basic SEO setup, and a 3–5 day turnaround. It suits a shop or trade business that needs a credible presence fast without a large page count.',
+      },
+    ],
+    heroImage: '/images/stouffville-main-street.jpg',
+    heroImageAlt: 'Historic storefronts along Main Street Stouffville, Ontario',
+    localSeoBody:
+      'We optimize your Google Business Profile and build citations with real local organizations — the Whitchurch-Stouffville Chamber of Commerce among them — so your business shows up for Stouffville-specific searches, not just the broader York Region term everyone else is chasing.',
+    geoBody:
+      "When a new resident asks ChatGPT or Perplexity for a good local business in Stouffville, we want your site structured so it can actually be the answer — not buried under results built for Toronto.",
+    smallBusinessNote:
+      'Most of the businesses lining Main Street are independently owned, and that\'s exactly who we build for — trades, clinics, and shops that need to look established online without an agency-sized budget.',
+    focusAreas: ['Retail & Dining', 'Trades', 'Personal Services', 'Professional Services'],
+    featuredProjectSlugs: ['ashcam-cutting-solutions', 'heroes-catering', 'pattys-delights'],
+    sectionOrder: ['advantage', 'recentWork', 'whatYouGet', 'industries', 'faq'],
+  },
+  scarborough: {
+    slug: 'scarborough',
+    city: 'Scarborough',
+    region: 'City of Toronto',
+    metaTitle: 'Web Design Scarborough | Small Business Sites | Zenara',
+    metaDescription:
+      'Custom web design in Scarborough for small and growing businesses. Fast, modern, SEO-optimized sites that win local customers. Free consultation.',
+    heroIntro: 'Websites for the small businesses powering one of Toronto’s most diverse communities.',
+    intro:
+      'Scarborough is one of the most culturally diverse parts of Toronto, home to thousands of small and family-run businesses — and customers increasingly check online before they ever visit.',
+    economy:
+      'Scarborough’s economy runs on a vast base of independent retailers, restaurants, clinics, and service businesses serving diverse, community-oriented neighbourhoods, alongside healthcare and education anchors. These are exactly the businesses customers look up before visiting, so a credible, mobile-fast website directly shapes who they choose.',
+    neighborhoods: [
+      'Scarborough Town Centre',
+      'Agincourt',
+      'Malvern',
+      'Birch Cliff',
+      'Guildwood',
+      'West Hill',
+      'Cliffside',
+    ],
+    whyPoints: [
+      {
+        title: 'Turn reputation into online reach',
+        body: 'Strong community reputations don’t always show up in search — we build sites that capture that research while reinforcing the trust you’ve already earned.',
+      },
+      {
+        title: 'Affordable, professional design',
+        body: 'Polished, custom sites at small-business prices — ideal for Scarborough’s independent and family-run businesses.',
+      },
+      {
+        title: 'Built for diverse, mobile-first customers',
+        body: 'Most Scarborough searches happen on phones — we build fast, mobile-first sites with click-to-call.',
+      },
+    ],
+    industries: INDUSTRY_LINKS,
+    faqs: [
+      {
+        question: 'Can you build a multilingual site for my Scarborough customers?',
+        answer:
+          'Yes. Scarborough is one of the most linguistically diverse parts of the country, and offering key pages in a second language — Mandarin, Cantonese, Tamil, and others are all common here — signals to customers that you understand the community you serve.',
+      },
+      {
+        question: 'Do you understand the difference between Agincourt, Malvern, and Guildwood?',
+        answer:
+          "We build that distinction into your content. Scarborough isn't one neighbourhood — it's dozens of them, each with its own character and search behaviour, so we write copy that names your actual area rather than defaulting to a generic 'Scarborough' pitch.",
+      },
+      {
+        question: 'My business already has an Instagram page — do I still need a full website?',
+        answer:
+          "Social media is great for visibility, but it's a rented platform you don't control, and it doesn't rank on Google the way a proper website does. A site is where a customer goes to actually decide, book, or call — Instagram just gets them there.",
+      },
+      {
+        question: 'Do you offer payment plans for independent Scarborough businesses?',
+        answer:
+          'Yes — 50% upfront and 50% on completion for every project, so you\'re never paying the full amount before the work begins. That keeps a professional site within reach for independent and family-run businesses.',
+      },
+    ],
+    heroImage: '/images/scarborough-dining-street.jpg',
+    heroImageAlt: 'A restaurant-lined street with a Canadian flag, representing Scarborough’s diverse dining and small business community',
+    localSeoBody:
+      'We optimize your Google Business Profile and build citations with local organizations like the Scarborough Business Association, so your site ranks for searches specific to your neighbourhood — not just the broad "Scarborough" term every competitor is also chasing.',
+    geoBody:
+      'We also structure your content so AI tools like ChatGPT and Perplexity can read and cite it directly — useful in a market where word of mouth already carries real weight and AI-driven recommendations are becoming an extension of that.',
+    smallBusinessNote:
+      "Scarborough's economy runs on independent and family-run businesses more than almost anywhere else in the GTA — we build for that reality with pricing and turnaround that fit a small operation, not a corporate budget.",
+    focusAreas: ['Restaurants & Retail', 'Healthcare & Clinics', 'Education', 'Community Services'],
+    featuredProjectSlugs: ['pattys-delights', 'heroes-catering', 'fungen-events'],
+    sectionOrder: ['advantage', 'industries', 'whatYouGet', 'recentWork', 'faq'],
+  },
   toronto: {
     slug: 'toronto',
     city: 'Toronto',
     region: 'City of Toronto',
-    metaTitle: 'Web Design Toronto | Custom Websites for Toronto Businesses | Zenara',
+    metaTitle: 'Web Design Toronto | Custom Business Websites | Zenara',
     metaDescription:
       'Custom web design in Toronto. Fast, modern, SEO-optimized websites for businesses across the downtown core, midtown, and the wider city. Free consultation.',
     heroIntro: 'Custom websites for Toronto businesses that compete in Canada’s most crowded market.',
     intro:
-      'Toronto is the most competitive business market in Canada, and that competition is just as fierce online. From the Financial District towers to the independent shops of Queen West, Toronto businesses are fighting for attention against national brands with deep marketing budgets. A template website blends into the noise. We build custom, fast-loading sites that establish credibility in seconds, rank for Toronto-specific searches, and turn visitors into booked calls — whether you serve clients from a King Street office or a studio in Leslieville.',
+      'Toronto is the most competitive business market in Canada, and that competition is just as fierce online — a template website simply blends into the noise.',
     economy:
       'Toronto’s economy spans finance and professional services downtown, technology and media in the King-Spadina area, healthcare around the hospital district, and tens of thousands of independent retailers and service businesses across its neighbourhoods. Each draws a different kind of customer who searches differently. A strong website meets that intent directly instead of relying on a generic city-wide pitch.',
     neighborhoods: [
@@ -69,52 +376,62 @@ export const cityContent: Record<string, CityContent> = {
     whyPoints: [
       {
         title: 'Built to stand out in a saturated market',
-        body: 'In a city this dense with competitors, design is your first differentiator. We lead with a distinct visual identity and clear messaging so you don’t look like every other Toronto site built from the same template.',
+        body: 'In a city this dense with competitors, a distinct visual identity is your first differentiator — not another site built from the same template.',
       },
       {
         title: 'Neighbourhood-level local SEO',
-        body: 'Toronto customers search by area — "near Yorkville", "downtown", "King West". We structure your content and local signals to capture that hyper-local intent rather than competing only for the broad city term.',
+        body: 'Toronto customers search by area — "near Yorkville", "King West" — so we structure content to capture that hyper-local intent, not just the broad city term.',
       },
       {
         title: 'Performance that holds up on mobile',
-        body: 'Most Toronto searches happen on phones, often on transit. We build for sub-2.5-second loads so you don’t lose impatient prospects before the page even renders.',
+        body: 'Most Toronto searches happen on phones, often on transit — we build for sub-2.5-second loads so you don’t lose impatient prospects.',
       },
     ],
-    industries: industriesFor('toronto'),
+    industries: INDUSTRY_LINKS,
     faqs: [
       {
-        question: 'How much does a website cost in Toronto?',
+        question: 'Everyone says Toronto web design is expensive — is that true here?',
         answer:
-          'Our Toronto web design projects start at $999 for a focused starter site, $1,999 for a typical small-business site of up to six pages, and $4,999+ for advanced builds with custom functionality. Every project includes responsive design, SEO setup, and SSL security, with transparent pricing and no hidden fees.',
+          "Agency pricing in Toronto often reflects downtown office overhead more than the actual work. We're a lean, two-person studio with fixed pricing starting at $999 — the same quality of custom build without the markup that comes from a large agency's overhead.",
       },
       {
-        question: 'How do I rank for "web design" or my service in Toronto?',
+        question: 'How is a Zenara site different from a template a big agency would sell me?',
         answer:
-          'Toronto is highly competitive, so we target specific, winnable terms — your service plus a neighbourhood or intent — alongside the broad city keyword. Combined with fast performance, clean structured data, and a properly optimized Google Business Profile, that approach earns rankings far faster than chasing the most contested term alone.',
+          "Most 'custom' sites from larger shops are page-builder templates with your logo swapped in. We build from scratch in Next.js and TypeScript — no drag-and-drop builder — so your site is faster, more distinct, and easier to extend later.",
       },
       {
-        question: 'Do you work with businesses across the whole city?',
+        question: 'Do you only work with businesses in the downtown core?',
         answer:
-          'Yes. We serve businesses from the downtown core to Scarborough, North York, and Etobicoke. Because we work remotely and on-site as needed, we can meet downtown or anywhere across the city for your consultation.',
+          'No — we build for businesses across the city, from the Financial District to Scarborough, North York, and Etobicoke. Most of the process happens remotely by video call, so location within the city is never a constraint.',
       },
       {
-        question: 'How long does a Toronto website take to build?',
+        question: 'Can a small Toronto business really compete with national brands online?',
         answer:
-          'Most Toronto projects launch in two to four weeks. A starter site can be ready in about a week; larger sites with custom features take three to four. We keep you involved at every milestone so the final site reflects your business.',
+          "Yes, on the searches that matter to you. National brands optimize for broad, expensive keywords. We target your service plus a neighbourhood or specific intent — terms a small business can actually win — while still building the credibility signals that make you look every bit as legitimate.",
       },
     ],
+    heroImage: '/images/toronto-gooderham-building.jpg',
+    heroImageAlt: 'The historic Gooderham (Flatiron) Building at Front and Wellington in downtown Toronto',
+    localSeoBody:
+      'Toronto customers search by neighbourhood — "near Yorkville," "King West," "the Beaches" — so we structure your content and citations around the areas you actually serve, working with organizations like the Toronto Region Board of Trade, rather than competing only for the broad city-wide term everyone else is bidding on.',
+    geoBody:
+      "In a market this saturated, showing up in AI-generated answers is a real edge — we structure your site so tools like ChatGPT and Perplexity can read and cite it directly, not just Google's algorithm.",
+    smallBusinessNote:
+      "Toronto's independent shops and studios are up against national brands with real marketing budgets. We build sites that lead with what a chain can't offer — a distinct identity and real local presence — at a price a small business can actually afford.",
+    focusAreas: ['Finance & Professional Services', 'Technology & Media', 'Healthcare', 'Independent Retail'],
+    featuredProjectSlugs: ['jb-loans', 'ik-smart-solution', 'fungen-events'],
+    sectionOrder: ['whatYouGet', 'advantage', 'recentWork', 'industries', 'faq'],
   },
-
   mississauga: {
     slug: 'mississauga',
     city: 'Mississauga',
     region: 'Peel Region',
-    metaTitle: 'Web Design Mississauga | Custom Business Websites | Zenara Designs',
+    metaTitle: 'Web Design Mississauga | Custom Business Sites | Zenara',
     metaDescription:
       'Professional web design in Mississauga — from Square One to Port Credit. Modern, fast, SEO-optimized websites that win local customers. Free consultation.',
     heroIntro: 'Websites built for Mississauga businesses, from Square One to the waterfront.',
     intro:
-      'Mississauga is Canada’s sixth-largest city and home to a remarkable concentration of corporate head offices, yet most of its economy runs on the small and mid-sized businesses lining its commercial corridors. Those businesses compete for the same customers as polished national brands, so a credible, fast website is no longer optional. We design custom sites for Mississauga companies — professional services around Square One, shops and restaurants in Port Credit and Streetsville, trades across Meadowvale and Erin Mills — that look the part and rank for the searches your customers actually make.',
+      'Mississauga is Canada’s sixth-largest city and home to a remarkable concentration of corporate head offices — and its small and mid-sized businesses compete for the same customers.',
     economy:
       'Mississauga blends a corporate base — head offices clustered near the airport and the City Centre — with thousands of independent service businesses and retailers spread across distinct town centres. Port Credit and Streetsville trade on local charm; Square One anchors professional services and retail. Each pocket searches and buys differently, which is why a single generic page rarely performs as well as content built around real neighbourhoods.',
     neighborhoods: [
@@ -130,233 +447,62 @@ export const cityContent: Record<string, CityContent> = {
     whyPoints: [
       {
         title: 'Credibility against corporate neighbours',
-        body: 'Competing in a city full of corporate head offices means your site has to look every bit as polished. We deliver design that signals you’re established and trustworthy from the first scroll.',
+        body: 'Competing near corporate head offices means your site has to look every bit as polished — established and trustworthy from the first scroll.',
       },
       {
         title: 'Targeted to Mississauga’s town centres',
-        body: 'A Port Credit café and an Erin Mills clinic reach different customers. We build location-aware content so you rank where your actual customers are searching.',
+        body: 'A Port Credit café and an Erin Mills clinic reach different customers, so we build location-aware content that ranks where they’re actually searching.',
       },
       {
         title: 'Conversion-focused, not just pretty',
-        body: 'Click-to-call, easy booking, and clear calls to action turn Mississauga search traffic into real enquiries — the metric that actually matters.',
+        body: 'Click-to-call, easy booking, and clear calls to action turn search traffic into real enquiries — the metric that actually matters.',
       },
     ],
-    industries: industriesFor('mississauga'),
+    industries: INDUSTRY_LINKS,
     faqs: [
       {
-        question: 'How much does web design cost in Mississauga?',
+        question: 'Mississauga has so many corporate agencies nearby — why choose a small studio?',
         answer:
-          'Mississauga projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds. All plans include responsive design, SEO optimization, and SSL — with clear, upfront pricing.',
+          "Corporate agencies price for corporate clients. We're built for independent Mississauga businesses that need a genuinely custom site — not a scaled-down version of an enterprise package — at a price that makes sense for your actual size.",
       },
       {
-        question: 'Can you help my Mississauga business rank locally?',
+        question: 'Do you serve businesses near the airport and corporate corridor?',
         answer:
-          'Yes. We optimize your site and structured data for "Mississauga" plus your specific service and town centre, and we set up your Google Business Profile correctly — the single biggest local ranking factor for a service business.',
+          'Yes — alongside the independent retailers and service businesses in Port Credit, Streetsville, and the town centres, we build for the professional and corporate-adjacent firms clustered near the airport corridor.',
       },
       {
-        question: 'Do you serve businesses outside the City Centre?',
+        question: 'Can you help my Port Credit business stand out from City Centre chains?',
         answer:
-          'Absolutely — we work with businesses across Port Credit, Streetsville, Meadowvale, Erin Mills, Clarkson, and the rest of Mississauga, as well as neighbouring Brampton and Oakville.',
+          "Port Credit trades on local character — that's exactly what a chain retailer near Square One can't replicate. We build sites that lead with that character instead of competing on the chain's own terms.",
       },
       {
-        question: 'Will my Mississauga website work on mobile?',
+        question: 'Do you build multilingual sites for Mississauga\'s diverse customer base?',
         answer:
-          'Every site we build is mobile-first and fully responsive. Most local searches happen on phones, so we make sure your site loads fast and looks sharp on every device.',
+          'Yes. Mississauga is home to large South Asian and other immigrant communities, and offering key pages in a second language can meaningfully widen the customers who find and trust your business.',
       },
     ],
+    heroImage: '/images/mississauga-office-tower.jpg',
+    heroImageAlt: 'A modern blue-glass office tower, representing Mississauga’s corporate business district',
+    localSeoBody:
+      'A Port Credit café and an Erin Mills clinic serve entirely different customers, so we build location-aware content and citations — through organizations like the Mississauga Board of Trade — that target your actual town centre instead of one generic "Mississauga" page trying to rank for everything.',
+    geoBody:
+      'We also make sure your site is structured for AI search tools, so when someone asks ChatGPT for a recommendation in your specific part of Mississauga, your business is positioned to be part of that answer.',
+    smallBusinessNote:
+      "Mississauga's corporate head offices set a high bar for polish — independent businesses here need a site that reads as equally established, without the corporate price tag. That's specifically what we build.",
+    focusAreas: ['Corporate & Professional Services', 'Retail', 'Trades', 'Local Services'],
+    featuredProjectSlugs: ['jb-loans', 'ashcam-cutting-solutions', 'ik-smart-solution'],
+    sectionOrder: ['advantage', 'whatYouGet', 'industries', 'recentWork', 'faq'],
   },
-
-  brampton: {
-    slug: 'brampton',
-    city: 'Brampton',
-    region: 'Peel Region',
-    metaTitle: 'Web Design Brampton | Affordable Custom Websites | Zenara Designs',
-    metaDescription:
-      'Custom web design in Brampton for small businesses and trades. Fast, modern, SEO-ready websites that bring in local leads. Transparent pricing, free consultation.',
-    heroIntro: 'Websites that help Brampton’s fast-growing businesses get found and get hired.',
-    intro:
-      'Brampton is one of the fastest-growing and most diverse cities in Canada, and that growth has created a thriving base of small businesses, trades, and family-run companies across logistics, construction, retail, and professional services. Many compete largely on word of mouth, which leaves a wide-open opportunity online: the Brampton businesses that invest in a real website consistently pull ahead of competitors who rely on a Facebook page. We build affordable, custom sites that establish trust and capture local search demand across the city.',
-    economy:
-      'Brampton’s economy leans heavily on logistics and transportation, manufacturing, construction and the trades, and a fast-expanding base of independent retailers and service providers serving a young, diverse population. These are exactly the businesses customers research online before calling — making a credible, mobile-fast website one of the highest-return investments a Brampton owner can make.',
-    neighborhoods: [
-      'Downtown Brampton',
-      'Bramalea',
-      'Springdale',
-      'Sandalwood',
-      "Fletcher's Creek",
-      'Heart Lake',
-      'Mount Pleasant',
-      'Castlemore',
-    ],
-    whyPoints: [
-      {
-        title: 'Beat word-of-mouth-only competitors',
-        body: 'Many Brampton businesses still have no real website. A fast, professional site instantly sets you apart and captures the customers who search before they call.',
-      },
-      {
-        title: 'Affordable without looking cheap',
-        body: 'We deliver premium-looking, custom design at small-business prices — no templates that scream "budget", and no surprise fees.',
-      },
-      {
-        title: 'Built for trades and service businesses',
-        body: 'Click-to-call, quote requests, and service-area pages are built in, so contractors and service providers turn searches into booked jobs.',
-      },
-    ],
-    industries: industriesFor('brampton'),
-    faqs: [
-      {
-        question: 'How much does a website cost in Brampton?',
-        answer:
-          'Brampton projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds. Everything includes responsive design, SEO setup, and SSL, with honest, upfront pricing and flexible payment options.',
-      },
-      {
-        question: 'I run a trades business in Brampton — can you help me get leads?',
-        answer:
-          'Yes. We build service-business sites with click-to-call, quote forms, and service-area pages, then optimize them for "Brampton" plus your trade so you show up when local customers search for the work you do.',
-      },
-      {
-        question: 'Do I need a website if I already get referrals?',
-        answer:
-          'Referrals are great, but most people still look you up online before they call. A professional site reassures referred customers and captures the larger group searching Google for your service in Brampton.',
-      },
-      {
-        question: 'How fast can you launch my Brampton website?',
-        answer:
-          'A focused starter site can launch in about a week; most small-business sites go live in two to three weeks depending on content and features.',
-      },
-    ],
-  },
-
-  vaughan: {
-    slug: 'vaughan',
-    city: 'Vaughan',
-    region: 'York Region',
-    metaTitle: 'Web Design Vaughan | Custom Websites for Vaughan Businesses | Zenara',
-    metaDescription:
-      'Modern web design in Vaughan — Woodbridge, Thornhill, Maple and the VMC. Fast, SEO-optimized websites that convert. Free consultation, transparent pricing.',
-    heroIntro: 'Websites for Vaughan businesses keeping pace with one of Canada’s fastest-growing cities.',
-    intro:
-      'Vaughan has transformed in a single decade — the Vaughan Metropolitan Centre and the subway extension turned a suburban patchwork into a genuine urban hub with direct transit to downtown Toronto. That growth brings new competition, and customers across Woodbridge, Thornhill, Maple, and Kleinburg increasingly judge businesses by their online presence first. We build custom, conversion-focused websites that match Vaughan’s upward momentum and help established local businesses defend their turf against newcomers.',
-    economy:
-      'Vaughan’s economy spans construction and development, a dense network of family-owned businesses in Woodbridge’s long-standing Italian-Canadian community, retail anchored by Vaughan Mills, and a rising tier of professional services around the VMC. With the population climbing fast, businesses that present themselves well online are pulling clear of competitors still relying on reputation alone.',
-    neighborhoods: [
-      'Vaughan Metropolitan Centre',
-      'Woodbridge',
-      'Thornhill',
-      'Maple',
-      'Kleinburg',
-      'Concord',
-      'Vellore Village',
-    ],
-    whyPoints: [
-      {
-        title: 'Keep pace with rapid growth',
-        body: 'As Vaughan urbanizes around the VMC, new competitors arrive constantly. A standout website helps established businesses hold their ground and win the newcomers searching for local providers.',
-      },
-      {
-        title: 'Dual-target Vaughan and Thornhill',
-        body: 'Thornhill straddles the Vaughan–Markham line, so residents search under both names. We build content that captures traffic competitors targeting a single city name miss.',
-      },
-      {
-        title: 'Mobile-first for a commuter city',
-        body: 'Vaughan’s subway-connected commuters search on the move. We optimize for fast mobile loading with click-to-call so you catch them in the moment.',
-      },
-    ],
-    industries: industriesFor('vaughan'),
-    faqs: [
-      {
-        question: 'How much does web design cost in Vaughan?',
-        answer:
-          'Vaughan projects start at $999 for a starter site, $1,999 for a typical small-business site, and $4,999+ for advanced builds — all with responsive design, SEO, and SSL included and pricing agreed upfront.',
-      },
-      {
-        question: 'Can you help me rank in both Vaughan and Thornhill?',
-        answer:
-          'Yes. Because Thornhill spans the Vaughan–Markham border, we build content and local signals that target both names so you capture searches a single-city competitor would miss.',
-      },
-      {
-        question: 'Do you work with Woodbridge family businesses?',
-        answer:
-          'Often. Many Woodbridge businesses have strong reputations but dated or missing websites. We modernize their presence while preserving the trust they’ve built over decades.',
-      },
-      {
-        question: 'How long will my Vaughan website take?',
-        answer:
-          'Most Vaughan sites launch in two to four weeks depending on size and features, with a focused starter site ready in roughly a week.',
-      },
-    ],
-  },
-
-  markham: {
-    slug: 'markham',
-    city: 'Markham',
-    region: 'York Region',
-    metaTitle: 'Web Design Markham | Websites for Markham Businesses & Tech | Zenara',
-    metaDescription:
-      'Custom web design in Markham — Unionville, Cornell, Downtown Markham. Modern, fast, multilingual-ready sites for a tech-savvy market. Free consultation.',
-    heroIntro: 'Websites built for Markham’s tech-driven, multicultural business community.',
-    intro:
-      'Markham is Canada’s high-tech capital outside of downtown Toronto, with major technology employers along the Highway 7 corridor and one of the most culturally diverse populations in the country. Its customers are digitally fluent and quick to judge a business by its website — a dated or template site costs you credibility instantly here. We build modern, fast, multilingual-ready sites for Markham businesses, from Unionville’s professional services to the shops and clinics serving the city’s large Chinese-Canadian and South Asian communities.',
-    economy:
-      'Markham combines a globally significant technology sector along Highway 7 with a deep base of professional services, healthcare, and retail serving its diverse communities. A tech-literate population expects polished digital experiences, and businesses that offer key content in a second language often reach communities that competitors leave underserved online.',
-    neighborhoods: [
-      'Downtown Markham',
-      'Unionville',
-      'Cornell',
-      'Milliken',
-      'Markham Village',
-      'Berczy',
-      'Cathedraltown',
-    ],
-    whyPoints: [
-      {
-        title: 'Meet a tech-savvy audience’s expectations',
-        body: 'Markham customers expect fast, modern, well-designed sites. We deliver builds that feel current and credible to one of the most digitally literate markets in Canada.',
-      },
-      {
-        title: 'Multilingual-ready design',
-        body: 'With large Chinese-Canadian and South Asian communities, offering key pages in a second language expands your reach. We build sites ready for that without sacrificing performance.',
-      },
-      {
-        title: 'Hyper-local to Markham’s districts',
-        body: 'We reference Unionville, Downtown Markham, and the Highway 7 corridor in your content to capture the neighbourhood-level searches that convert.',
-      },
-    ],
-    industries: industriesFor('markham'),
-    faqs: [
-      {
-        question: 'How much does a website cost in Markham?',
-        answer:
-          'Markham projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds — each including responsive design, SEO, and SSL with transparent pricing.',
-      },
-      {
-        question: 'Does my Markham business need a multilingual website?',
-        answer:
-          'Given Markham’s large Chinese-Canadian and South Asian populations, offering key pages in a second language can meaningfully widen your audience and signal that you understand the community you serve. We build sites ready for that.',
-      },
-      {
-        question: 'Can you build a site for a Markham tech startup?',
-        answer:
-          'Yes. We build modern, fast, scalable sites on current frameworks — well suited to startups along the Highway 7 corridor that need a credible presence and room to grow.',
-      },
-      {
-        question: 'How long does a Markham website take to build?',
-        answer:
-          'Most Markham projects launch in two to four weeks, with a focused starter site ready in about a week.',
-      },
-    ],
-  },
-
   'richmond-hill': {
     slug: 'richmond-hill',
     city: 'Richmond Hill',
     region: 'York Region',
-    metaTitle: 'Web Design Richmond Hill | Custom Business Websites | Zenara Designs',
+    metaTitle: 'Web Design Richmond Hill | Business Websites | Zenara',
     metaDescription:
-      'Professional web design in Richmond Hill along the Yonge corridor. Fast, modern, SEO-optimized websites for local businesses. Free consultation, clear pricing.',
+      'Professional web design in Richmond Hill along the Yonge corridor. Fast, modern, SEO-optimized sites for local businesses. Free consultation.',
     heroIntro: 'Websites for Richmond Hill businesses along the busy Yonge Street corridor.',
     intro:
-      'Richmond Hill sits at the heart of York Region with a dense, affluent, and diverse population strung along the Yonge Street corridor. Its professional services, healthcare practices, and retailers compete for discerning local customers who research thoroughly before they buy. A polished, fast website is the baseline expectation here. We build custom sites that present Richmond Hill businesses as the credible, established choice and that rank for the local searches driving real enquiries.',
+      'Richmond Hill sits at the heart of York Region with a dense, affluent, diverse population strung along the Yonge Street corridor — and a polished, fast website is the baseline expectation here.',
     economy:
       'Richmond Hill’s economy is anchored by professional and financial services, healthcare, and retail serving a prosperous, education-focused community. Customers here compare options carefully online, so businesses with clear, trustworthy, well-structured websites consistently win the consideration that leads to a call.',
     neighborhoods: [
@@ -371,412 +517,132 @@ export const cityContent: Record<string, CityContent> = {
     whyPoints: [
       {
         title: 'Credibility for a discerning market',
-        body: 'Richmond Hill’s affluent, research-driven customers expect a professional presence. We build sites that read as established and trustworthy at first glance.',
+        body: 'Richmond Hill’s affluent, research-driven customers expect a professional presence — sites that read as established at first glance.',
       },
       {
         title: 'Own the Yonge corridor searches',
-        body: 'We optimize for Richmond Hill plus your service and key neighbourhoods so you appear for the local searches your best customers are running.',
+        body: 'We optimize for Richmond Hill plus your service and key neighbourhoods, so you appear for the searches your best customers run.',
       },
       {
         title: 'Designed to convert considered buyers',
-        body: 'Clear information architecture, trust signals, and easy contact paths guide careful researchers from interest to enquiry.',
+        body: 'Clear information architecture and trust signals guide careful researchers from interest to enquiry.',
       },
     ],
-    industries: industriesFor('richmond-hill'),
+    industries: INDUSTRY_LINKS,
     faqs: [
       {
-        question: 'How much does web design cost in Richmond Hill?',
+        question: 'Richmond Hill customers research everything before buying — how does that change my site?',
         answer:
-          'Projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds, each including responsive design, SEO, and SSL with upfront pricing.',
+          'It means information architecture matters as much as design. We build clear service pages, credentials, and trust signals up front, so a careful researcher finds what they need to move from consideration to a call without having to dig.',
       },
       {
-        question: 'Can you help my Richmond Hill practice rank locally?',
+        question: 'Can you build a site for a financial advisor or wealth manager?',
         answer:
-          'Yes. We optimize your content and structured data for Richmond Hill and your specialty, and set up your Google Business Profile correctly so you appear in local and map results.',
+          'Yes. Richmond Hill has a strong base of financial and professional services, and we build sites for that audience specifically — credibility-first design, clear service breakdowns, and secure contact paths appropriate for regulated professions.',
       },
       {
-        question: 'Do you work with healthcare and professional practices?',
+        question: 'Do you offer multilingual pages for Richmond Hill\'s Chinese-Canadian and Persian-Canadian communities?',
         answer:
-          'Frequently. We build trust-focused sites with clear service information and easy booking or contact, well suited to clinics, advisors, and professional firms along the Yonge corridor.',
+          'Yes. Both communities are a significant part of Richmond Hill\'s population, and a site with key content in a second language signals directly that you understand the customers you\'re trying to reach.',
       },
       {
-        question: 'How long does a Richmond Hill website take?',
+        question: 'My practice already gets referrals — why do I need a polished website?',
         answer:
-          'Most projects launch in two to four weeks, with a focused starter site ready in about a week.',
+          "Referrals bring someone to your site before they call — and in an affluent, considered market, that visit is where they decide whether the referral was right. A dated or thin site can undo a good referral in seconds.",
       },
     ],
+    heroImage: '/images/richmond-hill-residential-street.jpg',
+    heroImageAlt: 'A tree-lined residential street in autumn, representing Richmond Hill’s established neighbourhoods',
+    localSeoBody:
+      'We optimize your Google Business Profile and build citations with organizations like the Richmond Hill Board of Trade, targeting Richmond Hill plus your specialty and key neighbourhoods so you appear for the specific local searches your best customers are running.',
+    geoBody:
+      'We also structure content so AI tools like ChatGPT and Perplexity can surface your business directly — increasingly how careful researchers start looking, before they ever open Google.',
+    smallBusinessNote:
+      "Richmond Hill's affluent, research-driven customers hold every business to the same high bar — independent practices and shops need a site that reads as established, not just the larger firms down the street.",
+    focusAreas: ['Professional & Financial Services', 'Healthcare', 'Retail', 'Education'],
+    featuredProjectSlugs: ['heroes-catering', 'pattys-delights', 'jb-loans'],
+    sectionOrder: ['advantage', 'recentWork', 'industries', 'whatYouGet', 'faq'],
   },
-
-  oakville: {
-    slug: 'oakville',
-    city: 'Oakville',
-    region: 'Halton Region',
-    metaTitle: 'Web Design Oakville | Premium Websites for Oakville Businesses | Zenara',
+  vaughan: {
+    slug: 'vaughan',
+    city: 'Vaughan',
+    region: 'York Region',
+    metaTitle: 'Web Design Vaughan | Custom Business Websites | Zenara',
     metaDescription:
-      'Premium web design in Oakville — downtown, Bronte, Glen Abbey. Refined, fast, SEO-optimized websites for professional and luxury brands. Free consultation.',
-    heroIntro: 'Refined websites for Oakville’s professional services and premium brands.',
+      'Modern web design in Vaughan — Woodbridge, Thornhill, Maple and the VMC. Fast, SEO-optimized websites that convert. Free consultation, transparent pricing.',
+    heroIntro: 'Websites for Vaughan businesses keeping pace with one of Canada’s fastest-growing cities.',
     intro:
-      'Oakville is one of the most affluent communities in Canada, and its businesses serve customers with high expectations and discerning taste. From the boutiques of downtown Oakville and Kerr Village to the professional firms serving Glen Abbey and Bronte, presentation matters enormously here — a generic website undercuts an otherwise premium brand. We design refined, elegant, fast websites that match the standard Oakville customers expect and that rank for the local searches that bring in high-value clients.',
+      'Vaughan has transformed in a single decade — the VMC and subway extension turned a suburban patchwork into a genuine urban hub, and customers now judge businesses by their online presence first.',
     economy:
-      'Oakville’s economy is built on professional services, finance, healthcare, and a strong base of upscale retail and hospitality serving an affluent population. Customers here equate visual quality with credibility, so a polished, well-crafted website directly influences whether a high-value prospect chooses you or a competitor.',
+      'Vaughan’s economy spans construction and development, a dense network of family-owned businesses in Woodbridge’s long-standing Italian-Canadian community, retail anchored by Vaughan Mills, and a rising tier of professional services around the VMC. With the population climbing fast, businesses that present themselves well online are pulling clear of competitors still relying on reputation alone.',
     neighborhoods: [
-      'Downtown Oakville',
-      'Bronte',
-      'Kerr Village',
-      'Glen Abbey',
-      'West Oak Trails',
-      'Iroquois Ridge',
-      'Clearview',
+      'Vaughan Metropolitan Centre',
+      'Woodbridge',
+      'Thornhill',
+      'Maple',
+      'Kleinburg',
+      'Concord',
+      'Vellore Village',
     ],
     whyPoints: [
       {
-        title: 'Design that matches a premium market',
-        body: 'Oakville customers associate polish with quality. We craft refined, elegant sites that reinforce a premium brand rather than undercut it.',
+        title: 'Keep pace with rapid growth',
+        body: 'As Vaughan urbanizes around the VMC, a standout website helps established businesses hold their ground against constant new competition.',
       },
       {
-        title: 'Local SEO for high-value clients',
-        body: 'We target Oakville plus your service and neighbourhoods so you reach the affluent local customers actively searching for what you offer.',
+        title: 'Dual-target Vaughan and Thornhill',
+        body: 'Thornhill straddles the Vaughan–Markham line, so we build content that captures traffic a single-city competitor would miss.',
       },
       {
-        title: 'Performance behind the polish',
-        body: 'Beautiful and fast aren’t a trade-off. We deliver sub-2.5-second loads so your refined design also performs in search and on mobile.',
+        title: 'Mobile-first for a commuter city',
+        body: 'Vaughan’s subway-connected commuters search on the move — we optimize for fast mobile loading with click-to-call.',
       },
     ],
-    industries: industriesFor('oakville'),
+    industries: INDUSTRY_LINKS,
     faqs: [
       {
-        question: 'How much does web design cost in Oakville?',
+        question: 'Vaughan is growing so fast — how do I keep up online?',
         answer:
-          'Oakville projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds — all including responsive design, SEO, and SSL with clear pricing.',
+          "New competitors are arriving as fast as new residents. The businesses that stay ahead are the ones with a strong, current website already in place — we build that foundation now so you're not scrambling to catch up once the newcomers arrive.",
       },
       {
-        question: 'Can you create a premium brand experience?',
+        question: 'Can you help my business rank in both Vaughan and Thornhill searches?',
         answer:
-          'Yes — refined, distinctive design is our focus. We build sites that look bespoke and credible to Oakville’s discerning, affluent customers, never templated.',
+          'Yes. Thornhill straddles the Vaughan–Markham border, so residents search under both names. We build content and local signals that target both, capturing traffic a competitor optimizing for a single city name would miss.',
       },
       {
-        question: 'Do you serve professional firms in Oakville?',
+        question: 'My family\'s Woodbridge business has been around for decades — will a new site still feel authentic?',
         answer:
-          'Often. We build trust-focused sites for advisors, clinics, and professional practices across Glen Abbey, Bronte, and downtown Oakville.',
+          "That's exactly what we design for. We modernize the presentation — speed, mobile experience, clear information — without stripping out the personality and reputation a longstanding business has actually earned.",
       },
       {
-        question: 'How long does an Oakville website take to build?',
+        question: 'Do you work with construction and trades companies specifically?',
         answer:
-          'Most Oakville projects launch in two to four weeks, with a focused starter site ready in about a week.',
+          "Regularly. Vaughan has a dense concentration of construction and development firms, and we build project-gallery-led sites with quote forms that turn browsers into booked estimates — the format that actually converts for trades.",
       },
     ],
+    heroImage: '/images/vaughan-glass-development.jpg',
+    heroImageAlt: 'A striking modern glass building, representing Vaughan’s rapid development around the Vaughan Metropolitan Centre',
+    localSeoBody:
+      'We build citations with organizations like the Vaughan Chamber of Commerce and structure your content around both "Vaughan" and "Thornhill" searches, since the two overlap at the city line — a detail a competitor targeting only one name will miss entirely.',
+    geoBody:
+      "As Vaughan's population grows, so does the number of people asking AI tools like ChatGPT for local recommendations instead of searching Google directly — we structure your site so it can be part of that answer.",
+    smallBusinessNote:
+      "Long-standing Woodbridge businesses often have real reputations but dated or missing websites. We modernize the presentation while keeping the trust that's already been earned — not replacing it with something generic.",
+    focusAreas: ['Construction & Development', 'Retail', 'Professional Services', 'Trades'],
+    featuredProjectSlugs: ['ashcam-cutting-solutions', 'fungen-events', 'ik-smart-solution'],
+    sectionOrder: ['industries', 'advantage', 'whatYouGet', 'recentWork', 'faq'],
   },
-
-  burlington: {
-    slug: 'burlington',
-    city: 'Burlington',
-    region: 'Halton Region',
-    metaTitle: 'Web Design Burlington | Custom Websites for Burlington Businesses | Zenara',
-    metaDescription:
-      'Custom web design in Burlington — downtown waterfront to Aldershot. Fast, modern, SEO-ready websites for local businesses. Free consultation, transparent pricing.',
-    heroIntro: 'Websites for Burlington businesses along the waterfront and beyond.',
-    intro:
-      'Burlington consistently ranks among the best places to live in Canada, with a vibrant downtown waterfront, a strong tourism and hospitality scene, and a healthy base of professional services and local trades. Its customers value quality and community, and they increasingly start with an online search. We build custom websites for Burlington businesses — restaurants and shops along the lakeshore, clinics and firms in Aldershot and Millcroft — that capture local demand and present you as a polished, established part of the community.',
-    economy:
-      'Burlington’s economy mixes tourism and hospitality around its downtown waterfront, advanced manufacturing, healthcare, and a steady base of professional and personal services. Locals and visitors alike research online before they visit or book, so a fast, attractive website with clear information is a direct driver of foot traffic and enquiries.',
-    neighborhoods: [
-      'Downtown Burlington',
-      'Aldershot',
-      'Appleby',
-      'Millcroft',
-      'Alton Village',
-      'Tansley',
-      'Roseland',
-    ],
-    whyPoints: [
-      {
-        title: 'Capture tourism and local search',
-        body: 'Visitors and residents research Burlington businesses online first. We build sites with clear hours, location, and booking paths so you convert that search into a visit.',
-      },
-      {
-        title: 'Community-credible design',
-        body: 'Burlington values quality and local roots. We craft sites that feel established and trustworthy to a community that prizes both.',
-      },
-      {
-        title: 'Mobile-fast for on-the-go searches',
-        body: 'Waterfront and downtown searches happen on phones. We optimize for quick mobile loading with click-to-call and maps built in.',
-      },
-    ],
-    industries: industriesFor('burlington'),
-    faqs: [
-      {
-        question: 'How much does a website cost in Burlington?',
-        answer:
-          'Burlington projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds — each with responsive design, SEO, and SSL included and pricing agreed upfront.',
-      },
-      {
-        question: 'Can you help my Burlington restaurant or shop get found?',
-        answer:
-          'Yes. We build sites with clear hours, menus or services, location maps, and booking or ordering paths, optimized for Burlington searches so locals and visitors find you first.',
-      },
-      {
-        question: 'Do you work with businesses in Aldershot and Millcroft?',
-        answer:
-          'Absolutely — we serve businesses across all of Burlington, from the downtown waterfront to Aldershot, Appleby, and Millcroft.',
-      },
-      {
-        question: 'How long does a Burlington website take?',
-        answer:
-          'Most projects launch in two to four weeks, with a focused starter site ready in roughly a week.',
-      },
-    ],
-  },
-
-  hamilton: {
-    slug: 'hamilton',
-    city: 'Hamilton',
-    region: 'City of Hamilton',
-    metaTitle: 'Web Design Hamilton | Custom Websites for Hamilton Businesses | Zenara',
-    metaDescription:
-      'Custom web design in Hamilton — from the James Street arts scene to the suburbs. Fast, modern, SEO-optimized websites for local businesses. Free consultation.',
-    heroIntro: 'Websites for Hamilton businesses powering the city’s creative and economic resurgence.',
-    intro:
-      'Hamilton has reinvented itself from a steel town into one of Ontario’s most dynamic small cities, powered by the arts scene on James Street North, the health and education sector around McMaster, and a wave of new independent businesses drawn by its relative affordability. That energy means real competition for local customers. We build custom websites for Hamilton businesses — from Dundas and Ancaster professional firms to downtown creative studios and Stoney Creek trades — that match the city’s momentum and rank for the searches bringing customers through the door.',
-    economy:
-      'Hamilton’s economy now spans healthcare and education anchored by McMaster, a thriving arts and independent-business scene downtown, advanced manufacturing, and the trades serving its growing suburbs. A new generation of professionals and entrepreneurs expects to find and vet businesses online, making a strong website essential to competing in the city’s resurgence.',
-    neighborhoods: [
-      'Downtown Hamilton',
-      'James Street North',
-      'Westdale',
-      'Dundas',
-      'Ancaster',
-      'Stoney Creek',
-      'Waterdown',
-    ],
-    whyPoints: [
-      {
-        title: 'Match Hamilton’s creative energy',
-        body: 'The James North scene set a high bar for design. We build distinctive, modern sites that fit a city that takes creativity seriously.',
-      },
-      {
-        title: 'Rank across a spread-out city',
-        body: 'Hamilton stretches from the downtown core to Ancaster, Dundas, and Stoney Creek. We build area-aware content so you rank where your customers actually are.',
-      },
-      {
-        title: 'Affordable for a growing market',
-        body: 'Hamilton’s entrepreneurs are cost-conscious. We deliver premium-looking, custom design at small-business prices, with no surprise fees.',
-      },
-    ],
-    industries: industriesFor('hamilton'),
-    faqs: [
-      {
-        question: 'How much does web design cost in Hamilton?',
-        answer:
-          'Hamilton projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds — all including responsive design, SEO, and SSL with transparent pricing.',
-      },
-      {
-        question: 'Can you help a new Hamilton business stand out?',
-        answer:
-          'Yes. With so many new businesses opening, distinctive design and solid local SEO are how you get noticed. We build sites that look the part and rank for Hamilton searches from day one.',
-      },
-      {
-        question: 'Do you serve Dundas, Ancaster, and Stoney Creek?',
-        answer:
-          'Absolutely — we work with businesses across greater Hamilton, including Dundas, Ancaster, Westdale, Stoney Creek, and Waterdown.',
-      },
-      {
-        question: 'How long does a Hamilton website take to build?',
-        answer:
-          'Most Hamilton projects launch in two to four weeks, with a focused starter site ready in about a week.',
-      },
-    ],
-  },
-
-  scarborough: {
-    slug: 'scarborough',
-    city: 'Scarborough',
-    region: 'City of Toronto',
-    metaTitle: 'Web Design Scarborough | Small Business Websites | Zenara Designs',
-    metaDescription:
-      'Custom web design in Scarborough for small and growing businesses. Fast, modern, SEO-optimized websites that win local customers. Free consultation, clear pricing.',
-    heroIntro: 'Websites for the small businesses powering one of Toronto’s most diverse communities.',
-    intro:
-      'Scarborough is one of the most culturally diverse parts of Toronto, home to thousands of small and family-run businesses serving tight-knit local communities. Many compete on reputation and community ties, but customers — especially younger ones — increasingly check online before they visit. We build affordable, custom websites for Scarborough businesses, from Agincourt and Malvern shops to clinics and service providers near Scarborough Town Centre, that turn that online research into real foot traffic and enquiries.',
-    economy:
-      'Scarborough’s economy runs on a vast base of independent retailers, restaurants, clinics, and service businesses serving diverse, community-oriented neighbourhoods, alongside healthcare and education anchors. These are exactly the businesses customers look up before visiting, so a credible, mobile-fast website directly shapes who they choose.',
-    neighborhoods: [
-      'Scarborough Town Centre',
-      'Agincourt',
-      'Malvern',
-      'Birch Cliff',
-      'Guildwood',
-      'West Hill',
-      'Cliffside',
-    ],
-    whyPoints: [
-      {
-        title: 'Turn reputation into online reach',
-        body: 'Strong community reputations don’t always show up in search. We build sites that capture the customers researching online while reinforcing the trust you’ve already earned.',
-      },
-      {
-        title: 'Affordable, professional design',
-        body: 'We deliver polished, custom sites at small-business prices — ideal for Scarborough’s independent and family-run businesses.',
-      },
-      {
-        title: 'Built for diverse, mobile-first customers',
-        body: 'Most Scarborough searches happen on phones. We build fast, mobile-first sites with click-to-call so you catch customers in the moment.',
-      },
-    ],
-    industries: industriesFor('scarborough'),
-    faqs: [
-      {
-        question: 'How much does web design cost in Scarborough?',
-        answer:
-          'Scarborough projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds, each including responsive design, SEO, and SSL with upfront, honest pricing.',
-      },
-      {
-        question: 'Do I need a website if my Scarborough business runs on word of mouth?',
-        answer:
-          'Word of mouth is valuable, but most people still look you up online first. A professional site reassures referred customers and captures the larger group searching for your service in Scarborough.',
-      },
-      {
-        question: 'Can you build an affordable site for a small Scarborough business?',
-        answer:
-          'Yes — our starter sites begin at $999, and we offer flexible payment options so a professional presence is within reach for independent and family-run businesses.',
-      },
-      {
-        question: 'How long does a Scarborough website take?',
-        answer:
-          'Most projects launch in two to four weeks, with a focused starter site ready in roughly a week.',
-      },
-    ],
-  },
-
-  'north-york': {
-    slug: 'north-york',
-    city: 'North York',
-    region: 'City of Toronto',
-    metaTitle: 'Web Design North York | Custom Business Websites | Zenara Designs',
-    metaDescription:
-      'Professional web design in North York along the Yonge corridor. Fast, modern, SEO-optimized websites for local businesses. Free consultation, transparent pricing.',
-    heroIntro: 'Websites for North York businesses along the Yonge and Sheppard corridors.',
-    intro:
-      'North York is a dense, business-rich part of Toronto, with commercial towers and professional offices clustered around North York Centre and the Yonge–Sheppard corridor, plus established retail and service districts through Willowdale and Don Mills. Competition for local customers is intense, and a polished, fast website is the price of entry. We build custom sites for North York businesses that establish credibility quickly and rank for the corridor-specific searches that drive enquiries.',
-    economy:
-      'North York combines a significant corporate and professional-services presence around North York Centre with a deep base of healthcare practices, retailers, and personal-service businesses along Yonge Street and through Don Mills and Willowdale. Customers here research and compare online, rewarding businesses with clear, credible, well-built websites.',
-    neighborhoods: [
-      'North York Centre',
-      'Willowdale',
-      'Don Mills',
-      'Bayview Village',
-      'York Mills',
-      'Lansing',
-      'Newtonbrook',
-    ],
-    whyPoints: [
-      {
-        title: 'Compete in a dense business district',
-        body: 'Around North York Centre you’re surrounded by competitors. We build standout, credible sites that earn attention in a crowded corridor.',
-      },
-      {
-        title: 'Corridor-level local SEO',
-        body: 'We target North York plus your service and key areas like Willowdale and Don Mills so you appear for the local searches that matter.',
-      },
-      {
-        title: 'Conversion-focused builds',
-        body: 'Clear calls to action, easy contact, and fast performance turn corridor search traffic into real enquiries.',
-      },
-    ],
-    industries: industriesFor('north-york'),
-    faqs: [
-      {
-        question: 'How much does web design cost in North York?',
-        answer:
-          'North York projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds, all including responsive design, SEO, and SSL with clear pricing.',
-      },
-      {
-        question: 'Can you help my North York office rank locally?',
-        answer:
-          'Yes. We optimize your site and structured data for North York and your service area along the Yonge–Sheppard corridor, and set up your Google Business Profile to appear in local results.',
-      },
-      {
-        question: 'Do you work with professional and healthcare practices?',
-        answer:
-          'Frequently — we build trust-focused sites with clear service information and easy booking for the many practices around North York Centre and Don Mills.',
-      },
-      {
-        question: 'How long does a North York website take to build?',
-        answer:
-          'Most projects launch in two to four weeks, with a focused starter site ready in about a week.',
-      },
-    ],
-  },
-
-  etobicoke: {
-    slug: 'etobicoke',
-    city: 'Etobicoke',
-    region: 'City of Toronto',
-    metaTitle: 'Web Design Etobicoke | Custom Websites for Etobicoke Businesses | Zenara',
-    metaDescription:
-      'Custom web design in Etobicoke — from the lakeshore to the Kingsway. Fast, modern, SEO-ready websites for local businesses. Free consultation, transparent pricing.',
-    heroIntro: 'Websites for Etobicoke businesses, from the lakeshore communities to the Kingsway.',
-    intro:
-      'Etobicoke spans Toronto’s western edge, from the lakeshore communities of Mimico and New Toronto to the established retail of the Kingsway and the commercial districts around Islington and Rexdale. Its mix of long-standing local businesses and newer arrivals competes for customers who increasingly search before they shop. We build custom websites for Etobicoke businesses that present them as credible and current, and that rank for the neighbourhood-level searches their customers actually use.',
-    economy:
-      'Etobicoke’s economy blends established retail and professional services along the Kingsway and Bloor West, a base of trades and personal-service businesses through the lakeshore communities, and commercial and light-industrial activity near Rexdale and the airport. Customers across these distinct pockets research locally online, rewarding businesses with clear, well-built websites.',
-    neighborhoods: [
-      'The Kingsway',
-      'Mimico',
-      'New Toronto',
-      'Long Branch',
-      'Islington',
-      'Humber Bay',
-      'Rexdale',
-    ],
-    whyPoints: [
-      {
-        title: 'Modern presence for established businesses',
-        body: 'Many Etobicoke businesses have loyal customers but dated sites. We modernize your presence while keeping the trust you’ve built.',
-      },
-      {
-        title: 'Neighbourhood-aware local SEO',
-        body: 'From the Kingsway to Mimico, we build area-specific content so you rank for the local searches happening in your part of Etobicoke.',
-      },
-      {
-        title: 'Fast, mobile-first design',
-        body: 'We build for quick mobile loading with click-to-call and maps so on-the-go customers reach you easily.',
-      },
-    ],
-    industries: industriesFor('etobicoke'),
-    faqs: [
-      {
-        question: 'How much does web design cost in Etobicoke?',
-        answer:
-          'Etobicoke projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds, each including responsive design, SEO, and SSL with upfront pricing.',
-      },
-      {
-        question: 'Can you refresh my outdated Etobicoke website?',
-        answer:
-          'Yes — modernizing dated sites is common work for us. We rebuild on fast, current frameworks while preserving your brand and the trust your customers already have.',
-      },
-      {
-        question: 'Do you serve the lakeshore communities and the Kingsway?',
-        answer:
-          'Absolutely — we work with businesses across Etobicoke, from Mimico and New Toronto to the Kingsway, Islington, and Humber Bay.',
-      },
-      {
-        question: 'How long does an Etobicoke website take?',
-        answer:
-          'Most projects launch in two to four weeks, with a focused starter site ready in roughly a week.',
-      },
-    ],
-  },
-
   pickering: {
     slug: 'pickering',
     city: 'Pickering',
-    region: 'Durham Region',
-    metaTitle: 'Web Design Pickering | Custom Websites for Pickering Businesses | Zenara',
+    region: 'the GTA',
+    metaTitle: 'Web Design Pickering | Custom Business Sites | Zenara',
     metaDescription:
-      'Custom web design in Pickering, the gateway to Durham Region. Fast, modern, SEO-optimized websites for local businesses. Free consultation, transparent pricing.',
+      'Custom web design in Pickering, the gateway to Durham Region. Fast, modern, SEO-optimized sites for local businesses. Free consultation.',
     heroIntro: 'Websites for Pickering businesses at the fast-growing gateway to Durham Region.',
     intro:
-      'Pickering sits at the western edge of Durham Region and is entering a period of major growth, with the Pickering City Centre redevelopment set to add thousands of residents and a wave of new commercial activity. Local businesses that establish a strong online presence now will be best positioned as that growth arrives. We build custom websites for Pickering businesses — from the established commercial areas to the growing residential neighbourhoods — that capture local demand and present you as a credible choice for new and existing customers alike.',
+      'Pickering is entering a period of major growth, with the City Centre redevelopment set to add thousands of residents — and the businesses building a strong online presence now will be best positioned when it arrives.',
     economy:
       'Pickering’s economy combines energy and corporate employment, a growing base of retail and personal services driven by residential expansion, and trades serving new and established neighbourhoods. With the City Centre redevelopment underway, competition for local customers is intensifying, making an early, well-built website a real advantage.',
     neighborhoods: [
@@ -791,400 +657,51 @@ export const cityContent: Record<string, CityContent> = {
     whyPoints: [
       {
         title: 'Get ahead of Pickering’s growth',
-        body: 'With the City Centre redevelopment bringing thousands of new residents, businesses that build a strong online presence now will capture demand competitors miss.',
+        body: 'With the City Centre redevelopment bringing thousands of new residents, a strong presence now captures demand competitors will miss.',
       },
       {
-        title: 'Reach the wider Durham Region',
-        body: 'Many local customers search by region. We target Pickering plus Durham Region terms so you capture traffic from neighbouring Ajax and Whitby too.',
+        title: 'Reach the wider GTA',
+        body: 'Many local customers search by region, so we target Pickering plus the GTA to also capture traffic from Ajax and Whitby.',
       },
       {
         title: 'Affordable, conversion-ready design',
-        body: 'We deliver professional, custom sites at small-business prices, built with click-to-call and quote paths that turn searches into enquiries.',
+        body: 'Professional, custom sites at small-business prices, built with click-to-call and quote paths that turn searches into enquiries.',
       },
     ],
-    industries: industriesFor('pickering'),
+    industries: INDUSTRY_LINKS,
     faqs: [
       {
-        question: 'How much does web design cost in Pickering?',
+        question: 'Pickering is about to grow a lot — is now the right time to build a website?',
         answer:
-          'Pickering projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds, all including responsive design, SEO, and SSL with transparent pricing.',
+          "It's close to ideal. The businesses that establish a strong online presence before the City Centre redevelopment brings thousands of new residents will be the ones those residents already know when they arrive — waiting until after the growth means catching up instead of leading.",
       },
       {
-        question: 'Can you help me reach customers across Durham Region?',
+        question: 'Do you build sites for businesses near the Pickering waterfront?',
         answer:
-          'Yes. Because many customers search by region, we target Pickering plus Durham Region terms so you also capture searches from Ajax, Whitby, and beyond.',
+          "Yes. Whether you're along the Waterfront Trail, in Bay Ridges, or in the established commercial core, we build sites that reflect where you actually are — not a generic template that could describe any suburb.",
       },
       {
-        question: 'Is now a good time to invest in a Pickering website?',
+        question: 'How is working with you different from a Toronto-based agency?',
         answer:
-          'It’s an ideal time. With the City Centre redevelopment driving growth, building a strong presence now positions you ahead of competitors as new residents and businesses arrive.',
+          "We're based twenty minutes away in Markham, not downtown, and we price accordingly — without the downtown-office overhead baked into a big-city agency's rates. You still get a fully custom build, just from a team that actually knows this side of the GTA.",
       },
       {
-        question: 'How long does a Pickering website take to build?',
+        question: 'Can you help a new Pickering business build credibility from zero?',
         answer:
-          'Most projects launch in two to four weeks, with a focused starter site ready in about a week.',
+          "That's one of the most common situations we build for. A clear, professional site is often the first credibility signal a new business has — before reviews, before a track record — so we make sure it does that work from day one.",
       },
     ],
-  },
-
-  ajax: {
-    slug: 'ajax',
-    city: 'Ajax',
-    region: 'Durham Region',
-    metaTitle: 'Web Design Ajax | Custom Websites for Ajax Businesses | Zenara Designs',
-    metaDescription:
-      'Custom web design in Ajax for a young, diverse, fast-growing community. Fast, modern, SEO-ready websites that win local customers. Free consultation, clear pricing.',
-    heroIntro: 'Websites for Ajax businesses serving a young, digitally-native community.',
-    intro:
-      'Ajax is one of the most diverse and fastest-growing communities in Durham Region, with a young population that researches almost everything online before making contact. For local businesses, that makes a professional website non-negotiable — if you don’t appear in local search, you’re effectively invisible to most prospective customers here. We build custom, mobile-first websites for Ajax businesses that capture that search demand and turn digitally-native browsers into booked customers.',
-    economy:
-      'Ajax’s economy is driven by retail and personal services, trades supporting rapid residential growth, and small businesses serving a young, diverse, commuter-heavy population near the 401 corridor. These customers start with a Google search and compare options online, so a fast, credible website strongly influences who they choose.',
-    neighborhoods: [
-      'Downtown Ajax',
-      'Pickering Beach',
-      'South Ajax',
-      'Salem',
-      'Audley',
-      'Carruthers Creek',
-      'Nottingham',
-    ],
-    whyPoints: [
-      {
-        title: 'Be found by digitally-native customers',
-        body: 'Ajax’s younger population searches online first. We build sites optimized for local search so you appear exactly when prospective customers are looking.',
-      },
-      {
-        title: 'Mobile-first, review-ready',
-        body: 'Most Ajax searches happen on phones, and reviews carry weight. We build fast mobile sites that showcase social proof and make contact effortless.',
-      },
-      {
-        title: 'Affordable for a growing market',
-        body: 'We deliver polished, custom design at small-business prices, with flexible payment options for growing Ajax businesses.',
-      },
-    ],
-    industries: industriesFor('ajax'),
-    faqs: [
-      {
-        question: 'How much does web design cost in Ajax?',
-        answer:
-          'Ajax projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds, each including responsive design, SEO, and SSL with upfront pricing.',
-      },
-      {
-        question: 'How do Ajax customers find local businesses?',
-        answer:
-          'Ajax’s young, diverse population overwhelmingly starts with a Google search, compares websites and reviews, then makes contact. A professional, fast, review-friendly site is how you win that comparison.',
-      },
-      {
-        question: 'Can you help me get more local leads in Ajax?',
-        answer:
-          'Yes. We build sites with click-to-call and quote forms, optimized for "Ajax" plus your service and supported by a properly set-up Google Business Profile to drive local enquiries.',
-      },
-      {
-        question: 'How long does an Ajax website take to build?',
-        answer:
-          'Most projects launch in two to four weeks, with a focused starter site ready in roughly a week.',
-      },
-    ],
-  },
-
-  whitby: {
-    slug: 'whitby',
-    city: 'Whitby',
-    region: 'Durham Region',
-    metaTitle: 'Web Design Whitby | Custom Websites for Whitby Businesses | Zenara Designs',
-    metaDescription:
-      'Custom web design in Whitby — from the historic downtown to Port Whitby. Fast, modern, SEO-optimized websites for local businesses. Free consultation, clear pricing.',
-    heroIntro: 'Websites for Whitby businesses, from the historic downtown to Port Whitby.',
-    intro:
-      'Whitby pairs a charming, historic downtown with steady residential growth across north Whitby and Brooklin, giving local businesses a healthy and expanding customer base. Families and professionals here value local, trustworthy providers and increasingly find them through online search. We build custom websites for Whitby businesses — downtown shops and restaurants, clinics and firms, trades serving the growing northern neighbourhoods — that capture that demand and present you as an established part of the community.',
-    economy:
-      'Whitby’s economy spans a historic downtown retail and dining district, professional and healthcare services, and trades supporting residential growth in Brooklin and north Whitby. Its family-oriented, community-minded customers research locally online, rewarding businesses with clear, credible, well-built websites.',
-    neighborhoods: [
-      'Downtown Whitby',
-      'Brooklin',
-      'Port Whitby',
-      'Williamsburg',
-      'Pringle Creek',
-      'Rolling Acres',
-      'Taunton North',
-    ],
-    whyPoints: [
-      {
-        title: 'Credible presence for a community market',
-        body: 'Whitby customers favour local, trustworthy businesses. We build sites that read as established and community-rooted at first glance.',
-      },
-      {
-        title: 'Capture growth in Brooklin and the north',
-        body: 'As north Whitby and Brooklin expand, new customers are searching for local providers. We build area-aware content so you reach them.',
-      },
-      {
-        title: 'Conversion-focused and fast',
-        body: 'Clear contact paths, click-to-call, and quick mobile loading turn local searches into real enquiries.',
-      },
-    ],
-    industries: industriesFor('whitby'),
-    faqs: [
-      {
-        question: 'How much does web design cost in Whitby?',
-        answer:
-          'Whitby projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds, all including responsive design, SEO, and SSL with transparent pricing.',
-      },
-      {
-        question: 'Can you help my downtown Whitby business get found?',
-        answer:
-          'Yes. We build sites with clear hours, services, and location, optimized for Whitby searches so locals find you whether they’re downtown or in the growing northern neighbourhoods.',
-      },
-      {
-        question: 'Do you serve Brooklin and north Whitby?',
-        answer:
-          'Absolutely — we work with businesses across all of Whitby, including the historic downtown, Port Whitby, and the fast-growing Brooklin area.',
-      },
-      {
-        question: 'How long does a Whitby website take to build?',
-        answer:
-          'Most projects launch in two to four weeks, with a focused starter site ready in about a week.',
-      },
-    ],
-  },
-
-  oshawa: {
-    slug: 'oshawa',
-    city: 'Oshawa',
-    region: 'Durham Region',
-    metaTitle: 'Web Design Oshawa | Custom Websites for Oshawa Businesses | Zenara Designs',
-    metaDescription:
-      'Custom web design in Oshawa for a city moving from manufacturing to a knowledge economy. Fast, modern, SEO-ready websites. Free consultation, transparent pricing.',
-    heroIntro: 'Websites for Oshawa businesses powering the city’s shift to a knowledge economy.',
-    intro:
-      'Oshawa is undergoing a real transformation, evolving from its manufacturing heritage into a knowledge-based economy anchored by Ontario Tech University and Durham College, with a revitalized downtown attracting a new generation of professionals and entrepreneurs. That shift is creating fresh demand and fresh competition. We build custom websites for Oshawa businesses — downtown startups and professional firms, established trades, and service providers across the city — that match its new energy and rank for the local searches driving growth.',
-    economy:
-      'Oshawa’s economy is rebalancing from automotive manufacturing toward education, healthcare, technology, and a growing entrepreneurial scene downtown, alongside enduring trades and retail. A younger, education-driven population expects to research and choose businesses online, making a strong website central to competing in the city’s next chapter.',
-    neighborhoods: [
-      'Downtown Oshawa',
-      'McLaughlin',
-      'Northglen',
-      'Windfields',
-      'Samac',
-      'Donevan',
-      'Lakeview',
-    ],
-    whyPoints: [
-      {
-        title: 'Match Oshawa’s new momentum',
-        body: 'As downtown revitalizes and the university scene grows, expectations are rising. We build modern, credible sites that fit a city on the way up.',
-      },
-      {
-        title: 'Reach a younger, online-first audience',
-        body: 'Students, graduates, and young professionals research online before they buy. We optimize for Oshawa searches so you reach them.',
-      },
-      {
-        title: 'Affordable, growth-ready builds',
-        body: 'We deliver professional, custom design at small-business prices, on frameworks that scale as your business grows.',
-      },
-    ],
-    industries: industriesFor('oshawa'),
-    faqs: [
-      {
-        question: 'How much does web design cost in Oshawa?',
-        answer:
-          'Oshawa projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds, each including responsive design, SEO, and SSL with upfront pricing.',
-      },
-      {
-        question: 'Can you help a new Oshawa business or startup?',
-        answer:
-          'Yes. We build modern, scalable sites well suited to the downtown startups and professionals driving Oshawa’s shift to a knowledge economy, with room to grow as you do.',
-      },
-      {
-        question: 'How long does it take to rank for searches in Oshawa?',
-        answer:
-          'Oshawa has moderate online competition, so a well-built, optimized site can gain local visibility within a few months — faster for specific service-plus-Oshawa terms. We set the foundation for steady, lasting gains.',
-      },
-      {
-        question: 'How long does an Oshawa website take to build?',
-        answer:
-          'Most projects launch in two to four weeks, with a focused starter site ready in roughly a week.',
-      },
-    ],
-  },
-
-  newmarket: {
-    slug: 'newmarket',
-    city: 'Newmarket',
-    region: 'York Region',
-    metaTitle: 'Web Design Newmarket | Custom Business Websites | Zenara Designs',
-    metaDescription:
-      'Custom web design in Newmarket — from historic Main Street to Upper Canada Mall. Fast, modern, SEO-optimized websites for local businesses. Free consultation.',
-    heroIntro: 'Websites for Newmarket businesses, from historic Main Street to the modern commercial core.',
-    intro:
-      'Newmarket blends a beloved historic Main Street with a busy modern commercial core around Upper Canada Mall and Davis Drive, serving as a regional hub for northern York Region. Its businesses range from long-standing independent shops to professional firms and growing service providers, all competing for customers who research locally online. We build custom websites for Newmarket businesses that honour the town’s character while delivering the speed, polish, and local SEO needed to win modern customers.',
-    economy:
-      'Newmarket’s economy combines a historic Main Street retail and dining district, major regional retail along Yonge and Davis Drive, healthcare around Southlake, and a strong base of professional and personal services. Its customers research locally before they buy, rewarding businesses with clear, credible, well-built websites.',
-    neighborhoods: [
-      'Historic Main Street',
-      'Glenway',
-      'Stonehaven',
-      'Summerhill',
-      'Bristol-London',
-      'Huron Heights',
-      'Armitage',
-    ],
-    whyPoints: [
-      {
-        title: 'Honour the brand, modernize the tech',
-        body: 'Newmarket businesses often have real character and history. We preserve that identity while rebuilding on fast, modern technology.',
-      },
-      {
-        title: 'Hub-level local SEO',
-        body: 'As a regional hub, Newmarket draws customers from across northern York Region. We target Newmarket plus your service to capture that wider demand.',
-      },
-      {
-        title: 'Conversion-focused design',
-        body: 'Clear calls to action, easy contact, and fast mobile performance turn local search into real enquiries.',
-      },
-    ],
-    industries: industriesFor('newmarket'),
-    faqs: [
-      {
-        question: 'How much does web design cost in Newmarket?',
-        answer:
-          'Newmarket projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds, all including responsive design, SEO, and SSL with transparent pricing.',
-      },
-      {
-        question: 'Can you build a site for a historic Main Street business?',
-        answer:
-          'Yes — we specialize in preserving a business’s established character and brand while rebuilding on fast, modern technology that performs in search and on mobile.',
-      },
-      {
-        question: 'Can you help me reach customers across York Region?',
-        answer:
-          'Yes. As a regional hub, Newmarket draws shoppers from surrounding towns, so we target Newmarket plus broader York Region terms to widen your reach.',
-      },
-      {
-        question: 'How long does a Newmarket website take to build?',
-        answer:
-          'Most projects launch in two to four weeks, with a focused starter site ready in about a week.',
-      },
-    ],
-  },
-
-  aurora: {
-    slug: 'aurora',
-    city: 'Aurora',
-    region: 'York Region',
-    metaTitle: 'Web Design Aurora | Custom Websites for Aurora Businesses | Zenara Designs',
-    metaDescription:
-      'Custom web design in Aurora for professional and local businesses. Refined, fast, SEO-optimized websites that build trust and win clients. Free consultation.',
-    heroIntro: 'Refined websites for Aurora’s professional services and established local businesses.',
-    intro:
-      'Aurora is an affluent, historic town in central York Region, known for its well-preserved heritage core and a prosperous, community-minded population. Its professional firms, clinics, and independent businesses serve customers who value quality and reputation and who research carefully before choosing a provider. We build refined, custom websites for Aurora businesses that reflect that standard and rank for the local searches bringing in high-value clients.',
-    economy:
-      'Aurora’s economy is anchored by professional and financial services, healthcare, and upscale retail and personal services serving an affluent, established community. Customers here weigh credibility heavily, so a polished, well-structured website directly shapes who they trust and choose.',
-    neighborhoods: [
-      'Aurora Village',
-      'Aurora Heights',
-      'Bayview Northeast',
-      'Hills of St. Andrew',
-      'Aurora Grove',
-      'Stone Ridge',
-      'Regency Acres',
-    ],
-    whyPoints: [
-      {
-        title: 'Polish for a discerning town',
-        body: 'Aurora customers expect quality. We craft refined, credible sites that reinforce an established professional reputation.',
-      },
-      {
-        title: 'Local SEO for high-value clients',
-        body: 'We target Aurora plus your service so you reach the affluent local customers actively searching for what you offer.',
-      },
-      {
-        title: 'Trust-building structure',
-        body: 'Clear information, social proof, and easy contact paths guide careful researchers from interest to enquiry.',
-      },
-    ],
-    industries: industriesFor('aurora'),
-    faqs: [
-      {
-        question: 'How much does web design cost in Aurora?',
-        answer:
-          'Aurora projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds, each including responsive design, SEO, and SSL with upfront pricing.',
-      },
-      {
-        question: 'Can you create a refined, professional site for my Aurora firm?',
-        answer:
-          'Yes — distinctive, polished design is our focus. We build credible, elegant sites suited to Aurora’s professional firms and discerning clientele.',
-      },
-      {
-        question: 'Can you help my Aurora practice rank locally?',
-        answer:
-          'Yes. We optimize your content and structured data for Aurora and your specialty, and set up your Google Business Profile so you appear in local and map results.',
-      },
-      {
-        question: 'How long does an Aurora website take to build?',
-        answer:
-          'Most projects launch in two to four weeks, with a focused starter site ready in roughly a week.',
-      },
-    ],
-  },
-
-  stouffville: {
-    slug: 'stouffville',
-    city: 'Stouffville',
-    region: 'York Region',
-    metaTitle: 'Web Design Stouffville | Custom Business Websites | Zenara Designs',
-    metaDescription:
-      'Custom web design in Stouffville for local and commuter-community businesses. Fast, modern, SEO-optimized websites. Free consultation, transparent pricing.',
-    heroIntro: 'Websites for Stouffville businesses serving a fast-growing commuter community.',
-    intro:
-      'Whitchurch-Stouffville has grown rapidly from a small town into a thriving commuter community, with a historic Main Street core and expanding residential neighbourhoods drawing families who work across the GTA. That growth has built a steady base of local customers who research businesses online before visiting. We build custom websites for Stouffville businesses — Main Street shops and restaurants, clinics, trades, and professional services — that capture local demand and present you as an established part of a growing community.',
-    economy:
-      'Stouffville’s economy centres on a historic Main Street retail and dining district, personal and professional services, and trades supporting fast residential growth. Its family-oriented, commuter population researches locally online, often from mobile, rewarding businesses with clear, fast, credible websites.',
-    neighborhoods: [
-      'Historic Main Street',
-      'Wheler’s Mill',
-      'Cardinal Point',
-      'Byers Pond',
-      'Hoover Park',
-      'Country Glen',
-      'Ballantrae',
-    ],
-    whyPoints: [
-      {
-        title: 'Grow with a fast-expanding town',
-        body: 'As Stouffville’s population climbs, new customers are searching for local providers. A strong website helps you capture that demand early.',
-      },
-      {
-        title: 'Reach commuters on mobile',
-        body: 'Stouffville’s commuter families search on the move. We build fast mobile sites with click-to-call so you catch them whenever they look.',
-      },
-      {
-        title: 'Community-credible, affordable design',
-        body: 'We deliver polished, custom sites at small-business prices that read as established and local.',
-      },
-    ],
-    industries: industriesFor('stouffville'),
-    faqs: [
-      {
-        question: 'How much does web design cost in Stouffville?',
-        answer:
-          'Stouffville projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds, all including responsive design, SEO, and SSL with transparent pricing.',
-      },
-      {
-        question: 'Can you help my Stouffville business reach new residents?',
-        answer:
-          'Yes. With the town growing quickly, we build and optimize your site for Stouffville searches so the steady flow of new residents finds you first.',
-      },
-      {
-        question: 'Do you work with Main Street and small local businesses?',
-        answer:
-          'Absolutely — we build affordable, professional sites for Main Street shops, clinics, trades, and service businesses across Whitchurch-Stouffville.',
-      },
-      {
-        question: 'How long does a Stouffville website take to build?',
-        answer:
-          'Most projects launch in two to four weeks, with a focused starter site ready in about a week.',
-      },
-    ],
+    heroImage: '/images/pickering-waterfront-trail.jpg',
+    heroImageAlt: 'A wooden pier extending into calm water at sunset, representing Pickering’s waterfront trail',
+    localSeoBody:
+      'We build citations with organizations like the Ajax-Pickering Board of Trade and target Pickering alongside neighbouring Ajax and Whitby, since many customers here search by region rather than by a single city name.',
+    geoBody:
+      'As new residents arrive with the City Centre redevelopment, more of them will ask AI tools like ChatGPT for local recommendations rather than searching Google directly — we structure your site to be part of that answer early, before competitors catch on.',
+    smallBusinessNote:
+      "With thousands of new residents arriving as the City Centre develops, the local businesses ready to be found now are the ones who'll be established by the time that growth peaks. We build for that timing specifically.",
+    focusAreas: ['Energy & Corporate', 'Retail & Personal Services', 'Trades', 'Local Services'],
+    featuredProjectSlugs: ['heroes-catering', 'ashcam-cutting-solutions', 'pattys-delights'],
+    sectionOrder: ['advantage', 'industries', 'recentWork', 'whatYouGet', 'faq'],
   },
 };
 

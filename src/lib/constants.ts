@@ -5,13 +5,6 @@ export const BUSINESS_NAME = 'Zenara Designs';
 export const BUSINESS_PHONE = '(647) 835-1077';
 export const BUSINESS_PHONE_E164 = '+16478351077';
 
-// Email configuration
-export const EMAIL_CONFIG = {
-  from: `${BUSINESS_NAME} <noreply@${BUSINESS_DOMAIN}>`,
-  to: [BUSINESS_EMAIL] as string[],
-  replyTo: BUSINESS_EMAIL,
-};
-
 // Navigation constants
 export const NAVIGATION_LINKS = [
   { href: '/', label: 'Home' },
@@ -27,29 +20,33 @@ export const FOOTER_ADDITIONAL_LINKS = [
   { href: '/faq', label: 'FAQ' },
   { href: '/locations', label: 'Locations' },
   { href: '/process', label: 'Our Process' },
-  { href: '/security', label: 'Security' },
-  { href: '/mobile', label: 'Mobile' },
   { href: '/blog', label: 'Blog' },
   { href: '/payments', label: 'Payments' },
+] as const;
+
+// Service-area city pages, for the footer link mesh. Markham, Stouffville and
+// Scarborough lead — keep in sync with src/lib/city-content.ts.
+export const SERVICE_AREA_LINKS = [
+  { href: '/web-design/markham', label: 'Markham' },
+  { href: '/web-design/stouffville', label: 'Stouffville' },
+  { href: '/web-design/scarborough', label: 'Scarborough' },
+  { href: '/web-design/toronto', label: 'Toronto' },
+  { href: '/web-design/mississauga', label: 'Mississauga' },
+  { href: '/web-design/richmond-hill', label: 'Richmond Hill' },
+  { href: '/web-design/vaughan', label: 'Vaughan' },
+  { href: '/web-design/pickering', label: 'Pickering' },
 ] as const;
 
 // Service sub-page links for footer
 export const SERVICE_LINKS = [
   { href: '/services/web-design', label: 'Web Design' },
   { href: '/services/ecommerce', label: 'E-Commerce' },
-  { href: '/services/logo-design', label: 'Logo Design' },
-  { href: '/services/business-cards', label: 'Business Cards' },
+  { href: '/services/branding', label: 'Branding' },
   { href: '/services/seo', label: 'SEO' },
-  { href: '/services/hosting', label: 'Hosting' },
+  { href: '/services/website-maintenance', label: 'Website Maintenance' },
+  { href: '/services/geo', label: 'GEO / AI Search' },
+  { href: '/services/website-redesign', label: 'Website Redesign' },
 ] as const;
-
-// Animation constants
-export const ANIMATION_DURATIONS = {
-  FAST: 200,
-  NORMAL: 300,
-  SLOW: 500,
-  VERY_SLOW: 1000,
-} as const;
 
 // Performance constants
 export const PERFORMANCE_THRESHOLDS = {
