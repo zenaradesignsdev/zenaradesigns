@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { PERFORMANCE_THRESHOLDS } from '@/lib/constants';
 import { SafeImage } from '@/components/ui/safe-image';
+import { formatPostDate } from '@/lib/utils';
 
 const Blog = () => {
   // Scroll to top when component mounts
@@ -135,7 +136,7 @@ const Blog = () => {
                       <div className="flex items-center gap-4 text-sm sm:text-base text-white/50 mb-6 font-light">
                         <span>{featuredPost.author}</span>
                         <span>•</span>
-                        <span>{new Date(featuredPost.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</span>
+                        <span>{formatPostDate(featuredPost.publishedAt)}</span>
                       </div>
                       
                       <div className="inline-flex items-center gap-2 text-cyan-300 group-hover:text-cyan-200 font-semibold transition-colors duration-300">

@@ -1,6 +1,6 @@
 import { Calendar, Clock, User, Edit } from 'lucide-react';
 import { BlogPost } from '@/types';
-import { format } from 'date-fns';
+import { formatPostDate } from '@/lib/utils';
 
 interface BlogMetadataProps {
   post: BlogPost;
@@ -14,8 +14,8 @@ const calculateReadingTime = (content: React.ComponentType): number => {
 
 export const BlogMetadata = ({ post }: BlogMetadataProps) => {
   const readingTime = calculateReadingTime(post.content);
-  const formattedDate = format(post.publishedAt, 'MMMM d, yyyy');
-  const formattedUpdatedDate = post.updatedAt ? format(post.updatedAt, 'MMMM d, yyyy') : null;
+  const formattedDate = formatPostDate(post.publishedAt);
+  const formattedUpdatedDate = post.updatedAt ? formatPostDate(post.updatedAt) : null;
 
   return (
     <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm sm:text-base text-white/50 mb-8 sm:mb-12 pb-6 sm:pb-8 border-b border-white/10 font-light">

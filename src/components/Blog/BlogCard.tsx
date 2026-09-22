@@ -4,7 +4,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Calendar, Clock, User } from 'lucide-react';
 import { BlogPost } from '@/types';
-import { format } from 'date-fns';
+import { formatPostDate } from '@/lib/utils';
 
 interface BlogCardProps {
   post: BlogPost;
@@ -20,7 +20,7 @@ const calculateReadingTime = (content: React.ComponentType): number => {
 
 export const BlogCard = ({ post }: BlogCardProps) => {
   const readingTime = calculateReadingTime(post.content);
-  const formattedDate = format(post.publishedAt, 'MMMM d, yyyy');
+  const formattedDate = formatPostDate(post.publishedAt);
 
   return (
     <Link
