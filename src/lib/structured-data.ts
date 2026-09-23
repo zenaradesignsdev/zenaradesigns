@@ -1,5 +1,6 @@
 // Structured data utilities for JSON-LD schema markup
 import { BUSINESS_NAME, BUSINESS_EMAIL, BUSINESS_PHONE, NAVIGATION_LINKS } from './constants';
+import { ABOUT_URL, findTeamMember, teamPersonId } from '@/lib/team';
 
 // Business information for LocalBusiness schema
 export const BUSINESS_INFO = {
@@ -281,9 +282,10 @@ export const generateServiceSchema = (serviceName: string, serviceDescription: s
 };
 
 // Generate BlogPosting schema for blog posts
-export const generateBlogPostingSchema = (post: { slug: string; title: string; description: string; author: string; publishedAt: Date; updatedAt?: Date; featuredImage?: string }) => {
+export const generateBlogPostingSchema = (post: { slug: string; title: string; description: string; author: string; publishedAt: Date; updatedAt?: Date; featuredImage?: string; tags?: string[] }) => {
   const baseUrl = 'https://zenaradesigns.com';
   const postUrl = `${baseUrl}/blog/${post.slug}`;
+  const authorMember = findTeamMember(post.author);
   
   return {
     '@context': 'https://schema.org',
@@ -294,14 +296,15 @@ export const generateBlogPostingSchema = (post: { slug: string; title: string; d
     description: post.description,
     url: postUrl,
     
-    author: {
-      '@type': 'Organization',
-      name: post.author,
-      url: BUSINESS_INFO.url
-    },
+    // A team member byline points at their Person node on /about; anything
+    // else is attributed to the company.
+    author: authorMember
+      ? { '@type': 'Person', '@id': teamPersonId(authorMember.name), name: authorMember.name, url: ABOUT_URL, jobTitle: authorMember.role }
+      : { '@type': 'Organization', name: post.author, url: BUSINESS_INFO.url },
     
     publisher: {
       '@type': 'Organization',
+      '@id': `${BUSINESS_INFO.url}/#organization`,
       name: BUSINESS_INFO.name,
       url: BUSINESS_INFO.url,
       logo: {
@@ -318,28 +321,29 @@ export const generateBlogPostingSchema = (post: { slug: string; title: string; d
       '@id': postUrl
     },
     
-    image: post.featuredImage || BUSINESS_INFO.logo,
+    // Schema.org image must be an absolute URL; featuredImage is a site path.
+    image: post.featuredImage ? `${baseUrl}${post.featuredImage}` : BUSINESS_INFO.logo,
     
-    keywords: post.title.split(' ').join(', '),
+    keywords: post.tags?.length ? post.tags.join(', ') : post.title.split(' ').join(', '),
     
-    articleSection: 'Web Design',
-    articleBody: post.description
+    articleSection: 'Web Design'
   };
 };
 
 // Generate BreadcrumbList schema for navigation
 export const generateBreadcrumbSchema = (items: Array<{ name: string; url: string }>) => {
-  const baseUrl = BUSINESS_INFO.url;
+  const absolute = (url: string) => (url.startsWith('http') ? url : `${BUSINESS_INFO.url}${url}`);
   
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
-    '@id': `${baseUrl}#breadcrumb`,
+    // Scoped to the page the trail ends on, so each page's breadcrumb is its own node.
+    '@id': `${absolute(items[items.length - 1]?.url ?? '/')}#breadcrumb`,
     itemListElement: items.map((item, index) => ({
       '@type': 'ListItem',
       position: index + 1,
       name: item.name,
-      item: item.url.startsWith('http') ? item.url : `${baseUrl}${item.url}`
+      item: absolute(item.url)
     }))
   };
 };

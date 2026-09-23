@@ -187,6 +187,7 @@ const localBusinessJsonLd = {
 const organizationJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
+  '@id': 'https://zenaradesigns.com/#organization',
   name: 'Zenara Designs',
   url: 'https://zenaradesigns.com',
   logo: 'https://zenaradesigns.com/logo-seo.svg',
@@ -209,11 +210,12 @@ const organizationJsonLd = {
 const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': 'https://zenaradesigns.com/#website',
   name: 'Zenara Designs',
   url: 'https://zenaradesigns.com',
   description:
     'Web design and development agency based in Markham, serving the GTA. Custom websites, branding, SEO and managed maintenance for small businesses.',
-  publisher: { '@type': 'Organization', name: 'Zenara Designs' },
+  publisher: { '@id': 'https://zenaradesigns.com/#organization' },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

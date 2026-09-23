@@ -50,3 +50,12 @@ export const team: TeamMember[] = [
     knowsAbout: ['UX Design', 'UI Design', 'Brand Identity', 'Conversion Optimization'],
   },
 ];
+
+export const ABOUT_URL = 'https://zenaradesigns.com/about';
+
+/** Stable schema.org @id for a team member's Person node (declared on /about). */
+export const teamPersonId = (name: string) =>
+  `${ABOUT_URL}#${name.toLowerCase().replace(/[^a-z]+/g, '-')}`;
+
+export const findTeamMember = (name: string): TeamMember | undefined =>
+  team.find((member) => member.name === name);

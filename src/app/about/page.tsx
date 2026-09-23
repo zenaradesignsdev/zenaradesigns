@@ -2,13 +2,9 @@ import type { Metadata } from 'next';
 import About from '@/components/pages/About';
 import { JsonLd } from '@/components/JsonLd';
 import { breadcrumbSchema } from '@/lib/service-content';
-import { team } from '@/lib/team';
+import { ABOUT_URL, team, teamPersonId as personId } from '@/lib/team';
 
-const ABOUT_URL = 'https://zenaradesigns.com/about';
 const ORG_ID = 'https://zenaradesigns.com/#organization';
-
-const personId = (name: string) =>
-  `${ABOUT_URL}#${name.toLowerCase().replace(/[^a-z]+/g, '-')}`;
 
 // Person schema per team member — named people with roles, credentials, and
 // alumniOf are a core E-E-A-T signal. worksFor is asserted only for founders;
