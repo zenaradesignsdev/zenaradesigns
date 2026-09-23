@@ -303,7 +303,7 @@ export const ontarioLawFirmWebsiteContentPost: BlogPost = {
   featuredImageAlt:
     'Wireframe of a fictional law firm website, with labelled sections for practice areas, lawyer profiles, office locations and a consultation request.',
   author: 'Kavin Mural',
-  publishedAt: new Date('2026-09-23'),
+  publishedAt: new Date('2026-09-19'),
   tags: ['industry guides', 'law firms', 'web design'],
   content: OntarioLawFirmWebsiteContent,
 };
