@@ -2,6 +2,7 @@
 // (TextReveal, FadeIn, Accordion, MiniContactForm) are client components in
 // their own right, so the page copy stays out of the client bundle.
 import Link from 'next/link';
+import { RelatedGuide } from '@/components/Blog/RelatedGuide';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SafeImage } from '@/components/ui/safe-image';
@@ -310,6 +311,7 @@ const WebsiteRedesignService = () => {
               </details>
             ))}
           </div>
+          <RelatedGuide href="/blog/bad-website-costing-business-money" title="How to tell if your website is losing you customers" className="mt-10" />
         </div>
       </section>
 

@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { RelatedGuide } from '@/components/Blog/RelatedGuide';
 import { Check, ArrowRight, Star, ChevronDown, Layers, Rocket, Gem, Sun } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -923,6 +924,7 @@ const Pricing = () => {
               Browse the full FAQ <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
+          <RelatedGuide href="/blog/how-much-does-a-website-cost-toronto" title="How much does a website cost in Toronto and the GTA?" className="mt-6" />
 
           {/* Last Updated Date */}
           <div className="text-center mt-12">

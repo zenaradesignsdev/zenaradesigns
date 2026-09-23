@@ -511,6 +511,10 @@ const Lawyers = () => {
                 <Link href="/process" className="hover:text-cyan-300 transition-colors">
                   See how we build it
                 </Link>
+                <span className="text-white/15 mx-2.5">/</span>
+                <Link href="/blog/ontario-law-firm-website-content" className="hover:text-cyan-300 transition-colors">
+                  What a law firm website should say
+                </Link>
               </p>
             </FadeIn>
           </div>

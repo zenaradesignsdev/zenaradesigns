@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { RelatedGuide } from '@/components/Blog/RelatedGuide';
 import { CheckCircle, ArrowRight, ChevronDown, Clock, Users, Target, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -363,6 +364,7 @@ const Process = () => {
               Browse the full FAQ <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
+          <RelatedGuide href="/blog/choosing-web-designer-gta" title="How to choose a web designer in the GTA: questions to ask first" className="mt-6" />
         </div>
       </section>
 
