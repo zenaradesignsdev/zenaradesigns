@@ -1574,3 +1574,81 @@
 #sib-container #EMAIL::-moz-placeholder          { color: #94a3b8 !important; opacity: 1 !important; }
 #sib-container #EMAIL:-ms-input-placeholder      { color: #94a3b8 !important; opacity: 1 !important; }
 #sib-container #EMAIL                            { color: #ffffff !important; }
+/* Blog post body. Post content in src/content/blog is plain semantic HTML;
+   every style for it lives here so the posts stay consistent. */
+@layer components {
+  .blog-prose {
+    @apply text-base sm:text-[1.0625rem] leading-[1.8] font-light text-white/75;
+  }
+  .blog-prose > div > p:first-child {
+    @apply text-lg sm:text-xl leading-[1.7] text-white/85;
+  }
+  .blog-prose p {
+    @apply mb-6;
+  }
+  .blog-prose h2 {
+    @apply mt-14 mb-5 scroll-mt-28 text-2xl sm:text-3xl font-normal text-white leading-tight tracking-[-0.02em];
+  }
+  .blog-prose h3 {
+    @apply mb-3 text-lg sm:text-xl font-medium text-white tracking-[-0.01em];
+  }
+  .blog-prose ul {
+    @apply mb-8 space-y-3;
+  }
+  .blog-prose li {
+    @apply relative pl-6;
+  }
+  .blog-prose li::before {
+    content: '';
+    @apply absolute left-0 top-[0.8em] h-px w-3 bg-cyan-300/70;
+  }
+  .blog-prose ol {
+    @apply mb-8 space-y-3;
+    counter-reset: blog-ol;
+  }
+  .blog-prose ol > li {
+    @apply pl-9;
+    counter-increment: blog-ol;
+  }
+  .blog-prose ol > li::before {
+    content: counter(blog-ol, decimal-leading-zero);
+    @apply top-[0.2em] h-auto w-auto bg-transparent font-mono text-xs tracking-widest text-cyan-300/70;
+  }
+  .blog-prose .blog-checklist li {
+    @apply pl-8;
+  }
+  .blog-prose .blog-checklist li::before {
+    @apply top-[0.35em] h-4 w-4 rounded border border-cyan-300/50 bg-transparent;
+  }
+  .blog-prose .blog-checklist li::after {
+    content: '';
+    @apply absolute left-[0.3rem] top-[0.5em] h-2 w-[0.4rem] rotate-45 border-b border-r border-cyan-300;
+  }
+  .blog-prose blockquote {
+    @apply my-8 border-l-2 border-cyan-300/60 pl-5 sm:pl-6 text-lg sm:text-xl leading-[1.6] text-white/90;
+  }
+  .blog-prose blockquote p {
+    @apply mb-0;
+  }
+  .blog-prose .blog-note {
+    @apply mt-8 rounded-xl border border-white/10 px-5 py-4 text-sm leading-relaxed text-white/55;
+  }
+  .blog-prose strong {
+    @apply font-medium text-white;
+  }
+  .blog-prose code {
+    @apply rounded bg-white/[0.07] px-1.5 py-0.5 font-mono text-[0.9em] text-white/90;
+  }
+  .blog-prose a {
+    @apply text-cyan-300 underline decoration-cyan-300/40 underline-offset-4 transition-colors hover:text-cyan-200 hover:decoration-cyan-200;
+  }
+  .blog-prose a strong {
+    @apply text-inherit;
+  }
+  .blog-prose .blog-callout {
+    @apply mt-14 mb-6 rounded-2xl border border-white/10 bg-white/[0.03] p-6 sm:p-8;
+  }
+  .blog-prose .blog-callout p:last-child {
+    @apply mb-0;
+  }
+}

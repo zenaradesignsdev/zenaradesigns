@@ -1,157 +1,156 @@
 import { BlogPost } from '@/types';
 import Link from 'next/link';
+import { ExternalLink } from '@/components/Blog/ExternalLink';
+
+const SOURCES = {
+  pageSpeed: 'https://pagespeed.web.dev/',
+  coreWebVitals: 'https://developers.google.com/search/docs/appearance/core-web-vitals',
+  searchConsole: 'https://search.google.com/search-console',
+  pageIndexing: 'https://support.google.com/webmasters/answer/7440203',
+};
 
 const BadWebsiteCostingMoneyContent = () => {
   return (
-    <div className="prose prose-lg max-w-none">
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Your website might look fine to you, but if it&apos;s not performing, it&apos;s actively costing
-        you money. Every day a subpar website is live, potential customers are leaving and choosing your
-        competitors instead. For Toronto businesses operating in one of Canada&apos;s most competitive
-        markets, these losses add up fast. Here are five ways a bad website drains your revenue—and what
-        you can do about each one.
+    <div>
+      <p>
+        You rarely see the customers your website loses. They don’t complain or leave a review. They close
+        the tab and call someone else, and from your side nothing happened at all.
+      </p>
+      <p>
+        The useful news is that most of the common problems can be checked in an afternoon, with free tools,
+        without hiring anyone. Here are five checks, what a bad result looks like for each, and what usually
+        causes it.
       </p>
 
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">1. Slow Load Times Are Driving Customers Away</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Speed isn&apos;t a luxury—it&apos;s the first test your website has to pass. Google&apos;s own research
-        shows that <strong className="text-cyan-300 font-semibold">53% of mobile visitors abandon a site
-        that takes longer than 3 seconds to load</strong>. For every additional second of load time, conversion
-        rates drop by an average of 4.42%. If your Toronto business website takes 6 seconds to load
-        instead of 2, you could be losing nearly 20% of potential conversions.
+      <h2 id="check-1-load-it-on-your-phone">Check 1: Load It on Your Phone, Away From Wi-Fi</h2>
+      <p>
+        Turn off Wi-Fi, open a private browser tab and load your homepage the way a new customer would. Then
+        run the address through <ExternalLink href={SOURCES.pageSpeed}>PageSpeed Insights</ExternalLink> and
+        look at the mobile results. If your site gets enough traffic, the report includes data from real
+        visitors, not just a test run.
       </p>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Common culprits include unoptimized images, bloated code from cheap website builders, too many
-        plugins, and low-quality shared hosting. The fix starts with compressing images, minimizing code,
-        and investing in quality hosting. A professionally built website should score 90+ on Google&apos;s
-        PageSpeed Insights. Check out{' '}
-        <Link href="/services" className="text-cyan-300 underline hover:text-cyan-200">our services</Link>{' '}
-        to see how we build performance into every project.
+      <p>
+        Google’s <ExternalLink href={SOURCES.coreWebVitals}>Core Web Vitals</ExternalLink> guidance gives
+        three targets: the main content should load within 2.5 seconds, the page should respond to a tap in
+        under 200 milliseconds, and the layout shift score should stay under 0.1.
       </p>
-
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">2. Your Site Isn&apos;t Mobile-Friendly</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        In the GTA, <strong className="text-cyan-300 font-semibold">over 65% of web traffic comes from
-        mobile devices</strong>. If your website isn&apos;t fully responsive—meaning it adapts seamlessly
-        to phones and tablets—you&apos;re alienating the majority of your potential customers. A site that
-        requires pinching, zooming, or horizontal scrolling on mobile tells visitors you don&apos;t care
-        about their experience.
+      <p>
+        <strong>A bad result looks like:</strong> a blank or half-built screen for several seconds, text that
+        jumps as images load, or buttons that don’t respond on the first tap.
       </p>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Google also uses mobile-first indexing, which means the mobile version of your site determines
-        your search rankings. A non-mobile-friendly site doesn&apos;t just frustrate users—it actively
-        pushes you down in search results. Learn about our approach to{' '}
-        <Link href="/services/web-design" className="text-cyan-300 underline hover:text-cyan-200">mobile-first design</Link>{' '}
-        that ensures every visitor has a seamless experience regardless of device.
+      <p>
+        <strong>Usual causes:</strong> oversized images, heavy themes and plugins, third-party scripts such as
+        chat widgets and trackers, and slow hosting.
       </p>
 
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">3. Poor SEO Means Nobody Finds You</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Having a website that doesn&apos;t rank on Google is like opening a store with no sign on a street
-        with no traffic. <strong className="text-cyan-300 font-semibold">75% of users never scroll past
-        the first page of search results</strong>. If your Toronto business isn&apos;t showing up for
-        relevant searches like &quot;[your service] Toronto&quot; or &quot;[your service] near me,&quot;
-        you&apos;re handing those customers directly to competitors who invested in SEO.
+      <h2 id="check-2-try-to-become-a-customer">Check 2: Try to Become a Customer</h2>
+      <p>
+        This is the most valuable check on the list, because the failures are silent. On your phone:
       </p>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Common SEO failures include missing meta titles and descriptions, no header tag structure,
-        duplicate content, missing alt text on images, and no local keyword optimization. Many budget
-        website builders produce sites with poor underlying code that search engines struggle to crawl
-        and index properly.
-      </p>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        The cost of invisible SEO is staggering. Consider that the average cost-per-click for Google Ads
-        in competitive Toronto markets ranges from <strong className="text-cyan-300 font-semibold">$3 to
-        $15 per click</strong>. If proper SEO could bring you even 100 organic clicks per month, that&apos;s
-        $300–$1,500 in ad spend you&apos;re saving every month while building long-term authority.
-      </p>
-
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">4. Weak Calls to Action Kill Conversions</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        You could have great traffic and a beautiful design, but if visitors don&apos;t know what to do
-        next, they&apos;ll leave without converting. <strong className="text-cyan-300 font-semibold">70% of
-        small business websites lack a clear call to action on their homepage</strong>. That&apos;s thousands
-        of potential leads walking away because the path from &quot;interested visitor&quot; to
-        &quot;paying customer&quot; isn&apos;t clear.
-      </p>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Effective CTAs are specific, visible, and action-oriented. Instead of a generic &quot;Contact
-        Us&quot; buried in the footer, use clear prompts throughout your pages:
-      </p>
-      <ul className="list-disc list-inside text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6 space-y-2 ml-4">
-        <li>&quot;Get Your Free Quote in 24 Hours&quot; with a prominent contact form</li>
-        <li>&quot;Book a Consultation&quot; with an integrated scheduling tool</li>
-        <li>&quot;See Our Work&quot; linking to case studies that build trust before the conversion step</li>
-        <li>Phone number and email visible on every page, not hidden three clicks deep</li>
+      <ul>
+        <li>Fill in and submit your own contact or quote form.</li>
+        <li>Check that the confirmation message makes sense, so nobody submits twice wondering if it worked.</li>
+        <li>Check how long the email takes to arrive, who receives it, and whether it lands in spam.</li>
+        <li>Tap your phone number and confirm it dials.</li>
+        <li>Check that the number matches your Google Business Profile.</li>
       </ul>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Every page should guide visitors toward a specific action. View{' '}
-        <Link href="/pricing" className="text-cyan-300 underline hover:text-cyan-200">our pricing</Link>{' '}
-        to see how we structure sites for maximum conversion.
+      <p>
+        <strong>A bad result looks like:</strong> the form sends to a former employee’s address, lands in a
+        spam folder nobody checks, or doesn’t send at all. The phone number is plain text that can’t be tapped.
+      </p>
+      <p>
+        <strong>Fix:</strong> repair it, then repeat this test every month. If you use analytics, record form
+        submissions and phone taps as conversions so a sudden drop is visible.
       </p>
 
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">5. Outdated Design and Content Erode Trust</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Web design trends evolve, and <strong className="text-cyan-300 font-semibold">94% of first
-        impressions are design-related</strong>. A website that looks like it was built in 2015—with stock
-        photos, cramped layouts, and outdated visual patterns—signals that your business isn&apos;t keeping
-        up. In Toronto&apos;s competitive market, customers associate your website quality with your service
-        quality.
+      <h2 id="check-3-can-google-find-your-pages">Check 3: Check Whether Google Can Find Your Pages</h2>
+      <p>
+        Search Google for <code>site:yourdomain.ca</code> (with your own domain) for a rough list of the pages
+        Google knows about. For the real answer, set up{' '}
+        <ExternalLink href={SOURCES.searchConsole}>Google Search Console</ExternalLink> and open the{' '}
+        <ExternalLink href={SOURCES.pageIndexing}>page indexing report</ExternalLink>, which lists the pages
+        that are indexed and the reasons others aren’t.
       </p>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Outdated content is equally damaging. If your latest blog post is from two years ago, your team
-        page lists employees who left, or your services page describes offerings you no longer provide,
-        visitors question whether you&apos;re still in business. Beyond trust issues, stale content hurts
-        your SEO rankings—Google favours websites that are regularly updated with fresh, relevant content.
+      <p>
+        Then open the Performance report and look at the searches that show your site. If nearly all of them
+        contain your business name, only people who already know you are finding you.
       </p>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        An outdated site also raises{' '}
-        <Link href="/services/website-maintenance" className="text-cyan-300 underline hover:text-cyan-200">security concerns</Link>.
-        Older websites built on unmaintained platforms are prime targets for hackers. A security breach
-        doesn&apos;t just cost money to fix—it destroys customer trust permanently.
+      <p>
+        <strong>A bad result looks like:</strong> important service pages missing from the index, or no
+        searches for your services at all.
+      </p>
+      <p>
+        <strong>Fix:</strong> usually a page for each main service, written to answer real questions. Our{' '}
+        <Link href="/blog/seo-guide-small-business-toronto">local SEO guide</Link> covers this step by step.
       </p>
 
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">What This Looks Like in the GTA</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        The pattern is consistent across the GTA: a contractor in Stouffville or a clinic in Markham with solid
-        word-of-mouth, a five-year-old website that loads slowly on a phone, and no idea how many
-        quote requests never arrived. Homeowners and patients now check the site before calling, and a
-        slow or dated one quietly filters out the higher-value enquiries first. We build for
-        <Link href="/renovations" className="text-cyan-300 underline hover:text-cyan-200">contractors and trades</Link> and
-        <Link href="/clinics" className="text-cyan-300 underline hover:text-cyan-200">clinics</Link> across Markham, Stouffville, and Scarborough.
+      <h2 id="check-4-the-five-second-test">Check 4: The Five-Second Test</h2>
+      <p>
+        Show your homepage on a phone to someone who doesn’t know your business. Take it away after five
+        seconds and ask three questions:
       </p>
-      <div className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 mt-10 sm:mt-12 mb-6 border border-slate-800/50 relative overflow-hidden">
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
-        <h3 className="text-xl sm:text-2xl font-semibold text-white mb-4 relative z-10 tracking-tight">
-          <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Fix Your Website Today</span>
-        </h3>
-        <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-4 relative z-10">
-          Every day your website underperforms is a day you&apos;re losing potential customers. Zenara
-          Designs builds fast, mobile-optimized, SEO-ready websites for Toronto businesses that turn
-          visitors into paying customers. Whether you need a complete redesign or targeted improvements,
-          we can help.
+      <ol>
+        <li>What does this business do?</li>
+        <li>Where does it work?</li>
+        <li>What would you do next if you needed it?</li>
+      </ol>
+      <p>
+        <strong>A bad result looks like:</strong> they remember a slogan (“excellence in every detail”) but not
+        the service, they can’t tell whether you cover their area, or they didn’t see a button or phone number.
+      </p>
+      <p>
+        <strong>Fix:</strong> replace the slogan with a plain description of what you do and for whom. We walk
+        through this in detail, using law firms as the example, in{' '}
+        <Link href="/blog/ontario-law-firm-website-content">what an Ontario law firm website should say</Link>
+        ; the same principle applies to any service business.
+      </p>
+
+      <h2 id="check-5-look-for-signs-of-neglect">Check 5: Look for Signs of Neglect</h2>
+      <p>
+        Visitors read small signals as evidence of whether you’re still in business and paying attention.
+        Look for:
+      </p>
+      <ul>
+        <li>A copyright year in the footer that is several years old</li>
+        <li>Team members who have left, or services and prices you no longer offer</li>
+        <li>A “latest news” section whose latest item is years old</li>
+        <li>Links that lead to error pages</li>
+        <li>Opening hours that don’t match your Business Profile</li>
+        <li>A browser warning that the site is not secure</li>
+      </ul>
+      <p>
+        None of these is serious alone. Together they tell a visitor that nobody is looking after the site,
+        and they tend to wonder what else isn’t being looked after.
+      </p>
+
+      <h2 id="fix-it-or-redesign">Fix It Yourself, or Redesign?</h2>
+      <p>
+        Plenty of what these checks turn up can be fixed without a new website: updated text and prices, a
+        corrected form address, compressed images, a clearer homepage headline.
+      </p>
+      <p>A redesign starts to make more sense when:</p>
+      <ul>
+        <li>The site is on a platform you can’t edit, or you don’t control the domain and hosting.</li>
+        <li>Speed problems are built into the theme, so fixing them means rebuilding pages anyway.</li>
+        <li>There is nowhere to put a page for each service without restructuring the site.</li>
+        <li>The mobile layout is broken throughout, not on one page.</li>
+      </ul>
+      <p>
+        One caution: a new design on its own doesn’t fix a message problem. If the five-second test fails,
+        rewrite the homepage first, whichever route you choose. And if you do rebuild, our{' '}
+        <Link href="/blog/website-launch-checklist">website launch checklist</Link> covers the redirects and
+        checks that stop a redesign from losing the search visibility you already have.
+      </p>
+
+      <div className="blog-callout">
+        <h3>Want Us to Run These Checks for You?</h3>
+        <p>
+          Send us your website address and we will run it through these checks and send you what we find, at
+          no cost. If a rebuild is the right call, we will tell you why; if it isn’t, we will say that too.
         </p>
-        <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] relative z-10">
-          <Link href="/services" className="text-cyan-300 underline hover:text-cyan-200">
-            <strong className="text-cyan-300 font-semibold">Explore our services</strong>
-          </Link>{' '}
-          or{' '}
-          <Link href="/contact" className="text-cyan-300 underline hover:text-cyan-200">
-            <strong className="text-cyan-300 font-semibold">contact us for a free website audit</strong>
-          </Link>{' '}
-          to find out exactly what&apos;s holding your site back.
+        <p>
+          See our <Link href="/services/website-redesign">website redesign service</Link>, or{' '}
+          <Link href="/contact">get in touch</Link>.
         </p>
       </div>
     </div>
@@ -160,10 +159,15 @@ const BadWebsiteCostingMoneyContent = () => {
 
 export const badWebsiteCostingMoneyPost: BlogPost = {
   slug: 'bad-website-costing-business-money',
-  title: '5 Ways a Bad Website Is Costing Your Business Money',
-  description: 'Your website might be losing customers right now. Learn the 5 most common website mistakes that cost Toronto businesses money and how to fix them for better conversions and growth.',
-  author: 'Zenara Designs',
+  title: 'How to Tell If Your Website Is Losing You Customers',
+  seoTitle: 'Is Your Website Losing Customers? 5 Checks | Zenara Designs',
+  description:
+    'Five checks any small business owner can run in an afternoon with free tools to see whether their website is losing enquiries, and what to fix first.',
+  excerpt:
+    'You rarely see the customers a website loses. These five checks, all free and doable in an afternoon, show whether yours is quietly sending enquiries to competitors.',
+  author: 'Kavin Mural',
   publishedAt: new Date('2025-01-28'),
-  tags: ['web design', 'business', 'conversions', 'Toronto'],
+  updatedAt: new Date('2026-09-23'),
+  tags: ['web design', 'website redesign', 'conversions'],
   content: BadWebsiteCostingMoneyContent,
 };

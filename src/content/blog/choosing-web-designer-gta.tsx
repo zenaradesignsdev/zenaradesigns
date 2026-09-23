@@ -1,145 +1,198 @@
 import { BlogPost } from '@/types';
 import Link from 'next/link';
+import { ExternalLink } from '@/components/Blog/ExternalLink';
+
+const AODA_WEBSITES = 'https://www.ontario.ca/page/how-make-websites-accessible';
 
 const ChoosingWebDesignerGtaContent = () => {
   return (
-    <div className="prose prose-lg max-w-none">
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Choosing a web designer is one of the most important business decisions you&apos;ll make. Your
-        website represents your brand 24/7, and the wrong choice can cost you thousands of dollars and
-        months of lost opportunity. With hundreds of web design agencies and freelancers across the Greater
-        Toronto Area, knowing what to look for—and what to avoid—can save you from a costly mistake.
+    <div>
+      <p>
+        There is no shortage of web designers in the GTA, from freelancers to large agencies. The hard part
+        isn’t finding one; it’s telling them apart before you have paid anyone. Portfolios all look good, and
+        every proposal promises a fast, modern, mobile-friendly site.
+      </p>
+      <p>
+        This guide covers what to look at, what to ask, and what to get in writing, so you can compare
+        designers on the things that decide how the project actually goes.
       </p>
 
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Start with Their Portfolio—But Look Deeper</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Every web designer has a portfolio, but not all portfolios tell the full story. When evaluating
-        a GTA web designer&apos;s work, go beyond aesthetics:
+      <h2 id="look-past-the-portfolio">Look Past the Portfolio</h2>
+      <p>
+        A portfolio shows taste. It doesn’t show whether the sites work. Pick two or three examples and check
+        them yourself:
       </p>
-      <ul className="list-disc list-inside text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6 space-y-2 ml-4">
-        <li><strong className="text-cyan-300 font-semibold">Visit the live sites:</strong> Do they load quickly? Are they mobile-friendly? Test them on your phone.</li>
-        <li><strong className="text-cyan-300 font-semibold">Check for variety:</strong> Can they adapt to different industries and brand styles, or does every site look the same?</li>
-        <li><strong className="text-cyan-300 font-semibold">Look for results:</strong> Ask whether those sites actually perform. A beautiful website that doesn&apos;t generate leads is just expensive art.</li>
-        <li><strong className="text-cyan-300 font-semibold">Verify authenticity:</strong> Some agencies showcase work they didn&apos;t actually build. Ask for specific details about their role in each project.</li>
+      <ul>
+        <li>
+          <strong>Open the live sites on your phone.</strong> Do they load quickly? Is the phone number
+          tappable? Does the menu work?
+        </li>
+        <li>
+          <strong>Look for range.</strong> If every site looks the same regardless of industry, expect yours to
+          look like them too.
+        </li>
+        <li>
+          <strong>Ask what their role was.</strong> Design only, build only, or both? Who wrote the content?
+          Portfolios sometimes include work where the designer played a small part.
+        </li>
+        <li>
+          <strong>Ask whether you can speak to a past client.</strong> A designer with happy clients rarely
+          minds.
+        </li>
       </ul>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Browse{' '}
-        <Link href="/projects" className="text-cyan-300 underline hover:text-cyan-200">our portfolio</Link>{' '}
-        to see real examples of websites we&apos;ve built for Toronto and GTA businesses.
-      </p>
 
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Understand Their Process Before You Sign</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        A professional web designer should have a clear, documented process. If they can&apos;t explain
-        how a project moves from concept to launch, that&apos;s a red flag. Key questions to ask:
+      <h2 id="understand-the-process">Understand the Process Before You Sign</h2>
+      <p>
+        A good designer can explain how a project moves from first call to launch in a few sentences. If the
+        answer is vague, the project probably will be too. Ask about:
       </p>
-      <ul className="list-disc list-inside text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6 space-y-2 ml-4">
-        <li><strong className="text-cyan-300 font-semibold">What does the timeline look like?</strong> Template shops turn sites around in days; traditional agencies often take two to three months. A focused custom build should land in one to two weeks. Ask what drives the number — if the answer is vague, the timeline probably is too.</li>
-        <li><strong className="text-cyan-300 font-semibold">How many revision rounds are included?</strong> Two to three rounds is standard. Unlimited revisions often means undefined scope.</li>
-        <li><strong className="text-cyan-300 font-semibold">Who provides the content?</strong> Clarify whether copywriting and photography are included or your responsibility.</li>
-        <li><strong className="text-cyan-300 font-semibold">What technology do they use?</strong> Understand whether they build on WordPress, custom code, or website builders—each has trade-offs.</li>
+      <ul>
+        <li>
+          <strong>Timeline.</strong> Template shops can turn sites around in days; traditional agencies often
+          take two to three months. A focused custom build for a small business can land in one to two weeks.
+          Ask what drives their number, and what happens to it if your content is late.
+        </li>
+        <li>
+          <strong>Sign-off points.</strong> Will you approve a sitemap and a design direction before any code
+          is written? Changes are cheap on paper and expensive after the build.
+        </li>
+        <li>
+          <strong>Revisions.</strong> How many rounds are included? “Unlimited revisions” usually means the
+          scope was never defined.
+        </li>
+        <li>
+          <strong>Content.</strong> Who writes the text and sources the photos? If it is you, when do they
+          need it?
+        </li>
+        <li>
+          <strong>Technology.</strong> A website builder, WordPress or custom code all have trade-offs. The
+          question that matters is whether you can make simple changes yourself afterwards, and what it costs
+          when you can’t.
+        </li>
       </ul>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Take a look at{' '}
-        <Link href="/process" className="text-cyan-300 underline hover:text-cyan-200">our design process</Link>{' '}
-        to see what a structured approach looks like in practice.
+      <p>
+        For comparison, here is <Link href="/process">how our own process works</Link>, from discovery to
+        launch.
       </p>
 
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Communication and Transparency Matter</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        The best technical skills mean nothing if your designer disappears for weeks or can&apos;t explain
-        decisions in plain language. During your initial conversations, pay attention to:
+      <h2 id="make-sure-you-own-everything">Make Sure You Own Everything</h2>
+      <p>
+        This is the point most often skipped, and the one that causes the most trouble later. Before the
+        project starts, agree in writing that these are registered in your business’s name, with the designer
+        added as a user rather than the owner:
       </p>
-      <ul className="list-disc list-inside text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6 space-y-2 ml-4">
-        <li><strong className="text-cyan-300 font-semibold">Response times:</strong> If they take days to reply before you&apos;ve even hired them, expect worse communication during the project.</li>
-        <li><strong className="text-cyan-300 font-semibold">Clarity:</strong> Do they explain technical concepts in terms you understand, or hide behind jargon?</li>
-        <li><strong className="text-cyan-300 font-semibold">Listening skills:</strong> A good designer asks questions about your business goals, target audience, and competitors—not just your colour preferences.</li>
-        <li><strong className="text-cyan-300 font-semibold">Transparency about limitations:</strong> Trustworthy designers will tell you when something isn&apos;t feasible within your budget rather than overpromising.</li>
+      <ul>
+        <li>The domain name</li>
+        <li>The hosting account, or a clear hosting agreement if they host it</li>
+        <li>Google Analytics and Google Search Console</li>
+        <li>Your Google Business Profile</li>
+        <li>Any paid plugins, fonts or software licences the site depends on</li>
       </ul>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        In a city as large as the GTA, you have no shortage of options. Prioritize designers who treat the
-        relationship as a partnership, not a transaction.
+      <p>
+        If you ever change providers, you keep your address, your history and your data. A designer who
+        resists this is telling you something about how the relationship ends.
       </p>
 
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Post-Launch Support and Security</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Your website needs ongoing care after launch. <strong className="text-cyan-300 font-semibold">43% of
-        cyberattacks target small businesses</strong>, and outdated software is one of the most common
-        vulnerabilities. Before signing a contract, ask:
+      <h2 id="accessibility-in-ontario">Ask About Accessibility</h2>
+      <p>
+        In Ontario, the AODA requires{' '}
+        <ExternalLink href={AODA_WEBSITES}>businesses and non-profits with 50 or more employees</ExternalLink>{' '}
+        to make their public websites meet WCAG 2.0 Level AA, with limited exceptions. The Government of
+        Ontario’s guidance also notes that the organization that controls the website is responsible,
+        including when the site is managed through a contractor.
       </p>
-      <ul className="list-disc list-inside text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6 space-y-2 ml-4">
-        <li>Do they offer maintenance plans for updates, backups, and security monitoring?</li>
-        <li>What happens if the site goes down—what&apos;s their response time?</li>
-        <li>Will they train you to make basic content updates yourself?</li>
-        <li>Do you own the website files and domain, or are they held hostage?</li>
+      <p>
+        Smaller businesses aren’t covered by that requirement, but accessible sites are easier for everyone to
+        use, and retrofitting is far more expensive than building it in. Ask any designer how they handle
+        colour contrast, keyboard navigation, image descriptions and form labels. A confident, specific answer
+        is a good sign.
+      </p>
+      <p className="blog-note">
+        This is general information, not legal advice. If your organization may be covered, check the current
+        requirements on the Government of Ontario’s website.
+      </p>
+
+      <h2 id="communication">Pay Attention to Communication Early</h2>
+      <p>
+        How a designer communicates before you hire them is the best preview you will get. Notice:
+      </p>
+      <ul>
+        <li>How long they take to reply when they are trying to win your business</li>
+        <li>Whether they explain things in plain language or hide behind jargon</li>
+        <li>Whether they ask about your customers and goals, or only about colours and style</li>
+        <li>Whether they tell you when something isn’t worth the money</li>
       </ul>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        A designer who builds your site and disappears leaves you vulnerable. Look for partners who offer
-        ongoing{' '}
-        <Link href="/services/website-maintenance" className="text-cyan-300 underline hover:text-cyan-200">security and support</Link>{' '}
-        as part of their services.
-      </p>
 
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Pricing Red Flags to Watch For</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        The Toronto web design market has a wide price range, and both extremes can be problematic. Be
-        cautious of:
+      <h2 id="support-after-launch">Know What Happens After Launch</h2>
+      <p>
+        A website needs care after it goes live: software updates, security fixes, backups and small content
+        changes. Ask:
       </p>
-      <ul className="list-disc list-inside text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6 space-y-2 ml-4">
-        <li><strong className="text-cyan-300 font-semibold">Prices that seem too good to be true:</strong> A $500 &quot;custom&quot; website is almost certainly a template with your logo slapped on. You&apos;ll likely need to rebuild it within a year.</li>
-        <li><strong className="text-cyan-300 font-semibold">No written contract:</strong> Always get a detailed scope of work in writing. Verbal agreements lead to disputes about what&apos;s included.</li>
-        <li><strong className="text-cyan-300 font-semibold">100% upfront payment:</strong> Industry standard is 30–50% upfront with the balance due at milestones or launch.</li>
-        <li><strong className="text-cyan-300 font-semibold">Long-term lock-in contracts:</strong> Avoid designers who require multi-year commitments or own your website files. You should always be able to take your site elsewhere.</li>
-        <li><strong className="text-cyan-300 font-semibold">Vague line items:</strong> A professional proposal breaks down costs clearly. If they can&apos;t explain what you&apos;re paying for, walk away.</li>
+      <ul>
+        <li>How long are fixes and small edits included after launch?</li>
+        <li>What does ongoing maintenance cost, and what does it include?</li>
+        <li>If the site goes down, who do you contact, and how quickly do they respond?</li>
+        <li>Can you make basic text changes yourself?</li>
       </ul>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Review{' '}
-        <Link href="/pricing" className="text-cyan-300 underline hover:text-cyan-200">our pricing</Link>{' '}
-        to see what transparent, honest web design pricing looks like.
+      <p>
+        Our <Link href="/services/website-maintenance">maintenance plans</Link> are one example of how this
+        can be packaged; whatever you choose, get the terms in writing.
       </p>
 
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Choosing a Designer in the GTA</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        The suburbs have a real advantage over downtown: those markets are served mostly by small shops,
-        which means a business that invests in a genuinely good site can rank — and stay ranked — in a
-        way that is far harder in Toronto. Ask any designer you shortlist whether they build
-        city-specific pages for Markham, Stouffville, and Scarborough, or whether they will hand you one
-        generic &quot;serving the GTA&quot; page and call it local SEO. We build for
-        <Link href="/renovations" className="text-cyan-300 underline hover:text-cyan-200">contractors and trades</Link>, <Link href="/clinics" className="text-cyan-300 underline hover:text-cyan-200">physio and wellness clinics</Link>,
-        <Link href="/accountants" className="text-cyan-300 underline hover:text-cyan-200">accountants and mortgage brokers</Link>, and
-        <Link href="/lawyers" className="text-cyan-300 underline hover:text-cyan-200">law firms</Link> across the region.
+      <h2 id="pricing-red-flags">Pricing Red Flags</h2>
+      <p>
+        Price alone tells you little. These patterns tell you more:
       </p>
-      <div className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 mt-10 sm:mt-12 mb-6 border border-slate-800/50 relative overflow-hidden">
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
-        <h3 className="text-xl sm:text-2xl font-semibold text-white mb-4 relative z-10 tracking-tight">
-          <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Learn About Our Process</span>
-        </h3>
-        <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-4 relative z-10">
-          At Zenara Designs, we&apos;ve built our reputation on clear communication, transparent pricing,
-          and delivering results for GTA businesses. Every project follows a structured process from
-          discovery to launch, and we provide ongoing support to keep your site performing at its best.
+      <ul>
+        <li>
+          <strong>A “custom” site at a template price.</strong> Ask directly whether the design is built for
+          you or adapted from a purchased theme. Both can be fine; you should know which you are buying.
+        </li>
+        <li>
+          <strong>No written scope.</strong> Every quote should list the pages, features, revision rounds and
+          what is excluded.
+        </li>
+        <li>
+          <strong>Full payment upfront.</strong> A deposit with the balance at milestones or launch is a common,
+          fair arrangement.
+        </li>
+        <li>
+          <strong>Long lock-in contracts.</strong> Especially where the designer, not you, owns the site or
+          the domain.
+        </li>
+        <li>
+          <strong>Line items nobody can explain.</strong> If they can’t tell you what a charge is for, don’t
+          pay it.
+        </li>
+      </ul>
+      <p>
+        For what drives price in the first place, see{' '}
+        <Link href="/blog/how-much-does-a-website-cost-toronto">how much a website costs in Toronto</Link>.
+      </p>
+
+      <h2 id="questions-to-ask-on-the-first-call">Questions to Ask on the First Call</h2>
+      <p>Copy these into your notes and ask every designer the same ones:</p>
+      <ul className="blog-checklist">
+        <li>Who will I be working with day to day, and who actually builds the site?</li>
+        <li>What will I approve before development starts?</li>
+        <li>How many revision rounds are included, and what does an extra round cost?</li>
+        <li>What do you need from me, and by when?</li>
+        <li>Will the domain, hosting and analytics accounts be in my name?</li>
+        <li>How do you handle accessibility?</li>
+        <li>What is included after launch, and what does ongoing support cost?</li>
+        <li>Can I make simple changes myself?</li>
+        <li>What is the payment schedule?</li>
+        <li>Could I speak to a recent client?</li>
+      </ul>
+
+      <div className="blog-callout">
+        <h3>Put Us Through the Same Questions</h3>
+        <p>
+          We are a small Markham studio building websites for businesses across the GTA. Our process and pricing
+          are published, and we are happy to answer every question above, ownership included, on a first call.
         </p>
-        <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] relative z-10">
-          <Link href="/process" className="text-cyan-300 underline hover:text-cyan-200">
-            <strong className="text-cyan-300 font-semibold">See how we work</strong>
-          </Link>{' '}
-          or{' '}
-          <Link href="/contact" className="text-cyan-300 underline hover:text-cyan-200">
-            <strong className="text-cyan-300 font-semibold">get in touch</strong>
-          </Link>{' '}
-          to discuss your project.
+        <p>
+          See <Link href="/process">how we work</Link>, or <Link href="/contact">book a call</Link>.
         </p>
       </div>
     </div>
@@ -148,10 +201,15 @@ const ChoosingWebDesignerGtaContent = () => {
 
 export const choosingWebDesignerGtaPost: BlogPost = {
   slug: 'choosing-web-designer-gta',
-  title: 'How to Choose the Right Web Designer in the GTA',
-  description: 'Hiring a web designer in the Greater Toronto Area? Learn what to look for, questions to ask, and red flags to avoid when selecting a web design agency for your business.',
-  author: 'Zenara Designs',
+  title: 'How to Choose a Web Designer in the GTA: Questions to Ask First',
+  seoTitle: 'How to Choose a Web Designer in the GTA | Zenara Designs',
+  description:
+    'Hiring a web designer in the GTA? What to check in a portfolio, what to get in writing, who should own your domain and accounts, and ten questions to ask first.',
+  excerpt:
+    'Portfolios all look good and every proposal promises a fast, modern site. Here is how to tell GTA web designers apart before you have paid anyone, including ten questions to ask on the first call.',
+  author: 'Kavin Mural',
   publishedAt: new Date('2025-02-10'),
-  tags: ['web design', 'GTA', 'hiring', 'business tips'],
+  updatedAt: new Date('2026-09-23'),
+  tags: ['pricing & planning', 'web design', 'hiring'],
   content: ChoosingWebDesignerGtaContent,
 };

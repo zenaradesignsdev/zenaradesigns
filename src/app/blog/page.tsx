@@ -4,22 +4,22 @@ import { generateBreadcrumbSchema } from '@/lib/structured-data';
 import Blog from '@/components/pages/Blog';
 
 export const metadata: Metadata = {
-  title: 'Blog | Web Design Tips & Insights | Zenara Designs',
+  title: 'Web Design & SEO Guides for GTA Businesses | Zenara Blog',
   description:
-    'Read our latest blog posts about web design, digital marketing, business growth, and online presence. Expert insights for Toronto businesses and entrepreneurs.',
+    'Practical guides on web design, local SEO, website costs and hiring a designer, written for small businesses and professional firms in Markham and across the GTA.',
   alternates: { canonical: 'https://zenaradesigns.com/blog' },
   openGraph: {
     images: ['/opengraph-image'],
-    title: 'Blog | Web Design Tips & Insights | Zenara Designs',
+    title: 'Web Design & SEO Guides for GTA Businesses | Zenara Blog',
     description:
-      'Read our latest blog posts about web design, digital marketing, business growth, and online presence. Expert insights for Toronto businesses and entrepreneurs.',
+      'Practical guides on web design, local SEO, website costs and hiring a designer, written for small businesses and professional firms in Markham and across the GTA.',
     url: 'https://zenaradesigns.com/blog',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Blog | Web Design Tips & Insights | Zenara Designs',
+    title: 'Web Design & SEO Guides for GTA Businesses | Zenara Blog',
     description:
-      'Read our latest blog posts about web design, digital marketing, business growth, and online presence. Expert insights for Toronto businesses and entrepreneurs.',
+      'Practical guides on web design, local SEO, website costs and hiring a designer, written for small businesses and professional firms in Markham and across the GTA.',
   },
 };
 

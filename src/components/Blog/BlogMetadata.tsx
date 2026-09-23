@@ -1,42 +1,40 @@
-import { Calendar, Clock, User, Edit } from 'lucide-react';
-import { BlogPost } from '@/types';
-import { formatPostDate } from '@/lib/utils';
+import Link from 'next/link';
+import { cn, formatPostDate } from '@/lib/utils';
+import { findTeamMember } from '@/lib/team';
+import type { BlogPost } from '@/types';
 
 interface BlogMetadataProps {
   post: BlogPost;
+  readingMinutes: number;
+  showAuthor?: boolean;
+  className?: string;
 }
 
-// Estimate reading time based on word count (average reading speed: 200 words per minute)
-const calculateReadingTime = (content: React.ComponentType): number => {
-  // Rough estimate for typical blog posts
-  return 5;
-};
-
-export const BlogMetadata = ({ post }: BlogMetadataProps) => {
-  const readingTime = calculateReadingTime(post.content);
-  const formattedDate = formatPostDate(post.publishedAt);
-  const formattedUpdatedDate = post.updatedAt ? formatPostDate(post.updatedAt) : null;
+export const BlogMetadata = ({ post, readingMinutes, showAuthor = false, className }: BlogMetadataProps) => {
+  const published = formatPostDate(post.publishedAt);
+  const updated = post.updatedAt ? formatPostDate(post.updatedAt) : null;
 
   return (
-    <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-sm sm:text-base text-white/50 mb-8 sm:mb-12 pb-6 sm:pb-8 border-b border-white/10 font-light">
-      <div className="flex items-center gap-2">
-        <User className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400" />
-        <span>{post.author}</span>
-      </div>
-      <div className="flex items-center gap-2">
-        <Calendar className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400" />
-        <span>Published {formattedDate}</span>
-      </div>
-      {formattedUpdatedDate && formattedUpdatedDate !== formattedDate && (
-        <div className="flex items-center gap-2">
-          <Edit className="h-4 w-4 sm:h-5 sm:w-5 text-purple-400" />
-          <span>Updated {formattedUpdatedDate}</span>
-        </div>
+    <p className={cn('flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-white/45 font-light', className)}>
+      {showAuthor && (
+        <>
+          {findTeamMember(post.author) ? (
+            <Link href="/about" className="text-white/70 hover:text-white transition-colors">{post.author}</Link>
+          ) : (
+            <span className="text-white/70">{post.author}</span>
+          )}
+          <span aria-hidden="true">·</span>
+        </>
       )}
-      <div className="flex items-center gap-2">
-        <Clock className="h-4 w-4 sm:h-5 sm:w-5 text-cyan-400" />
-        <span>{readingTime} min read</span>
-      </div>
-    </div>
+      <time dateTime={new Date(post.publishedAt).toISOString()}>{published}</time>
+      {updated && updated !== published && (
+        <>
+          <span aria-hidden="true">·</span>
+          <span>Updated {updated}</span>
+        </>
+      )}
+      <span aria-hidden="true">·</span>
+      <span>{readingMinutes} min read</span>
+    </p>
   );
 };

@@ -1,66 +1,82 @@
 import Image from 'next/image';
-import { BlogPost } from '@/types';
+import Link from 'next/link';
 import { BlogMetadata } from './BlogMetadata';
+import { BlogOutline } from './BlogOutline';
+import type { PostOutline } from '@/lib/blog-outline';
+import type { BlogPost } from '@/types';
 
 interface BlogPostLayoutProps {
   post: BlogPost;
+  outline: PostOutline;
 }
 
-export const BlogPostLayout = ({ post }: BlogPostLayoutProps) => {
+export const BlogPostLayout = ({ post, outline }: BlogPostLayoutProps) => {
   const ContentComponent = post.content;
+  const tag = post.tags?.[0];
 
   return (
-    <article className="max-w-4xl mx-auto">
-      {/* Header */}
-      <header className="mb-12 sm:mb-16 md:mb-20">
-        {/* Tags */}
-        {post.tags && post.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-6 sm:mb-8">
-            {post.tags.map((tag, index) => (
-              <span
-                key={index}
-                className="px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-medium bg-gradient-to-r from-cyan-500/20 to-purple-500/20 text-cyan-300 rounded-full border border-cyan-400/30"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
+    <article>
+      <header className="max-w-4xl">
+        <nav aria-label="Breadcrumb" className="mb-6 sm:mb-8">
+          <ol className="flex items-center gap-2 text-xs uppercase tracking-[0.2em] font-medium">
+            <li>
+              <Link href="/blog" className="text-white/40 hover:text-white transition-colors">Blog</Link>
+            </li>
+            {tag && (
+              <>
+                <li aria-hidden="true" className="text-white/20">/</li>
+                <li className="text-cyan-300/70">{tag}</li>
+              </>
+            )}
+          </ol>
+        </nav>
 
-        {/* Title */}
-        <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-white mb-6 sm:mb-8 leading-[1.1] tracking-[-0.04em]">
-          <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">{post.title}</span>
+        <h1 className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-extralight text-white leading-[1.08] tracking-[-0.04em]">
+          {post.title}
         </h1>
-
-        {/* Description/Excerpt */}
-        <p className="text-base sm:text-lg md:text-xl text-white/60 leading-[1.7] font-light tracking-[0.01em] mb-6 sm:mb-8">
+        <p className="mt-6 max-w-3xl text-base sm:text-lg md:text-xl text-white/60 font-light leading-relaxed">
           {post.description}
         </p>
-
-        {/* Metadata */}
-        <BlogMetadata post={post} />
+        <BlogMetadata post={post} readingMinutes={outline.readingMinutes} showAuthor className="mt-6" />
       </header>
 
-      {/* Featured Image */}
       {post.featuredImage && (
-        <div className="w-full mb-12 sm:mb-16 md:mb-20 rounded-xl overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
+        <div className="relative mt-10 sm:mt-14 aspect-[16/9] sm:aspect-[21/8] rounded-2xl overflow-hidden border border-white/10 bg-white/5">
           <Image
             src={post.featuredImage}
-            alt={post.title}
-            width={1200}
-            height={630}
-            className="w-full h-auto object-cover relative z-10"
+            alt={post.featuredImageAlt ?? ''}
+            fill
             priority
-            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 80vw, 800px"
+            sizes="(max-width: 1280px) 100vw, 1152px"
+            className="object-cover opacity-80"
           />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
         </div>
       )}
 
-      {/* Content */}
-      <div className="blog-content">
-        <ContentComponent />
+      <div className="mt-12 sm:mt-16 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_15rem] gap-12 xl:gap-20">
+        <div className="blog-prose min-w-0 max-w-[42rem]">
+          <ContentComponent />
+        </div>
+
+        {outline.headings.length > 1 && (
+          <aside className="hidden lg:block">
+            <div className="sticky top-28">
+              <BlogOutline headings={outline.headings} />
+            </div>
+          </aside>
+        )}
       </div>
+
+      {post.tags && post.tags.length > 0 && (
+        <ul className="mt-14 flex flex-wrap gap-2" aria-label="Topics">
+          {post.tags.map((t) => (
+            <li key={t} className="rounded-full border border-white/10 px-3 py-1 text-xs text-white/50">
+              {t}
+            </li>
+          ))}
+        </ul>
+      )}
     </article>
   );
 };

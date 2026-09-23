@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { blogPosts, getPostBySlug } from '@/content/blog';
 import BlogPost from '@/components/pages/BlogPost';
-import { generateBlogPostingSchema, generateOrganizationSchema, generateWebSiteSchema } from '@/lib/structured-data';
+import { generateBlogPostingSchema, generateBreadcrumbSchema } from '@/lib/structured-data';
 
 interface Props {
   params: { slug: string };
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${post.title} | Zenara Designs Blog`,
+    title: post.seoTitle ?? `${post.title} | Zenara Designs Blog`,
     description: post.description,
     alternates: { canonical: `https://zenaradesigns.com/blog/${post.slug}` },
     openGraph: {
@@ -37,8 +37,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       type: 'article',
       url: `https://zenaradesigns.com/blog/${post.slug}`,
       publishedTime: post.publishedAt.toISOString(),
+      ...(post.updatedAt && { modifiedTime: post.updatedAt.toISOString() }),
       ...(post.featuredImage && {
-        images: [{ url: `https://zenaradesigns.com${post.featuredImage}` }],
+        images: [{ url: `https://zenaradesigns.com${post.featuredImage}`, ...(post.featuredImageAlt && { alt: post.featuredImageAlt }) }],
       }),
     },
     twitter: {
@@ -53,10 +54,15 @@ export default function BlogPostPage({ params }: Props) {
   const post = getPostBySlug(params.slug);
   if (!post) notFound();
 
+  // Organization and WebSite come from the root layout; repeating them here
+  // put two copies of each on every post.
   const schemas = [
-    generateOrganizationSchema(),
-    generateWebSiteSchema(),
     generateBlogPostingSchema(post),
+    generateBreadcrumbSchema([
+      { name: 'Home', url: '/' },
+      { name: 'Blog', url: '/blog' },
+      { name: post.title, url: `/blog/${post.slug}` },
+    ]),
   ];
 
   return (
@@ -69,7 +75,7 @@ export default function BlogPostPage({ params }: Props) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
       ))}
-      <BlogPost />
+      <BlogPost post={post} />
     </>
   );
 }

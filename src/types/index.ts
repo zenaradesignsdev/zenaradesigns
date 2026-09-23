@@ -153,11 +153,18 @@ export interface PerformanceMonitoringHook {
 export interface BlogPost {
   slug: string;
   title: string;
+  /** Full <title> when `${title} | Zenara Designs Blog` would be too long. */
+  seoTitle?: string;
+  /** Meta description; also the summary on /blog when there is no excerpt. */
   description: string;
+  /** Summary shown on /blog listings, when it should differ from the meta description. */
+  excerpt?: string;
   author: string;
   publishedAt: Date;
   updatedAt?: Date;
   tags?: string[];
   featuredImage?: string;
+  /** Alt text for a featured image that carries information. Stock photos are left decorative. */
+  featuredImageAlt?: string;
   content: React.ComponentType;
 }

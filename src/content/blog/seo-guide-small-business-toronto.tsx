@@ -1,151 +1,227 @@
 import { BlogPost } from '@/types';
 import Link from 'next/link';
+import { ExternalLink as External } from '@/components/Blog/ExternalLink';
+
+const SOURCES = {
+  localRanking: 'https://support.google.com/business/answer/7091',
+  profileGuidelines: 'https://support.google.com/business/answer/3038177',
+  reviewPolicy: 'https://support.google.com/contributionpolicy/answer/7400114',
+  peopleFirst: 'https://developers.google.com/search/docs/fundamentals/creating-helpful-content',
+  doorways: 'https://developers.google.com/search/docs/essentials/spam-policies',
+  pageIndexing: 'https://support.google.com/webmasters/answer/7440203',
+  coreWebVitals: 'https://developers.google.com/search/docs/appearance/core-web-vitals',
+};
 
 const SeoGuideTorontoContent = () => {
   return (
-    <div className="prose prose-lg max-w-none">
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        For small businesses in Toronto, ranking on Google isn&apos;t just a nice-to-have—it&apos;s how
-        customers find you. With <strong className="text-cyan-300 font-semibold">46% of all Google searches
-        having local intent</strong>, the businesses that show up on the first page capture the vast
-        majority of clicks. Whether you run a dental practice in Midtown, a bakery in the Beaches, or a
-        consulting firm downtown, mastering SEO is the most cost-effective way to grow your customer base.
+    <div>
+      <p>
+        Most local SEO advice arrives as a list of fifty tactics with equal weight. For a small business in
+        Toronto or the wider GTA, a handful of things do most of the work, and the rest is either minor or a
+        distraction. This guide covers the handful, in the order we would do them.
       </p>
 
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Why SEO Matters for Local Toronto Businesses</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Think about how you find businesses yourself. You pull out your phone and search &quot;best plumber
-        near me&quot; or &quot;accountant in Scarborough.&quot; Your customers do the exact same thing.
-        Research shows that <strong className="text-cyan-300 font-semibold">78% of local mobile searches
-        result in an offline purchase within 24 hours</strong>. That means if your business appears in
-        those search results, you&apos;re capturing customers who are ready to buy right now.
+      <h2 id="how-google-chooses-local-results">How Google Chooses Which Local Businesses to Show</h2>
+      <p>
+        Google is unusually direct about this. Its Business Profile help pages say{' '}
+        <External href={SOURCES.localRanking}>local results are based mainly on relevance, distance and
+        prominence</External>, and that there is no way to request or pay for a better local ranking.
       </p>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Unlike paid advertising, which stops generating leads the moment you stop paying, SEO builds
-        compounding value over time. A well-optimized website can bring in consistent organic traffic for
-        months or years, making it one of the highest-ROI marketing channels available to Toronto small
-        businesses.
+      <ul>
+        <li>
+          <strong>Relevance</strong> is how well your profile matches what someone searched for.
+        </li>
+        <li>
+          <strong>Distance</strong> is how far you are from the person searching. You can’t change it.
+        </li>
+        <li>
+          <strong>Prominence</strong> is how well known you are. Google says this draws on information such as
+          how many websites link to your business and how many reviews you have.
+        </li>
+      </ul>
+      <p>
+        Everything below is about the two you can influence: making it obvious what you do (relevance) and
+        building evidence that people know and use your business (prominence).
       </p>
 
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Optimize Your Google Business Profile</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Your Google Business Profile (GBP) is the single most important local SEO asset you have. It&apos;s
-        what appears in the map pack—those top three results with the map that show up for local searches.
-        To maximize your GBP:
+      <h2 id="get-your-business-profile-right">Step 1: Get Your Google Business Profile Right</h2>
+      <p>
+        The profile is where most local visibility starts, and the common mistakes are easy to fix.
       </p>
-      <ul className="list-disc list-inside text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6 space-y-2 ml-4">
-        <li><strong className="text-cyan-300 font-semibold">Complete every field:</strong> Business name, address, phone, hours, categories, and service areas across the GTA.</li>
-        <li><strong className="text-cyan-300 font-semibold">Add photos weekly:</strong> Businesses with 100+ photos get 520% more calls than average, according to Google&apos;s data.</li>
-        <li><strong className="text-cyan-300 font-semibold">Collect and respond to reviews:</strong> Aim for at least 20 reviews with a 4.5+ star rating. Respond to every review—positive and negative.</li>
-        <li><strong className="text-cyan-300 font-semibold">Post updates regularly:</strong> Use Google Posts to share offers, events, and news to keep your profile active.</li>
-        <li><strong className="text-cyan-300 font-semibold">Use local keywords:</strong> Include neighbourhood names like &quot;Etobicoke,&quot; &quot;North York,&quot; or &quot;Mississauga&quot; in your business description.</li>
+      <ul>
+        <li>
+          <strong>Use your real business name.</strong> Google’s{' '}
+          <External href={SOURCES.profileGuidelines}>profile guidelines</External> say the name should match
+          what you use on your storefront, website and stationery, and they prohibit adding service or
+          location keywords. “Example Plumbing” is fine. “Example Plumbing Markham 24/7 Emergency Plumber”
+          breaks the guidelines.
+        </li>
+        <li>
+          <strong>Pick the most specific primary category</strong> for your main line of work, and use
+          secondary categories for the rest.
+        </li>
+        <li>
+          <strong>Set up a service area correctly.</strong> If customers don’t come to your address (most
+          trades working from home, for example), Google’s guidelines say to hide the address and list the
+          areas you serve instead.
+        </li>
+        <li>
+          <strong>Write a useful description.</strong> What you do, who for, and where. Google’s guidelines
+          ask for useful information about your services and exclude links and promotional offers.
+        </li>
+        <li>
+          <strong>Ask every satisfied customer for a review.</strong> Send the direct review link by text or
+          email the day the job finishes, and reply to every review you get. Don’t offer anything in return:
+          Google’s <External href={SOURCES.reviewPolicy}>review policy</External> prohibits incentives such
+          as discounts or free services in exchange for reviews.
+        </li>
+        <li>
+          <strong>Add real photos</strong> of your work, your team and, if customers visit, your premises.
+        </li>
       </ul>
 
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">On-Page SEO Fundamentals</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        On-page SEO refers to everything you can control directly on your website. Getting these basics right
-        puts you ahead of the majority of Toronto small business websites:
+      <h2 id="give-each-service-a-real-page">Step 2: Give Each Service a Real Page</h2>
+      <p>
+        Your website supports relevance too. A single “Services” page with one line per service gives Google
+        very little to match against a specific search like “basement waterproofing Scarborough”. A page
+        dedicated to that service gives it a lot.
       </p>
-      <ul className="list-disc list-inside text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6 space-y-2 ml-4">
-        <li><strong className="text-cyan-300 font-semibold">Title tags:</strong> Each page needs a unique, keyword-rich title under 60 characters. Include your city: &quot;Custom Web Design Toronto | Zenara Designs.&quot;</li>
-        <li><strong className="text-cyan-300 font-semibold">Meta descriptions:</strong> Write compelling 150–160 character summaries that include your target keywords and a call to action.</li>
-        <li><strong className="text-cyan-300 font-semibold">Header structure:</strong> Use H1 for your main page title, H2 for sections, and H3 for subsections. Google uses these to understand your content.</li>
-        <li><strong className="text-cyan-300 font-semibold">Image optimization:</strong> Compress images, use descriptive file names, and always include alt text with relevant keywords.</li>
-        <li><strong className="text-cyan-300 font-semibold">Internal linking:</strong> Link between your own pages to help search engines discover and understand your site structure.</li>
+      <p>A useful service page usually covers:</p>
+      <ul>
+        <li>What the service includes, and what it doesn’t</li>
+        <li>Who it is typically for, and the problems it solves</li>
+        <li>How pricing works, even if that is a range or the factors that affect a quote</li>
+        <li>What happens from first contact to finished job</li>
+        <li>The questions people ask before they call, answered</li>
+        <li>Where you do the work</li>
       </ul>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Explore{' '}
-        <Link href="/services" className="text-cyan-300 underline hover:text-cyan-200">our services</Link>{' '}
-        to see how we build SEO into every website from the ground up.
+      <p>
+        Write it for the customer first. Google’s own guidance on{' '}
+        <External href={SOURCES.peopleFirst}>people-first content</External> recommends content made
+        primarily for people, not content made primarily to gain rankings. In practice the two line up: the
+        page that answers a customer’s real questions naturally uses the words they search with.
+      </p>
+      <p>
+        Give each page a clear title and heading that name the service, and where it helps, the area. For
+        example: “Basement Waterproofing in Scarborough | Example Plumbing”.
       </p>
 
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Local Keyword Strategy for Toronto and the GTA</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Generic keywords like &quot;web designer&quot; are extremely competitive. Instead, target location-specific
-        long-tail keywords that match how Toronto customers actually search:
+      <h2 id="be-careful-with-city-pages">Step 3: Be Careful With City Pages</h2>
+      <p>
+        A common piece of local SEO advice is to build a page for every town you serve. Done badly, that
+        creates exactly what Google’s spam policies call{' '}
+        <External href={SOURCES.doorways}>doorway abuse</External>, which includes “having multiple domain
+        names or pages targeted at specific regions or cities that funnel users to one page”.
       </p>
-      <ul className="list-disc list-inside text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6 space-y-2 ml-4">
-        <li>&quot;Best [your service] in [neighbourhood]&quot; (e.g., &quot;best physiotherapist in Liberty Village&quot;)</li>
-        <li>&quot;[Your service] near me&quot; — optimized through your GBP and on-page content</li>
-        <li>&quot;[Your service] Toronto reviews&quot;</li>
-        <li>&quot;Affordable [your service] GTA&quot;</li>
+      <p>A city page is justified when it has something specific to say about that city. For example:</p>
+      <ul>
+        <li>Projects you have completed there, with photos</li>
+        <li>Local differences that matter to the customer, such as which municipality issues the permit</li>
+        <li>How you serve that area: travel, scheduling, or a team member based nearby</li>
       </ul>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Create dedicated pages or blog posts for each service area you cover. A plumber serving both
-        Markham and Vaughan should have separate, optimized pages for each city rather than one generic
-        &quot;service areas&quot; page.
+      <p>
+        If the only difference between two pages would be the town name, don’t build the second page.
+        Mention the areas you serve on your service pages and in your Business Profile instead.
       </p>
 
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Mobile Optimization Is Non-Negotiable</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Google uses mobile-first indexing, meaning it evaluates the mobile version of your site before
-        the desktop version. In the Toronto market, <strong className="text-cyan-300 font-semibold">over 65% of
-        local searches happen on mobile devices</strong>. If your site isn&apos;t fast and easy to use on a
-        phone, you&apos;re losing both rankings and customers. Key mobile optimization factors include fast
-        load times under three seconds, tap-friendly buttons, readable text without zooming, and streamlined
-        navigation. Learn more about our approach to{' '}
-        <Link href="/services/web-design" className="text-cyan-300 underline hover:text-cyan-200">mobile optimization</Link>.
+      <h2 id="technical-basics-worth-your-time">Step 4: The Technical Basics Worth Your Time</h2>
+      <p>
+        Technical SEO can absorb unlimited time. For a small business site, these checks cover what
+        matters:
       </p>
-
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Measuring Your SEO Results</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        SEO is a long-term strategy. Most Toronto businesses start seeing meaningful results within three to
-        six months of consistent effort. Track these key metrics to measure progress:
-      </p>
-      <ul className="list-disc list-inside text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6 space-y-2 ml-4">
-        <li><strong className="text-cyan-300 font-semibold">Organic traffic:</strong> The number of visitors finding you through search engines (check Google Analytics).</li>
-        <li><strong className="text-cyan-300 font-semibold">Keyword rankings:</strong> Your position for target keywords like &quot;[your service] Toronto.&quot;</li>
-        <li><strong className="text-cyan-300 font-semibold">Conversion rate:</strong> What percentage of visitors take action—calling, filling out a form, or booking.</li>
-        <li><strong className="text-cyan-300 font-semibold">Local pack appearances:</strong> How often your GBP shows in the top three map results.</li>
+      <ul>
+        <li>
+          <strong>Your pages are actually indexed.</strong> Set up Google Search Console and check the{' '}
+          <External href={SOURCES.pageIndexing}>page indexing report</External>. A page marked “Crawled,
+          currently not indexed” was seen by Google but not added to results. When that happens to an
+          important page, ask whether it offers anything the rest of your site doesn’t.
+        </li>
+        <li>
+          <strong>Every page has its own title and description.</strong> There is no official character
+          limit; Google shortens titles to fit the screen, so put the important words first.
+        </li>
+        <li>
+          <strong>The site is fast on a phone.</strong> Google’s{' '}
+          <External href={SOURCES.coreWebVitals}>Core Web Vitals</External> guidance suggests aiming for the
+          main content to load within 2.5 seconds, responses to taps under 200 milliseconds, and a layout
+          shift score under 0.1. PageSpeed Insights will measure all three for free.
+        </li>
+        <li>
+          <strong>Your name, address and phone number match</strong> across your website, Business Profile
+          and any directory listings.
+        </li>
       </ul>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Don&apos;t expect overnight results. SEO rewards consistency—businesses that publish regular content,
-        maintain their technical foundation, and build local citations will steadily climb the rankings.
+      <p>
+        For the full pre-launch list, including redirects, analytics and form testing, see our{' '}
+        <Link href="/blog/website-launch-checklist">website launch checklist</Link>.
       </p>
 
-      <h2 className="text-2xl sm:text-3xl md:text-4xl font-semibold text-white mt-10 sm:mt-12 mb-4 sm:mb-6 tracking-tight">
-        <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Local SEO for GTA Businesses</span>
-      </h2>
-      <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-6">
-        Everything above applies in the suburbs, with one significant difference: the competition is
-        thinner. Ranking for &quot;web design Stouffville&quot; or &quot;physiotherapy Markham&quot; is a
-        genuinely achievable goal for a small business, where the equivalent Toronto term is contested
-        by agencies with twenty-year backlink profiles. Focus your effort on a Google Business Profile
-        with real reviews, citations with local organizations like the Markham Board of Trade and your
-        municipal chamber of commerce, and one properly-built page per city you actually serve.
-        See our <Link href="/services/seo" className="text-cyan-300 underline hover:text-cyan-200">SEO services</Link> or the <Link href="/locations" className="text-cyan-300 underline hover:text-cyan-200">areas we cover</Link>.
+      <h2 id="earn-local-links-and-mentions">Step 5: Earn Local Links and Mentions</h2>
+      <p>
+        Links from other websites are part of prominence, and this is where most small businesses are
+        weakest. The useful ones are usually the ones that exist because of a real relationship:
       </p>
-      <div className="bg-slate-900/90 backdrop-blur-sm rounded-xl p-6 sm:p-8 mt-10 sm:mt-12 mb-6 border border-slate-800/50 relative overflow-hidden">
-        <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-cyan-500/10 via-purple-500/10 to-cyan-500/10 blur-2xl opacity-50"></div>
-        <h3 className="text-xl sm:text-2xl font-semibold text-white mb-4 relative z-10 tracking-tight">
-          <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Explore Our SEO Services</span>
-        </h3>
-        <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] mb-4 relative z-10">
-          At Zenara Designs, every website we build is optimized for search from day one. We handle
-          technical SEO, local optimization, content strategy, and ongoing performance monitoring so
-          your Toronto business gets found by the customers who matter most.
+      <ul>
+        <li>Supplier or manufacturer “find an installer” pages that list you</li>
+        <li>Your local board of trade or chamber of commerce member directory</li>
+        <li>Local teams, events or charities you actually sponsor or support</li>
+        <li>Industry associations and professional directories you belong to</li>
+        <li>Local news coverage of work that is genuinely newsworthy</li>
+      </ul>
+      <p>
+        Skip anything sold as a link package. It is the fastest way to spend money on SEO that can hurt you.
+      </p>
+
+      <h2 id="how-to-measure-local-seo">How to Measure Whether It Is Working</h2>
+      <p>Three sources tell you most of what you need:</p>
+      <ol>
+        <li>
+          <strong>Search Console:</strong> which searches show your site, how often, and which pages people
+          land on. Watch for service-and-town searches growing.
+        </li>
+        <li>
+          <strong>Business Profile performance:</strong> calls, direction requests and website clicks from
+          your profile.
+        </li>
+        <li>
+          <strong>Your own records:</strong> ask every new enquiry how they found you, and write it down.
+        </li>
+      </ol>
+      <p>
+        How long results take depends on how competitive your service and area are, so be wary of anyone who
+        promises a timeline. Plan in months, not weeks, and judge progress by enquiries rather than by where
+        you rank on a given day.
+      </p>
+
+      <h2 id="what-to-skip">What to Skip</h2>
+      <ul>
+        <li>Keyword-stuffed business names and fake locations</li>
+        <li>Bought reviews, or discounts in exchange for reviews</li>
+        <li>Link packages and directory blasts</li>
+        <li>Dozens of near-identical city pages</li>
+        <li>
+          Writing “near me” into your pages. “Near me” searches are answered using the searcher’s location,
+          which is the distance factor above.
+        </li>
+      </ul>
+
+      <h2 id="what-about-ai-search">What About AI Search?</h2>
+      <p>
+        AI answers, such as Google’s AI Overviews and assistants like ChatGPT, draw on the same public web.
+        The fundamentals above (clear service pages, a consistent Business Profile, genuine mentions of your
+        business elsewhere) are also what makes a business easy for those tools to describe accurately. Our{' '}
+        <Link href="/services/geo">AI search page</Link> covers the few things that are specific to them.
+      </p>
+
+      <div className="blog-callout">
+        <h3>Want Help With Local SEO?</h3>
+        <p>
+          We do this work for small businesses in Markham and across the GTA: Business Profile setup, service
+          pages, technical fixes and monthly reporting in plain English.
         </p>
-        <p className="text-white/60 text-base sm:text-lg leading-[1.7] font-light tracking-[0.01em] relative z-10">
-          <Link href="/services" className="text-cyan-300 underline hover:text-cyan-200">
-            <strong className="text-cyan-300 font-semibold">View our SEO and web design services</strong>
-          </Link>{' '}
-          or{' '}
-          <Link href="/contact" className="text-cyan-300 underline hover:text-cyan-200">
-            <strong className="text-cyan-300 font-semibold">contact us</strong>
-          </Link>{' '}
-          for a free SEO audit of your current site.
+        <p>
+          See our <Link href="/services/seo">local SEO services</Link>, or{' '}
+          <Link href="/contact">get in touch</Link> and we will tell you what we would fix first on your site.
         </p>
       </div>
     </div>
@@ -154,10 +230,15 @@ const SeoGuideTorontoContent = () => {
 
 export const seoGuideTorontoPost: BlogPost = {
   slug: 'seo-guide-small-business-toronto',
-  title: 'SEO for Small Businesses in Toronto: A Complete Guide',
-  description: 'Learn the essential SEO strategies Toronto small businesses need to rank on Google. From local SEO to technical optimization, this guide covers everything to grow your online visibility.',
-  author: 'Zenara Designs',
+  title: 'Local SEO for GTA Small Businesses: What Actually Moves Rankings',
+  seoTitle: 'Local SEO Guide for GTA Small Businesses | Zenara Designs',
+  description:
+    'A practical local SEO guide for Toronto and GTA small businesses: Google Business Profile, service pages, city pages, technical basics and measuring results.',
+  excerpt:
+    'Most local SEO advice is a list of fifty tactics. For a small business in the GTA, a handful do most of the work. Here they are, in the order we would do them, with Google’s own guidance linked.',
+  author: 'Kavin Mural',
   publishedAt: new Date('2025-03-01'),
-  tags: ['SEO', 'Toronto', 'small business', 'digital marketing'],
+  updatedAt: new Date('2026-09-23'),
+  tags: ['SEO', 'local SEO', 'small business'],
   content: SeoGuideTorontoContent,
 };

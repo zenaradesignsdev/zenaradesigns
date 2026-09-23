@@ -51,6 +51,9 @@ const retiredCityRedirects = () =>
 // /services/website-maintenance page — the pricing page already bundles
 // hosting and analytics/reporting into one Core/Grow/Prime subscription
 // ladder, so two separate service pages no longer matched reality.
+// /blog/importance-of-website-for-business answered the same question as the
+// website-vs-social-media post (and was the thinner of the two), so the two
+// were combined into the latter.
 const MERGED_PAGES = [
   { source: '/mobile', destination: '/services/web-design' },
   { source: '/security', destination: '/services/website-maintenance' },
@@ -58,6 +61,7 @@ const MERGED_PAGES = [
   { source: '/services/business-cards', destination: '/services/branding' },
   { source: '/services/hosting', destination: '/services/website-maintenance' },
   { source: '/services/website-care', destination: '/services/website-maintenance' },
+  { source: '/blog/importance-of-website-for-business', destination: '/blog/website-vs-social-media-business' },
 ];
 
 const mergedPageRedirects = () =>
