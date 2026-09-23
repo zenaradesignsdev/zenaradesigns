@@ -27,7 +27,7 @@ export const lawyersFaqs: IndustryFaq[] = [
   },
   {
     question: "How much does a professional law firm website cost in Ontario?",
-    answer: "A custom, professional website for an Ontario law firm typically ranges from $4,000 to $10,000, depending on features like consultation booking systems, practice area pages, case study sections, blog functionality, and attorney profile pages. Zenara Designs provides transparent, fixed-price proposals to ensure budgetary certainty for your practice."
+    answer: "Most law firm websites fit our Small Business plan ($1,999, up to six pages) or our Pro plan (from $4,999). Where a firm lands depends on how many practice area pages and lawyer profiles it needs, and whether it wants integrations such as online consultation booking. Every project gets a fixed written quote before work starts, and current prices and any promotions are listed on our pricing page. Because we are a small senior team using AI-assisted development, automated deployment and scripted site audits, you pay for the build itself rather than agency overhead."
   },
   {
     question: "How long does it take to build a lawyer's website?",
@@ -66,7 +66,7 @@ export const accountantsFaqs: IndustryFaq[] = [
   },
   {
     question: "How much does a professional accounting firm website cost in Ontario?",
-    answer: "A custom, professional website for an Ontario accounting firm typically ranges from $4,000 to $10,000, depending on features like client portals, tax document management systems, service area pages, blog functionality, and CPA profile pages. Zenara Designs provides transparent, fixed-price proposals to ensure budgetary certainty for your practice."
+    answer: "Most accounting firm websites fit our Small Business plan ($1,999, up to six pages) or our Pro plan (from $4,999). Where a firm lands depends on how many service pages and CPA profiles it needs, and whether it wants integrations such as appointment booking or a link to a secure client portal. Every project gets a fixed written quote before work starts, and current prices and any promotions are listed on our pricing page. Because we are a small senior team using AI-assisted development, automated deployment and scripted site audits, you pay for the build itself rather than agency overhead."
   },
   {
     question: "How long does it take to build an accounting firm's website?",
@@ -97,7 +97,7 @@ export const clinicsFaqs: IndustryFaq[] = [
   },
   {
     question: "How much does a professional wellness clinic website cost in Ontario?",
-    answer: "A custom, professional website for an Ontario wellness clinic typically ranges from $4,000 to $10,000, depending on features like booking integration (Jane App, Gorendezvous, Cliniko), practitioner bio pages, condition-specific SEO pages, HIPAA/PHIPA compliant forms, and patient education content. Zenara Designs provides transparent, fixed-price proposals to ensure budgetary certainty for your practice."
+    answer: "Most clinic websites fit our Small Business plan ($1,999, up to six pages) or our Pro plan (from $4,999). Where a clinic lands depends on how many service and practitioner pages it needs, and whether it wants its booking system (such as Jane App or Cliniko) integrated into the site. Every project gets a fixed written quote before work starts, and current prices and any promotions are listed on our pricing page. Because we are a small senior team using AI-assisted development, automated deployment and scripted site audits, you pay for the build itself rather than agency overhead."
   },
   {
     question: "How long does it take to build a wellness clinic's website?",
@@ -128,7 +128,7 @@ export const renovationsFaqs: IndustryFaq[] = [
   },
   {
     question: "How much does a professional renovation company website cost in Ontario?",
-    answer: "A custom, professional website for an Ontario renovation company typically ranges from $4,000 to $10,000, depending on features like project portfolio galleries, quote request systems, service area pages, video testimonials, and local SEO optimization. Zenara Designs provides transparent, fixed-price proposals to ensure budgetary certainty for your business."
+    answer: "Most renovation company websites fit our Small Business plan ($1,999, up to six pages) or our Pro plan (from $4,999). Where a company lands depends on how many service pages and project galleries it needs, and whether it wants a detailed quote request form or other integrations. Every project gets a fixed written quote before work starts, and current prices and any promotions are listed on our pricing page. Because we are a small senior team using AI-assisted development, automated deployment and scripted site audits, you pay for the build itself rather than agency overhead."
   },
   {
     question: "How long does it take to build a renovation company's website?",
