@@ -21,6 +21,10 @@ const Navbar = () => {
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const previousBodyOverflow = useRef<string>('');
+  const restoreScrollOnClose = useRef(true);
+  // Scroll position when the menu opened. Kept in a ref because the effect
+  // cleanup clears body.style.top before the close branch could read it.
+  const lockedScrollY = useRef(0);
 
   const navLinks = NAVIGATION_LINKS;
   const isActive = (href: string) => pathname === href;
@@ -108,14 +112,13 @@ const Navbar = () => {
     }
   };
 
+  // Navigating from the menu: the new page should open at the top, so the
+  // scroll lock below must not put back the previous page's scroll position
+  // when the menu finishes closing. Next.js handles the scroll to top itself.
   const handleNavigation = (href: string) => {
+    restoreScrollOnClose.current = false;
     closeMobileMenu();
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        router.push(href);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      }, 200);
-    });
+    router.push(href);
   };
 
   // Prevent body scroll when mobile menu is open - optimized for mobile devices
@@ -123,6 +126,7 @@ const Navbar = () => {
     if (isMobileMenuOpen) {
       // Save current scroll position
       const scrollY = window.scrollY;
+      lockedScrollY.current = scrollY;
       previousBodyOverflow.current = document.body.style.overflow;
       
       // Lock scroll - method that works on all devices
@@ -144,9 +148,6 @@ const Navbar = () => {
         closeButtonRef.current?.focus();
       }, 150);
     } else {
-      // Restore scroll
-      const scrollY = document.body.style.top;
-      
       // Restore body styles
       document.body.style.overflow = previousBodyOverflow.current || '';
       document.body.style.position = '';
@@ -161,10 +162,12 @@ const Navbar = () => {
       document.documentElement.style.width = '';
       document.documentElement.style.height = '';
       
-      // Restore scroll position
-      if (scrollY) {
-        window.scrollTo(0, parseInt(scrollY || '0') * -1);
+      // Restore scroll position, unless the menu closed because of a navigation
+      if (lockedScrollY.current && restoreScrollOnClose.current) {
+        window.scrollTo(0, lockedScrollY.current);
       }
+      lockedScrollY.current = 0;
+      restoreScrollOnClose.current = true;
     }
 
     return () => {
@@ -340,7 +343,6 @@ const Navbar = () => {
             <Link
               href="/"
               className="group relative flex items-center rounded-full focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300"
-              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               onMouseEnter={() => setLogoTurns((turns) => turns + 1)}
               // Keyboard focus only — a mouse click focuses the link too, and
               // would otherwise stack a second turn on top of the hover's.
@@ -388,7 +390,6 @@ const Navbar = () => {
                 ref={(el) => {
                   linkRefs.current[index] = el;
                 }}
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                 onMouseEnter={() => moveTo(index)}
                 onFocus={() => moveTo(index)}
                   className={`relative py-1.5 font-light text-sm xl:text-base transition-colors duration-300 rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-300 ${
@@ -428,7 +429,6 @@ const Navbar = () => {
                     >
                       <Link 
                         href="/contact" 
-                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                     className="flex items-center gap-1.5 xl:gap-2 relative z-10 group-hover:text-white"
                   >
                     <span className="relative z-10">Let's Talk</span>

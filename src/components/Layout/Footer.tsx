@@ -199,7 +199,6 @@ const Footer = () => {
                   <Link
                     key={link.href}
                     href={link.href}
-                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                     className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                   >
                     {link.label}
@@ -216,7 +215,6 @@ const Footer = () => {
                   <Link
                     key={link.href}
                     href={link.href}
-                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                     className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                   >
                     {link.label}
@@ -231,28 +229,24 @@ const Footer = () => {
               <div className="grid grid-cols-1 gap-x-1 gap-y-2">
                 <Link
                   href="/renovations"
-                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                 >
                   Renovations &amp; Contractors
                 </Link>
                 <Link
                   href="/clinics"
-                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                 >
                   Physio &amp; Wellness Clinics
                 </Link>
                 <Link
                   href="/accountants"
-                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                 >
                   Accountants &amp; Brokers
                 </Link>
                 <Link
                   href="/lawyers"
-                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                 >
                   Law Firms
@@ -268,7 +262,6 @@ const Footer = () => {
                   <Link
                     key={link.href}
                     href={link.href}
-                    onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                     className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                   >
                     {link.label}
@@ -286,7 +279,6 @@ const Footer = () => {
                 <Link
                   key={link.href}
                   href={link.href}
-                  onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
                   className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
                 >
                   {link.label}
