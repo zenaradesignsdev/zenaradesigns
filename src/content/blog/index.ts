@@ -6,6 +6,7 @@ import { choosingWebDesignerGtaPost } from './choosing-web-designer-gta';
 import { badWebsiteCostingMoneyPost } from './bad-website-costing-business-money';
 import { websiteLaunchChecklistPost } from './website-launch-checklist';
 import { ontarioLawFirmWebsiteContentPost } from './ontario-law-firm-website-content';
+import { accountingFirmWebsitePagesPost } from './accounting-firm-website-pages';
 
 // Featured images live in /public/images/blog/<slug>.jpg (1600x900).
 // Photos are from Unsplash under the Unsplash License (free for commercial
@@ -16,11 +17,15 @@ import { ontarioLawFirmWebsiteContentPost } from './ontario-law-firm-website-con
 //   bad-website-costing-business-money   MJ Duford         unsplash.com/photos/P_5mirRrg0k
 //   choosing-web-designer-gta            Amélie Mourichon  unsplash.com/photos/sv8oOQaUb-o
 //   website-launch-checklist             Jakub Żerdzicki   unsplash.com/photos/yKnIbJV0RbY
-// The law firm post's image is an original illustration, not a stock photo.
+// The law firm and accounting firm posts use original illustrations, not stock photos.
 const image = (slug: string) => `/images/blog/${slug}.jpg`;
 
 // Posts are ordered by published date (newest first)
 export const blogPosts: BlogPost[] = [
+  {
+    ...accountingFirmWebsitePagesPost,
+    featuredImage: image(accountingFirmWebsitePagesPost.slug),
+  },
   {
     ...ontarioLawFirmWebsiteContentPost,
     featuredImage: image(ontarioLawFirmWebsiteContentPost.slug),
