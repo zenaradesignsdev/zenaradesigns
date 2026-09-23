@@ -93,7 +93,7 @@ const GeoService = () => {
               <FadeIn delay={320}>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
-                    <Button asChild className="relative overflow-hidden h-auto bg-black rounded-full text-white shadow-lg transition-all duration-300 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold group">
+                    <Button asChild className="w-full relative overflow-hidden h-auto bg-black rounded-full text-white shadow-lg transition-all duration-300 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold group">
                       <Link href="/contact" className="flex items-center justify-center">
                         <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full" />
                         <span className="flex items-center gap-2 relative z-10 group-hover:text-white">

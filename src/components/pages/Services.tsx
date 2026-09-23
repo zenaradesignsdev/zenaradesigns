@@ -259,7 +259,7 @@ const Services = () => {
               <FadeIn delay={420}>
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 sm:gap-10">
                   <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
-                    <Button asChild className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-7 py-5 sm:px-9 sm:py-6 text-base sm:text-lg font-semibold group">
+                    <Button asChild className="w-full relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-7 py-5 sm:px-9 sm:py-6 text-base sm:text-lg font-semibold group">
                       <Link href="/contact" className="flex items-center relative z-10 group-hover:text-white">
                         <span className="relative z-10">Start Your Project</span>
                         <ArrowUpRight className="ml-2 h-5 w-5 relative z-10 group-hover:text-cyan-400 transition-colors" />

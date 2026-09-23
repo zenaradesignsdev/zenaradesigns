@@ -180,7 +180,7 @@ const ProcessSection = () => {
             <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
               <Link
                 href="/process"
-                className="relative flex items-center justify-center overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-7 py-3.5 sm:px-9 sm:py-4 text-base sm:text-lg font-semibold group"
+                className="w-full relative flex items-center justify-center overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-7 py-3.5 sm:px-9 sm:py-4 text-base sm:text-lg font-semibold group"
               >
                 <span className="relative z-10 group-hover:text-white">See How We Work</span>
                 <ArrowUpRight className="ml-2 h-5 w-5 relative z-10 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

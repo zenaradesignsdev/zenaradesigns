@@ -455,7 +455,7 @@ const WebDesignCity = ({ content }: WebDesignCityProps) => {
             <div className="relative rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
               <Link
                 href="/contact"
-                className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold flex items-center justify-center gap-2 group/button"
+                className="w-full relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold flex items-center justify-center gap-2 group/button"
               >
                 <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover/button:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full"></span>
                 <span className="flex items-center justify-center relative z-10 group-hover/button:text-white whitespace-nowrap">

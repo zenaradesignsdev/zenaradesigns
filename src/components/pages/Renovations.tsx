@@ -160,7 +160,7 @@ const Renovations = () => {
                   <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
                     <Button
                       asChild
-                      className="relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold group"
+                      className="w-full relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-6 sm:px-8 py-3 sm:py-4 text-sm sm:text-base font-semibold group"
                     >
                       <a href="#quote" className="flex items-center gap-2 relative z-10 group-hover:text-white">
                         <span className="relative z-10">Get A Free Quote</span>
