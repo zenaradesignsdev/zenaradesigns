@@ -166,8 +166,7 @@ export const badWebsiteCostingMoneyPost: BlogPost = {
   excerpt:
     'You rarely see the customers a website loses. These five checks, all free and doable in an afternoon, show whether yours is quietly sending enquiries to competitors.',
   author: 'Kavin Mural',
-  publishedAt: new Date('2025-01-28'),
-  updatedAt: new Date('2026-09-23'),
+  publishedAt: new Date('2026-04-02'),
   tags: ['web design', 'website redesign', 'conversions'],
   content: BadWebsiteCostingMoneyContent,
 };

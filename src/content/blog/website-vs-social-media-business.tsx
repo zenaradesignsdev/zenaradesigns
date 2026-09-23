@@ -179,8 +179,7 @@ export const websiteVsSocialMediaPost: BlogPost = {
   excerpt:
     'Plenty of GTA businesses run on referrals, Instagram and a Google Business Profile. Here is what each one does well, where each runs out, and when a website starts doing work the others can’t.',
   author: 'Kavin Mural',
-  publishedAt: new Date('2025-03-05'),
-  updatedAt: new Date('2026-09-23'),
+  publishedAt: new Date('2026-07-01'),
   tags: ['web design', 'social media', 'small business'],
   content: WebsiteVsSocialMediaContent,
 };

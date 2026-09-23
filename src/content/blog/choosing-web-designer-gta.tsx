@@ -208,8 +208,7 @@ export const choosingWebDesignerGtaPost: BlogPost = {
   excerpt:
     'Portfolios all look good and every proposal promises a fast, modern site. Here is how to tell GTA web designers apart before you have paid anyone, including ten questions to ask on the first call.',
   author: 'Kavin Mural',
-  publishedAt: new Date('2025-02-10'),
-  updatedAt: new Date('2026-09-23'),
+  publishedAt: new Date('2026-04-21'),
   tags: ['pricing & planning', 'web design', 'hiring'],
   content: ChoosingWebDesignerGtaContent,
 };

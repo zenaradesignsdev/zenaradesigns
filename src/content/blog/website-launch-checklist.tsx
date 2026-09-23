@@ -114,7 +114,6 @@ export const websiteLaunchChecklistPost: BlogPost = {
     'The checklist we run before handing over any website: content, technical setup, forms, analytics, performance and local search. Free to use on your own site.',
   author: 'Kavin Mural',
   publishedAt: new Date('2026-08-23'),
-  updatedAt: new Date('2026-09-23'),
   tags: ['checklists', 'website launch', 'SEO'],
   content: WebsiteLaunchChecklistContent,
 };
