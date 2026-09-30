@@ -1661,3 +1661,55 @@
     @apply mb-0;
   }
 }
+
+/* Home hero — website mockup art + marquee */
+@keyframes zn-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes zn-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-9px); }
+}
+
+@keyframes zn-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes zn-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.zn-marquee { animation: zn-marquee 34s linear infinite; }
+.zn-float { animation: zn-float 4.5s ease-in-out infinite; }
+.zn-float-slow { animation: zn-float 5.5s ease-in-out infinite; }
+.zn-spin { animation: zn-spin 40s linear infinite; }
+.zn-pulse { animation: zn-pulse 2s ease-in-out infinite; }
+
+.zn-dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.09) 1.2px, transparent 1.2px);
+  background-size: 26px 26px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zn-marquee, .zn-float, .zn-float-slow, .zn-spin, .zn-pulse { animation: none; }
+}
+
+/* Case study device mockups: the full-page screenshot scrolls inside the
+   screen. --scroll-end is how far to travel, as a share of the image's own
+   height (image height minus screen height, over image height). */
+@keyframes cs-screen-scroll {
+  0%, 8% { transform: translateY(0); }
+  46%, 54% { transform: translateY(var(--scroll-end)); }
+  92%, 100% { transform: translateY(0); }
+}
+
+.cs-screen-scroll { animation: cs-screen-scroll var(--scroll-duration, 30s) ease-in-out infinite; }
+.cs-device:hover .cs-screen-scroll { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-screen-scroll { animation: none; }
+}

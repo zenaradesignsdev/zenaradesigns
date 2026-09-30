@@ -2,46 +2,152 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { Rocket } from 'lucide-react';
+import { ArrowUpRight, Rocket } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useState, useEffect, useRef, memo } from 'react';
+import { useEffect, memo } from 'react';
 
 const logo = '/images/zenara-logo-v5.svg';
 
-const SLOGANS = ['Build', 'Launch', 'Scale'] as const;
+const MARQUEE_ITEMS = [
+  'Contractors',
+  'Clinics',
+  'Trades',
+  'Professional firms',
+  'Markham',
+  'Stouffville',
+  'Scarborough',
+] as const;
+
+const PANEL_DOTS = {
+  backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.14) 1.4px, transparent 1.4px)',
+  backgroundSize: '22px 22px',
+};
+
+// cyan-300 stripes
+const MOCK_IMAGE_STRIPES = {
+  backgroundImage:
+    'repeating-linear-gradient(135deg, rgba(103, 232, 249, 0.16) 0px, rgba(103, 232, 249, 0.16) 8px, transparent 8px, transparent 16px)',
+};
+
+// Glass surface shared by the floating cards, matching the site's bordered black panels.
+const GLASS_CARD = 'border border-white/15 bg-black/70 backdrop-blur-md shadow-[0_20px_50px_-15px_rgba(0,0,0,0.9)]';
+
+const Sparkle = () => (
+  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="shrink-0">
+    <path d="M12 0l3 9 9 3-9 3-3 9-3-9-9-3 9-3z" />
+  </svg>
+);
+
+const CursorTag = ({ label, className, tagClassName, fill }: { label: string; className: string; tagClassName: string; fill: string }) => (
+  <div className={`absolute z-[5] flex items-start ${className}`}>
+    <svg width="26" height="26" viewBox="0 0 24 24">
+      <path d="M3 2l17 8-7.5 2.5L9.5 20z" fill={fill} stroke="#000" strokeWidth="1.6" strokeLinejoin="round" />
+    </svg>
+    <span className={`-ml-1 mt-[18px] rounded-md px-[9px] py-[3px] font-mono text-xs font-semibold text-black ${tagClassName}`}>
+      {label}
+    </span>
+  </div>
+);
+
+/* Decorative mock of a client site being built, with live-collaboration details. */
+const WebsiteArt = () => (
+  <div className="relative mx-auto h-[570px] w-full max-w-[580px] sm:h-[600px] lg:h-[640px]" aria-hidden="true">
+    {/* Back panel: purple-to-cyan nebula glass */}
+    <div className="absolute left-10 right-0 top-11 h-[440px] overflow-hidden rounded-[38px] border border-white/10 bg-gradient-to-br from-purple-500/35 via-purple-900/40 to-cyan-500/25 sm:left-14 sm:h-[520px]">
+      <div className="absolute inset-0" style={PANEL_DOTS} />
+      <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-cyan-400/20 blur-3xl" />
+      <div className="absolute -bottom-20 -left-10 h-72 w-72 rounded-full bg-purple-500/30 blur-3xl" />
+    </div>
+
+    <div className="zn-spin absolute -top-1.5 left-[30px] h-20 w-20 rounded-full border-2 border-dashed border-cyan-300/50 sm:h-[120px] sm:w-[120px]" />
+
+    {/* Browser window */}
+    <div className="absolute left-0 top-[110px] z-[2] w-[88%] overflow-hidden rounded-[18px] border border-white/15 bg-black/85 shadow-[0_30px_80px_-20px_rgba(168,85,247,0.45)] backdrop-blur-md sm:w-[80%]">
+      <div className="flex items-center gap-2 border-b border-white/10 bg-white/[0.04] px-4 py-3">
+        <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+        <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+        <span className="h-2.5 w-2.5 rounded-full bg-white/20" />
+        <div className="ml-2.5 flex-grow truncate rounded-full bg-white/[0.06] px-3.5 py-1.5 font-mono text-xs text-white/50">
+          [yourbusiness].ca
+        </div>
+      </div>
+      <div className="flex flex-col gap-5 p-4 sm:p-[22px]">
+        <div className="flex items-center justify-between gap-3 text-[13px]">
+          <span className="font-semibold text-white">[Your Business]</span>
+          <span className="hidden text-white/50 xs:inline">Services · About · Contact</span>
+        </div>
+        <div className="flex items-stretch gap-[18px]">
+          <div className="flex flex-1 flex-col justify-center gap-3">
+            <div className="text-xl font-medium leading-[1.15] tracking-[-0.02em] text-white sm:text-[25px]">
+              Free estimates. Fast callbacks.
+            </div>
+            <div className="h-[7px] rounded bg-white/10" />
+            <div className="h-[7px] w-[62%] rounded bg-white/10" />
+            <div className="self-start rounded-full bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 px-[18px] py-[9px] text-[13px] font-semibold text-black">
+              Call now
+            </div>
+          </div>
+          <div className="hidden h-[150px] w-[132px] shrink-0 rounded-[14px] border border-white/10 bg-white/[0.03] sm:block" style={MOCK_IMAGE_STRIPES} />
+        </div>
+        <div className="grid grid-cols-3 gap-2.5">
+          {['Service one', 'Service two', 'Service three'].map((service) => (
+            <div key={service} className="flex flex-col gap-[7px] rounded-xl border border-white/10 bg-white/[0.04] p-2.5 sm:p-3">
+              <div className="truncate text-[11px] font-medium text-white/90 sm:text-xs">{service}</div>
+              <div className="h-[5px] rounded-[3px] bg-white/10" />
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <CursorTag label="Dev" fill="#67e8f9" tagClassName="bg-cyan-300" className="zn-float left-[58%] top-[270px] sm:top-[290px]" />
+    <CursorTag label="You" fill="#d8b4fe" tagClassName="bg-purple-300" className="zn-float-slow left-[26%] top-[200px] sm:top-[215px]" />
+
+    {/* "Live in 1–2 weeks" badge */}
+    <div className="absolute -right-2 -top-2.5 z-[6] flex h-[136px] w-[136px] origin-top-right rotate-12 scale-[0.8] items-center justify-center rounded-full bg-gradient-to-br from-cyan-300 via-purple-300 to-cyan-300 text-black shadow-[0_0_45px_rgba(103,232,249,0.35)] sm:scale-100">
+      <div className="flex h-[116px] w-[116px] flex-col items-center justify-center rounded-full border-2 border-dashed border-black/60">
+        <span className="font-mono text-[11px] font-semibold tracking-[0.14em]">LIVE IN</span>
+        <span className="text-4xl font-semibold leading-[1.05] tracking-[-0.03em]">1–2</span>
+        <span className="font-mono text-[11px] font-semibold tracking-[0.14em]">WEEKS</span>
+      </div>
+    </div>
+
+    {/* Chat message from the developer */}
+    <div className={`absolute bottom-1 right-0 z-[6] flex w-[260px] flex-col gap-2 rounded-[20px_20px_6px_20px] px-[18px] py-4 text-white sm:w-[290px] ${GLASS_CARD}`}>
+      <div className="flex items-center gap-2">
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/15 bg-black">
+          <Image src={logo} alt="" width={18} height={18} className="h-[18px] w-[18px]" />
+        </span>
+        <span className="whitespace-nowrap font-mono text-[11px] tracking-[0.12em] text-cyan-400/70 sm:tracking-[0.18em]">ZENARA DEV · DIRECT LINE</span>
+      </div>
+      <div className="text-sm font-light leading-[1.5] text-white/90 sm:text-[15px]">
+        Staging link&apos;s ready. Want the call button higher up?
+      </div>
+    </div>
+
+    {/* New lead notification */}
+    <div className={`absolute bottom-[112px] left-2.5 z-[6] flex items-center gap-3 rounded-[14px] px-4 py-3 text-white sm:bottom-[38px] ${GLASS_CARD}`}>
+      <span className="zn-pulse h-2.5 w-2.5 rounded-full bg-emerald-400 shadow-[0_0_10px_rgba(52,211,153,0.8)]" />
+      <div className="flex flex-col gap-px">
+        <span className="text-[13px] font-semibold">New quote request</span>
+        <span className="text-xs text-white/50">[Name] · Markham · just now</span>
+      </div>
+    </div>
+  </div>
+);
+
+const MarqueeRow = () => (
+  <div className="flex items-center gap-[34px] whitespace-nowrap pr-[34px] font-mono text-sm font-semibold uppercase tracking-[0.2em] text-black sm:text-base">
+    {MARQUEE_ITEMS.map((item) => (
+      <span key={item} className="flex items-center gap-[34px]">
+        {item}
+        <Sparkle />
+      </span>
+    ))}
+  </div>
+);
 
 const HeroSection = () => {
-  const [currentSlogan, setCurrentSlogan] = useState(0);
-  const heroRef = useRef<HTMLElement>(null);
-
-  // Pause slogan cycling when hero is off-screen
-  useEffect(() => {
-    const el = heroRef.current;
-    if (!el) return;
-
-    let interval: ReturnType<typeof setInterval> | null = null;
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          interval = setInterval(() => {
-            setCurrentSlogan((prev) => (prev + 1) % SLOGANS.length);
-          }, 2000);
-        } else if (interval) {
-          clearInterval(interval);
-          interval = null;
-        }
-      },
-      { threshold: 0 }
-    );
-
-    observer.observe(el);
-    return () => {
-      observer.disconnect();
-      if (interval) clearInterval(interval);
-    };
-  }, []);
-
   // Cursor glow effect — Hero section only
   useEffect(() => {
     const heroSection = document.querySelector('.cursor-glow') as HTMLElement;
@@ -101,92 +207,100 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Space-Themed Hero Section */}
-      <section ref={heroRef} className="hero-section min-h-screen flex items-center justify-center relative bg-black cursor-glow z-10" role="banner" aria-label="Hero section">
-        {/* Gradient Background Layers */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
-          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
-          <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20"></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/35 to-transparent"></div>
-        </div>
-
-        {/* Animated Background Elements */}
-        <div className="absolute inset-0 overflow-hidden">
+      <section
+        className="hero-section cursor-glow relative z-10 flex min-h-screen flex-col overflow-hidden bg-black text-white"
+        role="banner"
+        aria-label="Hero section"
+      >
+        {/* Space background — same gradient wash and stars as the rest of the site,
+            with a dot grid that fades out so the hero hands off to black below. */}
+        <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/30 to-black" />
+          <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/30 to-black" />
+          <div className="zn-dot-grid absolute inset-0 [mask-image:radial-gradient(ellipse_80%_70%_at_50%_35%,black_30%,transparent_100%)]" />
+          <div className="absolute left-[10%] top-1/4 h-96 w-96 rounded-full bg-gradient-to-r from-cyan-300/15 via-purple-300/10 to-cyan-300/15 blur-3xl" />
+          <div className="absolute right-[8%] top-[15%] h-[28rem] w-[28rem] rounded-full bg-gradient-to-r from-purple-300/15 via-cyan-300/10 to-purple-300/15 blur-3xl" />
           <div className="shooting-star shooting-star-1"></div>
           <div className="shooting-star shooting-star-2"></div>
           <div className="shooting-star shooting-star-3"></div>
           <div className="bg-star bg-star-1"></div>
-          <div className="bg-star bg-star-2"></div>
           <div className="bg-star bg-star-3"></div>
-          <div className="bg-star bg-star-4"></div>
           <div className="bg-star bg-star-5"></div>
-          <div className="bg-star bg-star-6"></div>
           <div className="bg-star bg-star-7"></div>
-          <div className="bg-star bg-star-8"></div>
           <div className="bg-star bg-star-9"></div>
-          <div className="bg-star bg-star-10"></div>
           <div className="bg-star bg-star-11"></div>
-          <div className="bg-star bg-star-12"></div>
           <div className="bg-star bg-star-13"></div>
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-r from-cyan-300/20 via-purple-300/20 to-cyan-300/20 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-r from-purple-300/20 via-cyan-300/20 to-purple-300/20 rounded-full blur-3xl"></div>
-          <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-r from-cyan-900/25 to-cyan-300/15 rounded-full blur-3xl"></div>
+          {/* Fade to the next section's pure black */}
+          <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-black" />
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 w-full flex items-center pt-16 sm:pt-20 md:pt-24 pb-12 sm:pb-16 md:pb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_0.8fr] gap-8 sm:gap-10 lg:gap-12 items-center w-full">
-            <div className="fade-in order-2 lg:order-1 text-center lg:text-left">
-              <h1 className="text-5xl xs:text-6xl sm:text-7xl md:text-7xl lg:text-8xl xl:text-8xl font-light mb-4 sm:mb-6 leading-[1.1] text-white tracking-[-0.02em] hero-text-fade">
-                <span className="block pb-1">
-                  Markham &amp; GTA Web Design.{' '}
-                  <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">
-                    <span key={currentSlogan} className="cool-text-animation">{SLOGANS[currentSlogan]}</span>
-                  </span>
-                </span>
+        <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-1 items-center px-4 pb-10 pt-28 sm:px-6 sm:pt-32 lg:px-12">
+          <div className="grid w-full grid-cols-1 items-center gap-14 xl:grid-cols-2">
+            <div className="hero-text-fade flex flex-col gap-7">
+              <h1 className="font-mono text-xs uppercase tracking-[0.2em] text-cyan-400/80 sm:text-sm">
+                Markham &amp; GTA Web Design
               </h1>
-              <p className="text-base sm:text-lg md:text-xl text-white/70 mb-8 leading-[1.7] font-light tracking-[0.01em] max-w-2xl mx-auto lg:mx-0">
-                Lead-focused websites for small businesses across Markham, Stouffville, and Scarborough &mdash; contractors, clinics, trades, and professional firms. Fixed pricing, direct access to the developers, live in 1&ndash;2 weeks.
+              <p className="text-[clamp(2.75rem,5.8vw,5.375rem)] font-light leading-[1.05] tracking-[-0.035em] text-white">
+                Websites that get the phone{' '}
+                <span className="relative inline-block pb-1">
+                  <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-[length:200%_auto] bg-clip-text font-normal text-transparent animate-gradient">
+                    ringing.
+                  </span>
+                  <svg
+                    className="absolute -bottom-2 left-0 h-4 w-full"
+                    viewBox="0 0 300 16"
+                    preserveAspectRatio="none"
+                    fill="none"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                    aria-hidden="true"
+                  >
+                    <defs>
+                      <linearGradient id="hero-squiggle" x1="0" x2="1" y1="0" y2="0">
+                        <stop offset="0%" stopColor="#d8b4fe" />
+                        <stop offset="100%" stopColor="#67e8f9" />
+                      </linearGradient>
+                    </defs>
+                    <path stroke="url(#hero-squiggle)" d="M3 10 C 32 2, 54 15, 86 8 S 138 3, 170 9 S 240 15, 297 5" />
+                  </svg>
+                </span>
               </p>
-              <div className="flex justify-center lg:justify-start hero-button-slide">
-                <div className="relative inline-block rounded-full p-[2px] bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
-                  <Button asChild className="w-full relative overflow-hidden bg-black rounded-full text-white shadow-lg transition-all duration-300 px-8 py-6 sm:px-10 sm:py-7 text-lg sm:text-xl font-semibold group">
-                    <Link href="/contact" className="flex items-center justify-center">
-                      <span className="absolute inset-0 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-in-out z-0 rounded-full"></span>
-                      <span className="relative z-10 group-hover:text-white">Launch Your Project</span>
-                      <Rocket className="ml-2 h-6 w-6 relative z-10" />
+              <p className="max-w-[560px] text-base font-light leading-[1.7] tracking-[0.01em] text-white/70 sm:text-lg md:text-xl">
+                Lead-focused websites for small businesses across Markham, Stouffville and Scarborough: contractors, clinics, trades and professional firms. Fixed pricing, direct access to the developers, live in 1&ndash;2 weeks.
+              </p>
+
+              {/* Same primary/secondary pair as the homepage portfolio section */}
+              <div className="hero-button-slide flex flex-col items-start gap-4 pt-1 xs:flex-row xs:flex-wrap xs:items-center">
+                <div className="relative inline-block rounded-full bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 p-[3.5px]">
+                  <Button asChild className="group relative h-auto overflow-hidden rounded-full bg-black px-7 py-4 text-base font-semibold text-white shadow-lg transition-all duration-300 sm:px-9 sm:py-5 sm:text-lg">
+                    <Link href="/contact" className="relative z-10 flex items-center justify-center whitespace-nowrap group-hover:text-white">
+                      <span className="relative z-10">Launch Your Project</span>
+                      <Rocket className="relative z-10 ml-2 h-5 w-5 transition-all duration-300 group-hover:scale-125 group-hover:text-cyan-400 sm:h-6 sm:w-6" aria-hidden="true" />
+                      <span className="absolute inset-0 z-0 -translate-x-full transform rounded-full bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 transition-transform duration-300 ease-in-out group-hover:translate-x-0" />
                     </Link>
                   </Button>
                 </div>
+                <Link
+                  href="/projects"
+                  className="group flex items-center justify-center whitespace-nowrap rounded-full border-[1.5px] border-white/45 bg-transparent px-7 py-[18px] text-base font-semibold text-white transition-colors duration-300 hover:border-cyan-300 hover:bg-white/[0.04] hover:text-cyan-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-black sm:px-9 sm:py-[22px] sm:text-lg"
+                >
+                  See Our Work
+                  <ArrowUpRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 sm:h-6 sm:w-6" aria-hidden="true" />
+                </Link>
               </div>
             </div>
 
-            <div className="relative order-1 lg:order-2 flex justify-center lg:justify-end">
-              <div className="w-full max-w-[200px] xs:max-w-[240px] sm:max-w-[350px] md:max-w-[400px] lg:max-w-[450px] xl:max-w-[500px] h-[180px] xs:h-[200px] sm:h-[300px] md:h-[350px] lg:h-[400px] mx-auto relative flex items-center justify-center">
-                <div className="absolute inset-0 border border-teal-500/20 rounded-full animate-spin-slow"></div>
-                <div className="absolute inset-4 border border-purple-500/20 rounded-full animate-spin-slow-reverse"></div>
-                <div className="absolute inset-8 border border-cyan-500/20 rounded-full animate-spin-slow"></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-teal-500/30 to-cyan-500/30 rounded-full blur-2xl animate-pulse"></div>
-                <div className="absolute inset-4 bg-gradient-to-r from-purple-500/20 to-violet-500/20 rounded-full blur-xl animate-pulse delay-1000"></div>
-                <div className="relative z-10 group hero-logo-zoom">
-                  <Image
-                    src={logo}
-                    alt="Zenara Designs - Professional Web Design Agency Markham Logo"
-                    className="w-full max-w-[180px] xs:max-w-[200px] sm:max-w-[280px] md:max-w-[320px] lg:max-w-[350px] h-auto object-contain animate-float animate-spin-slow"
-                    style={{ filter: 'drop-shadow(0 0 20px rgba(0, 0, 0, 0.5)) drop-shadow(0 0 40px rgba(0, 0, 0, 0.3))' }}
-                    width={350}
-                    height={350}
-                    sizes="(max-width: 480px) 180px, (max-width: 640px) 200px, (max-width: 768px) 280px, (max-width: 1024px) 320px, 350px"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-r from-teal-500/0 to-purple-500/0 rounded-full blur-xl group-hover:from-teal-500/20 group-hover:to-purple-500/20 transition-all duration-500"></div>
-                </div>
-                <div className="absolute top-8 left-8 w-2 h-2 bg-white rounded-full animate-twinkle"></div>
-                <div className="absolute top-16 right-12 w-1 h-1 bg-cyan-300 rounded-full animate-twinkle delay-500"></div>
-                <div className="absolute bottom-20 left-16 w-1.5 h-1.5 bg-teal-300 rounded-full animate-twinkle delay-1000"></div>
-                <div className="absolute bottom-12 right-8 w-1 h-1 bg-purple-300 rounded-full animate-twinkle delay-1500"></div>
-                <div className="absolute top-1/2 left-4 w-1 h-1 bg-yellow-300 rounded-full animate-twinkle delay-2000"></div>
-                <div className="absolute top-1/3 right-4 w-1.5 h-1.5 bg-violet-300 rounded-full animate-twinkle delay-2500"></div>
-              </div>
+            <WebsiteArt />
+          </div>
+        </div>
+
+        {/* Industries + service areas marquee */}
+        <div className="relative z-10 mt-auto h-[104px] w-full overflow-hidden" aria-hidden="true">
+          <div className="absolute -left-[3%] top-[26px] h-14 w-[106%] rotate-[1.3deg] bg-gradient-to-r from-purple-500/40 via-cyan-500/30 to-purple-500/40" />
+          <div className="absolute -left-[3%] top-3.5 flex h-[58px] w-[106%] -rotate-[1.4deg] items-center overflow-hidden bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300">
+            <div className="zn-marquee flex w-max">
+              <MarqueeRow />
+              <MarqueeRow />
             </div>
           </div>
         </div>
