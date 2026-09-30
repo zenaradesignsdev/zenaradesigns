@@ -17,6 +17,7 @@ interface FeaturedProject {
   image: string;
   imageAlt: string;
   flip: boolean;
+  caseStudy?: string;
 }
 
 interface TileProject {
@@ -35,6 +36,30 @@ interface TileProject {
 const featured: FeaturedProject[] = [
   {
     number: '01',
+    name: 'FunGen Events',
+    tags: ['Web Design', 'Events'],
+    description:
+      'Website for FunGen Events, built to showcase their event planning services and offerings with a polished, professional online presence.',
+    url: 'https://fungenevents.ca/',
+    image: '/images/fungen-events.png',
+    imageAlt: 'FunGen Events Website — event planning business website design',
+    flip: false,
+    caseStudy: '/projects/fungen-events',
+  },
+  {
+    number: '02',
+    name: "Patty's Delights",
+    tags: ['Web Design', 'Food & Beverage'],
+    description:
+      "Website for Patty's Delights, built to showcase their menu and bring customers in the door with a warm, appetizing online presence.",
+    url: 'https://pattysdelights.com/',
+    image: '/images/pattys-delights.jpg',
+    imageAlt: "Patty's Delights Website — food and beverage business website design",
+    flip: true,
+    caseStudy: '/projects/pattys-delights',
+  },
+  {
+    number: '03',
     name: 'AshCam Cutting Solutions',
     tags: ['E-commerce', 'Construction'],
     description:
@@ -43,28 +68,7 @@ const featured: FeaturedProject[] = [
     image: '/images/ashcam-site.png',
     imageAlt: 'AshCam Cutting Solutions Website — construction blades and equipment platform',
     flip: false,
-  },
-  {
-    number: '02',
-    name: 'FunGen Events',
-    tags: ['Web Design', 'Events'],
-    description:
-      'Website for FunGen Events, built to showcase their event planning services and offerings with a polished, professional online presence.',
-    url: 'https://fungenevents.ca/',
-    image: '/images/fungen-events.png',
-    imageAlt: 'FunGen Events Website — event planning business website design',
-    flip: true,
-  },
-  {
-    number: '03',
-    name: 'JB Loans',
-    tags: ['Web Design', 'Mortgage Broker'],
-    description:
-      'Professional mortgage broker website helping clients find the best loan solutions with a seamless application process.',
-    url: 'https://jbloans.ca/',
-    image: '/images/jbloans.png',
-    imageAlt: 'JB Loans Mortgage Broker Website — professional mortgage services platform',
-    flip: false,
+    caseStudy: '/projects/ashcam-cutting-solutions',
   },
   {
     number: '04',
@@ -76,16 +80,17 @@ const featured: FeaturedProject[] = [
     image: '/images/iksmartsolutions.png',
     imageAlt: 'IK Smart Solution Website — custom security and smart home systems integrator',
     flip: true,
+    caseStudy: '/projects/ik-smart-solution',
   },
   {
     number: '05',
-    name: "Patty's Delights",
-    tags: ['Web Design', 'Food & Beverage'],
+    name: 'JB Loans',
+    tags: ['Web Design', 'Mortgage Broker'],
     description:
-      "Website for Patty's Delights, built to showcase their menu and bring customers in the door with a warm, appetizing online presence.",
-    url: 'https://pattysdelights.com/',
-    image: '/images/pattys-delights.png',
-    imageAlt: "Patty's Delights Website — food and beverage business website design",
+      'Professional mortgage broker website helping clients find the best loan solutions with a seamless application process.',
+    url: 'https://jbloans.ca/',
+    image: '/images/jbloans.png',
+    imageAlt: 'JB Loans Mortgage Broker Website — professional mortgage services platform',
     flip: false,
   },
   {
@@ -95,7 +100,7 @@ const featured: FeaturedProject[] = [
     description:
       'Website for Heroes Catering, built to showcase their catering services and menu offerings with a clean, appetizing online presence.',
     url: 'https://heroes-catering.com/',
-    image: '/images/heroes-catering.png',
+    image: '/images/heroes-catering.jpg',
     imageAlt: 'Heroes Catering Website — catering business website design',
     flip: true,
   },
@@ -272,21 +277,37 @@ function FeaturedRow({ project, index }: FeaturedRowProps) {
             ))}
           </div>
 
-          {/* CTA */}
-          <a
-            href={project.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`View the ${project.name} live site — opens in a new tab`}
-            className="inline-flex items-center gap-3 self-start group/btn"
-          >
-            <span className="relative flex items-center justify-center w-12 h-12 rounded-full border border-cyan-400/40 text-cyan-400 group-hover/btn:bg-cyan-400/10 group-hover/btn:border-cyan-400/70 transition-all duration-300">
-              <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
-            </span>
-            <span className="text-sm font-medium text-white/70 group-hover/btn:text-cyan-300 transition-colors duration-300 tracking-wide">
-              View Live Site
-            </span>
-          </a>
+          {/* CTAs */}
+          <div className="flex flex-wrap items-center gap-x-8 gap-y-4">
+            <a
+              href={project.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`View the ${project.name} live site — opens in a new tab`}
+              className="inline-flex items-center gap-3 self-start group/btn"
+            >
+              <span className="relative flex items-center justify-center w-12 h-12 rounded-full border border-cyan-400/40 text-cyan-400 group-hover/btn:bg-cyan-400/10 group-hover/btn:border-cyan-400/70 transition-all duration-300">
+                <ArrowUpRight className="w-5 h-5 transition-transform duration-300 group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5" />
+              </span>
+              <span className="text-sm font-medium text-white/70 group-hover/btn:text-cyan-300 transition-colors duration-300 tracking-wide">
+                View Live Site
+              </span>
+            </a>
+            {project.caseStudy && (
+              <Link
+                href={project.caseStudy}
+                aria-label={`Read the ${project.name} case study`}
+                className="inline-flex items-center gap-3 self-start group/cs"
+              >
+                <span className="relative flex items-center justify-center w-12 h-12 rounded-full border border-purple-400/40 text-purple-300 group-hover/cs:bg-purple-400/10 group-hover/cs:border-purple-400/70 transition-all duration-300">
+                  <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover/cs:translate-x-0.5" />
+                </span>
+                <span className="text-sm font-medium text-white/70 group-hover/cs:text-purple-300 transition-colors duration-300 tracking-wide">
+                  Read Case Study
+                </span>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </div>

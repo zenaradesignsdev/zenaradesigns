@@ -2,6 +2,7 @@ import type { MetadataRoute } from 'next';
 import { blogPosts } from '@/content/blog';
 import { citySlugs } from '@/lib/city-content';
 import { industryVerticalSlugs } from '@/lib/industry-verticals';
+import { caseStudySlugs } from '@/lib/case-studies';
 
 const baseUrl = 'https://zenaradesigns.com';
 // A real content date, NOT `new Date()`. Using build time stamped all ~50 URLs
@@ -56,6 +57,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  const caseStudyRoutes: MetadataRoute.Sitemap = caseStudySlugs.map((slug) => ({
+    url: `${baseUrl}/projects/${slug}`,
+    lastModified: new Date('2026-09-30T00:00:00Z'),
+    changeFrequency: 'yearly' as const,
+    priority: 0.6,
+  }));
+
   const blogRoutes: MetadataRoute.Sitemap = blogPosts.map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
     lastModified: post.updatedAt ?? post.publishedAt,
@@ -67,6 +75,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...staticRoutes,
     ...webDesignCityRoutes,
     ...industryVerticalRoutes,
+    ...caseStudyRoutes,
     ...blogRoutes,
   ];
 }

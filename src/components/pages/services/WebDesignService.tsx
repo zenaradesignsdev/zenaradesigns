@@ -91,7 +91,7 @@ const FEATURED_WORK = [
     industry: 'Catering & hospitality',
     url: 'heroes-catering.com',
     href: 'https://heroes-catering.com/',
-    image: '/images/heroes-catering.png',
+    image: '/images/heroes-catering.jpg',
     imageAlt: 'Heroes Catering website — catering services and menu presentation',
   },
 ];

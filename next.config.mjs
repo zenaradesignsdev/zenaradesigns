@@ -102,6 +102,9 @@ const nextConfig = {
       ...retiredCityRedirects(),
       ...industryLocationRedirects(),
       ...mergedPageRedirects(),
+      // Project screenshots moved from PNG to JPG; keep old image URLs working.
+      { source: '/images/heroes-catering.png', destination: '/images/heroes-catering.jpg', permanent: true },
+      { source: '/images/pattys-delights.png', destination: '/images/pattys-delights.jpg', permanent: true },
     ];
   },
   async headers() {
