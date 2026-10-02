@@ -349,7 +349,7 @@ const WebDesignService = () => {
               <div className="group relative inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 border border-amber-300/30 bg-amber-400/[0.07] backdrop-blur-sm overflow-hidden">
                 <span className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-400/10 via-amber-300/[0.04] to-amber-400/10 animate-pulse pointer-events-none" />
                 <span className="relative z-10 text-xs sm:text-sm font-medium text-amber-100/90 tracking-wide">
-                  Summer Offer — <span className="text-amber-300 font-semibold">$500 off</span> Starter &amp; Small Business plans
+                  Fall Offer — <span className="text-amber-300 font-semibold">$500 off</span> Starter &amp; Small Business plans
                 </span>
               </div>
             </div>

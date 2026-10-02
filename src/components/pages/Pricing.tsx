@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { RelatedGuide } from '@/components/Blog/RelatedGuide';
-import { Check, ArrowRight, Star, ChevronDown, Layers, Rocket, Gem, Sun } from 'lucide-react';
+import { Check, ArrowRight, Star, ChevronDown, Layers, Rocket, Gem, Leaf } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { memo, useMemo, useEffect, useRef, useState } from 'react';
@@ -304,9 +304,9 @@ const Pricing = () => {
                   <span className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-400/10 via-amber-300/[0.04] to-amber-400/10 animate-pulse pointer-events-none" />
                   {/* Shine sweep */}
                   <span className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-200/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform [transition-duration:1400ms] pointer-events-none" />
-                  <Sun className="h-4 w-4 text-amber-300 relative z-10 flex-shrink-0" strokeWidth={1.75} />
+                  <Leaf className="h-4 w-4 text-amber-300 relative z-10 flex-shrink-0" strokeWidth={1.75} />
                   <span className="relative z-10 text-xs sm:text-sm font-medium text-amber-100/90 tracking-wide">
-                    Summer Offer — <span className="text-amber-300 font-semibold">$500 off</span> Starter &amp; Small Business plans
+                    Fall Offer — <span className="text-amber-300 font-semibold">$500 off</span> Starter &amp; Small Business plans
                   </span>
                 </div>
               </div>
