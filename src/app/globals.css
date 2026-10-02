@@ -1471,13 +1471,6 @@
   -webkit-overflow-scrolling: touch;
 }
 
-/* Better touch targets for mobile */
-.mobile-menu-item {
-  min-height: 56px;
-  display: flex;
-  align-items: center;
-}
-
 /* Prevent pull-to-refresh on mobile */
 @supports (-webkit-touch-callout: none) {
   .mobile-menu-container {
