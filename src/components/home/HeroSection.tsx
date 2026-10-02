@@ -166,17 +166,21 @@ const HeroSection = () => {
       heroSection.style.setProperty('--mouse-y', '-100px');
     };
 
-    const handleResize = () => {
+    // The rect moves when the page scrolls, not just on resize, so refresh it on
+    // both or the glow drifts away from the pointer after scrolling.
+    const updateRect = () => {
       cachedRect = heroSection.getBoundingClientRect();
     };
 
     heroSection.addEventListener('mousemove', handleMouseMove);
     heroSection.addEventListener('mouseleave', handleMouseLeave);
-    window.addEventListener('resize', handleResize, { passive: true });
+    window.addEventListener('resize', updateRect, { passive: true });
+    window.addEventListener('scroll', updateRect, { passive: true });
     return () => {
       heroSection.removeEventListener('mousemove', handleMouseMove);
       heroSection.removeEventListener('mouseleave', handleMouseLeave);
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('resize', updateRect);
+      window.removeEventListener('scroll', updateRect);
     };
   }, []);
 

@@ -1077,10 +1077,10 @@
   animation: levitate 4s ease-in-out infinite;
 }
 
-/* Cursor Glow Effect - Hero Section Only */
+/* Cursor Glow Effect - Hero Section Only. Decorative light that follows the
+   pointer; the real cursor stays visible (the glow sits under the hero content). */
 .cursor-glow {
   position: relative;
-  cursor: none;
 }
 
 .cursor-glow::before {
