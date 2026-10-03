@@ -310,7 +310,7 @@ export const accountingFirmWebsitePagesPost: BlogPost = {
   title: '7 Pages an Accounting Firm Website Needs Before Tax Season',
   seoTitle: '7 Pages an Accounting Firm Website Needs | Zenara Designs',
   description:
-    'A practical website structure for CPA firms, bookkeepers and tax practices. See the pages that help accounting firms build trust and turn searches into consultations.',
+    'A practical website structure for CPA firms, bookkeepers and tax practices: the pages that build trust and turn searches into consultations.',
   excerpt:
     'Tax season exposes weak website structure: prospects who can’t tell what you do, clients who can’t find the portal, and staff answering the same questions. These are the seven pages that fix it.',
   featuredImageAlt:

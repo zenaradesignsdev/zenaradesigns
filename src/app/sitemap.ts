@@ -9,7 +9,7 @@ const baseUrl = 'https://zenaradesigns.com';
 // as "modified now" on every deploy, which teaches search engines to discount
 // lastmod entirely — including for pages that genuinely did change. Bump this
 // when site-wide copy changes; per-page dates (blog) override it below.
-const lastModified = new Date('2026-09-22T00:00:00Z');
+const lastModified = new Date('2026-10-03T00:00:00Z');
 
 // Markham (home base), Stouffville and Scarborough lead the campaign, so they
 // outrank the other city pages in priority. The full set of city slugs comes
@@ -38,7 +38,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/renovations`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/clinics`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${baseUrl}/locations`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${baseUrl}/contact/schedule`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/faq`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/process`, lastModified, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/privacy`, lastModified, changeFrequency: 'yearly', priority: 0.3 },

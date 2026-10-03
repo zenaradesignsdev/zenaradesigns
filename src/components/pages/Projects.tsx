@@ -154,7 +154,7 @@ const more: TileProject[] = [
     url: 'https://projecttwo.zenaradesigns.com/',
     image: '/images/project2.png',
     imageAlt: 'Pickering Law Firm Website — professional legal services website design',
-    whyText: '78% of clients research a law firm online before calling — make that first impression count.',
+    whyText: "Most clients check a law firm's website before they call, so that first impression has to count.",
     industryLabel: 'Law Firms',
     industryHref: '/lawyers',
     industryIcon: Scale,
@@ -543,6 +543,7 @@ const Projects = () => {
                     </p>
                   </FadeIn>
                   <TextReveal
+                    as="h2"
                     className="text-4xl sm:text-5xl md:text-6xl font-extralight text-white leading-[1] tracking-[-0.04em]"
                     staggerMs={120}
                     lines={[
@@ -611,6 +612,7 @@ const Projects = () => {
                 </p>
               </FadeIn>
               <TextReveal
+                as="h2"
                 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-white leading-[1] tracking-[-0.04em] mb-6"
                 staggerMs={120}
                 lines={[
@@ -665,6 +667,7 @@ const Projects = () => {
 
                 <div className="relative z-10 px-6 sm:px-10 md:px-16 py-12 sm:py-16 text-center">
                   <TextReveal
+                    as="h2"
                     className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white mb-4 leading-[1.05] tracking-[-0.04em]"
                     staggerMs={130}
                     lines={[

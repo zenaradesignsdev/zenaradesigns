@@ -297,7 +297,7 @@ export const ontarioLawFirmWebsiteContentPost: BlogPost = {
   title: 'What Should an Ontario Law Firm Website Actually Say?',
   seoTitle: 'Ontario Law Firm Website Content Guide | Zenara Designs',
   description:
-    'Building or redesigning a law firm website in Ontario? Learn what your homepage, practice pages, lawyer bios, trust signals and calls to action should actually communicate.',
+    'Building or redesigning an Ontario law firm website? What your homepage, practice pages, lawyer bios, trust signals and calls to action should say.',
   excerpt:
     'Most law firm websites don’t suffer from a lack of content. They suffer from vague content. Here’s how Ontario firms can structure their websites around the questions prospective clients actually have.',
   featuredImageAlt:

@@ -23,7 +23,7 @@ export const lawyersFaqs: IndustryFaq[] = [
   },
   {
     question: "Why is website design so important for trust and credibility?",
-    answer: "Research shows that first impressions are formed in just 0.05 seconds, and 94% of those impressions are design-related. 75% of users judge a business's credibility based on website design. With 78% of people researching lawyers online (and 92% among younger demographics), your website is often the first interaction potential clients have with your firm. Professional design signals competence, attention to detail, and technological capability—all critical factors when clients are choosing between multiple law firms."
+    answer: "Most people who need a lawyer ask for a referral or search online, and then check the firm's website before they call. That visit is often the first contact a potential client has with your firm, and they are usually comparing you with two or three others. A site that looks dated, loads slowly or makes it hard to find your practice areas and contact details gives them an easy reason to call someone else. Clear, professional design signals the same competence and attention to detail they expect from their lawyer."
   },
   {
     question: "How much does a professional law firm website cost in Ontario?",
@@ -39,7 +39,7 @@ export const lawyersFaqs: IndustryFaq[] = [
   },
   {
     question: "Do law firms in GTA suburbs need local SEO?",
-    answer: "Absolutely. With 68% of users performing local searches before contacting a law firm, local SEO is critical for acquiring clients. Appearing in Google Map Pack for city-specific terms like 'Markham family lawyer' or 'Vaughan real estate attorney' is essential for capturing ready-to-consult prospects."
+    answer: "Absolutely. Many people look for a lawyer by searching for a practice area plus their city, and Google shows the local map results first, so local SEO is critical for acquiring clients. Appearing in Google Map Pack for city-specific terms like 'Markham family lawyer' or 'Vaughan real estate attorney' is essential for capturing ready-to-consult prospects."
   },
   {
     question: "Can a new website help my law firm get more clients?",
@@ -62,7 +62,7 @@ export const accountantsFaqs: IndustryFaq[] = [
   },
   {
     question: "Why is website design so important for accounting firm trust and credibility?",
-    answer: "When dealing with people's money and business finances, trust is everything. Research shows that first impressions are formed in just 0.05 seconds, and 94% of those impressions are design-related. 75% of users judge a business's credibility based on website design. With 74% of business owners researching accounting firms online (and 89% among millennial and Gen Z entrepreneurs), your website is often the first interaction potential clients have with your firm. Professional design signals competence, attention to detail, and modern data-security capabilities."
+    answer: "When people hand over their personal or business finances, trust is everything. Business owners and individuals usually check an accounting firm's website before booking a consultation, even when they were referred, and that visit is often the first contact they have with your firm. A site that looks dated or makes it hard to see what you do, who you serve and how to reach you gives them a reason to keep looking. Professional design signals competence, attention to detail and care with sensitive information."
   },
   {
     question: "How much does a professional accounting firm website cost in Ontario?",
@@ -93,7 +93,7 @@ export const clinicsFaqs: IndustryFaq[] = [
   },
   {
     question: "Why is website design so important for wellness clinic trust and credibility?",
-    answer: "In healthcare, the stakes are higher. Patients aren't just looking for a service; they are looking for a provider they can trust with their physical well-being. Research shows that first impressions are formed in just 0.05 seconds, and 94% of those impressions are design-related. 75% of users judge a clinic's credibility based on website design. If your website looks neglected, patients subconsciously assume your clinic's hygiene or technology might be as well. A clean, modern, and accessible website signals that you are organized, professional, and up-to-date with modern health practices."
+    answer: "In healthcare, the stakes are higher. Patients aren't just looking for a service; they are looking for a provider they can trust with their physical well-being. Most patients look at a clinic's website before booking, often on a phone and often while comparing a few nearby clinics. If your website looks neglected, patients subconsciously assume your clinic's hygiene or technology might be as well. A clean, modern, and accessible website signals that you are organized, professional, and up-to-date with modern health practices."
   },
   {
     question: "How much does a professional wellness clinic website cost in Ontario?",
@@ -109,7 +109,7 @@ export const clinicsFaqs: IndustryFaq[] = [
   },
   {
     question: "Do wellness clinics in GTA suburbs need local SEO?",
-    answer: "Absolutely. With 77% of patients using search engines to find a healthcare provider before booking, local SEO is critical for acquiring patients. Appearing in Google Map Pack for city-specific terms like 'Markham physiotherapy' or 'Vaughan massage therapy' is essential for capturing ready-to-book patients searching for wellness services."
+    answer: "Absolutely. Patients usually find a clinic by searching for the treatment plus their area, and Google shows the local map results first, so local SEO is critical for acquiring patients. Appearing in Google Map Pack for city-specific terms like 'Markham physiotherapy' or 'Vaughan massage therapy' is essential for capturing ready-to-book patients searching for wellness services."
   },
   {
     question: "Can a new website help my wellness clinic get more patients?",
@@ -124,7 +124,7 @@ export const renovationsFaqs: IndustryFaq[] = [
   },
   {
     question: "Why is website design so important for renovation company trust and credibility?",
-    answer: "In the renovation business, people aren't just buying a service; they're buying a vision for their home. Research shows that first impressions are formed in just 0.05 seconds, and 94% of those impressions are design-related. 75% of users judge a contractor's reliability based on their website design. If your website looks outdated or 'cheap,' homeowners will assume your finishing work is, too. A sleek, modern site signals that you are organized, professional, and use the latest building technologies."
+    answer: "In the renovation business, people aren't just buying a service; they're buying a vision for their home. Homeowners almost always look at a contractor's website and past work before asking for a quote, and they are usually comparing several companies. If your website looks outdated or 'cheap,' homeowners will assume your finishing work is, too. A sleek, modern site signals that you are organized, professional, and use the latest building technologies."
   },
   {
     question: "How much does a professional renovation company website cost in Ontario?",
@@ -140,7 +140,7 @@ export const renovationsFaqs: IndustryFaq[] = [
   },
   {
     question: "Do renovation companies in GTA suburbs need local SEO?",
-    answer: "Absolutely. With 84% of homeowners researching contractors online first, local SEO is critical for acquiring clients. Appearing in Google Map Pack for city-specific terms like 'Markham kitchen renovation' or 'Vaughan basement finishing' is essential for capturing ready-to-buy homeowners searching for renovation services."
+    answer: "Absolutely. Homeowners usually start by searching for the job plus their city, and Google shows the local map results first, so local SEO is critical for acquiring clients. Appearing in Google Map Pack for city-specific terms like 'Markham kitchen renovation' or 'Vaughan basement finishing' is essential for capturing ready-to-buy homeowners searching for renovation services."
   },
   {
     question: "Can a new website help my renovation company get more projects?",

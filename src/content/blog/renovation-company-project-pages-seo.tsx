@@ -334,7 +334,7 @@ const RenovationProjectPagesContent = () => {
 export const renovationProjectPagesPost: BlogPost = {
   slug: 'renovation-company-project-pages-seo',
   title: 'How Renovation Companies Should Build Project Pages That Rank and Win Leads',
-  seoTitle: 'How to Build Better Renovation Project Pages | Zenara Designs',
+  seoTitle: 'Renovation Project Pages That Rank | Zenara Designs',
   description:
     'Turn renovation photos into useful project pages. Learn how GTA contractors can structure case studies for SEO, homeowner trust and better quote requests.',
   excerpt:

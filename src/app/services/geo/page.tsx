@@ -8,7 +8,7 @@ const entry = serviceContent['geo'];
 export const metadata: Metadata = {
   title: 'GEO & AI Search Optimization | Markham & GTA | Zenara',
   description:
-    'Get cited by ChatGPT, Perplexity, Gemini and Google AI Overviews. Generative engine optimization for GTA businesses — structured data, entity signals, answer-shaped content.',
+    'Get cited by ChatGPT, Perplexity, Gemini and Google AI Overviews. GEO for GTA businesses: structured data, entity signals and answer-shaped content.',
   keywords: ['generative engine optimization', 'GEO services Toronto', 'AI search optimization', 'ChatGPT SEO', 'Perplexity optimization', 'AI Overviews optimization Markham'],
   alternates: { canonical: 'https://zenaradesigns.com/services/geo' },
   openGraph: {
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'GEO & AI Search Optimization | Markham & GTA | Zenara',
     description:
-      'Get cited by ChatGPT, Perplexity, Gemini and Google AI Overviews. Generative engine optimization for GTA businesses — structured data, entity signals, answer-shaped content.',
+      'Get cited by ChatGPT, Perplexity, Gemini and Google AI Overviews. GEO for GTA businesses: structured data, entity signals and answer-shaped content.',
   },
 };
 
