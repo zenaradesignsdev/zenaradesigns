@@ -22,6 +22,7 @@ export const FOOTER_ADDITIONAL_LINKS = [
   { href: '/process', label: 'Our Process' },
   { href: '/blog', label: 'Blog' },
   { href: '/payments', label: 'Payments' },
+  { href: '/privacy', label: 'Privacy Policy' },
 ] as const;
 
 // Service-area city pages, for the footer link mesh. Markham, Stouffville and
