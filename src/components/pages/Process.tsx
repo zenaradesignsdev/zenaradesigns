@@ -227,6 +227,7 @@ const Process = () => {
                   </p>
                 </FadeIn>
                 <TextReveal
+                  as="h2"
                   className="text-4xl sm:text-5xl md:text-6xl font-extralight text-white leading-[1] tracking-[-0.04em]"
                   staggerMs={120}
                   lines={[
@@ -304,6 +305,7 @@ const Process = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-16">
             <TextReveal
+              as="h2"
               className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[0.95] tracking-[-0.04em] text-center"
               staggerMs={120}
               lines={[
@@ -387,6 +389,7 @@ const Process = () => {
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10">
           <TextReveal
+            as="h2"
             className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[1.1] tracking-[-0.04em]"
             staggerMs={130}
             lines={[
@@ -415,7 +418,7 @@ const Process = () => {
         </div>
       </section>
 
-      {/* Breadcrumb + HowTo + FAQPage schema are server-rendered in src/app/process/page.tsx */}
+      {/* Breadcrumb + FAQPage schema are server-rendered in src/app/process/page.tsx */}
     </div>
   );
 };

@@ -4,6 +4,8 @@ import './globals.css';
 import Providers from '@/components/providers';
 import Layout from '@/components/Layout/Layout';
 import { fontSans } from '@/lib/fonts';
+import { JsonLd } from '@/components/JsonLd';
+import { generateBusinessSchema, generateWebSiteSchema } from '@/lib/structured-data';
 
 export const metadata: Metadata = {
   title: {
@@ -15,9 +17,8 @@ export const metadata: Metadata = {
   description:
     'Custom, lead-focused websites for GTA service businesses, built from our Markham base. Fixed pricing, direct developer access, launch in 1–2 weeks.',
   metadataBase: new URL('https://zenaradesigns.com'),
-  alternates: {
-    canonical: 'https://zenaradesigns.com',
-  },
+  // No site-wide canonical here: pages that forgot their own would inherit it
+  // and canonicalise to the homepage. Each page sets its own.
   robots: {
     index: true,
     follow: true,
@@ -45,8 +46,6 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    site: '@zenaradesigns',
-    creator: '@zenaradesigns',
     title: 'Markham Web Design | Websites for GTA Businesses | Zenara',
     description:
       'Custom, lead-focused websites for GTA service businesses, built from our Markham base. Fixed pricing, direct developer access, launch in 1–2 weeks.',
@@ -74,150 +73,6 @@ export const metadata: Metadata = {
   },
 };
 
-const localBusinessJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'LocalBusiness',
-  name: 'Zenara Designs',
-  description:
-    'Web design and development agency based in Markham, serving the GTA. Custom websites, branding, SEO and managed maintenance for small businesses.',
-  url: 'https://zenaradesigns.com',
-  logo: 'https://zenaradesigns.com/logo-seo.svg',
-  image: 'https://zenaradesigns.com/web-app-manifest-512x512.png',
-  email: 'info@zenaradesigns.com',
-  areaServed: [
-    { '@type': 'City', name: 'Markham' },
-    { '@type': 'City', name: 'Stouffville' },
-    { '@type': 'City', name: 'Scarborough' },
-    { '@type': 'City', name: 'Toronto' },
-    { '@type': 'City', name: 'Mississauga' },
-    { '@type': 'City', name: 'Richmond Hill' },
-    { '@type': 'City', name: 'Vaughan' },
-    { '@type': 'City', name: 'Pickering' },
-  ],
-
-  serviceArea: {
-    '@type': 'GeoCircle',
-    geoMidpoint: {
-      '@type': 'GeoCoordinates',
-      latitude: '43.8561',
-      longitude: '-79.3370',
-    },
-    geoRadius: '45000',
-  },
-  openingHours: 'Mo-Fr 09:00-18:00',
-  priceRange: '$$',
-  paymentAccepted: 'Cash, Credit Card, PayPal',
-  currenciesAccepted: 'CAD',
-  sameAs: [
-    'https://twitter.com/zenaradesigns',
-    'https://linkedin.com/company/zenara-designs',
-    'https://facebook.com/zenaradesigns',
-  ],
-  hasOfferCatalog: {
-    '@type': 'OfferCatalog',
-    name: 'Web Design & Development Services',
-    itemListElement: [
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'Web Design',
-          description: 'Custom website design and development for Markham and GTA businesses',
-          url: 'https://zenaradesigns.com/services/web-design',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'Branding',
-          description: 'Logo design and print-ready business cards, designed as one identity',
-          url: 'https://zenaradesigns.com/services/branding',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'SEO',
-          description: 'Local SEO, technical optimization and content strategy',
-          url: 'https://zenaradesigns.com/services/seo',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'GEO',
-          description: 'Generative engine optimization for AI search visibility',
-          url: 'https://zenaradesigns.com/services/geo',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'E-Commerce',
-          description: 'Online stores with payment integration and product management',
-          url: 'https://zenaradesigns.com/services/ecommerce',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'Website Maintenance',
-          description: 'Managed hosting, uptime monitoring and monthly analytics reporting',
-          url: 'https://zenaradesigns.com/services/website-maintenance',
-        },
-      },
-      {
-        '@type': 'Offer',
-        itemOffered: {
-          '@type': 'Service',
-          name: 'Website Redesign',
-          description: 'Rebuilds of ageing sites for speed, modern design and conversion',
-          url: 'https://zenaradesigns.com/services/website-redesign',
-        },
-      },
-    ],
-  },
-};
-
-const organizationJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  '@id': 'https://zenaradesigns.com/#organization',
-  name: 'Zenara Designs',
-  url: 'https://zenaradesigns.com',
-  logo: 'https://zenaradesigns.com/logo-seo.svg',
-  description:
-    'Web design agency in Markham serving the GTA, specializing in custom websites, branding, SEO and website maintenance for small businesses.',
-  foundingDate: '2024',
-  contactPoint: {
-    '@type': 'ContactPoint',
-    contactType: 'customer service',
-    email: 'info@zenaradesigns.com',
-    availableLanguage: 'English',
-  },
-  sameAs: [
-    'https://twitter.com/zenaradesigns',
-    'https://linkedin.com/company/zenara-designs',
-    'https://facebook.com/zenaradesigns',
-  ],
-};
-
-const websiteJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'WebSite',
-  '@id': 'https://zenaradesigns.com/#website',
-  name: 'Zenara Designs',
-  url: 'https://zenaradesigns.com',
-  description:
-    'Web design and development agency based in Markham, serving the GTA. Custom websites, branding, SEO and managed maintenance for small businesses.',
-  publisher: { '@id': 'https://zenaradesigns.com/#organization' },
-};
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en-CA" className={fontSans.variable}>
@@ -226,21 +81,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="preconnect" href="https://www.googletagmanager.com" />
         <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
         {/* Structured Data */}
-        <script
-          type="application/ld+json"
-          data-ssr="true"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          data-ssr="true"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
-        />
-        <script
-          type="application/ld+json"
-          data-ssr="true"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-        />
+        <JsonLd schema={generateBusinessSchema()} />
+        <JsonLd schema={generateWebSiteSchema()} />
       </head>
       <body className="font-sans antialiased">
         {/* Google Analytics */}

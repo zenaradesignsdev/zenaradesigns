@@ -3,8 +3,9 @@ import About from '@/components/pages/About';
 import { JsonLd } from '@/components/JsonLd';
 import { breadcrumbSchema } from '@/lib/service-content';
 import { ABOUT_URL, team, teamPersonId as personId } from '@/lib/team';
+import { ORGANIZATION_ID } from '@/lib/constants';
 
-const ORG_ID = 'https://zenaradesigns.com/#organization';
+const ORG_ID = ORGANIZATION_ID;
 
 // Person schema per team member — named people with roles, credentials, and
 // alumniOf are a core E-E-A-T signal. worksFor is asserted only for founders;
@@ -21,15 +22,14 @@ const personSchemas = team.map((member) => ({
   ...(member.founder ? { worksFor: { '@id': ORG_ID } } : {}),
 }));
 
-// Organization with declared founders (Pratik & Kavin only).
+// Adds the founders (Pratik & Kavin only) to the business node the root
+// layout already describes. Same @id and type, so parsers merge the two
+// instead of seeing a second, differently-worded organization.
 const organizationSchema = {
   '@context': 'https://schema.org',
-  '@type': 'Organization',
+  '@type': 'ProfessionalService',
   '@id': ORG_ID,
   name: 'Zenara Designs',
-  url: 'https://zenaradesigns.com',
-  description: 'the GTA web design agency building fast, modern, conversion-focused websites for local service businesses.',
-  foundingDate: '2024',
   founder: team
     .filter((m) => m.founder)
     .map((m) => ({ '@type': 'Person', '@id': personId(m.name), name: m.name })),
@@ -52,20 +52,20 @@ const aboutBreadcrumb = breadcrumbSchema('/about', [
 export const metadata: Metadata = {
   title: 'Meet the Team Behind Zenara — Markham Web Design | Zenara',
   description:
-    'Zenara Designs is a Toronto web design agency built by engineers from Waterloo and Ottawa. We build fast, modern websites for law firms, clinics, and GTA businesses. See our team and process.',
+    'Zenara Designs is a Markham web design studio founded by engineers from Waterloo and Ottawa, building fast websites for law firms, clinics and GTA businesses.',
   alternates: { canonical: 'https://zenaradesigns.com/about' },
   openGraph: {
     images: ['/opengraph-image'],
     title: 'Meet the Team Behind Zenara — Markham Web Design | Zenara',
     description:
-      'Zenara Designs is a Toronto web design agency built by engineers from Waterloo and Ottawa. We build fast, modern websites for law firms, clinics, and GTA businesses. See our team and process.',
+      'Zenara Designs is a Markham web design studio founded by engineers from Waterloo and Ottawa, building fast websites for law firms, clinics and GTA businesses.',
     url: 'https://zenaradesigns.com/about',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Meet the Team Behind Zenara — Markham Web Design | Zenara',
     description:
-      'Zenara Designs is a Toronto web design agency built by engineers from Waterloo and Ottawa. We build fast, modern websites for law firms, clinics, and GTA businesses. See our team and process.',
+      'Zenara Designs is a Markham web design studio founded by engineers from Waterloo and Ottawa, building fast websites for law firms, clinics and GTA businesses.',
   },
 };
 

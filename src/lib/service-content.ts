@@ -4,7 +4,9 @@
 // both the client presentational components (FAQ rendering) and the server
 // route files (server-rendered JSON-LD). See SEO-RANKING-PLAN.md §8.1.
 
-const BASE = 'https://zenaradesigns.com';
+import { ORGANIZATION_ID, SITE_URL } from './constants';
+
+const BASE = SITE_URL;
 
 export interface ServiceFaq {
   question: string;
@@ -25,20 +27,8 @@ const AREA_SERVED = [
   'Mississauga', 'Richmond Hill', 'Vaughan', 'Pickering', 'GTA',
 ].map((name) => ({ '@type': 'City', name }));
 
-const PROVIDER = {
-  '@type': 'LocalBusiness',
-  name: 'Zenara Designs',
-  url: BASE,
-  email: 'info@zenaradesigns.com',
-  telephone: '+16478351077',
-  priceRange: '$$',
-  address: {
-    '@type': 'PostalAddress',
-    addressLocality: 'Markham',
-    addressRegion: 'ON',
-    addressCountry: 'CA',
-  },
-};
+// The business itself is described once, site-wide, in the root layout.
+const PROVIDER = { '@id': ORGANIZATION_ID };
 
 // ── Schema builders (return plain objects; rendered via <JsonLd>) ──────────────
 

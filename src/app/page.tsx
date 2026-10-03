@@ -1,6 +1,4 @@
 import type { Metadata } from 'next';
-import { JsonLd } from '@/components/JsonLd';
-import { generateBreadcrumbSchema, generateSiteNavigationElementSchema } from '@/lib/structured-data';
 import Home from '@/components/pages/Home';
 
 export const metadata: Metadata = {
@@ -24,11 +22,5 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  return (
-    <>
-      <JsonLd schema={generateSiteNavigationElementSchema()} />
-      <JsonLd schema={generateBreadcrumbSchema([{ name: 'Home', url: '/' }])} />
-      <Home />
-    </>
-  );
+  return <Home />;
 }

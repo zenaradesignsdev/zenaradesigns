@@ -5,6 +5,17 @@ export const BUSINESS_NAME = 'Zenara Designs';
 export const BUSINESS_PHONE = '(647) 835-1077';
 export const BUSINESS_PHONE_E164 = '+16478351077';
 
+export const SITE_URL = 'https://zenaradesigns.com';
+// JSON-LD node ids. Every schema that mentions the business points at
+// ORGANIZATION_ID instead of restating its details.
+export const ORGANIZATION_ID = `${SITE_URL}/#organization`;
+export const WEBSITE_ID = `${SITE_URL}/#website`;
+
+// The business's only public profiles. The Maps URL is the Google Business
+// Profile (listing CID), which is the strongest sameAs signal for local search.
+export const INSTAGRAM_URL = 'https://www.instagram.com/zenaradesignsinc/';
+export const GOOGLE_MAPS_URL = 'https://maps.google.com/?cid=3251807051192604712';
+
 // Navigation constants
 export const NAVIGATION_LINKS = [
   { href: '/', label: 'Home' },

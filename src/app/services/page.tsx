@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import Services from '@/components/pages/Services';
+import { JsonLd } from '@/components/JsonLd';
+import { breadcrumbSchema } from '@/lib/service-content';
 
 export const metadata: Metadata = {
   title: 'Web Design, SEO & Branding — All Services | Zenara',
@@ -21,6 +23,16 @@ export const metadata: Metadata = {
   },
 };
 
+const servicesBreadcrumb = breadcrumbSchema('/services', [
+  { name: 'Home', url: '/' },
+  { name: 'Services', url: '/services' },
+]);
+
 export default function ServicesPage() {
-  return <Services />;
+  return (
+    <>
+      <JsonLd schema={servicesBreadcrumb} />
+      <Services />
+    </>
+  );
 }

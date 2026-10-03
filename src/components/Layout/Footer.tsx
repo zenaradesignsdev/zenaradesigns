@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { Mail, Phone, CheckCircle, Instagram } from 'lucide-react';
-import { BUSINESS_EMAIL, BUSINESS_PHONE, BUSINESS_PHONE_E164, NAVIGATION_LINKS, FOOTER_ADDITIONAL_LINKS, SERVICE_LINKS, SERVICE_AREA_LINKS } from '@/lib/constants';
+import { BUSINESS_EMAIL, BUSINESS_PHONE, BUSINESS_PHONE_E164, NAVIGATION_LINKS, FOOTER_ADDITIONAL_LINKS, SERVICE_LINKS, SERVICE_AREA_LINKS, INSTAGRAM_URL } from '@/lib/constants';
 import { useState, FormEvent } from 'react';
 
 const logo = '/images/zenara-logo-v5.svg';
@@ -179,7 +179,7 @@ const Footer = () => {
                 <div className="flex items-baseline space-x-2 text-slate-300">
                   <Instagram className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5" />
                   <a 
-                    href="https://www.instagram.com/zenaradesignsinc/" 
+                    href={INSTAGRAM_URL} 
                     target="_blank" 
                     rel="noopener noreferrer"
                     className="hover:text-cyan-400 transition-colors text-xs sm:text-sm"

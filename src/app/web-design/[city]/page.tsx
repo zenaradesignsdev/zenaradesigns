@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import WebDesignCity from '@/components/pages/WebDesignCity';
 import { cityContent, citySlugs } from '@/lib/city-content';
+import { ORGANIZATION_ID } from '@/lib/constants';
 
 interface Props {
   params: { city: string };
@@ -54,14 +55,7 @@ export default function WebDesignCityPage({ params }: Props) {
     serviceType: 'Web Design and Development',
     description: content.metaDescription,
     url,
-    provider: {
-      '@type': 'LocalBusiness',
-      name: 'Zenara Designs',
-      url: 'https://zenaradesigns.com',
-      email: 'info@zenaradesigns.com',
-      telephone: '+16478351077',
-      priceRange: '$$',
-    },
+    provider: { '@id': ORGANIZATION_ID },
     areaServed: { '@type': 'City', name: content.city },
   };
 

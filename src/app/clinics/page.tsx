@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Clinics from '@/components/pages/Clinics';
 import { JsonLd } from '@/components/JsonLd';
-import { generateLocalBusinessSchema, generateServiceSchema } from '@/lib/structured-data';
+import { generateServiceSchema } from '@/lib/structured-data';
 import { faqPageSchema, breadcrumbSchema } from '@/lib/service-content';
 import { industryContent } from '@/lib/industry-content';
 
@@ -35,12 +35,11 @@ export default function ClinicsPage() {
         { name: entry.breadcrumbLabel, url: entry.path },
       ])} />
       <JsonLd schema={faqPageSchema(entry.path, entry.faqs)} />
-      {/* Moved here from a useEffect inside Clinics.tsx so it is server-rendered. */}
-      <JsonLd schema={generateLocalBusinessSchema()} />
       <JsonLd
         schema={generateServiceSchema(
           'Wellness Clinic Web Design',
-          'Web design for physiotherapy, chiropractic, massage therapy, dental, and wellness clinics across the GTA. Online booking, practitioner profiles, and insurance information that turn visitors into confirmed appointments.'
+          'Web design for physiotherapy, chiropractic, massage therapy, dental, and wellness clinics across the GTA. Online booking, practitioner profiles, and insurance information that turn visitors into confirmed appointments.',
+          entry.path
         )}
       />
       <Clinics />

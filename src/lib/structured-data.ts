@@ -1,40 +1,45 @@
 // Structured data utilities for JSON-LD schema markup
-import { BUSINESS_NAME, BUSINESS_EMAIL, BUSINESS_PHONE, NAVIGATION_LINKS } from './constants';
+import {
+  BUSINESS_NAME,
+  BUSINESS_EMAIL,
+  BUSINESS_PHONE_E164,
+  GOOGLE_MAPS_URL,
+  INSTAGRAM_URL,
+  ORGANIZATION_ID,
+  SERVICE_LINKS,
+  SITE_URL,
+  WEBSITE_ID,
+} from './constants';
 import { ABOUT_URL, findTeamMember, teamPersonId } from '@/lib/team';
 
-// Business information for LocalBusiness schema
+// Business facts for the site-wide schema. Keep hours, phone and profiles
+// identical to the Google Business Profile, since Google cross-checks them.
+// This is a service-area business, so the address is the municipality only.
 export const BUSINESS_INFO = {
   name: BUSINESS_NAME,
   email: BUSINESS_EMAIL,
-  phone: BUSINESS_PHONE,
-  url: 'https://zenaradesigns.com',
-  logo: 'https://zenaradesigns.com/logo-seo.svg',
-  description: 'Professional web design and development agency based in Markham, Ontario, serving the Greater Toronto Area. We create modern, fast, and secure websites for small businesses and professionals.',
-  
-  // Address information (service-area business — no physical storefront)
+  phone: BUSINESS_PHONE_E164,
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo-seo.svg`,
+  image: `${SITE_URL}/web-app-manifest-512x512.png`,
+  description:
+    'Web design and development studio based in Markham, serving the GTA. Custom websites, branding, SEO and managed maintenance for small businesses.',
   address: {
     addressLocality: 'Markham',
     addressRegion: 'ON',
-    addressCountry: 'CA'
+    addressCountry: 'CA',
   },
-  
   // Markham civic centroid — the municipality, deliberately not a street
-  // address (this is a service-area business run from a residential address).
+  // address (the business is run from a residential address).
   geo: {
     latitude: 43.8561,
-    longitude: -79.3370
+    longitude: -79.337,
   },
-  
-  // Business hours (Monday to Friday, 9 AM to 6 PM EST)
-  openingHours: [
-    {
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
-      opens: '09:00',
-      closes: '18:00'
-    }
-  ],
-  
-  // Service areas
+  openingHours: {
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '09:00',
+    closes: '18:00',
+  },
   areaServed: [
     'Markham',
     'Stouffville',
@@ -44,240 +49,97 @@ export const BUSINESS_INFO = {
     'Richmond Hill',
     'Vaughan',
     'Pickering',
-    'Greater Toronto Area',
   ],
-  
-  // Services offered
-  serviceType: [
-    'Web Design',
-    'Web Development',
-    'Business Card Design',
-    'Logo Design',
-    'Digital Marketing',
-    'E-commerce Development',
-    'Mobile App Development',
-    'SEO Services'
-  ],
-  
-  // Social media profiles
-  sameAs: [
-    'https://www.linkedin.com/company/zenara-designs',
-    'https://twitter.com/zenaradesigns',
-    'https://www.instagram.com/zenaradesigns',
-    'https://www.facebook.com/zenaradesigns'
-  ],
-  
-  // Price range
-  priceRange: '$$',
-  
-  // Price range
-  priceRangeIndicator: '$$'
+  googleMapsUrl: GOOGLE_MAPS_URL,
+  sameAs: [INSTAGRAM_URL, GOOGLE_MAPS_URL],
+  // Matches the payment FAQ on /pricing.
+  paymentAccepted: 'Credit Card, Interac e-Transfer, Cheque',
 };
 
-// Generate LocalBusiness JSON-LD schema
-export const generateLocalBusinessSchema = () => {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'LocalBusiness',
-    '@id': 'https://zenaradesigns.com/#business',
-    
-    // Required fields
-    name: BUSINESS_INFO.name,
-    description: BUSINESS_INFO.description,
-    url: BUSINESS_INFO.url,
-    
-    // Address (PostalAddress — service-area business, no street address)
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: BUSINESS_INFO.address.addressLocality,
-      addressRegion: BUSINESS_INFO.address.addressRegion,
-      addressCountry: BUSINESS_INFO.address.addressCountry
+// The one node that describes the business. ProfessionalService is a subtype
+// of both LocalBusiness and Organization, so a single entity serves as the
+// local listing and as the publisher/founder target everywhere else (blog
+// posts, WebSite, /about). Other schemas reference it by @id rather than
+// restating it, which is what previously let two conflicting copies appear.
+export const generateBusinessSchema = () => ({
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': ORGANIZATION_ID,
+  name: BUSINESS_INFO.name,
+  description: BUSINESS_INFO.description,
+  url: BUSINESS_INFO.url,
+  logo: { '@type': 'ImageObject', url: BUSINESS_INFO.logo },
+  image: BUSINESS_INFO.image,
+  telephone: BUSINESS_INFO.phone,
+  email: BUSINESS_INFO.email,
+  address: {
+    '@type': 'PostalAddress',
+    ...BUSINESS_INFO.address,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    ...BUSINESS_INFO.geo,
+  },
+  hasMap: BUSINESS_INFO.googleMapsUrl,
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      ...BUSINESS_INFO.openingHours,
     },
-    
-    // Contact information
+  ],
+  areaServed: BUSINESS_INFO.areaServed.map((name) => ({ '@type': 'City', name })),
+  contactPoint: {
+    '@type': 'ContactPoint',
+    contactType: 'customer service',
     telephone: BUSINESS_INFO.phone,
     email: BUSINESS_INFO.email,
-    
-    // Image and logo
-    image: BUSINESS_INFO.logo,
-    logo: {
-      '@type': 'ImageObject',
-      url: BUSINESS_INFO.logo,
-      width: 450,
-      height: 120
-    },
-    
-    // Geographic coordinates
-    geo: {
-      '@type': 'GeoCoordinates',
-      latitude: BUSINESS_INFO.geo.latitude,
-      longitude: BUSINESS_INFO.geo.longitude
-    },
-    
-    // Opening hours
-    openingHoursSpecification: BUSINESS_INFO.openingHours.map(hours => ({
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: hours.dayOfWeek,
-      opens: hours.opens,
-      closes: hours.closes
-    })),
-    
-    // Service areas
-    areaServed: BUSINESS_INFO.areaServed.map(area => ({
-      '@type': 'City',
-      name: area
-    })),
-    
-    // Services offered
-    makesOffer: BUSINESS_INFO.serviceType.map(service => ({
+    areaServed: 'CA',
+    availableLanguage: 'English',
+  },
+  sameAs: BUSINESS_INFO.sameAs,
+  priceRange: '$$',
+  currenciesAccepted: 'CAD',
+  paymentAccepted: BUSINESS_INFO.paymentAccepted,
+  foundingDate: '2024',
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Web Design & Development Services',
+    itemListElement: SERVICE_LINKS.map((service) => ({
       '@type': 'Offer',
       itemOffered: {
         '@type': 'Service',
-        name: service,
-        provider: {
-          '@type': 'LocalBusiness',
-          name: BUSINESS_INFO.name
-        }
-      }
+        name: service.label,
+        url: `${SITE_URL}${service.href}`,
+      },
     })),
-    
-    // Social media
-    sameAs: BUSINESS_INFO.sameAs,
-    
-    // Price range
-    priceRange: BUSINESS_INFO.priceRange,
-    
-    // Additional business details
-    foundingDate: '2024',
-    numberOfEmployees: '2-10',
-    currenciesAccepted: 'CAD',
-    paymentAccepted: ['Cash', 'Check', 'Credit Card', 'Bank Transfer'],
-    
-    // Keywords for search engines
-  };
-};
+  },
+});
 
-// Generate Organization schema (for broader business presence)
-export const generateOrganizationSchema = () => {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    '@id': 'https://zenaradesigns.com/#organization',
-    
-    name: BUSINESS_INFO.name,
-    url: BUSINESS_INFO.url,
-    logo: BUSINESS_INFO.logo,
-    description: BUSINESS_INFO.description,
-    
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: BUSINESS_INFO.address.addressLocality,
-      addressRegion: BUSINESS_INFO.address.addressRegion,
-      addressCountry: BUSINESS_INFO.address.addressCountry
-    },
+export const generateWebSiteSchema = () => ({
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  '@id': WEBSITE_ID,
+  name: BUSINESS_INFO.name,
+  url: BUSINESS_INFO.url,
+  inLanguage: 'en-CA',
+  publisher: { '@id': ORGANIZATION_ID },
+});
 
-    contactPoint: {
-      '@type': 'ContactPoint',
-      telephone: BUSINESS_INFO.phone,
-      email: BUSINESS_INFO.email,
-      contactType: 'customer service',
-      availableLanguage: 'English'
-    },
-
-    sameAs: BUSINESS_INFO.sameAs,
-    foundingDate: '2024',
-    numberOfEmployees: '2-10'
-  };
-};
-
-// Generate SiteNavigationElement schema for main navigation
-export const generateSiteNavigationElementSchema = () => {
-  const baseUrl = BUSINESS_INFO.url;
-  
-  // Filter out Home page and only include main navigation pages (About, Services, Projects, Pricing, Contact)
-  const mainNavLinks = NAVIGATION_LINKS.filter(link => link.href !== '/');
-  
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'SiteNavigationElement',
-    '@id': 'https://zenaradesigns.com/#main-navigation',
-    name: 'Main Navigation',
-    hasPart: mainNavLinks.map(link => ({
-      '@type': 'SiteNavigationElement',
-      name: link.label,
-      url: `${baseUrl}${link.href}`
-    }))
-  };
-};
-
-// Generate WebSite schema
-export const generateWebSiteSchema = () => {
-  const baseUrl = BUSINESS_INFO.url;
-  
-  // Get main navigation pages (excluding Home)
-  const mainNavLinks = NAVIGATION_LINKS.filter(link => link.href !== '/');
-  
-  // Create hasPart array with WebPage references for main navigation pages
-  const mainPages = mainNavLinks.map(link => ({
-    '@type': 'WebPage',
-    '@id': `${baseUrl}${link.href}`,
-    name: link.label,
-    url: `${baseUrl}${link.href}`
-  }));
-  
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    '@id': 'https://zenaradesigns.com/#website',
-    
-    name: BUSINESS_INFO.name,
-    url: BUSINESS_INFO.url,
-    description: BUSINESS_INFO.description,
-    
-    publisher: {
-      '@type': 'Organization',
-      name: BUSINESS_INFO.name,
-      url: BUSINESS_INFO.url,
-      logo: {
-        '@type': 'ImageObject',
-        url: BUSINESS_INFO.logo
-      }
-    },
-    
-    // Main pages in the site structure
-    hasPart: mainPages
-  };
-};
-
-// Generate Service schema for specific services
-export const generateServiceSchema = (serviceName: string, serviceDescription: string) => {
+// Service schema for an industry page. `path` is the page the service is
+// described on, so the @id belongs to that page.
+export const generateServiceSchema = (serviceName: string, serviceDescription: string, path: string) => {
+  const url = `${SITE_URL}${path}`;
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    '@id': `https://zenaradesigns.com/services#${serviceName.toLowerCase().replace(/\s+/g, '-')}`,
-    
+    '@id': `${url}#service`,
     name: serviceName,
     description: serviceDescription,
-    
-    provider: {
-      '@type': 'LocalBusiness',
-      name: BUSINESS_INFO.name,
-      url: BUSINESS_INFO.url,
-      address: {
-        '@type': 'PostalAddress',
-        addressLocality: BUSINESS_INFO.address.addressLocality,
-        addressRegion: BUSINESS_INFO.address.addressRegion,
-        addressCountry: BUSINESS_INFO.address.addressCountry
-      }
-    },
-
-    areaServed: BUSINESS_INFO.areaServed.map(area => ({
-      '@type': 'City',
-      name: area
-    })),
-    
+    url,
+    provider: { '@id': ORGANIZATION_ID },
+    areaServed: BUSINESS_INFO.areaServed.map((name) => ({ '@type': 'City', name })),
     serviceType: serviceName,
-    category: 'Web Design and Development'
+    category: 'Web Design and Development',
   };
 };
 
@@ -300,18 +162,9 @@ export const generateBlogPostingSchema = (post: { slug: string; title: string; d
     // else is attributed to the company.
     author: authorMember
       ? { '@type': 'Person', '@id': teamPersonId(authorMember.name), name: authorMember.name, url: ABOUT_URL, jobTitle: authorMember.role }
-      : { '@type': 'Organization', name: post.author, url: BUSINESS_INFO.url },
+      : { '@id': ORGANIZATION_ID },
     
-    publisher: {
-      '@type': 'Organization',
-      '@id': `${BUSINESS_INFO.url}/#organization`,
-      name: BUSINESS_INFO.name,
-      url: BUSINESS_INFO.url,
-      logo: {
-        '@type': 'ImageObject',
-        url: BUSINESS_INFO.logo
-      }
-    },
+    publisher: { '@id': ORGANIZATION_ID },
     
     datePublished: post.publishedAt.toISOString(),
     dateModified: (post.updatedAt || post.publishedAt).toISOString(),
@@ -346,31 +199,4 @@ export const generateBreadcrumbSchema = (items: Array<{ name: string; url: strin
       item: absolute(item.url)
     }))
   };
-};
-
-// Utility function to inject multiple schemas
-// `groupId` scopes an injection to one caller. Without it this cleared *every*
-// client-injected ld+json script before writing its own, so two StructuredData
-// components on the same page (e.g. siteNavigation + breadcrumb on the home
-// page) silently wiped each other and only the last one to run survived.
-export const injectMultipleSchemas = (schemas: object[], groupId: string) => {
-  removeSchemaGroup(groupId);
-
-  schemas.forEach(schema => {
-    const script = document.createElement('script');
-    script.type = 'application/ld+json';
-    script.dataset.schemaGroup = groupId;
-    script.textContent = JSON.stringify(schema, null, 2);
-    document.head.appendChild(script);
-  });
-};
-
-// Matched on the dataset rather than an attribute selector: React's useId()
-// produces ids containing colons, which are not valid in an unescaped selector.
-export const removeSchemaGroup = (groupId: string) => {
-  document
-    .querySelectorAll<HTMLScriptElement>('script[type="application/ld+json"][data-schema-group]')
-    .forEach(script => {
-      if (script.dataset.schemaGroup === groupId) script.remove();
-    });
 };

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Renovations from '@/components/pages/Renovations';
 import { JsonLd } from '@/components/JsonLd';
-import { generateLocalBusinessSchema, generateServiceSchema } from '@/lib/structured-data';
+import { generateServiceSchema } from '@/lib/structured-data';
 import { faqPageSchema, breadcrumbSchema } from '@/lib/service-content';
 import { industryContent } from '@/lib/industry-content';
 
@@ -35,12 +35,11 @@ export default function RenovationsPage() {
         { name: entry.breadcrumbLabel, url: entry.path },
       ])} />
       <JsonLd schema={faqPageSchema(entry.path, entry.faqs)} />
-      {/* Moved here from a useEffect inside Renovations.tsx so it is server-rendered. */}
-      <JsonLd schema={generateLocalBusinessSchema()} />
       <JsonLd
         schema={generateServiceSchema(
           'Renovation & Contractor Web Design',
-          'Web design for renovation companies and trades across the GTA — kitchen and bath remodelers, general contractors, roofing, HVAC, electrical, and landscaping. Project galleries and quote forms that turn browsers into booked estimates.'
+          'Web design for renovation companies and trades across the GTA — kitchen and bath remodelers, general contractors, roofing, HVAC, electrical, and landscaping. Project galleries and quote forms that turn browsers into booked estimates.',
+          entry.path
         )}
       />
       <Renovations />

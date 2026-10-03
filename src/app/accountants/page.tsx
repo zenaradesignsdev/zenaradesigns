@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Accountants from '@/components/pages/Accountants';
 import { JsonLd } from '@/components/JsonLd';
-import { generateLocalBusinessSchema, generateServiceSchema } from '@/lib/structured-data';
+import { generateServiceSchema } from '@/lib/structured-data';
 import { faqPageSchema, breadcrumbSchema } from '@/lib/service-content';
 import { industryContent } from '@/lib/industry-content';
 
@@ -35,12 +35,11 @@ export default function AccountantsPage() {
         { name: entry.breadcrumbLabel, url: entry.path },
       ])} />
       <JsonLd schema={faqPageSchema(entry.path, entry.faqs)} />
-      {/* Moved here from a useEffect inside Accountants.tsx so it is server-rendered. */}
-      <JsonLd schema={generateLocalBusinessSchema()} />
       <JsonLd
         schema={generateServiceSchema(
           'Accounting Firm Web Design',
-          'Web design for accounting firms, bookkeepers, and mortgage brokers across the GTA. Secure client portals, service-line pages, and document intake that turn browsers into booked discovery calls.'
+          'Web design for accounting firms, bookkeepers, and mortgage brokers across the GTA. Secure client portals, service-line pages, and document intake that turn browsers into booked discovery calls.',
+          entry.path
         )}
       />
       <Accountants />

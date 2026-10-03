@@ -4,6 +4,7 @@ import IndustryVerticalPage from '@/components/pages/IndustryVertical';
 import { JsonLd } from '@/components/JsonLd';
 import { industryVerticals, getIndustryVertical } from '@/lib/industry-verticals';
 import { breadcrumbSchema, faqPageSchema } from '@/lib/service-content';
+import { generateServiceSchema } from '@/lib/structured-data';
 
 const BASE = 'https://zenaradesigns.com';
 
@@ -52,6 +53,7 @@ export default function IndustryPage({ params }: { params: { slug: string } }) {
         ])}
       />
       <JsonLd schema={faqPageSchema(path, vertical.faqs)} />
+      <JsonLd schema={generateServiceSchema(`${vertical.name} Website Design`, vertical.metaDescription, path)} />
       <IndustryVerticalPage vertical={vertical} />
     </>
   );

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import Lawyers from '@/components/pages/Lawyers';
 import { JsonLd } from '@/components/JsonLd';
-import { generateLocalBusinessSchema, generateServiceSchema } from '@/lib/structured-data';
+import { generateServiceSchema } from '@/lib/structured-data';
 import { faqPageSchema, breadcrumbSchema } from '@/lib/service-content';
 import { industryContent } from '@/lib/industry-content';
 
@@ -35,12 +35,11 @@ export default function LawyersPage() {
         { name: entry.breadcrumbLabel, url: entry.path },
       ])} />
       <JsonLd schema={faqPageSchema(entry.path, entry.faqs)} />
-      {/* Moved here from a useEffect inside Lawyers.tsx so it is server-rendered. */}
-      <JsonLd schema={generateLocalBusinessSchema()} />
       <JsonLd
         schema={generateServiceSchema(
           'Law Firm Web Design',
-          'Web design for law firms and legal practices across the GTA. Practice-area pages, case results, and consultation intake that build trust and convert visitors into consultations.'
+          'Web design for law firms and legal practices across the GTA. Practice-area pages, case results, and consultation intake that build trust and convert visitors into consultations.',
+          entry.path
         )}
       />
       <Lawyers />
