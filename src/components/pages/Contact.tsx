@@ -151,7 +151,7 @@ const Contact = () => {
                     </div>
                     <div>
                       <p className="text-xs text-white/40 uppercase tracking-[0.15em] font-medium mb-0.5">Hours</p>
-                      <p className="text-white/80 text-sm font-light">Mon – Fri, 9 AM – 5 PM EST</p>
+                      <p className="text-white/80 text-sm font-light">Every day, 9 AM – 6 PM ET</p>
                     </div>
                   </div>
                 </div>
