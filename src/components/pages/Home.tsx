@@ -9,7 +9,7 @@ import CTABand from '@/components/home/CTABand';
 
 const GoogleReviews = dynamic(() => import('@/components/GoogleReviews'), {
   ssr: false,
-  loading: () => <div className="py-16 sm:py-20 md:py-24" style={{ backgroundColor: '#e5e7eb' }} />,
+  loading: () => <div className="min-h-[640px] bg-black" />,
 });
 
 const Home = () => {

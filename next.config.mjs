@@ -89,6 +89,11 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'zenaradesigns.com',
       },
+      // Google review author photos (from the Places API).
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
+      },
     ],
   },
   async redirects() {
