@@ -106,7 +106,9 @@ export async function GET(request: NextRequest) {
         'X-Goog-Api-Key': apiKey,
         'X-Goog-FieldMask': 'reviews,rating,userRatingCount,displayName',
       },
-      next: { revalidate: 3600 },
+      // Reviews change rarely; a daily refresh keeps Places API usage (billed
+      // per call) far inside the free tier.
+      next: { revalidate: 86400 },
     });
 
     if (!response.ok) {
