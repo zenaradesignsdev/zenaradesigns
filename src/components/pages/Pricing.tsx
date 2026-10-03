@@ -9,6 +9,7 @@ import { memo, useMemo, useEffect, useRef, useState } from 'react';
 import { FadeIn } from '@/components/ui/fade-in';
 import { TextReveal } from '@/components/ui/text-reveal';
 import { pricingPageFaqs } from '@/lib/faq-data';
+import { PRICES, formatCad, formatCadRange } from '@/lib/pricing-data';
 
 interface PricingPlan {
   name: string;
@@ -70,8 +71,8 @@ const Pricing = () => {
     {
       name: "Starter",
       subtitle: "Individual",
-      price: "$499",
-      originalPrice: "$999",
+      price: formatCad(PRICES.starter.price),
+      originalPrice: formatCad(PRICES.starter.regular),
       savings: "$500 OFF",
       description: "Affordable web design for freelancers and personal brands",
       features: [
@@ -91,8 +92,8 @@ const Pricing = () => {
     {
       name: "Small Business",
       subtitle: "Recommended",
-      price: "$1,499",
-      originalPrice: "$1,999",
+      price: formatCad(PRICES.smallBusiness.price),
+      originalPrice: formatCad(PRICES.smallBusiness.regular),
       savings: "$500 OFF",
       description: "Professional web design for small businesses and growing brands",
       features: [
@@ -114,7 +115,7 @@ const Pricing = () => {
     {
       name: "Pro",
       subtitle: "Fully Custom", 
-      price: "$4,999+",
+      price: `${formatCad(PRICES.pro.from)}+`,
       description: "Fully custom, premium web design for businesses needing advanced functionality",
       features: [
         "Everything in Small Business",
@@ -169,7 +170,7 @@ const Pricing = () => {
       services: [
         {
           name: "Professional Business Cards",
-          price: "$149 - $399",
+          price: formatCadRange(PRICES.businessCards),
           description: "High-quality business card design and printing",
           features: ["Custom design", "Premium printing", "Digital files", "2-3 day turnaround"],
           idealFor: "Professionals, consultants, service providers, small business owners, executives, lawyers, doctors, financial advisors, luxury brands",
@@ -177,7 +178,7 @@ const Pricing = () => {
         },
         {
           name: "Basic Logo Design",
-          price: "$99 - $199",
+          price: formatCadRange(PRICES.logoDesign),
           description: "Simple logo design for small businesses",
           features: ["3 initial concepts", "2 revisions", "Vector files", "1 week delivery"],
           idealFor: "Startups, freelancers, small businesses, entrepreneurs",
@@ -192,8 +193,8 @@ const Pricing = () => {
       id: 'core',
       name: 'Zenara Core',
       icon: Layers,
-      monthlyPrice: 45,
-      annualPrice: 486, // 10% discount: $45 * 12 * 0.9 = $486
+      monthlyPrice: PRICES.subscriptions.core,
+      annualPrice: Math.round(PRICES.subscriptions.core * 12 * 0.9), // 10% off annual
       features: [
         'Managed hosting (modern stack) + SSL',
         'Monitoring + basic security checks',
@@ -207,8 +208,8 @@ const Pricing = () => {
       id: 'grow',
       name: 'Zenara Grow',
       icon: Rocket,
-      monthlyPrice: 70,
-      annualPrice: 756, // 10% discount: $70 * 12 * 0.9 = $756
+      monthlyPrice: PRICES.subscriptions.grow,
+      annualPrice: Math.round(PRICES.subscriptions.grow * 12 * 0.9), // 10% off annual
       features: [
         'Everything in Core, plus:',
         'Monthly performance check + light optimization (speed, UX, small fixes)',
@@ -224,8 +225,8 @@ const Pricing = () => {
       id: 'prime',
       name: 'Zenara Prime',
       icon: Gem,
-      monthlyPrice: 150,
-      annualPrice: 1620, // 10% discount: $150 * 12 * 0.9 = $1620
+      monthlyPrice: PRICES.subscriptions.prime,
+      annualPrice: Math.round(PRICES.subscriptions.prime * 12 * 0.9), // 10% off annual
       features: [
         'Everything in Grow, plus:',
         'Advanced performance tuning (Core Web Vitals)',
@@ -460,7 +461,7 @@ const Pricing = () => {
                     Everything a small business needs to launch a professional online presence — website, branding, Google Business, social, hosting, and local SEO — for one fast, affordable, transparent price.
                   </p>
                   <div className="flex items-baseline gap-3 mb-2">
-                    <span className="text-5xl sm:text-6xl font-light text-white">$2,000</span>
+                    <span className="text-5xl sm:text-6xl font-light text-white">{formatCad(PRICES.launchPackage.price)}</span>
                     <span className="text-white/40 text-sm font-light">one-time</span>
                   </div>
                   <p className="text-white/40 text-xs sm:text-sm font-light mb-8">
@@ -526,6 +527,7 @@ const Pricing = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-16">
             <TextReveal
+              as="h2"
               className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[0.95] tracking-[-0.04em]"
               staggerMs={120}
               lines={[
@@ -644,6 +646,7 @@ const Pricing = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-16">
             <TextReveal
+              as="h2"
               className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[0.95] tracking-[-0.04em]"
               staggerMs={120}
               lines={[
@@ -774,6 +777,7 @@ const Pricing = () => {
                   </p>
                 </FadeIn>
                 <TextReveal
+                  as="h2"
                   className="text-4xl sm:text-5xl md:text-6xl font-extralight text-white leading-[1] tracking-[-0.04em]"
                   staggerMs={120}
                   lines={[
@@ -856,6 +860,7 @@ const Pricing = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-16">
             <TextReveal
+              as="h2"
               className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[0.95] tracking-[-0.04em] text-center"
               staggerMs={120}
               lines={[

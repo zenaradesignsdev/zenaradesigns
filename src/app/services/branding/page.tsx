@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import BrandingService from '@/components/pages/services/BrandingService';
 import { JsonLd } from '@/components/JsonLd';
 import { serviceContent, serviceSchema, faqPageSchema, serviceBreadcrumb } from '@/lib/service-content';
+import { businessCardsProductSchema } from '@/lib/pricing-data';
 
 const entry = serviceContent['branding'];
 
@@ -29,6 +30,7 @@ export default function BrandingPage() {
     <>
       <JsonLd schema={serviceBreadcrumb(entry)} />
       <JsonLd schema={serviceSchema(entry)} />
+      <JsonLd schema={businessCardsProductSchema} />
       <JsonLd schema={faqPageSchema(entry.path, entry.faqs)} />
       <BrandingService />
     </>

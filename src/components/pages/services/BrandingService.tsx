@@ -8,6 +8,7 @@ import { SafeImage } from '@/components/ui/safe-image';
 import { FadeIn } from '@/components/ui/fade-in';
 import { TextReveal } from '@/components/ui/text-reveal';
 import { brandingFaqs as faqs } from '@/lib/service-content';
+import { PRICES, formatCadRange } from '@/lib/pricing-data';
 
 const INCLUDED = ['Custom Logo Mark', 'Colour Palette', 'Typography Pairing', 'Business Card Design', 'Print-Ready Files', 'Source Files (AI/SVG/PDF)'];
 
@@ -55,8 +56,8 @@ const DIFFERENTIATORS = [
 ];
 
 const PLANS = [
-  { name: 'Logo Design', price: '$99–$199', desc: '3 concepts, 2 revisions, vector files, 1 week' },
-  { name: 'Business Cards', price: '$149–$399', desc: 'Custom design, premium printing, 2–3 day turnaround' },
+  { name: 'Logo Design', price: formatCadRange(PRICES.logoDesign, '–'), desc: '3 concepts, 2 revisions, vector files, 1 week' },
+  { name: 'Business Cards', price: formatCadRange(PRICES.businessCards, '–'), desc: 'Custom design, premium printing, 2–3 day turnaround' },
 ];
 
 const BrandingService = () => {
@@ -336,6 +337,7 @@ const BrandingService = () => {
 
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center relative z-10">
           <TextReveal
+            as="h2"
             className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-extralight mb-6 text-white leading-[1.1] tracking-[-0.04em]"
             staggerMs={130}
             lines={[
