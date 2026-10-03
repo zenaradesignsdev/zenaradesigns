@@ -49,3 +49,4 @@ gsc-audit-report.md
 
 # Playwright MCP test artifacts
 .playwright-mcp/
+.vercel

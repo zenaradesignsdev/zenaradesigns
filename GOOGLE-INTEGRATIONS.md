@@ -211,7 +211,41 @@ Sample (2026-10-03, Markham): `website design markham` / `markham web design` / 
 
 ---
 
-## 3. What was done on 2026-10-03
+## 3. Google reviews on the homepage (Places API)
+
+The homepage reviews widget (`src/components/GoogleReviews.tsx` → `/api/reviews`) reads the
+Google Business Profile through the **Places API (New)**. Set up 2026-10-03; before that the
+env vars were never configured and the widget silently showed the "0 reviews" fallback.
+
+| Thing | Value |
+|---|---|
+| Cloud project (billing enabled) | `zenara-510519` ("Zenara") |
+| API key | "zenaradesigns.com reviews (server, Places only)" — restricted to `places.googleapis.com` |
+| Place ID (public, not secret) | `ChIJx1_pTDIDFGkRKBhyxEi9IC0` |
+| Maps listing | `https://maps.google.com/?cid=3251807051192604712` (5.0, 5 reviews as of 2026-10-03) |
+| Vercel env (Production only) | `GOOGLE_PLACES_API_KEY` (sensitive), `GOOGLE_PLACE_ID` |
+
+**Cost guardrails — the API is billed per call, keep it $0:**
+- `/api/reviews` caches the Places response for **24 hours** (`next: { revalidate: 86400 }`).
+- Hard daily quota caps on the project: GetPlace **30/day**, SearchText **5/day**, everything
+  else (autocomplete, photos, nearby, media, review posts) **0/day**. Don't raise them without
+  asking. Change via `gcloud beta quotas preferences create … --allow-high-percentage-quota-decrease`.
+- The env vars are Production-only on purpose, so preview deployments don't spend quota.
+
+**Gotchas:**
+- The business is a **service-area business with a hidden address**, so Places *Text Search
+  returns nothing* for "Zenara Designs". The place ID was derived from the Maps feature ID
+  (`0x691403324ce95fc7:0x2d20bd48c4721828` → protobuf → base64url) and confirmed with Place Details.
+- Places returns at most **5** reviews (most relevant/recent). Showing more would need the
+  Business Profile API (free, but needs Google's manual access approval).
+- Site hours/phone in JSON-LD must match the Business Profile (every day 9 AM–6 PM,
+  (647) 835-1077) — Google cross-checks them.
+- Vercel CLI: account `zenaradesigns`, team `zenara-designs-projects`; repo is linked via
+  `vercel link` (`.vercel/` is gitignored). Env changes only apply after a redeploy.
+
+---
+
+## 4. What was done on 2026-10-03
 
 **Search Console**
 - Enabled `searchconsole.googleapis.com`; created `zenara-gsc` service account; granted keyless
@@ -229,9 +263,16 @@ Sample (2026-10-03, Markham): `website design markham` / `markham web design` / 
 - Brand verification (home page, privacy URL, authorized domain `zenaradesigns.com`) — verified
   and published.
 
+**Site / reviews**
+- Shipped the pending SEO pass: one JSON-LD business node referenced by `@id`, no site-wide
+  canonical, h2 section headings, pricing schema from `src/lib/pricing-data.ts`, noindexed
+  `/contact/schedule`, tightened meta descriptions (commits `c0bb839`–`d6923e7`).
+- Business hours set to every day 9–6 to match the Business Profile (`40f5634`).
+- Google reviews wired up via Places API with 24h caching and quota caps (`0fae7a4` + Vercel env).
+
 ---
 
-## 4. Baseline findings (2026-10-03) — for future comparison
+## 5. Baseline findings (2026-10-03) — for future comparison
 
 From GSC (domain property):
 - **Last 28 days:** 1,023 impressions, 4 clicks. Impressions roughly doubled from 2026-09-24
@@ -250,7 +291,7 @@ vasanlaw; tamilbookstore not yet live/crawled.
 
 ---
 
-## 5. Open follow-ups
+## 6. Open follow-ups
 
 - [ ] **Remove the temporary demo sitemaps** once `gsc inspect` shows "Excluded by 'noindex'
       tag" for `projecttwo/`, `projectthree/`, `projectthree/contact`, `projectfour/`:
@@ -265,7 +306,7 @@ vasanlaw; tamilbookstore not yet live/crawled.
 
 ---
 
-## 6. Security notes
+## 7. Security notes
 
 - **Never commit** `~/.config/zenara/*`, gcloud credentials, OAuth client JSON files, or any
   access token. None of these belong in this repo.
