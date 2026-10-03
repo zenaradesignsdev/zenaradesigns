@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 
 interface TextRevealProps {
   /** Each array item renders as one animated line */
@@ -75,27 +75,34 @@ export const TextReveal = ({
        wrapper, so the wrapper's own height stays exactly what it was. */
     <Wrapper ref={ref} className={`flex flex-col ${className}`}>
       {lines.map((line, i) => (
-        <div key={i} className="overflow-hidden pb-[0.25em] -mb-[0.25em]">
-          <div
-            className={
-              immediate
-                ? `${lineClassName} opacity-100 translate-y-0`
-                : `transition-[opacity,transform] duration-700 ${lineClassName} ${
-                    visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[155%]'
-                  }`
-            }
-            style={
-              immediate
-                ? undefined
-                : {
-                    transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
-                    transitionDelay: visible ? `${baseDelayMs + i * staggerMs}ms` : '0ms',
-                  }
-            }
-          >
-            {line}
-          </div>
-        </div>
+        // Spans (display:block) rather than divs, so the wrapper can be a
+        // heading: h1/h2 only allow phrasing content. The space between lines
+        // keeps the words apart in the heading's text ("Everything your
+        // business…", not "yourbusiness"); flex layout doesn't render it.
+        <Fragment key={i}>
+          {i > 0 && ' '}
+          <span className="block overflow-hidden pb-[0.25em] -mb-[0.25em]">
+            <span
+              className={
+                immediate
+                  ? `block ${lineClassName} opacity-100 translate-y-0`
+                  : `block transition-[opacity,transform] duration-700 ${lineClassName} ${
+                      visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-[155%]'
+                    }`
+              }
+              style={
+                immediate
+                  ? undefined
+                  : {
+                      transitionTimingFunction: 'cubic-bezier(0.16, 1, 0.3, 1)',
+                      transitionDelay: visible ? `${baseDelayMs + i * staggerMs}ms` : '0ms',
+                    }
+              }
+            >
+              {line}
+            </span>
+          </span>
+        </Fragment>
       ))}
     </Wrapper>
   );

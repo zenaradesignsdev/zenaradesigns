@@ -336,6 +336,7 @@ const Services = () => {
               <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 font-medium">What We Offer</p>
             </FadeIn>
             <TextReveal
+              as="h2"
               className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-white leading-[0.95] tracking-[-0.04em]"
               staggerMs={120}
               lines={[
@@ -427,6 +428,7 @@ const Services = () => {
               <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 font-medium">Dive Deeper</p>
             </FadeIn>
             <TextReveal
+              as="h2"
               className="text-3xl sm:text-4xl md:text-5xl font-extralight text-white leading-[0.95] tracking-[-0.04em]"
               staggerMs={120}
               lines={[
@@ -513,6 +515,7 @@ const Services = () => {
               <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 font-medium">Specialized Expertise</p>
             </FadeIn>
             <TextReveal
+              as="h2"
               className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-white leading-[0.95] tracking-[-0.04em] mb-6"
               staggerMs={120}
               lines={[
@@ -594,6 +597,7 @@ const Services = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-14">
             <TextReveal
+              as="h2"
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white mb-4 leading-[0.95] tracking-[-0.04em]"
               staggerMs={130}
               lines={[
@@ -651,6 +655,7 @@ const Services = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-14">
             <TextReveal
+              as="h2"
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white mb-4 leading-[0.95] tracking-[-0.04em]"
               staggerMs={120}
               lines={[
@@ -727,6 +732,7 @@ const Services = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-12 sm:mb-14">
             <TextReveal
+              as="h2"
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white leading-[0.95] tracking-[-0.04em]"
               staggerMs={120}
               lines={[
@@ -802,6 +808,7 @@ const Services = () => {
             </div>
             <div className="relative z-10 px-6 sm:px-8 md:px-12 lg:px-16 py-12 sm:py-16 md:py-20 text-center">
               <TextReveal
+                as="h2"
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white mb-6 leading-[1.1] tracking-[-0.04em]"
                 staggerMs={140}
                 lines={[

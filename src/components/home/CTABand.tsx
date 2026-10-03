@@ -36,6 +36,7 @@ const CTABand = () => {
 
           <div className="relative z-10 px-6 sm:px-8 md:px-12 lg:px-16 py-12 sm:py-16 md:py-20 text-center">
             <TextReveal
+              as="h2"
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white mb-6 leading-[1.1] tracking-[-0.04em]"
               staggerMs={140}
               lines={[

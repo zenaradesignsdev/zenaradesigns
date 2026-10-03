@@ -112,6 +112,10 @@ const AgencyPartnersSection = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 items-center mb-16 sm:mb-20">
           <div className="text-center lg:text-left space-y-4 sm:space-y-6">
             <TextReveal
+              as="h2"
+              // No size classes of its own (the lines carry them): inherit so the
+              // h2 base styles don't change the em-based line clipping.
+              className="[font:inherit] tracking-[inherit]"
               staggerMs={120}
               lineClassName="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-[1.1] tracking-[-0.02em]"
               lines={[
@@ -151,6 +155,7 @@ const AgencyPartnersSection = () => {
         {/* Technology We Work With */}
         <div className="text-center mb-12 sm:mb-16">
           <TextReveal
+            as="h2"
             className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white mb-4 leading-[0.95] tracking-[-0.04em]"
             lines={[
               <span key="l1">

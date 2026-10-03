@@ -329,6 +329,7 @@ const WebsiteRedesignService = () => {
 
         <div className="max-w-3xl mx-auto px-4 sm:px-6 text-center relative z-10">
           <TextReveal
+            as="h2"
             className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl font-extralight mb-6 text-white leading-[1.1] tracking-[-0.04em]"
             staggerMs={130}
             lines={[

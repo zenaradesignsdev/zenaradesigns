@@ -209,6 +209,7 @@ const Clinics = () => {
             <p className="text-xs font-mono text-cyan-400/60 tracking-[0.2em] uppercase mb-5 text-center">Modalities We Serve</p>
           </FadeIn>
           <TextReveal
+            as="h2"
             className="text-3xl sm:text-4xl md:text-5xl font-extralight text-white leading-[1.05] tracking-[-0.04em] text-center mb-6"
             staggerMs={120}
             lines={[
@@ -286,6 +287,7 @@ const Clinics = () => {
                 <p className="text-xs font-mono text-cyan-400/60 tracking-[0.2em] uppercase mb-5">The Research Happens First</p>
               </FadeIn>
               <TextReveal
+                as="h2"
                 className="text-3xl sm:text-4xl md:text-5xl font-extralight text-white leading-[1.05] tracking-[-0.04em] mb-6"
                 staggerMs={120}
                 lines={[
@@ -366,6 +368,7 @@ const Clinics = () => {
                 <p className="text-xs font-mono text-cyan-400/60 tracking-[0.2em] uppercase mb-5">What It Needs to Do</p>
               </FadeIn>
               <TextReveal
+                as="h2"
                 className="text-3xl sm:text-4xl md:text-5xl font-extralight text-white leading-[1.05] tracking-[-0.04em] mb-6"
                 staggerMs={120}
                 lines={[

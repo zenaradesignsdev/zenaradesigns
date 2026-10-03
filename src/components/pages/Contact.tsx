@@ -197,6 +197,7 @@ const Contact = () => {
             </div>
             <div className="relative z-10 px-6 sm:px-10 md:px-14 py-10 sm:py-14 text-center">
               <TextReveal
+                as="h2"
                 className="text-3xl sm:text-4xl md:text-5xl font-extralight text-white mb-4 leading-[1.1] tracking-[-0.04em]"
                 staggerMs={130}
                 lines={[

@@ -87,6 +87,7 @@ const ProcessSection = () => {
         {/* Headline */}
         <div className="text-center mb-12 sm:mb-16 relative z-20">
           <TextReveal
+            as="h2"
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-white mb-8 sm:mb-10 leading-[0.95] tracking-[-0.04em] text-center"
             staggerMs={130}
             lines={[

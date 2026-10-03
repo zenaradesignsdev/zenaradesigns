@@ -71,6 +71,7 @@ const DifferentiatorsSection = () => {
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-12 sm:mb-16 gap-6">
           <div className="flex-1">
             <TextReveal
+              as="h2"
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight mb-4 text-white leading-[0.95] tracking-[-0.04em]"
               staggerMs={120}
               lines={[

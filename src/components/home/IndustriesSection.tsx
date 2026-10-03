@@ -89,6 +89,7 @@ const IndustriesSection = () => {
             </p>
           </FadeIn>
           <TextReveal
+            as="h2"
             className="text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 sm:mb-8 leading-[0.95] tracking-[-0.04em]"
             staggerMs={120}
             lines={[

@@ -78,6 +78,7 @@ const PortfolioSection = () => {
           {/* Left Side - Text Content */}
           <div className="space-y-6 text-center lg:text-left">
             <TextReveal
+              as="h2"
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white leading-[0.95] tracking-[-0.04em]"
               staggerMs={120}
               lines={[
