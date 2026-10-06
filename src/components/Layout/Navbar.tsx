@@ -34,6 +34,9 @@ const logo = '/images/zenara-logo-v5.svg';
 /** useLayoutEffect warns during SSR; this component renders on the server too. */
 const useIsomorphicLayoutEffect = typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
+/** Just over the CSS exit animation (--mobile-menu-backdrop-duration, 180ms). */
+const MOBILE_MENU_EXIT_MS = 200;
+
 /** How far the page scrolls before the bar morphs into the compact pill. */
 const SCROLL_MORPH_AT = 24;
 
@@ -240,7 +243,7 @@ const Navbar = () => {
         setIsMobileMenuOpen(false);
         setMobileServicesOpen(false);
         menuElement.classList.remove('mobile-menu-exiting');
-      }, 300);
+      }, MOBILE_MENU_EXIT_MS);
     } else {
       setIsMobileMenuOpen(false);
       setMobileServicesOpen(false);
@@ -401,7 +404,7 @@ const Navbar = () => {
                 const active = link.href === '/services' ? isServicesSection : isActive(link.href);
                 const number = String(index + 1).padStart(2, '0');
                 return (
-                  <li key={link.href} className="mobile-menu-item" style={{ animationDelay: `${80 + index * 55}ms` }}>
+                  <li key={link.href} className="mobile-menu-item" style={{ animationDelay: `${index * 30}ms` }}>
                     <div className="flex items-center">
                       <Link
                         href={link.href}
@@ -477,7 +480,7 @@ const Navbar = () => {
 
           <div
             className="mobile-menu-item mt-auto pt-8 space-y-3"
-            style={{ animationDelay: `${80 + navLinks.length * 55}ms` }}
+            style={{ animationDelay: `${navLinks.length * 30}ms` }}
           >
             <div className="grid grid-cols-2 gap-3">
               <a

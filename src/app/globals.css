@@ -1307,10 +1307,10 @@
 
 /* CSS Custom Properties for Animation Timing */
 :root {
-  --mobile-menu-backdrop-duration: 300ms;
-  --mobile-menu-content-duration: 400ms;
-  --mobile-menu-item-stagger: 60ms;
-  --mobile-menu-easing: cubic-bezier(0.4, 0, 0.2, 1);
+  --mobile-menu-backdrop-duration: 180ms;
+  --mobile-menu-content-duration: 220ms;
+  --mobile-menu-item-stagger: 30ms;
+  --mobile-menu-easing: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Mobile Menu Container */
@@ -1357,7 +1357,7 @@
 @keyframes mobile-menu-content-enter {
   from {
     opacity: 0;
-    transform: translateY(30px) translateZ(0);
+    transform: translateY(12px) translateZ(0);
   }
   to {
     opacity: 1;
@@ -1372,7 +1372,7 @@
   }
   to {
     opacity: 0;
-    transform: translateY(30px) translateZ(0);
+    transform: translateY(12px) translateZ(0);
   }
 }
 
@@ -1399,7 +1399,7 @@
 @keyframes mobile-menu-item-enter {
   from {
     opacity: 0;
-    transform: translateY(20px) translateZ(0);
+    transform: translateY(12px) translateZ(0);
   }
   to {
     opacity: 1;
@@ -1409,8 +1409,8 @@
 
 .mobile-menu-item {
   opacity: 0;
-  transform: translateY(20px) translateZ(0);
-  animation: mobile-menu-item-enter 0.4s var(--mobile-menu-easing) forwards;
+  transform: translateY(12px) translateZ(0);
+  animation: mobile-menu-item-enter 250ms var(--mobile-menu-easing) forwards;
   will-change: opacity, transform;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -1705,4 +1705,18 @@
 
 @media (prefers-reduced-motion: reduce) {
   .cs-screen-scroll { animation: none; }
+}
+
+/* Phones: stop the always-on starfield. ~230 hand-placed stars (footer, home
+   sections) each run an infinite twinkle, which kept style recalc busy on every
+   frame and delayed taps such as opening the menu. Left unlayered and last so it
+   beats the layered mobile rules above and the base .animate-twinkle / .bg-star
+   rules. Without the keyframe the stars would sit at full opacity, so hold them
+   near the twinkle's average brightness. */
+@media (max-width: 768px) {
+  .animate-twinkle,
+  .bg-star {
+    animation: none;
+    opacity: 0.6;
+  }
 }
