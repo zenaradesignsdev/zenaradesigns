@@ -300,9 +300,11 @@ const Navbar = () => {
       document.documentElement.style.width = '';
       document.documentElement.style.height = '';
 
-      // Restore scroll position, unless the menu closed because of a navigation
+      // Restore scroll position, unless the menu closed because of a navigation.
+      // Unlocking resets the page to the top; html has scroll-behavior: smooth,
+      // so a plain scrollTo would visibly animate back down from 0.
       if (lockedScrollY.current && restoreScrollOnClose.current) {
-        window.scrollTo(0, lockedScrollY.current);
+        window.scrollTo({ top: lockedScrollY.current, behavior: 'instant' });
       }
       lockedScrollY.current = 0;
       restoreScrollOnClose.current = true;
