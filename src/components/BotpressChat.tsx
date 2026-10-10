@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Script from 'next/script';
 import { Loader2, MessageCircle, X } from 'lucide-react';
+import { useFirstInteraction } from '@/hooks';
 
 type Botpress = {
   on: (event: string, handler: () => void) => void;
@@ -26,10 +27,6 @@ const GREETING_DELAY_MS = 4000;
 // launcher while the chat window (which has its own close button) is open.
 const STATE_POLL_MS = 100;
 const SHADOW_STYLE_ID = 'zenari-webchat-style';
-// inject.js is ~520 KB gzipped, so it is only fetched once the visitor
-// interacts with the page (or taps the launcher). Keeps it out of page-load
-// metrics such as Lighthouse TBT, which never interacts.
-const LOAD_TRIGGER_EVENTS = ['pointerdown', 'touchstart', 'keydown', 'scroll'] as const;
 
 // Botpress renders both its round launcher and the chat window inside
 // #fab-root's shadow root, so page CSS can't reach them. Inject a style that:
@@ -71,7 +68,11 @@ function styleWebchat() {
 // renders straight away and doesn't depend on Botpress having loaded.
 export default function BotpressChat() {
   const [mounted, setMounted] = useState(false);
-  const [shouldLoad, setShouldLoad] = useState(false);
+  // inject.js is ~520 KB gzipped, so it is only fetched once the visitor
+  // interacts with the page (or taps the launcher).
+  const hasInteracted = useFirstInteraction();
+  const [launcherTapped, setLauncherTapped] = useState(false);
+  const shouldLoad = hasInteracted || launcherTapped;
   const [injected, setInjected] = useState(false);
   const [ready, setReady] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -85,14 +86,6 @@ export default function BotpressChat() {
 
   useEffect(() => {
     setMounted(true);
-    const load = () => {
-      setShouldLoad(true);
-      LOAD_TRIGGER_EVENTS.forEach((e) => window.removeEventListener(e, load));
-    };
-    LOAD_TRIGGER_EVENTS.forEach((e) =>
-      window.addEventListener(e, load, { once: true, passive: true })
-    );
-    return () => LOAD_TRIGGER_EVENTS.forEach((e) => window.removeEventListener(e, load));
   }, []);
 
   // Launcher tapped before Botpress finished loading: open once it's ready.
@@ -137,7 +130,7 @@ export default function BotpressChat() {
   const openChat = () => {
     dismissGreeting();
     if (!ready) {
-      setShouldLoad(true);
+      setLauncherTapped(true);
       setPendingOpen(true);
       return;
     }

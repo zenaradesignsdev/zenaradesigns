@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
 import './globals.css';
 import Providers from '@/components/providers';
 import Layout from '@/components/Layout/Layout';
 import { fontSans } from '@/lib/fonts';
 import { JsonLd } from '@/components/JsonLd';
 import BotpressChat from '@/components/BotpressChat';
+import GoogleAnalytics from '@/components/GoogleAnalytics';
 import { generateBusinessSchema, generateWebSiteSchema } from '@/lib/structured-data';
 
 export const metadata: Metadata = {
@@ -86,23 +86,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <JsonLd schema={generateWebSiteSchema()} />
       </head>
       <body className="font-sans antialiased">
-        {/* Google Analytics */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-XEHPLPLX0S"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-XEHPLPLX0S', {
-              'anonymize_ip': true,
-              'cookie_flags': 'SameSite=None;Secure',
-              'send_page_view': true
-            });
-          `}
-        </Script>
+        <GoogleAnalytics />
         <BotpressChat />
         <Providers>
           <Layout>{children}</Layout>
