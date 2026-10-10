@@ -5,6 +5,7 @@ import Providers from '@/components/providers';
 import Layout from '@/components/Layout/Layout';
 import { fontSans } from '@/lib/fonts';
 import { JsonLd } from '@/components/JsonLd';
+import BotpressChat from '@/components/BotpressChat';
 import { generateBusinessSchema, generateWebSiteSchema } from '@/lib/structured-data';
 
 export const metadata: Metadata = {
@@ -102,6 +103,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             });
           `}
         </Script>
+        <BotpressChat />
         <Providers>
           <Layout>{children}</Layout>
         </Providers>

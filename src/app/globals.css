@@ -1720,3 +1720,18 @@
     opacity: 0.6;
   }
 }
+
+.zenari-bob {
+  animation: zenari-bob 3s ease-in-out infinite;
+}
+
+@keyframes zenari-bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .zenari-bob {
+    animation: none;
+  }
+}
