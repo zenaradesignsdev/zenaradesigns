@@ -343,6 +343,7 @@ export const renovationProjectPagesPost: BlogPost = {
     'Wireframe of a fictional renovation project page with before and after photos, a project scope list, location details and a quote request button.',
   author: 'Kavin Mural',
   publishedAt: new Date('2026-08-12'),
+  updatedAt: new Date('2026-09-23'),
   tags: ['industry guides', 'renovation companies', 'SEO'],
   content: RenovationProjectPagesContent,
 };

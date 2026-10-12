@@ -226,6 +226,7 @@ export const websiteCostTorontoPost: BlogPost = {
     'Quotes for a small business website in Toronto can differ by a factor of ten. Here is what actually drives the price, what you keep paying after launch, and how to compare quotes fairly.',
   author: 'Kavin Mural',
   publishedAt: new Date('2026-05-12'),
+  updatedAt: new Date('2026-09-23'),
   tags: ['pricing & planning', 'web design', 'small business'],
   content: WebsiteCostTorontoContent,
 };

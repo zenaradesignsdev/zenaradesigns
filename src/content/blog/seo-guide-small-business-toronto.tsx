@@ -238,6 +238,7 @@ export const seoGuideTorontoPost: BlogPost = {
     'Most local SEO advice is a list of fifty tactics. For a small business in the GTA, a handful do most of the work. Here they are, in the order we would do them, with Google’s own guidance linked.',
   author: 'Kavin Mural',
   publishedAt: new Date('2026-06-03'),
+  updatedAt: new Date('2026-09-23'),
   tags: ['SEO', 'local SEO', 'small business'],
   content: SeoGuideTorontoContent,
 };
