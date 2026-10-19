@@ -2,11 +2,19 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Mail, Phone, CheckCircle, Instagram } from 'lucide-react';
-import { BUSINESS_EMAIL, BUSINESS_PHONE, BUSINESS_PHONE_E164, NAVIGATION_LINKS, FOOTER_ADDITIONAL_LINKS, SERVICE_LINKS, SERVICE_AREA_LINKS, INSTAGRAM_URL } from '@/lib/constants';
+import { Mail, Phone, CheckCircle, Instagram, Youtube } from 'lucide-react';
+import { BUSINESS_EMAIL, BUSINESS_PHONE, BUSINESS_PHONE_E164, NAVIGATION_LINKS, FOOTER_ADDITIONAL_LINKS, SERVICE_LINKS, SERVICE_AREA_LINKS, INSTAGRAM_URL, TIKTOK_URL, YOUTUBE_URL, LINKTREE_URL } from '@/lib/constants';
+import { TikTokIcon, LinktreeIcon } from '@/components/Layout/BrandIcons';
 import { useState, FormEvent } from 'react';
 
 const logo = '/images/zenara-logo-v5.svg';
+
+const SOCIAL_LINKS = [
+  { href: INSTAGRAM_URL, label: '@zenaradesignsinc', ariaLabel: 'Follow us on Instagram @zenaradesignsinc', Icon: Instagram },
+  { href: TIKTOK_URL, label: '@zenaradesigns', ariaLabel: 'Follow us on TikTok @zenaradesigns', Icon: TikTokIcon },
+  { href: YOUTUBE_URL, label: '@ZenaraDesigns', ariaLabel: 'Subscribe to us on YouTube @ZenaraDesigns', Icon: Youtube },
+  { href: LINKTREE_URL, label: 'Linktree', ariaLabel: 'All our links on Linktree', Icon: LinktreeIcon },
+] as const;
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -176,18 +184,20 @@ const Footer = () => {
                     {BUSINESS_PHONE}
                   </a>
                 </div>
-                <div className="flex items-baseline space-x-2 text-slate-300">
-                  <Instagram className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5" />
-                  <a 
-                    href={INSTAGRAM_URL} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="hover:text-cyan-400 transition-colors text-xs sm:text-sm"
-                    aria-label="Follow us on Instagram @zenaradesignsinc"
-                  >
-                    @zenaradesignsinc
-                  </a>
-                </div>
+                {SOCIAL_LINKS.map(({ href, label, ariaLabel, Icon }) => (
+                  <div key={href} className="flex items-baseline space-x-2 text-slate-300">
+                    <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5" />
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:text-cyan-400 transition-colors text-xs sm:text-sm"
+                      aria-label={ariaLabel}
+                    >
+                      {label}
+                    </a>
+                  </div>
+                ))}
               </div>
             </div>
 

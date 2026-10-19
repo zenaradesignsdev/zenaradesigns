@@ -14,6 +14,9 @@ export const WEBSITE_ID = `${SITE_URL}/#website`;
 // The business's only public profiles. The Maps URL is the Google Business
 // Profile (listing CID), which is the strongest sameAs signal for local search.
 export const INSTAGRAM_URL = 'https://www.instagram.com/zenaradesignsinc/';
+export const TIKTOK_URL = 'https://www.tiktok.com/@zenaradesigns';
+export const YOUTUBE_URL = 'https://www.youtube.com/@ZenaraDesigns';
+export const LINKTREE_URL = 'https://linktr.ee/zenaradesigns';
 export const GOOGLE_MAPS_URL = 'https://maps.google.com/?cid=3251807051192604712';
 
 // Navigation constants

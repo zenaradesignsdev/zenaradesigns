@@ -5,10 +5,13 @@ import {
   BUSINESS_PHONE_E164,
   GOOGLE_MAPS_URL,
   INSTAGRAM_URL,
+  LINKTREE_URL,
   ORGANIZATION_ID,
   SERVICE_LINKS,
   SITE_URL,
+  TIKTOK_URL,
   WEBSITE_ID,
+  YOUTUBE_URL,
 } from './constants';
 import { ABOUT_URL, findTeamMember, teamPersonId } from '@/lib/team';
 
@@ -51,7 +54,7 @@ export const BUSINESS_INFO = {
     'Pickering',
   ],
   googleMapsUrl: GOOGLE_MAPS_URL,
-  sameAs: [INSTAGRAM_URL, GOOGLE_MAPS_URL],
+  sameAs: [INSTAGRAM_URL, TIKTOK_URL, YOUTUBE_URL, LINKTREE_URL, GOOGLE_MAPS_URL],
   // Matches the payment FAQ on /pricing.
   paymentAccepted: 'Credit Card, Interac e-Transfer, Cheque',
 };
