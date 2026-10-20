@@ -5,6 +5,12 @@
 // FAQPage + Breadcrumb JSON-LD). Schema builders live in service-content.ts and
 // are reused by the hub route files. See SEO-RANKING-PLAN.md §8.1.
 
+import { packagePriceWithRegular, proFromPrice } from './pricing-data';
+
+// Prices come from PRICES so these answers (which are also FAQPage JSON-LD)
+// can never quote a different figure from /pricing.
+const PLAN_FIT = `our Small Business plan (${packagePriceWithRegular('smallBusiness')}, up to six pages) or our Pro plan (from ${proFromPrice()}).`;
+
 export interface IndustryFaq {
   question: string;
   answer: string;
@@ -27,23 +33,27 @@ export const lawyersFaqs: IndustryFaq[] = [
   },
   {
     question: "How much does a professional law firm website cost in Ontario?",
-    answer: "Most law firm websites fit our Small Business plan ($1,999, up to six pages) or our Pro plan (from $4,999). Where a firm lands depends on how many practice area pages and lawyer profiles it needs, and whether it wants integrations such as online consultation booking. Every project gets a fixed written quote before work starts, and current prices and any promotions are listed on our pricing page. Because we are a small senior team using AI-assisted development, automated deployment and scripted site audits, you pay for the build itself rather than agency overhead."
+    answer: `Most law firm websites fit ${PLAN_FIT} Where a firm lands depends on how many practice area pages and lawyer profiles it needs, and whether it wants integrations such as online consultation booking. Every project gets a fixed written quote before work starts, and current prices and any promotions are listed on our pricing page. Because we are a small senior team using AI-assisted development, automated deployment and scripted site audits, you pay for the build itself rather than agency overhead.`
   },
   {
     question: "How long does it take to build a lawyer's website?",
-    answer: "A complete custom law firm website usually takes 2 to 3 weeks from kickoff to launch. Larger builds with custom functionality run 3 to 4 weeks. That timeline includes competitive analysis, custom design focused on trust and credibility, development of essential features, and SEO optimization to ensure your firm ranks for local searches."
+    answer: "A complete custom law firm website usually launches 1 to 2 weeks after we receive your content. Larger builds with custom functionality run 3 to 4 weeks. That timeline includes competitive analysis, custom design focused on trust and credibility, development of essential features, and SEO optimization to ensure your firm ranks for local searches."
   },
   {
     question: "What features are essential for a law firm website in 2026?",
-    answer: "Essential features include consultation booking systems, SEO-optimized practice area showcase pages, case studies and success stories, legal blog and content marketing capabilities, attorney profiles and team pages, and client testimonials and reviews. These features build trust, demonstrate expertise, and convert visitors into consultations."
+    answer: "A dedicated page for each major practice area, lawyer profiles with year of call and real photos, a clear explanation of how the first consultation works and what it costs, an intake form that captures the type of matter, and a fast, accessible mobile experience. Reviews and results can help too, but they have to be presented within the Law Society of Ontario's marketing rules, which restrict emotional testimonials and require a disclaimer alongside past results."
+  },
+  {
+    question: "Does a law firm website have to follow the Law Society's marketing rules?",
+    answer: "Yes. In Ontario a law firm website is marketing, so rule 4.2-1 of the Law Society of Ontario's Rules of Professional Conduct applies: claims must be demonstrably true, accurate and verifiable, and must not mislead. The commentary lists examples that may contravene the rule, such as suggesting superiority over other lawyers or quoting amounts recovered without a past-results disclaimer, and rule 4.3-1 reserves the word 'specialist' for Law Society certified specialists. We write and review every page with those rules in mind, but the final sign-off on what your firm says is always yours."
   },
   {
     question: "Do law firms in GTA suburbs need local SEO?",
-    answer: "Absolutely. Many people look for a lawyer by searching for a practice area plus their city, and Google shows the local map results first, so local SEO is critical for acquiring clients. Appearing in Google Map Pack for city-specific terms like 'Markham family lawyer' or 'Vaughan real estate attorney' is essential for capturing ready-to-consult prospects."
+    answer: "Absolutely. Many people look for a lawyer by searching for a practice area plus their city, and Google shows the local map results first, so local SEO is critical for acquiring clients. Appearing in Google Map Pack for city-specific terms like 'Markham family lawyer' or 'Vaughan real estate lawyer' is essential for capturing ready-to-consult prospects."
   },
   {
     question: "Can a new website help my law firm get more clients?",
-    answer: "Yes. A professionally designed, SEO-optimized website functions as a 24/7 client acquisition engine. Law firms with authoritative content, clear practice area pages, case studies, and optimized call-to-action triggers see a significant increase in consultation requests compared to firms with outdated digital presences. Professional websites also build trust and credibility, which are essential for converting visitors into clients."
+    answer: "It can, if it answers the questions prospective clients actually have. Most people still start with a referral, then check the firm online before they call. A site with clear practice area pages, plain-language answers, visible lawyer credentials and an easy way to request a consultation gives a referred client the confidence to call, and gives a searching client a reason to pick you from the results."
   },
   {
     question: "Why is Next.js better than WordPress for a law firm?",
@@ -51,7 +61,7 @@ export const lawyersFaqs: IndustryFaq[] = [
   },
   {
     question: "Can I update my law firm website content myself?",
-    answer: "Yes. Zenara Designs integrates an intuitive, no-code backend that allows your staff to easily update practice area descriptions, publish blog articles, manage attorney bios, add case studies, update testimonials, and modify consultation availability without technical expertise."
+    answer: "Yes. Zenara Designs integrates an intuitive, no-code backend that allows your staff to easily update practice area descriptions, publish blog articles, manage lawyer bios, add articles and news, and modify consultation availability without technical expertise."
   }
 ];
 
@@ -66,11 +76,11 @@ export const accountantsFaqs: IndustryFaq[] = [
   },
   {
     question: "How much does a professional accounting firm website cost in Ontario?",
-    answer: "Most accounting firm websites fit our Small Business plan ($1,999, up to six pages) or our Pro plan (from $4,999). Where a firm lands depends on how many service pages and CPA profiles it needs, and whether it wants integrations such as appointment booking or a link to a secure client portal. Every project gets a fixed written quote before work starts, and current prices and any promotions are listed on our pricing page. Because we are a small senior team using AI-assisted development, automated deployment and scripted site audits, you pay for the build itself rather than agency overhead."
+    answer: `Most accounting firm websites fit ${PLAN_FIT} Where a firm lands depends on how many service pages and CPA profiles it needs, and whether it wants integrations such as appointment booking or a link to a secure client portal. Every project gets a fixed written quote before work starts, and current prices and any promotions are listed on our pricing page. Because we are a small senior team using AI-assisted development, automated deployment and scripted site audits, you pay for the build itself rather than agency overhead.`
   },
   {
     question: "How long does it take to build an accounting firm's website?",
-    answer: "A complete custom accounting firm website usually takes 2 to 3 weeks from kickoff to launch. Larger builds with client portals or custom integrations run 3 to 4 weeks. That timeline includes competitive analysis, custom design focused on trust and security, development of essential features, and SEO optimization to ensure your firm ranks for local searches."
+    answer: "A complete custom accounting firm website usually launches 1 to 2 weeks after we receive your content. Larger builds with client portals or custom integrations run 3 to 4 weeks. That timeline includes competitive analysis, custom design focused on trust and security, development of essential features, and SEO optimization to ensure your firm ranks for local searches."
   },
   {
     question: "What features are essential for an accounting firm website in 2026?",
@@ -97,11 +107,11 @@ export const clinicsFaqs: IndustryFaq[] = [
   },
   {
     question: "How much does a professional wellness clinic website cost in Ontario?",
-    answer: "Most clinic websites fit our Small Business plan ($1,999, up to six pages) or our Pro plan (from $4,999). Where a clinic lands depends on how many service and practitioner pages it needs, and whether it wants its booking system (such as Jane App or Cliniko) integrated into the site. Every project gets a fixed written quote before work starts, and current prices and any promotions are listed on our pricing page. Because we are a small senior team using AI-assisted development, automated deployment and scripted site audits, you pay for the build itself rather than agency overhead."
+    answer: `Most clinic websites fit ${PLAN_FIT} Where a clinic lands depends on how many service and practitioner pages it needs, and whether it wants its booking system (such as Jane App or Cliniko) integrated into the site. Every project gets a fixed written quote before work starts, and current prices and any promotions are listed on our pricing page. Because we are a small senior team using AI-assisted development, automated deployment and scripted site audits, you pay for the build itself rather than agency overhead.`
   },
   {
     question: "How long does it take to build a wellness clinic's website?",
-    answer: "A complete custom wellness clinic website usually takes 2 to 3 weeks from kickoff to launch. Larger builds with booking integrations run 3 to 4 weeks. That timeline includes competitive analysis, custom design focused on clinical authority and patient trust, development of essential features, and SEO optimization to ensure your clinic ranks for local searches."
+    answer: "A complete custom wellness clinic website usually launches 1 to 2 weeks after we receive your content. Larger builds with booking integrations run 3 to 4 weeks. That timeline includes competitive analysis, custom design focused on clinical authority and patient trust, development of essential features, and SEO optimization to ensure your clinic ranks for local searches."
   },
   {
     question: "What features are essential for a wellness clinic website in 2026?",
@@ -128,11 +138,11 @@ export const renovationsFaqs: IndustryFaq[] = [
   },
   {
     question: "How much does a professional renovation company website cost in Ontario?",
-    answer: "Most renovation company websites fit our Small Business plan ($1,999, up to six pages) or our Pro plan (from $4,999). Where a company lands depends on how many service pages and project galleries it needs, and whether it wants a detailed quote request form or other integrations. Every project gets a fixed written quote before work starts, and current prices and any promotions are listed on our pricing page. Because we are a small senior team using AI-assisted development, automated deployment and scripted site audits, you pay for the build itself rather than agency overhead."
+    answer: `Most renovation company websites fit ${PLAN_FIT} Where a company lands depends on how many service pages and project galleries it needs, and whether it wants a detailed quote request form or other integrations. Every project gets a fixed written quote before work starts, and current prices and any promotions are listed on our pricing page. Because we are a small senior team using AI-assisted development, automated deployment and scripted site audits, you pay for the build itself rather than agency overhead.`
   },
   {
     question: "How long does it take to build a renovation company's website?",
-    answer: "A complete custom renovation or contractor website usually takes 2 to 3 weeks from kickoff to launch. Larger builds with extensive project galleries run 3 to 4 weeks. That timeline includes competitive analysis, custom design focused on showcasing craftsmanship, development of essential features, and SEO optimization to ensure your company ranks for local searches."
+    answer: "A complete custom renovation or contractor website usually launches 1 to 2 weeks after we receive your content. Larger builds with extensive project galleries run 3 to 4 weeks. That timeline includes competitive analysis, custom design focused on showcasing craftsmanship, development of essential features, and SEO optimization to ensure your company ranks for local searches."
   },
   {
     question: "What features are essential for a renovation company website in 2026?",

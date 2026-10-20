@@ -15,6 +15,8 @@ import { FadeIn } from '@/components/ui/fade-in';
 import { memo } from 'react';
 import { lawyersFaqs as faqs } from '@/lib/industry-content';
 import { SafeImage } from '@/components/ui/safe-image';
+import { ReviewsStrip } from '@/components/ReviewsStrip';
+import { LSO_RULES_URL } from '@/lib/constants';
 
 const lawyerHeroOffice = '/images/lawyer-gavel-office.png';
 const lawyerResearchImage = '/images/lawyer-consultation-document.png';
@@ -41,7 +43,7 @@ const PRACTICE_AREAS: PracticeAreaCard[] = [
   {
     icon: Scale,
     title: 'Personal Injury',
-    copy: "Contingency-fee searches expect proof up front. \"No fee unless we win,\" case results, and a fast intake form need to be visible before the client scrolls past the fold.",
+    copy: "Contingency-fee searches expect clarity up front: how the fee works, what the first consultation costs, and a fast intake form, all visible before the client scrolls past the fold. Past results can help, but only with the disclaimer the Law Society requires.",
   },
   {
     icon: BookOpen,
@@ -50,7 +52,7 @@ const PRACTICE_AREAS: PracticeAreaCard[] = [
   },
   {
     icon: Gavel,
-    title: 'Criminal Defense',
+    title: 'Criminal Defence',
     copy: "Urgent, often after-hours. A visible 24/7 phone number matters more than anything else on the page — a client calling from a police station won't fill out a contact form.",
   },
   {
@@ -60,24 +62,72 @@ const PRACTICE_AREAS: PracticeAreaCard[] = [
   },
 ];
 
+// Figures from Clio's 2025 Legal Trends Report (a survey of 1,000 U.S.
+// adults). There is no comparable Canadian survey; the source line says so.
+// The figures previously shown here (96% / 81% / 57%) could not be traced to
+// the report and were removed.
+const CLIO_REPORT_URL = 'https://www.clio.com/resources/legal-trends/read-online/';
+
 const STATS = [
   {
-    stat: '96%',
-    label: 'Legal consumers begin their search online',
-    description: 'Almost every prospective client\'s first move is a search — mostly Google, but increasingly legal directories and AI search tools too.',
-    source: 'Clio, 2025 Legal Trends Report',
+    stat: '70%',
+    label: 'Of recent legal clients found hiring a lawyer easy',
+    description: 'Largely thanks to referrals and online searches. Most still start with a referral, then check the firm online before they call.',
+    source: 'Clio, 2025 Legal Trends Report (U.S. consumer survey)',
   },
   {
-    stat: '81%',
-    label: 'Read reviews when they\'re available',
-    description: 'A strong set of recent reviews gets a prospect curious enough to open your site — an empty profile sends them to the next search result.',
-    source: 'Clio, Legal Trends Report',
+    stat: '1 in 2+',
+    label: 'Would search online for their next lawyer',
+    description: 'More than half say they would also turn to the internet next time, with firm websites and online reviews playing strong roles.',
+    source: 'Clio, 2025 Legal Trends Report (U.S. consumer survey)',
   },
   {
-    stat: '57%',
-    label: 'Consider reviews important when choosing an attorney',
-    description: 'For most clients, reviews aren\'t a nice-to-have — they\'re one of the deciding factors between two firms with similar credentials.',
-    source: 'Clio, Legal Trends Report',
+    stat: '24%',
+    label: 'Would not rehire the last lawyer they used',
+    description: 'Even satisfied clients shop around for their next matter, so your website has to win them again, not just the first time.',
+    source: 'Clio, 2025 Legal Trends Report (U.S. consumer survey)',
+  },
+];
+
+interface LsoRule {
+  rule: string;
+  title: string;
+  body: string;
+}
+
+// Paraphrased from the Law Society of Ontario's Rules of Professional
+// Conduct, chapter 4 (rules 4.2-1, 4.2-1.1, 4.2-2, 4.3-1 and the 4.2-1
+// commentary), checked against lso.ca on 2026-10-20.
+const LSO_RULES: LsoRule[] = [
+  {
+    rule: 'Rule 4.2-1',
+    title: 'Every claim has to be provable',
+    body: 'Marketing must be demonstrably true, accurate and verifiable, and must not mislead. "Results-driven" and "aggressive" rarely survive that test. A specific practice focus and real experience do.',
+  },
+  {
+    rule: 'Rule 4.3-1',
+    title: '"Specialist" is a protected word',
+    body: 'Only lawyers certified by the Law Society may advertise as specialists. We describe practice areas, experience and the matters you take on instead.',
+  },
+  {
+    rule: '4.2-1 commentary',
+    title: 'Past results need a disclaimer',
+    body: 'Amounts recovered or a success rate should sit beside a statement that past results are not necessarily indicative of future results and that outcomes depend on the facts of each case.',
+  },
+  {
+    rule: '4.2-1 commentary',
+    title: 'No "best", no emotional testimonials',
+    body: 'Suggesting superiority over other lawyers, raising expectations and testimonials with emotional appeals are listed as marketing that may contravene the rule. Awards and rankings must be bona fide.',
+  },
+  {
+    rule: 'Rule 4.2-2',
+    title: 'Published fees must be precise',
+    body: 'If the site lists fees, it has to say what each fee covers and whether disbursements and HST are extra. Residential real estate pricing has its own, stricter rule (4.2-2.1).',
+  },
+  {
+    rule: 'Rule 4.2-1.1',
+    title: 'Say that you are licensed as a lawyer',
+    body: 'Marketing materials must identify that the services are provided by a licensed lawyer, which on a website usually means the footer and every lawyer profile.',
   },
 ];
 
@@ -91,11 +141,11 @@ const FEATURES = [
     description: 'A dedicated page for family law, real estate, and personal injury — not one generic "practice areas" list trying to cover all three at once.',
   },
   {
-    title: 'Case Results & Credentials, Not Buried',
-    description: 'Bar admission, notable results, and testimonials shown where prospects actually look — not filed away on an About page nobody opens.',
+    title: 'Credentials Where Prospects Look',
+    description: 'Year of call, practice focus, languages spoken and professional memberships shown where prospects actually look — not filed away on an About page nobody opens.',
   },
   {
-    title: 'Attorney Bios That Build Rapport',
+    title: 'Lawyer Bios That Build Rapport',
     description: 'A real person with real credentials and a real photo — not a stock-photo team grid that could belong to any firm in the province.',
   },
 ];
@@ -151,12 +201,12 @@ const Lawyers = () => {
               />
 
               <p className="text-lg sm:text-xl md:text-2xl mb-6 font-light">
-                <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">the GTA</span>
+                <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient">Toronto &amp; the GTA</span>
               </p>
 
               <FadeIn delay={260}>
                 <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-8 font-light tracking-[0.01em]">
-                  Built for family, real estate, personal injury, criminal defense, wills &amp; estates, and corporate practices. A site that builds trust fast and turns visitors into consultations.
+                  Websites for small and mid-size Ontario law firms — family, real estate, personal injury, criminal defence, wills &amp; estates, and corporate practices. Written to the Law Society&apos;s marketing rules, built to earn trust fast and turn visitors into consultations.
                 </p>
               </FadeIn>
 
@@ -297,8 +347,8 @@ const Lawyers = () => {
               />
               <FadeIn delay={220}>
                 <div className="space-y-5 text-white/60 text-base leading-[1.75] font-light">
-                  <p>Legal decisions carry the highest trust bar of any service search — clients are handing over a problem they often can&apos;t solve themselves. Almost none of that decision starts with a phone call anymore; it starts with a search, and a shortlist forms before you ever hear from them.</p>
-                  <p>Reviews and credentials are the first filter, but your website is what closes the gap between "found you" and "booked a consultation." A firm that looks credible online gets the call; one that doesn&apos;t loses it to a competitor with a more polished site.</p>
+                  <p>Legal decisions carry the highest trust bar of any service search — clients are handing over a problem they often can&apos;t solve themselves. Most still start with a referral, but very few call a referred lawyer without looking them up first, and a growing share skip the referral and search.</p>
+                  <p>Reviews and credentials are the first filter, but your website is what closes the gap between &quot;found you&quot; and &quot;booked a consultation.&quot; A firm that looks credible online gets the call; one that doesn&apos;t loses it to a competitor with a more polished site.</p>
                 </div>
               </FadeIn>
             </div>
@@ -321,7 +371,12 @@ const Lawyers = () => {
                   </div>
                   <h3 className="text-white font-medium mb-2">{item.label}</h3>
                   <p className="text-white/50 text-sm leading-relaxed font-light mb-3">{item.description}</p>
-                  <p className="text-white/30 text-xs font-light italic">Source: {item.source}</p>
+                  <p className="text-white/30 text-xs font-light italic">
+                    Source:{' '}
+                    <a href={CLIO_REPORT_URL} target="_blank" rel="noopener noreferrer" className="underline decoration-white/20 underline-offset-2 hover:text-cyan-300">
+                      {item.source}
+                    </a>
+                  </p>
                 </div>
               ))}
             </div>
@@ -381,6 +436,15 @@ const Lawyers = () => {
                   A site built around how clients actually shop for a law firm — not a generic build with your name swapped in.
                 </p>
               </FadeIn>
+              <FadeIn delay={280}>
+                <Link
+                  href="/projects/law-firm-concept"
+                  className="inline-flex items-center gap-1.5 mt-6 text-cyan-400 hover:text-purple-400 transition-colors text-sm font-medium group/link"
+                >
+                  Read the law firm concept case study
+                  <ArrowRight className="h-3.5 w-3.5 group-hover/link:translate-x-1 transition-transform" />
+                </Link>
+              </FadeIn>
             </div>
           </div>
 
@@ -396,6 +460,56 @@ const Lawyers = () => {
           </div>
         </div>
       </section>
+
+      {/* ===== Law Society of Ontario marketing rules ===== */}
+      <section aria-labelledby="lso-rules" className="py-20 sm:py-24 md:py-28 relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900/25 to-slate-900">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="max-w-3xl mb-12 sm:mb-14">
+            <FadeIn>
+              <p className="text-xs font-mono text-cyan-400/60 tracking-[0.2em] uppercase mb-5">Law Society of Ontario Rules</p>
+            </FadeIn>
+            <h2 id="lso-rules" className="text-3xl sm:text-4xl md:text-5xl font-extralight text-white leading-[1.05] tracking-[-0.04em] mb-6">
+              <span className="font-light">What your website </span>
+              <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">can and can&apos;t say</span>
+            </h2>
+            <FadeIn delay={150}>
+              <p className="text-white/60 text-base sm:text-lg leading-[1.75] font-light">
+                In Ontario, a law firm website is marketing, so chapter 4 of the Law Society&apos;s Rules of Professional Conduct applies to every page. Most web designers have never read it. We write to it from the first draft, so your review is about whether the site sounds like your firm, not about fixing claims you could never make.
+              </p>
+            </FadeIn>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-white/[0.06] rounded-2xl overflow-hidden mb-8">
+            {LSO_RULES.map((item) => (
+              <div key={item.title} className="bg-slate-950/90 p-6 sm:p-7">
+                <p className="text-[11px] font-mono text-cyan-400/60 tracking-[0.15em] uppercase mb-2">{item.rule}</p>
+                <h3 className="text-base sm:text-lg text-white font-medium mb-2">{item.title}</h3>
+                <p className="text-white/55 text-sm leading-relaxed font-light">{item.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <p className="text-white/40 text-xs font-light mb-6 max-w-3xl">
+            This is how we apply the rules when we write, not legal advice. Your firm reviews and approves every page before it goes live. Source:{' '}
+            <a href={LSO_RULES_URL} target="_blank" rel="noopener noreferrer" className="underline decoration-white/20 underline-offset-2 hover:text-cyan-300">
+              Law Society of Ontario, Rules of Professional Conduct, chapter 4
+            </a>
+            .
+          </p>
+          <div className="flex flex-wrap gap-x-6 gap-y-2">
+            <Link href="/resources/ontario-law-firm-website-checklist" className="inline-flex items-center gap-1.5 text-cyan-400 hover:text-purple-400 transition-colors text-sm font-medium group/link">
+              Ontario law firm website checklist
+              <ArrowRight className="h-3.5 w-3.5 group-hover/link:translate-x-1 transition-transform" />
+            </Link>
+            <Link href="/blog/ontario-law-firm-website-content" className="inline-flex items-center gap-1.5 text-cyan-400 hover:text-purple-400 transition-colors text-sm font-medium group/link">
+              What an Ontario law firm website should say
+              <ArrowRight className="h-3.5 w-3.5 group-hover/link:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      <ReviewsStrip headingId="lawyers-reviews" className="py-20 sm:py-24 bg-black" />
 
       {/* ===== FAQ (left) / Contact form (right) ===== */}
       <section id="quote" className="scroll-mt-24 py-20 sm:py-24 md:py-28 relative overflow-hidden bg-gradient-to-br from-slate-900 via-cyan-900/25 to-slate-900">
@@ -420,7 +534,7 @@ const Lawyers = () => {
               </FadeIn>
               <FadeIn delay={150}>
                 <Accordion type="single" collapsible className="w-full space-y-2 sm:space-y-3">
-                  {faqs.slice(0, 4).map((faq, index) => (
+                  {faqs.map((faq, index) => (
                     <AccordionItem
                       key={index}
                       value={`item-${index}`}
@@ -517,6 +631,18 @@ const Lawyers = () => {
                 <span className="text-white/15 mx-2.5">/</span>
                 <Link href="/blog/ontario-law-firm-website-content" className="hover:text-cyan-300 transition-colors">
                   What a law firm website should say
+                </Link>
+                <span className="text-white/15 mx-2.5">/</span>
+                <Link href="/resources/ontario-law-firm-website-checklist" className="hover:text-cyan-300 transition-colors">
+                  Ontario law firm website checklist
+                </Link>
+                <span className="text-white/15 mx-2.5">/</span>
+                <Link href="/blog/law-firm-website-cost-ontario" className="hover:text-cyan-300 transition-colors">
+                  What a law firm website costs
+                </Link>
+                <span className="text-white/15 mx-2.5">/</span>
+                <Link href="/blog/law-firm-seo-toronto" className="hover:text-cyan-300 transition-colors">
+                  Law firm SEO in Toronto
                 </Link>
               </p>
             </FadeIn>

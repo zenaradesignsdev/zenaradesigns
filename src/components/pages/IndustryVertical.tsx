@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { ArrowRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ConceptDemoCallout, { CONCEPT_DEMOS } from '@/components/industries/ConceptDemoCallout';
-import type { IndustryVertical as VerticalData } from '@/lib/industry-verticals';
+import { industryVerticals, type IndustryVertical as VerticalData } from '@/lib/industry-verticals';
 
 const GRADIENT_TEXT =
   'bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient';
@@ -19,6 +19,9 @@ interface IndustryVerticalProps {
 
 const IndustryVerticalPage = ({ vertical }: IndustryVerticalProps) => {
   const demo = CONCEPT_DEMOS[vertical.demoKey];
+  // Sibling practice areas under the same hub (family law ↔ real estate law),
+  // so the specialist pages link to each other, not only up to the hub.
+  const siblings = industryVerticals.filter((v) => v.parentHref === vertical.parentHref && v.slug !== vertical.slug);
 
   return (
     <div className="min-h-screen bg-black relative overflow-hidden">
@@ -130,6 +133,7 @@ const IndustryVerticalPage = ({ vertical }: IndustryVerticalProps) => {
             <div className="flex flex-wrap justify-center gap-4">
               {[
                 { label: vertical.parentLabel, href: vertical.parentHref },
+                ...siblings.map((v) => ({ label: `${v.name} websites`, href: `/industries/${v.slug}` })),
                 { label: 'Our work', href: '/projects' },
                 { label: 'Pricing', href: '/pricing' },
                 { label: 'Local SEO', href: '/services/seo' },

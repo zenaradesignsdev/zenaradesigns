@@ -19,6 +19,10 @@ export const YOUTUBE_URL = 'https://www.youtube.com/@ZenaraDesigns';
 export const LINKTREE_URL = 'https://linktr.ee/zenaradesigns';
 export const GOOGLE_MAPS_URL = 'https://maps.google.com/?cid=3251807051192604712';
 
+// Law Society of Ontario, Rules of Professional Conduct, chapter 4 (marketing).
+// Cited on /lawyers, the law firm checklist and the law firm blog posts.
+export const LSO_RULES_URL = 'https://lso.ca/about-lso/legislation-and-rules/rules-of-professional-conduct/chapter-4';
+
 // Navigation constants
 export const NAVIGATION_LINKS = [
   { href: '/', label: 'Home' },
