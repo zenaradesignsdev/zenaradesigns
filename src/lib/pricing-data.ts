@@ -26,6 +26,55 @@ export const formatCad = (amount: number) => `$${amount.toLocaleString('en-US')}
 export const formatCadRange = ({ min, max }: PriceRange, separator = ' - ') =>
   `${formatCad(min)}${separator}${formatCad(max)}`;
 
+// Copy helpers for FAQs, city pages and blog posts, so prose quotes the same
+// figures as /pricing. While a promotion runs (price below regular) they read
+// "$499 (regularly $999)"; once PRICES.*.price is set back to the regular
+// figure they read "$999" with no edit to the copy.
+type PackageTier = 'starter' | 'smallBusiness';
+
+export const isOnPromo = (tier: PackageTier) => PRICES[tier].price < PRICES[tier].regular;
+
+export const packagePrice = (tier: PackageTier) => formatCad(PRICES[tier].price);
+
+export const packagePriceWithRegular = (tier: PackageTier) =>
+  isOnPromo(tier)
+    ? `${formatCad(PRICES[tier].price)} (regularly ${formatCad(PRICES[tier].regular)})`
+    : formatCad(PRICES[tier].price);
+
+export const proFromPrice = () => `${formatCad(PRICES.pro.from)}+`;
+
+export interface WebsitePlanSummary {
+  name: string;
+  price: string;
+  /** Regular price, only while a promotion is running. */
+  originalPrice?: string;
+  desc: string;
+  popular: boolean;
+}
+
+/** The three website packages as one-line summaries, for pricing snapshots outside /pricing. */
+export const websitePlanSummaries = (): WebsitePlanSummary[] => [
+  {
+    name: 'Starter',
+    price: packagePrice('starter'),
+    originalPrice: isOnPromo('starter') ? formatCad(PRICES.starter.regular) : undefined,
+    desc: 'Up to 3 pages, 3–5 day turnaround',
+    popular: false,
+  },
+  {
+    name: 'Small Business',
+    price: packagePrice('smallBusiness'),
+    originalPrice: isOnPromo('smallBusiness') ? formatCad(PRICES.smallBusiness.regular) : undefined,
+    desc: 'Up to 6 pages, custom sections, 1–2 weeks',
+    popular: true,
+  },
+  { name: 'Pro', price: proFromPrice(), desc: 'Advanced functionality, e-commerce, 3–4 weeks', popular: false },
+];
+
+/** "$499 for a Starter site, $1,499 for a Small Business site and $4,999+ for Pro" */
+export const packageRangeSentence = () =>
+  `${packagePriceWithRegular('starter')} for a Starter site of up to three pages, ${packagePriceWithRegular('smallBusiness')} for a Small Business site of up to six pages, and ${proFromPrice()} for a Pro build`;
+
 const PRICING_URL = `${SITE_URL}/pricing`;
 const BRANDING_URL = `${SITE_URL}/services/branding`;
 export const BUSINESS_CARDS_ID = `${BRANDING_URL}#business-cards`;
