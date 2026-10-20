@@ -11,6 +11,29 @@ const baseUrl = 'https://zenaradesigns.com';
 // when site-wide copy changes; per-page dates (blog) override it below.
 const lastModified = new Date('2026-10-03T00:00:00Z');
 
+// Pages whose copy changed after that date (ranking work on the Markham,
+// Pickering, custom-web-design-Toronto and law firm targets, plus every page
+// whose FAQ prices now come from PRICES). Keyed by path.
+const contentUpdated = new Date('2026-10-20T00:00:00Z');
+const UPDATED_PATHS = new Set([
+  '/',
+  '/services/web-design',
+  '/pricing',
+  '/faq',
+  '/locations',
+  '/lawyers',
+  '/accountants',
+  '/clinics',
+  '/renovations',
+  '/web-design/markham',
+  '/web-design/pickering',
+  '/web-design/toronto',
+  '/web-design/stouffville',
+  '/industries/family-law',
+  '/industries/real-estate-law',
+]);
+const modifiedFor = (path: string) => (UPDATED_PATHS.has(path) ? contentUpdated : lastModified);
+
 // Markham (home base), Stouffville and Scarborough lead the campaign, so they
 // outrank the other city pages in priority. The full set of city slugs comes
 // from cityContent; retired cities 301 elsewhere — see RETIRED_CITIES in
@@ -18,7 +41,7 @@ const lastModified = new Date('2026-10-03T00:00:00Z');
 const primaryCities = new Set(['markham', 'stouffville', 'scarborough']);
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes: MetadataRoute.Sitemap = [
+  const fixedRoutes: MetadataRoute.Sitemap = [
     { url: baseUrl, lastModified, changeFrequency: 'weekly', priority: 1.0 },
     { url: `${baseUrl}/services`, lastModified, changeFrequency: 'monthly', priority: 0.9 },
     { url: `${baseUrl}/services/web-design`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
@@ -41,18 +64,24 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}/faq`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${baseUrl}/process`, lastModified, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${baseUrl}/privacy`, lastModified, changeFrequency: 'yearly', priority: 0.3 },
+    { url: `${baseUrl}/resources/ontario-law-firm-website-checklist`, lastModified: contentUpdated, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${baseUrl}/projects/law-firm-concept`, lastModified: contentUpdated, changeFrequency: 'yearly', priority: 0.5 },
   ];
+  const staticRoutes = fixedRoutes.map((route) => ({
+    ...route,
+    lastModified: route.lastModified === lastModified ? modifiedFor(route.url.slice(baseUrl.length) || '/') : route.lastModified,
+  }));
 
   const webDesignCityRoutes: MetadataRoute.Sitemap = citySlugs.map((city) => ({
     url: `${baseUrl}/web-design/${city}`,
-    lastModified,
+    lastModified: modifiedFor(`/web-design/${city}`),
     changeFrequency: 'monthly' as const,
     priority: primaryCities.has(city) ? 0.9 : 0.7,
   }));
 
   const industryVerticalRoutes: MetadataRoute.Sitemap = industryVerticalSlugs.map((slug) => ({
     url: `${baseUrl}/industries/${slug}`,
-    lastModified,
+    lastModified: modifiedFor(`/industries/${slug}`),
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   }));
