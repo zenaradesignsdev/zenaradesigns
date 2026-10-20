@@ -6,6 +6,10 @@ import { SafeImage } from '@/components/ui/safe-image';
 import { FadeIn } from '@/components/ui/fade-in';
 import { TextReveal } from '@/components/ui/text-reveal';
 import MiniContactForm from '@/components/forms/MiniContactForm';
+import { ReviewsStrip } from '@/components/ReviewsStrip';
+import { websitePlanSummaries } from '@/lib/pricing-data';
+import { processPhases } from '@/lib/process-data';
+import { team } from '@/lib/team';
 
 // Three background treatments cycled by section position (not identity), so
 // however a city's sectionOrder is arranged, no two adjacent sections ever
@@ -71,8 +75,10 @@ interface WebDesignCityProps {
 // are themselves client components, but composing them here is safe — React
 // server-renders their initial output too, so the text still lands in the HTML.
 const WebDesignCity = ({ content }: WebDesignCityProps) => {
-  const { city, region, heroIntro, intro, economy, neighborhoods, whyPoints, industries, faqs, heroImage, heroImageAlt, localSeoBody, geoBody, smallBusinessNote, focusAreas, featuredProjectSlugs, sectionOrder } =
+  const { city, region, heroIntro, intro, economy, neighborhoods, whyPoints, industries, faqs, heroImage, heroImageAlt, localSeoBody, geoBody, smallBusinessNote, focusAreas, featuredProjectSlugs, sectionOrder, localTeam, spotlight, serviceLinkText } =
     content;
+
+  const plans = websitePlanSummaries();
 
   const orderedSections = sectionOrder ?? DEFAULT_SECTION_ORDER;
 
@@ -80,7 +86,122 @@ const WebDesignCity = ({ content }: WebDesignCityProps) => {
     ? featuredProjectSlugs.map((slug) => allProjects.find((p) => p.slug === slug)).filter((p): p is (typeof allProjects)[number] => Boolean(p))
     : allProjects.slice(0, 3);
 
-  const sectionContent: Record<SectionKey, React.ReactNode> = {
+  // 'reviews' is rendered by ReviewsStrip itself (it owns its <section> so it
+  // can disappear entirely when there are no reviews); 'local' and 'spotlight'
+  // are null for cities without that content and are skipped below.
+  const sectionContent: Record<Exclude<SectionKey, 'reviews'>, React.ReactNode> = {
+    local: localTeam ? (
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        <p className="text-xs font-mono text-cyan-400/60 tracking-[0.2em] uppercase mb-6">Who you&apos;ll work with</p>
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 lg:items-start">
+          <div className="lg:col-span-3">
+            <h2 className="text-3xl sm:text-4xl font-extralight text-white leading-[1.1] tracking-[-0.04em] mb-6">{localTeam.heading}</h2>
+            <div className="space-y-4">
+              {localTeam.paragraphs.map((paragraph) => (
+                <p key={paragraph} className="text-white/60 leading-relaxed font-light">{paragraph}</p>
+              ))}
+            </div>
+          </div>
+          <div className="lg:col-span-2">
+            <ul className="rounded-2xl border border-white/10 bg-white/[0.02] divide-y divide-white/10">
+              {team.map((member) => (
+                <li key={member.name} className="flex items-center gap-4 p-5">
+                  <span aria-hidden="true" className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-cyan-500/30 bg-cyan-500/10 text-sm font-medium text-cyan-200">
+                    {member.initials}
+                  </span>
+                  <span>
+                    <span className="block text-white font-medium text-sm">{member.name}</span>
+                    <span className="block text-white/50 text-sm font-light">{member.role}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <Link href="/about" className="inline-flex items-center mt-4 text-sm font-medium text-cyan-300/80 hover:text-cyan-300 transition-colors group">
+              More about the team <ArrowRight className="ml-1.5 h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    ) : null,
+
+    spotlight: spotlight ? (
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        <p className="text-xs font-mono text-cyan-400/60 tracking-[0.2em] uppercase mb-6">{spotlight.eyebrow}</p>
+        <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 lg:items-start">
+          <div className="lg:col-span-2">
+            <h2 className="text-3xl sm:text-4xl font-extralight text-white leading-[1.1] tracking-[-0.04em] mb-6">{spotlight.heading}</h2>
+            <div className="space-y-4">
+              {spotlight.paragraphs.map((paragraph) => (
+                <p key={paragraph} className="text-white/60 leading-relaxed font-light">{paragraph}</p>
+              ))}
+            </div>
+          </div>
+          {spotlight.points && spotlight.points.length > 0 && (
+            <div className="lg:col-span-3 grid grid-cols-1 gap-4">
+              {spotlight.points.map((point) => (
+                <div key={point.title} className="rounded-2xl border border-white/10 bg-slate-950/60 p-6">
+                  <h3 className="text-base sm:text-lg text-white font-medium mb-2">{point.title}</h3>
+                  <p className="text-white/55 text-sm leading-relaxed font-light">{point.body}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    ) : null,
+
+    pricing: (
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+        <div className="text-center mb-10 sm:mb-12">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extralight text-white leading-[1.1] tracking-[-0.04em] mb-4">
+            <span className="font-light opacity-90">Fixed Prices for</span>{' '}
+            <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">{city}</span>{' '}
+            <span className="font-light opacity-90">Businesses</span>
+          </h2>
+          <p className="text-white/55 text-base sm:text-lg font-light max-w-2xl mx-auto">
+            Published packages and a written quote before any work starts — the price you agree to is the price you pay.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 mb-12 sm:mb-14">
+          {plans.map((plan) => (
+            <div
+              key={plan.name}
+              className={`rounded-2xl border p-6 text-center ${plan.popular ? 'border-cyan-400/50 bg-slate-900/90' : 'border-white/10 bg-slate-950/60'}`}
+            >
+              <h3 className="text-white/50 text-xs uppercase tracking-[0.15em] font-medium mb-3">{plan.name}</h3>
+              {plan.originalPrice && (
+                <p className="text-sm font-light text-white/35 mb-1">
+                  <span className="sr-only">Regular price </span>
+                  <span className="line-through decoration-amber-300/50">{plan.originalPrice}</span>
+                </p>
+              )}
+              <p className="text-3xl sm:text-4xl font-light text-white mb-2">{plan.price}</p>
+              <p className="text-white/50 text-sm font-light">{plan.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        <h3 className="text-xs font-semibold uppercase tracking-[0.15em] text-cyan-300/60 mb-5">How a {city} project runs</h3>
+        <ol className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-5 mb-8">
+          {processPhases.map((phase, index) => (
+            <li key={phase.phase} className="flex gap-4">
+              <span className="text-xs font-mono text-cyan-400/50 tracking-widest mt-1 w-6 shrink-0">{String(index + 1).padStart(2, '0')}</span>
+              <span>
+                <span className="block text-white font-medium text-sm mb-1">{phase.phase}</span>
+                <span className="block text-white/50 text-sm font-light leading-relaxed">{phase.tagline}</span>
+              </span>
+            </li>
+          ))}
+        </ol>
+        <p className="text-white/50 text-sm font-light">
+          See everything each package includes on our{' '}
+          <Link href="/pricing" className="text-cyan-300 hover:underline">pricing page</Link>, or the full{' '}
+          <Link href="/process" className="text-cyan-300 hover:underline">web design process</Link>.
+        </p>
+      </div>
+    ),
+
     advantage: (
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
         <p className="text-xs font-mono text-cyan-400/60 tracking-[0.2em] uppercase mb-6">The {city} Advantage</p>
@@ -160,7 +281,7 @@ const WebDesignCity = ({ content }: WebDesignCityProps) => {
             </ul>
             <p className="text-white/50 text-sm font-light">
               Explore our full{' '}
-              <Link href="/services/web-design" className="text-cyan-300 hover:underline">web design service</Link>{' '}
+              <Link href="/services/web-design" className="text-cyan-300 hover:underline">{serviceLinkText ?? 'web design service'}</Link>{' '}
               or see transparent{' '}
               <Link href="/pricing" className="text-cyan-300 hover:underline">pricing</Link>.
             </p>
@@ -416,8 +537,13 @@ const WebDesignCity = ({ content }: WebDesignCityProps) => {
 
       {orderedSections.map((key, i) => {
         const variant = (i % 3) as BgVariant;
+        const sectionClass = `py-16 sm:py-20 md:py-24 ${SECTION_BG_CLASS[variant]}`;
+        if (key === 'reviews') {
+          return <ReviewsStrip key={key} headingId={`${content.slug}-reviews`} className={sectionClass} background={<SectionBg variant={variant} />} />;
+        }
+        if (sectionContent[key] === null) return null;
         return (
-          <section key={key} className={`relative overflow-hidden py-16 sm:py-20 md:py-24 ${SECTION_BG_CLASS[variant]}`}>
+          <section key={key} className={`relative overflow-hidden ${sectionClass}`}>
             <SectionBg variant={variant} />
             {sectionContent[key]}
           </section>

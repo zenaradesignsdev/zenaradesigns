@@ -69,8 +69,8 @@ const locations = [
     },
     {
       city: "Pickering",
-      region: "the GTA",
-      description: "The nearest Durham city to our Markham base, and the one market we keep east of Toronto. The Seaton lands and City Centre redevelopment have created steady demand from contractors, trades, and the professional services following them east.",
+      region: "Durham Region",
+      description: "The nearest Durham city to our Markham base, and where we serve Durham Region from, including Ajax and Whitby. The Seaton lands and City Centre redevelopment have created steady demand from contractors, trades, and the professional services following them east.",
       services: ["Contractor and trades websites", "Clinic sites with online booking", "Local SEO for Pickering searches", "Logo and brand identity"],
       neighborhoods: ["Pickering City Centre", "Bay Ridges", "Amberlea", "Rougemount", "Duffin Heights", "Seaton", "Claremont"]
     }

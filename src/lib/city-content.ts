@@ -4,6 +4,11 @@
 // local economy, real business districts). No fabricated statistics, reviews,
 // or clients. Imported by the server route (SSR schema + metadata) and the
 // presentational component. See SEO-RANKING-PLAN.md §6 / §11.
+//
+// Prices in FAQ answers come from PRICES (pricing-data.ts): these answers are
+// also FAQPage JSON-LD, and hard-coded figures drifted from /pricing before.
+
+import { packagePrice, packagePriceWithRegular, packageRangeSentence } from './pricing-data';
 
 export interface CityFaq {
   question: string;
@@ -18,6 +23,18 @@ export interface CityIndustry {
 export interface CityWhyPoint {
   title: string;
   body: string;
+}
+
+export interface CitySpotlight {
+  eyebrow: string;
+  heading: string;
+  paragraphs: string[];
+  points?: CityWhyPoint[];
+}
+
+export interface CityLocalTeam {
+  heading: string;
+  paragraphs: string[];
 }
 
 export interface CityContent {
@@ -46,15 +63,36 @@ export interface CityContent {
   focusAreas?: string[];
   /** 3 slugs from `allProjects`, chosen per city for thematic fit and order. */
   featuredProjectSlugs?: string[];
+  /** "Who you'd work with" section — only for cities we genuinely work in person. */
+  localTeam?: CityLocalTeam;
+  /** One city-specific deep-dive section (Markham: multilingual sites; Pickering: Durham Region). */
+  spotlight?: CitySpotlight;
   /**
-   * Render order for the 5 reorderable middle sections (Hero and the final
-   * CTA are always first/last). Falls back to DEFAULT_SECTION_ORDER when
-   * omitted, so cities without a redesign yet still render correctly.
+   * Anchor text for the link to /services/web-design. Toronto sets it so the
+   * city page points "custom web design in Toronto" at the service page that
+   * ranks for it, instead of competing for the same term.
+   */
+  serviceLinkText?: string;
+  /**
+   * Render order for the reorderable middle sections (Hero and the final CTA
+   * are always first/last). Falls back to DEFAULT_SECTION_ORDER when omitted,
+   * so cities without a redesign yet still render correctly. 'local' and
+   * 'spotlight' render only when the city has that content; 'reviews' renders
+   * only when the Places API returns reviews.
    */
   sectionOrder?: SectionKey[];
 }
 
-export type SectionKey = 'advantage' | 'whatYouGet' | 'recentWork' | 'industries' | 'faq';
+export type SectionKey =
+  | 'advantage'
+  | 'whatYouGet'
+  | 'recentWork'
+  | 'industries'
+  | 'faq'
+  | 'local'
+  | 'spotlight'
+  | 'pricing'
+  | 'reviews';
 
 export const DEFAULT_SECTION_ORDER: SectionKey[] = ['advantage', 'whatYouGet', 'recentWork', 'industries', 'faq'];
 
@@ -145,10 +183,9 @@ export const cityContent: Record<string, CityContent> = {
     slug: 'markham',
     city: 'Markham',
     region: 'York Region',
-    metaTitle: 'Web Design Markham | Custom Business Websites | Zenara',
-    metaDescription:
-      'Custom web design in Markham — Unionville, Cornell, Downtown Markham. Modern, fast, multilingual-ready sites for a tech-savvy market. Free consultation.',
-    heroIntro: 'Websites built for Markham’s tech-driven, multicultural business community.',
+    metaTitle: 'Web Design Markham, ON | Fixed-Price Custom Websites | Zenara',
+    metaDescription: `Markham-based web design studio building custom, fast websites for local businesses. Fixed prices from ${packagePrice('starter')}, live in 1–2 weeks. Free consultation.`,
+    heroIntro: 'Custom websites for Markham businesses, from a studio based right here in Markham.',
     intro:
       'Markham is Canada’s high-tech capital outside Toronto — and customers here judge a business by its website in seconds.',
     economy:
@@ -180,13 +217,21 @@ export const cityContent: Record<string, CityContent> = {
     faqs: [
       {
         question: 'How much does a website cost in Markham?',
+        answer: `Our fixed prices are ${packageRangeSentence()}. Each includes responsive design, SEO setup and SSL, and you get a written quote before any work starts. For comparison, Markham freelancers often quote from a few hundred dollars and full-service agencies usually start in five figures; the difference is mostly how much custom design, content and support is included.`,
+      },
+      {
+        question: 'What is a reasonable price for a small business website?',
+        answer: `For a small business that needs five or six well-built pages, a contact or quote form and proper SEO setup, a low-to-mid four-figure budget is reasonable in the GTA. Below that you are usually buying a template with your logo on it; well above it you are paying for a larger team, more pages or integrations such as booking and payments. Our Small Business plan is ${packagePriceWithRegular('smallBusiness')} for up to six custom pages.`,
+      },
+      {
+        question: 'Can we meet in person?',
         answer:
-          'Markham projects start at $999 for a starter site, $1,999 for a standard small-business site, and $4,999+ for advanced builds — each including responsive design, SEO, and SSL with transparent pricing.',
+          'Yes. We are based in Markham, so for Markham clients we are happy to meet at your office or somewhere nearby for the kickoff and design review. Day-to-day communication happens by email and video call, which keeps the project moving between meetings.',
       },
       {
         question: 'Do I need a multilingual website?',
         answer:
-          'Given Markham’s large Chinese-Canadian and South Asian populations, offering key pages in a second language can meaningfully widen your audience and signal that you understand the community you serve. We build sites ready for that.',
+          'Given Markham’s large Chinese-Canadian and South Asian populations, offering key pages in a second language can meaningfully widen your audience and signal that you understand the community you serve. We build the second language as real pages with their own URLs, so Google can show them to people searching in that language.',
       },
       {
         question: 'Can you build a site for a Markham tech startup?',
@@ -196,20 +241,49 @@ export const cityContent: Record<string, CityContent> = {
       {
         question: 'How long does it take to build a website?',
         answer:
-          'Most Markham projects launch in one to two weeks, with a focused starter site ready in 3–5 days.',
+          'Most Markham projects launch in one to two weeks once we have your content, with a focused starter site ready in 3–5 days.',
       },
     ],
     heroImage: '/images/markham-business-district.jpg',
     heroImageAlt: 'Modern glass office building in a business district, representing Markham’s Highway 7 tech corridor',
     localSeoBody:
-      'We optimize your Google Business Profile and build citations with real local organizations — the Markham Board of Trade and your municipal chamber of commerce — instead of running a generic national SEO checklist. Pages that name Unionville or the Highway 7 corridor specifically outrank ones that just say "serving the GTA."',
+      'We set up and optimize your Google Business Profile and list you in the directories that matter locally — including the Markham Board of Trade’s member directory if you are a member — instead of running a generic national SEO checklist. Pages that name Unionville or the Highway 7 corridor specifically outrank ones that just say "serving the GTA."',
     geoBody:
       'And when someone asks ChatGPT or Perplexity for a web designer near Markham, we want your business in that answer too — not just page one of Google.',
     smallBusinessNote:
       'Markham runs on small business as much as it does on tech — the independent clinics, accountants, and shops serving Unionville and Cornell need the same credibility online as the Highway 7 corporates next door. We price and build for that reality.',
     focusAreas: ['Technology', 'Professional Services', 'Healthcare', 'Retail'],
     featuredProjectSlugs: ['ik-smart-solution', 'jb-loans', 'ashcam-cutting-solutions'],
-    sectionOrder: DEFAULT_SECTION_ORDER,
+    localTeam: {
+      heading: 'A Markham studio, not a call centre',
+      paragraphs: [
+        'Zenara Designs is based in Markham. It is a small team: two co-founders who build every site, working with a contract designer on the visual design. The people on your first call are the people who design and code your website, so nothing gets lost between a salesperson and a developer.',
+        'For Markham clients we are glad to meet in person for the kickoff and the design review, at your office or somewhere nearby. Everything in between happens by email and video call, so a busy owner never has to block out an afternoon for a status update.',
+      ],
+    },
+    spotlight: {
+      eyebrow: 'Multilingual websites',
+      heading: 'Reaching Markham in more than one language',
+      paragraphs: [
+        'Census data puts Cantonese, Mandarin and Tamil among the most common mother tongues in Markham after English. For a clinic, accountant or restaurant serving those communities, a second language on the website is often the difference between being found and being skipped.',
+        'A translation widget does not get you there: it creates no pages Google can index in that language, and customers can tell when copy has been machine-translated. We build the second language as a proper version of the site.',
+      ],
+      points: [
+        {
+          title: 'Real pages for each language',
+          body: 'Each language gets its own URLs, page titles and descriptions, with hreflang tags so Google shows English searchers the English page and Chinese searchers the Chinese one.',
+        },
+        {
+          title: 'Translation you can stand behind',
+          body: 'The words come from you or a professional translator you trust. We do not machine-translate client copy; we build the structure and make sure every form, button and email works in both languages.',
+        },
+        {
+          title: 'Start with the pages that matter',
+          body: 'Most businesses do not need every page translated. Your homepage, main services and contact page in a second language usually cover what a new customer needs to decide.',
+        },
+      ],
+    },
+    sectionOrder: ['local', 'advantage', 'pricing', 'spotlight', 'recentWork', 'reviews', 'whatYouGet', 'industries', 'faq'],
   },
   stouffville: {
     slug: 'stouffville',
@@ -266,7 +340,7 @@ export const cityContent: Record<string, CityContent> = {
       {
         question: "What's included in the Starter plan for a small Stouffville shop?",
         answer:
-          'The $999 Starter plan covers up to 3 pages — typically Home, About, and Contact — with mobile-responsive design, basic SEO setup, and a 3–5 day turnaround. It suits a shop or trade business that needs a credible presence fast without a large page count.',
+          `The ${packagePriceWithRegular('starter')} Starter plan covers up to 3 pages — typically Home, About, and Contact — with mobile-responsive design, basic SEO setup, and a 3–5 day turnaround. It suits a shop or trade business that needs a credible presence fast without a large page count.`,
       },
     ],
     heroImage: '/images/stouffville-main-street.jpg',
@@ -355,9 +429,9 @@ export const cityContent: Record<string, CityContent> = {
     slug: 'toronto',
     city: 'Toronto',
     region: 'City of Toronto',
-    metaTitle: 'Web Design Toronto | Custom Business Websites | Zenara',
+    metaTitle: 'Web Design Toronto | Small Business Websites | Zenara',
     metaDescription:
-      'Custom web design in Toronto. Fast, modern, SEO-optimized websites for businesses across the downtown core, midtown, and the wider city. Free consultation.',
+      'Web design for Toronto small businesses, from downtown to Scarborough and North York. Fast, SEO-ready websites at fixed, published prices. Free consultation.',
     heroIntro: 'Custom websites for Toronto businesses that compete in Canada’s most crowded market.',
     intro:
       'Toronto is the most competitive business market in Canada, and that competition is just as fierce online — a template website simply blends into the noise.',
@@ -392,7 +466,7 @@ export const cityContent: Record<string, CityContent> = {
       {
         question: 'Everyone says Toronto web design is expensive — is that true here?',
         answer:
-          "Agency pricing in Toronto often reflects downtown office overhead more than the actual work. We're a lean, two-person studio with fixed pricing starting at $999 — the same quality of custom build without the markup that comes from a large agency's overhead.",
+          `Agency pricing in Toronto often reflects downtown office overhead more than the actual work. We're a lean, two-person studio with fixed pricing starting at ${packagePrice('starter')} — the same quality of custom build without the markup that comes from a large agency's overhead.`,
       },
       {
         question: 'How is a Zenara site different from a template a big agency would sell me?',
@@ -420,6 +494,7 @@ export const cityContent: Record<string, CityContent> = {
       "Toronto's independent shops and studios are up against national brands with real marketing budgets. We build sites that lead with what a chain can't offer — a distinct identity and real local presence — at a price a small business can actually afford.",
     focusAreas: ['Finance & Professional Services', 'Technology & Media', 'Healthcare', 'Independent Retail'],
     featuredProjectSlugs: ['jb-loans', 'ik-smart-solution', 'fungen-events'],
+    serviceLinkText: 'custom web design in Toronto',
     sectionOrder: ['whatYouGet', 'advantage', 'recentWork', 'industries', 'faq'],
   },
   mississauga: {
@@ -636,10 +711,9 @@ export const cityContent: Record<string, CityContent> = {
   pickering: {
     slug: 'pickering',
     city: 'Pickering',
-    region: 'the GTA',
-    metaTitle: 'Web Design Pickering | Custom Business Sites | Zenara',
-    metaDescription:
-      'Custom web design in Pickering, the gateway to Durham Region. Fast, modern, SEO-optimized sites for local businesses. Free consultation.',
+    region: 'Durham Region',
+    metaTitle: 'Web Design Pickering & Ajax | Custom Business Websites | Zenara',
+    metaDescription: `Custom web design for Pickering, Ajax and Durham Region businesses, from a studio 20 minutes away in Markham. Fixed prices from ${packagePrice('starter')}. Free consultation.`,
     heroIntro: 'Websites for Pickering businesses at the fast-growing gateway to Durham Region.',
     intro:
       'Pickering is entering a period of major growth, with the City Centre redevelopment set to add thousands of residents — and the businesses building a strong online presence now will be best positioned when it arrives.',
@@ -660,8 +734,8 @@ export const cityContent: Record<string, CityContent> = {
         body: 'With the City Centre redevelopment bringing thousands of new residents, a strong presence now captures demand competitors will miss.',
       },
       {
-        title: 'Reach the wider GTA',
-        body: 'Many local customers search by region, so we target Pickering plus the GTA to also capture traffic from Ajax and Whitby.',
+        title: 'Reach Ajax and Whitby too',
+        body: 'Many Durham customers search by region rather than by town, so we target Pickering alongside Ajax, Whitby and "Durham Region" searches.',
       },
       {
         title: 'Affordable, conversion-ready design',
@@ -670,6 +744,15 @@ export const cityContent: Record<string, CityContent> = {
     ],
     industries: INDUSTRY_LINKS,
     faqs: [
+      {
+        question: 'How much does a website cost in Pickering?',
+        answer: `Our fixed prices are ${packageRangeSentence()}. Each includes responsive design, SEO setup and SSL, and every project starts with a written quote, so the price you agree to is the price you pay. Most Pickering small businesses fit the Small Business plan.`,
+      },
+      {
+        question: 'Do you work with businesses in Ajax and Whitby?',
+        answer:
+          'Yes. We work across Durham Region, most often in Pickering, Ajax and Whitby, and we can meet in person for the kickoff and design review. If your customers come from several Durham towns, we build the site and your Google Business Profile to be found for each of them.',
+      },
       {
         question: 'Pickering is about to grow a lot — is now the right time to build a website?',
         answer:
@@ -694,14 +777,42 @@ export const cityContent: Record<string, CityContent> = {
     heroImage: '/images/pickering-waterfront-trail.jpg',
     heroImageAlt: 'A wooden pier extending into calm water at sunset, representing Pickering’s waterfront trail',
     localSeoBody:
-      'We build citations with organizations like the Ajax-Pickering Board of Trade and target Pickering alongside neighbouring Ajax and Whitby, since many customers here search by region rather than by a single city name.',
+      'We set up your Google Business Profile and local citations so you show up for Pickering, Ajax and Whitby searches — including the Ajax-Pickering Board of Trade’s member directory if you are a member — since many customers here search by region rather than by a single city name.',
     geoBody:
       'As new residents arrive with the City Centre redevelopment, more of them will ask AI tools like ChatGPT for local recommendations rather than searching Google directly — we structure your site to be part of that answer early, before competitors catch on.',
     smallBusinessNote:
       "With thousands of new residents arriving as the City Centre develops, the local businesses ready to be found now are the ones who'll be established by the time that growth peaks. We build for that timing specifically.",
     focusAreas: ['Energy & Corporate', 'Retail & Personal Services', 'Trades', 'Local Services'],
     featuredProjectSlugs: ['heroes-catering', 'ashcam-cutting-solutions', 'pattys-delights'],
-    sectionOrder: ['advantage', 'industries', 'recentWork', 'whatYouGet', 'faq'],
+    localTeam: {
+      heading: 'How we work with Pickering clients',
+      paragraphs: [
+        'We are based in Markham, about twenty minutes from Pickering along Highway 407 or Steeles. For Pickering and Ajax clients we can meet in person for the kickoff and the design review; everything in between happens by email and video call.',
+        'You deal directly with the two co-founders who build your site, from the first call through launch and afterwards. There is no account manager in the middle and no hand-off to a junior team once the contract is signed.',
+      ],
+    },
+    spotlight: {
+      eyebrow: 'Durham Region',
+      heading: 'Also serving Ajax, Whitby and the rest of Durham',
+      paragraphs: [
+        'Pickering, Ajax and Whitby share customers, roads and, in Pickering and Ajax’s case, a Board of Trade. Someone in Ajax looking for a contractor or clinic will happily drive to Pickering, and they often search "Durham Region" rather than a single town. Your website should be found for all of it.',
+      ],
+      points: [
+        {
+          title: 'Ajax',
+          body: 'Pickering’s closest neighbour, with the same Kingston Road and Highway 401 commercial corridors. We build Ajax businesses the same site we would build in Pickering, with copy that names the neighbourhoods their customers live in.',
+        },
+        {
+          title: 'Whitby',
+          body: 'Home to the Region of Durham’s headquarters and a growing base of professional services. Whitby clients get the same in-person kickoff, about half an hour from our Markham base.',
+        },
+        {
+          title: 'Region-wide search',
+          body: 'For businesses that serve all of Durham, we structure service-area content and the Google Business Profile so you show up for the region-level searches as well as the town-level ones.',
+        },
+      ],
+    },
+    sectionOrder: ['advantage', 'local', 'pricing', 'spotlight', 'recentWork', 'reviews', 'industries', 'whatYouGet', 'faq'],
   },
 };
 

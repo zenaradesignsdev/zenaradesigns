@@ -22,17 +22,26 @@ const RETIRED_CITIES = [
   'etobicoke',
   'newmarket',
   'aurora',
-  'ajax',
-  'whitby',
   'oshawa',
 ];
 
-const retiredCityRedirects = () =>
-  RETIRED_CITIES.map((city) => ({
+// Ajax and Whitby fold into the Pickering page, which now covers Durham Region
+// ("Also serving Ajax, Whitby…"), so their old URLs pass to the nearest page
+// that actually serves them rather than the generic /locations hub.
+const DURHAM_CITIES = ['ajax', 'whitby'];
+
+const retiredCityRedirects = () => [
+  ...RETIRED_CITIES.map((city) => ({
     source: `/web-design/${city}`,
     destination: '/locations',
     permanent: true,
-  }));
+  })),
+  ...DURHAM_CITIES.map((city) => ({
+    source: `/web-design/${city}`,
+    destination: '/web-design/pickering',
+    permanent: true,
+  })),
+];
 
 // The 32 /{industry}/{city} pages are gone. They were ~90% identical to one
 // another and produced 850 impressions with zero clicks over 92 days.
