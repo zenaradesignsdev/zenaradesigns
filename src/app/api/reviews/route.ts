@@ -1,26 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { fetchGoogleReviews } from '@/lib/google-reviews';
 
 export const maxDuration = 10;
-
-interface GooglePlaceReview {
-  name: string;
-  relativePublishTimeDescription: string;
-  rating: number;
-  text: { text: string; languageCode: string };
-  originalText: { text: string; languageCode: string };
-  authorAttribution: { displayName: string; uri: string; photoUri?: string };
-  publishTime: string;
-}
-
-// Places API v1 returns `rating` and `userRatingCount` as sibling top-level
-// fields — exactly as requested in the X-Goog-FieldMask below.
-interface GooglePlaceResponse {
-  name: string;
-  rating?: number;
-  userRatingCount?: number;
-  reviews?: GooglePlaceReview[];
-  displayName?: { text: string; languageCode: string };
-}
 
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT_WINDOW = 15 * 60 * 1000;
@@ -88,67 +69,13 @@ export async function GET(request: NextRequest) {
     );
   }
 
-  if (!process.env.GOOGLE_PLACE_ID || !process.env.GOOGLE_PLACES_API_KEY) {
-    // Return empty data gracefully so the UI renders without reviews in dev
+  const result = await fetchGoogleReviews();
+  if (result.ok === false) {
     return NextResponse.json(
-      { success: true, data: { displayName: 'Zenara Designs', rating: 5, userRatingCount: 0, reviews: [] } },
-      { status: 200, headers: corsHeaders }
+      { error: 'Failed to fetch reviews from Google Places API', success: false },
+      { status: result.status, headers: corsHeaders }
     );
   }
 
-  try {
-    const placeId = process.env.GOOGLE_PLACE_ID;
-    const apiKey = process.env.GOOGLE_PLACES_API_KEY;
-
-    const response = await fetch(`https://places.googleapis.com/v1/places/${placeId}`, {
-      method: 'GET',
-      headers: {
-        'X-Goog-Api-Key': apiKey,
-        'X-Goog-FieldMask': 'reviews,rating,userRatingCount,displayName',
-      },
-      // Reviews change rarely; a daily refresh keeps Places API usage (billed
-      // per call) far inside the free tier.
-      next: { revalidate: 86400 },
-    });
-
-    if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Google Places API error:', response.status, errorText);
-      return NextResponse.json(
-        { error: 'Failed to fetch reviews from Google Places API', success: false },
-        { status: response.status, headers: corsHeaders }
-      );
-    }
-
-    const data: GooglePlaceResponse = await response.json();
-
-    const reviews = data.reviews || [];
-    const rating = data.rating ?? 0;
-    const userRatingCount = data.userRatingCount ?? 0;
-    const displayName = data.displayName?.text || data.name || '';
-
-    const latestReviews = reviews
-      .sort((a, b) => {
-        const timeA = a.publishTime ? new Date(a.publishTime).getTime() : 0;
-        const timeB = b.publishTime ? new Date(b.publishTime).getTime() : 0;
-        return timeB - timeA;
-      })
-      .slice(0, 5)
-      .map((review) => ({
-        name: review.authorAttribution?.displayName || 'Anonymous',
-        rating: review.rating || 5,
-        text: review.text?.text || review.originalText?.text || '',
-        relativeTime: review.relativePublishTimeDescription || 'Recently',
-        publishTime: review.publishTime || new Date().toISOString(),
-        photoUri: review.authorAttribution?.photoUri,
-      }));
-
-    return NextResponse.json(
-      { success: true, data: { displayName, rating, userRatingCount, reviews: latestReviews } },
-      { status: 200, headers: corsHeaders }
-    );
-  } catch (err) {
-    console.error('Error fetching Google Reviews:', err);
-    return NextResponse.json({ error: 'Internal server error', success: false }, { status: 500, headers: corsHeaders });
-  }
+  return NextResponse.json({ success: true, data: result.data }, { status: 200, headers: corsHeaders });
 }
