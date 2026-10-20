@@ -5,6 +5,7 @@
 // route files (server-rendered JSON-LD). See SEO-RANKING-PLAN.md §8.1.
 
 import { ORGANIZATION_ID, SITE_URL } from './constants';
+import { packagePriceWithRegular, packageRangeSentence } from './pricing-data';
 
 const BASE = SITE_URL;
 
@@ -100,8 +101,16 @@ export function serviceBreadcrumb(entry: ServiceEntry) {
 export const webDesignFaqs: ServiceFaq[] = [
   {
     question: 'How much does a custom website cost?',
+    answer: `Our web design packages have fixed, published prices: ${packageRangeSentence()}. You get a written quote agreed before we start, and the pricing page breaks down what is included at every tier.`,
+  },
+  {
+    question: 'How much does a custom website cost in Toronto?',
+    answer: `It depends mostly on who builds it. In Toronto, freelancers range from under a thousand dollars to several thousand, small studios typically quote low to mid four figures for a small-business site, and traditional agencies usually start in five figures. A fully custom site from us starts at ${packagePriceWithRegular('starter')} for up to three pages and ${packagePriceWithRegular('smallBusiness')} for up to six, with no page builder or purchased theme underneath.`,
+  },
+  {
+    question: 'How much does it cost to build a website in Ontario?',
     answer:
-      'Our web design packages are priced to stay affordable — starting at $999 for a focused starter site, $1,999 for a standard small-business build of up to six pages, and $4,999+ for advanced custom functionality — each with fixed, transparent pricing agreed before we start. Starter and Small Business are currently $500 off for a limited time. See the full breakdown, including what\'s included at every tier, on our pricing page.',
+      'The same bands apply across Ontario: a website builder subscription if you do it yourself, roughly a few hundred to a few thousand dollars with a freelancer, low to mid four figures with a small studio, and five figures or more with an agency. Two Ontario-specific costs are worth budgeting for: businesses with 50 or more employees must meet WCAG 2.0 Level AA under the AODA, and a bilingual English–French or multilingual site is closer to two sites than one.',
   },
   {
     question: 'How long does it take to build a website?',
@@ -335,9 +344,9 @@ export const serviceContent: Record<string, ServiceEntry> = {
   'web-design': {
     path: '/services/web-design',
     breadcrumbLabel: 'Web Design',
-    schemaName: 'Custom Web Design Markham & GTA',
+    schemaName: 'Custom Web Design Toronto & GTA',
     schemaDescription:
-      'Professional custom website design and development for GTA businesses. Built with Next.js for performance, SEO, and modern user experiences.',
+      'Custom website design and development for Toronto and GTA businesses, designed from scratch and built in code with Next.js — no themes or page builders. Fixed, published pricing.',
     features: ['Custom UI/UX Design', 'Responsive Development', 'Performance Optimization', 'SEO Integration', 'Clean Code Architecture', 'Security & Accessibility'],
     faqs: webDesignFaqs,
   },

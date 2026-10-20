@@ -6,21 +6,21 @@ import { serviceContent, serviceSchema, faqPageSchema, serviceBreadcrumb } from 
 const entry = serviceContent['web-design'];
 
 export const metadata: Metadata = {
-  title: 'Custom Web Design Markham & GTA | Zenara Designs',
-  description: 'Custom website design and development for GTA businesses. Modern, responsive, SEO-optimized sites built with Next.js. Fixed pricing, live in 1–2 weeks.',
-  keywords: ['web design Toronto', 'custom website design GTA', 'professional web development Toronto', 'Next.js web design', 'responsive website design Toronto', 'small business website Toronto'],
+  title: 'Custom Web Design Toronto & GTA | Zenara Designs',
+  description: 'Custom web design for Toronto and GTA businesses: designed from scratch, built in Next.js, no templates. Fixed prices, live in 1–2 weeks.',
+  keywords: ['custom web design Toronto', 'web design Toronto', 'custom website design GTA', 'professional web development Toronto', 'Next.js web design', 'responsive website design Toronto', 'small business website Toronto'],
   alternates: { canonical: 'https://zenaradesigns.com/services/web-design' },
   openGraph: {
     images: ['/opengraph-image'],
-    title: 'Custom Web Design Markham & GTA | Zenara Designs',
-    description: 'Custom website design and development for GTA businesses. Modern, responsive, SEO-optimized sites built with Next.js. Fixed pricing, live in 1–2 weeks.',
+    title: 'Custom Web Design Toronto & GTA | Zenara Designs',
+    description: 'Custom web design for Toronto and GTA businesses: designed from scratch, built in Next.js, no templates. Fixed prices, live in 1–2 weeks.',
     url: 'https://zenaradesigns.com/services/web-design',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Custom Web Design Markham & GTA | Zenara Designs',
+    title: 'Custom Web Design Toronto & GTA | Zenara Designs',
     description:
-      'Custom website design and development for GTA businesses. Modern, responsive, SEO-optimized sites built with Next.js. Fixed pricing, live in 1–2 weeks.',
+      'Custom web design for Toronto and GTA businesses: designed from scratch, built in Next.js, no templates. Fixed prices, live in 1–2 weeks.',
   },
 };
 

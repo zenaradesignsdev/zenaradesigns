@@ -8,7 +8,9 @@ import { Button } from '@/components/ui/button';
 import { SafeImage } from '@/components/ui/safe-image';
 import { FadeIn } from '@/components/ui/fade-in';
 import { TextReveal } from '@/components/ui/text-reveal';
+import { ReviewsStrip } from '@/components/ReviewsStrip';
 import { webDesignFaqs as faqs } from '@/lib/service-content';
+import { PRICES, formatCad, packagePrice, websitePlanSummaries } from '@/lib/pricing-data';
 
 const STACK = ['Next.js 14', 'TypeScript', 'Tailwind CSS', 'Vercel', 'Cloudflare', 'Figma'];
 
@@ -48,10 +50,92 @@ const DIFFERENTIATORS = [
   },
 ];
 
+// What "custom" means here, stated concretely so it can be checked against
+// the comparison table below and against any other quote.
+const CUSTOM_MEANS = [
+  {
+    title: 'No themes, no page builders',
+    body: 'Every layout is designed for your business, then built as code. Nothing starts from a purchased theme or a drag-and-drop template that thousands of other sites share.',
+  },
+  {
+    title: 'Hand-built on Next.js',
+    body: 'Pages are server-rendered, so they load fast and search engines read the full content. Each page ships only the code it needs, with no plugin stack slowing it down.',
+  },
+  {
+    title: 'You own it',
+    body: 'The finished site, the domain, the hosting account, Analytics and your Business Profile are all yours. If you ever leave, everything leaves with you.',
+  },
+  {
+    title: 'Tested before it goes live',
+    body: 'We run Lighthouse performance, accessibility and SEO checks on every build and fix what they flag before launch, then test on real phones and browsers.',
+  },
+];
+
+interface ComparisonRow {
+  label: string;
+  custom: string;
+  builder: string;
+  wordpress: string;
+}
+
+// Builder prices are the published Canadian monthly rates for Wix's and
+// Squarespace's common business plans, checked October 2026.
+const COMPARISON: ComparisonRow[] = [
+  {
+    label: 'Upfront cost',
+    custom: `Fixed quote, from ${packagePrice('starter')}`,
+    builder: 'Your own time, or a freelancer to set it up',
+    wordpress: 'Theme licence plus setup; quotes vary widely',
+  },
+  {
+    label: 'Ongoing cost',
+    custom: `Optional hosting and care from ${formatCad(PRICES.subscriptions.core)}/month`,
+    builder: 'Subscription for as long as the site is live, about CA$21–46/month on common plans',
+    wordpress: 'Hosting, premium plugin licences and someone to run updates',
+  },
+  {
+    label: 'Design',
+    custom: 'Designed for your business',
+    builder: 'A template shared with many other sites',
+    wordpress: 'A purchased theme, customized',
+  },
+  {
+    label: 'Speed',
+    custom: 'Server-rendered, only the code each page needs',
+    builder: 'Depends on the template and apps added',
+    wordpress: 'Depends on the theme and plugins; often slow without tuning',
+  },
+  {
+    label: 'Ownership',
+    custom: 'You own the site and every account',
+    builder: 'Rented; the site cannot be moved off the platform',
+    wordpress: 'You own it, on hosting you choose',
+  },
+  {
+    label: 'Maintenance',
+    custom: 'Little to patch; we handle it on a care plan',
+    builder: 'Platform handles it; you edit content',
+    wordpress: 'Regular core, theme and plugin security updates',
+  },
+  {
+    label: 'Best for',
+    custom: 'Businesses that sell on trust and want to stand out',
+    builder: 'Very small budgets and hands-on owners',
+    wordpress: 'Sites run by a team already comfortable with WordPress',
+  },
+];
+
+const COMPARISON_OPTIONS: { key: 'custom' | 'builder' | 'wordpress'; label: string }[] = [
+  { key: 'custom', label: 'Custom (Zenara)' },
+  { key: 'builder', label: 'Builder template (Wix, Squarespace)' },
+  { key: 'wordpress', label: 'WordPress theme' },
+];
+
 const FEATURED_WORK = [
   {
     slug: 'ashcam-cutting-solutions',
     name: 'AshCam Cutting Solutions',
+    location: 'Toronto',
     industry: 'Construction supply & e-commerce',
     url: 'ashcamcuttingsolution.ca',
     href: 'https://ashcamcuttingsolution.ca/',
@@ -61,6 +145,7 @@ const FEATURED_WORK = [
   {
     slug: 'fungen-events',
     name: 'FunGen Events',
+    location: 'Scarborough',
     industry: 'Event planning',
     url: 'fungenevents.ca',
     href: 'https://fungenevents.ca/',
@@ -79,6 +164,7 @@ const FEATURED_WORK = [
   {
     slug: 'ik-smart-solution',
     name: 'IK Smart Solution',
+    location: 'Toronto',
     industry: 'Security & smart home',
     url: 'iksmartsolution.ca',
     href: 'https://www.iksmartsolution.ca/',
@@ -96,11 +182,7 @@ const FEATURED_WORK = [
   },
 ];
 
-const PLANS = [
-  { name: 'Starter', price: '$499', originalPrice: '$999', desc: 'Up to 3 pages, 3–5 day turnaround', popular: false },
-  { name: 'Small Business', price: '$1,499', originalPrice: '$1,999', desc: 'Up to 6 pages, custom sections, 1–2 weeks', popular: true },
-  { name: 'Pro', price: '$4,999+', originalPrice: undefined, desc: 'Advanced functionality, e-commerce, 3–4 weeks', popular: false },
-];
+const PLANS = websitePlanSummaries();
 
 const WebDesignService = () => {
   return (
@@ -123,20 +205,20 @@ const WebDesignService = () => {
             {/* Left — heading */}
             <div className="lg:col-span-3">
               <FadeIn>
-                <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">Web Design — Markham &amp; the GTA</p>
+                <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">Not a Template</p>
               </FadeIn>
               <TextReveal
                 as="h1"
                 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-white leading-[1.05] tracking-[-0.04em] mb-6"
                 staggerMs={120}
                 lines={[
-                  <span key="l1" className="block font-light opacity-90">Custom Web Design,</span>,
-                  <span key="l2" className="block mt-1 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Not a Template.</span>,
+                  <span key="l1" className="block font-light opacity-90">Custom Web Design in</span>,
+                  <span key="l2" className="block mt-1 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Toronto &amp; the GTA</span>,
                 ]}
               />
               <FadeIn delay={240}>
                 <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-xl leading-relaxed font-light tracking-[0.01em] mb-8">
-                  Modern, responsive, SEO-optimized websites built with Next.js — designed and coded from scratch, at an affordable, fixed price, for GTA businesses that want to look nothing like the competition.
+                  Modern, responsive, SEO-optimized websites built with Next.js — designed and coded from scratch, at a fixed price, for Toronto and GTA businesses that want to look nothing like the competition. We&apos;re a small studio based in Markham, working with clients across the city.
                 </p>
               </FadeIn>
               <FadeIn delay={320}>
@@ -221,6 +303,80 @@ const WebDesignService = () => {
         </div>
       </section>
 
+      {/* What custom means + comparison */}
+      <section className="relative overflow-hidden py-16 sm:py-20 md:py-24 bg-black">
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/30 to-black" />
+        </div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+          <p className="text-xs font-mono text-cyan-400/60 tracking-[0.2em] uppercase mb-6">What Custom Means at Zenara</p>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extralight text-white leading-[1.1] tracking-[-0.04em] mb-10 sm:mb-12 max-w-3xl">
+            <span className="font-light opacity-90">&ldquo;Custom&rdquo; gets used loosely.</span>{' '}
+            <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Here&apos;s what it means here.</span>
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-6 mb-16 sm:mb-20">
+            {CUSTOM_MEANS.map((item) => (
+              <div key={item.title} className="pl-4 border-l-2 border-cyan-500/40">
+                <h3 className="text-base sm:text-lg text-white font-medium mb-1.5">{item.title}</h3>
+                <p className="text-white/55 text-sm sm:text-base font-light leading-relaxed">{item.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <h2 id="custom-vs-template" className="text-2xl sm:text-3xl font-light text-white leading-snug tracking-tight mb-3">
+            Custom vs. template vs. WordPress
+          </h2>
+          <p className="text-white/55 font-light max-w-3xl mb-8">
+            All three are legitimate choices. They are different products, and the right one depends on your budget, how much you want to do yourself, and how much the website has to win business for you.
+          </p>
+          {/* Phones: one card per option, so nothing scrolls sideways. */}
+          <div className="grid grid-cols-1 gap-4 md:hidden">
+            {COMPARISON_OPTIONS.map((option) => (
+              <div
+                key={option.key}
+                className={`rounded-2xl border p-5 ${option.key === 'custom' ? 'border-cyan-400/40 bg-cyan-500/[0.04]' : 'border-white/10 bg-slate-950/60'}`}
+              >
+                <h3 className={`text-base font-medium mb-3 ${option.key === 'custom' ? 'text-cyan-300' : 'text-white/85'}`}>{option.label}</h3>
+                <dl className="space-y-2.5">
+                  {COMPARISON.map((row) => (
+                    <div key={row.label}>
+                      <dt className="text-[11px] uppercase tracking-[0.15em] text-white/40">{row.label}</dt>
+                      <dd className="text-sm font-light text-white/75">{row[option.key]}</dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            ))}
+          </div>
+          <div className="hidden md:block overflow-x-auto rounded-2xl border border-white/10" tabIndex={0} aria-labelledby="custom-vs-template">
+            <table className="w-full text-left text-sm">
+              <caption className="sr-only">Comparison of a custom website, a website builder template and a WordPress theme</caption>
+              <thead className="bg-white/[0.04]">
+                <tr>
+                  <th scope="col" className="p-4 font-medium text-white/50 w-[16%]"><span className="sr-only">Aspect</span></th>
+                  <th scope="col" className="p-4 font-medium text-cyan-300">Custom (Zenara)</th>
+                  <th scope="col" className="p-4 font-medium text-white/80">Builder template (Wix, Squarespace)</th>
+                  <th scope="col" className="p-4 font-medium text-white/80">WordPress theme</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-white/10">
+                {COMPARISON.map((row) => (
+                  <tr key={row.label}>
+                    <th scope="row" className="p-4 font-medium text-white/70 align-top">{row.label}</th>
+                    <td className="p-4 font-light text-white/80 align-top bg-cyan-500/[0.04]">{row.custom}</td>
+                    <td className="p-4 font-light text-white/55 align-top">{row.builder}</td>
+                    <td className="p-4 font-light text-white/55 align-top">{row.wordpress}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-white/40 text-xs font-light mt-3">
+            Builder prices are the published Canadian monthly rates for common Wix and Squarespace business plans, October 2026.
+          </p>
+        </div>
+      </section>
+
       {/* Featured Work */}
       <section className="relative overflow-hidden py-16 sm:py-20 md:py-24 bg-gradient-to-br from-slate-900 via-cyan-900 to-slate-900">
         <div className="absolute inset-0" aria-hidden="true">
@@ -239,7 +395,7 @@ const WebDesignService = () => {
               <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Work</span>
             </h2>
             <p className="text-white/55 text-base sm:text-lg font-light max-w-2xl mx-auto">
-              Real sites we&apos;ve designed and shipped for GTA businesses — not mockups.
+              Real sites we&apos;ve designed and shipped for Toronto and GTA businesses — not mockups.
             </p>
           </div>
 
@@ -269,7 +425,10 @@ const WebDesignService = () => {
                 </div>
                 <div className="p-5 flex items-center justify-between">
                   <div>
-                    <span className="text-cyan-300/60 text-xs font-medium uppercase tracking-wide">{project.industry}</span>
+                    <span className="text-cyan-300/60 text-xs font-medium uppercase tracking-wide">
+                      {project.industry}
+                      {project.location && <span className="text-white/40"> · {project.location}</span>}
+                    </span>
                     <h3 className="text-white font-semibold text-base group-hover:text-cyan-300 transition-colors duration-300">{project.name}</h3>
                   </div>
                   <ArrowUpRight className="h-4 w-4 text-cyan-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform flex-shrink-0" />
@@ -344,16 +503,18 @@ const WebDesignService = () => {
             </p>
           </div>
 
-          <FadeIn delay={120}>
-            <div className="flex justify-center mb-8 sm:mb-10">
-              <div className="group relative inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 border border-amber-300/30 bg-amber-400/[0.07] backdrop-blur-sm overflow-hidden">
-                <span className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-400/10 via-amber-300/[0.04] to-amber-400/10 animate-pulse pointer-events-none" />
-                <span className="relative z-10 text-xs sm:text-sm font-medium text-amber-100/90 tracking-wide">
-                  Fall Offer — <span className="text-amber-300 font-semibold">$500 off</span> Starter &amp; Small Business plans
-                </span>
+          {PLANS.some((plan) => plan.originalPrice) && (
+            <FadeIn delay={120}>
+              <div className="flex justify-center mb-8 sm:mb-10">
+                <div className="group relative inline-flex items-center gap-2.5 rounded-full px-5 py-2.5 border border-amber-300/30 bg-amber-400/[0.07] backdrop-blur-sm overflow-hidden">
+                  <span className="absolute inset-0 rounded-full bg-gradient-to-r from-amber-400/10 via-amber-300/[0.04] to-amber-400/10 animate-pulse pointer-events-none" />
+                  <span className="relative z-10 text-xs sm:text-sm font-medium text-amber-100/90 tracking-wide">
+                    Fall Offer — <span className="text-amber-300 font-semibold">$500 off</span> Starter &amp; Small Business plans
+                  </span>
+                </div>
               </div>
-            </div>
-          </FadeIn>
+            </FadeIn>
+          )}
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 sm:gap-6 mb-10 sm:items-center">
             {PLANS.map((plan, i) => (
@@ -398,6 +559,11 @@ const WebDesignService = () => {
         </div>
       </section>
 
+      <ReviewsStrip
+        headingId="web-design-reviews"
+        className="py-16 sm:py-20 md:py-24 bg-gradient-to-br from-slate-900 via-cyan-900/40 to-slate-900"
+      />
+
       {/* FAQ */}
       <section className="relative overflow-hidden py-16 sm:py-20 md:py-24 bg-black">
         <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -425,7 +591,7 @@ const WebDesignService = () => {
               </details>
             ))}
           </div>
-          <RelatedGuide href="/blog/website-vs-social-media-business" title="Do you need a website if you already have Instagram and a Google Business Profile?" className="mt-10" />
+          <RelatedGuide href="/blog/custom-website-vs-template-toronto" title="Custom website vs. template: what a Toronto small business actually gets for the money" className="mt-10" />
         </div>
       </section>
 
