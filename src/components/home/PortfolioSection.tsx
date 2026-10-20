@@ -122,29 +122,35 @@ const PortfolioSection = () => {
           {/* Right Side - Vertical Sliding Animation */}
           <div className="relative h-[350px] sm:h-[450px] md:h-[550px] lg:h-[600px] overflow-hidden order-2 lg:order-1">
             <div className="absolute inset-0 flex flex-col animate-vertical-scroll-smooth">
-              {/* Items + duplicate for seamless loop */}
-              {[...PORTFOLIO_ITEMS, ...PORTFOLIO_ITEMS].map((item, index) => (
-                <div key={index} className="flex-shrink-0 mb-6">
-                  <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl overflow-hidden">
-                    <div className={`aspect-video bg-gradient-to-br ${item.gradient} p-6`}>
-                      <div className="h-full bg-white/90 rounded-xl shadow-lg overflow-hidden">
-                        <SafeImage
-                          src={item.src}
-                          alt={item.alt}
-                          className="w-full h-full object-cover"
-                          priority={index === 0}
-                          quality={85}
-                          sizes="(max-width: 640px) calc(100vw - 112px), (max-width: 1024px) calc(50vw - 80px), 540px"
-                        />
+              {/* Items + duplicate for seamless loop. The second copy exists only so the loop is seamless: it is hidden
+                  from assistive tech and its titles aren't headings, so the page
+                  outline lists each project once. */}
+              {[...PORTFOLIO_ITEMS, ...PORTFOLIO_ITEMS].map((item, index) => {
+                const isLoopCopy = index >= PORTFOLIO_ITEMS.length;
+                const TitleTag = isLoopCopy ? 'p' : 'h3';
+                return (
+                  <div key={index} className="flex-shrink-0 mb-6" aria-hidden={isLoopCopy || undefined}>
+                    <div className="bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl overflow-hidden">
+                      <div className={`aspect-video bg-gradient-to-br ${item.gradient} p-6`}>
+                        <div className="h-full bg-white/90 rounded-xl shadow-lg overflow-hidden">
+                          <SafeImage
+                            src={item.src}
+                            alt={item.alt}
+                            className="w-full h-full object-cover"
+                            priority={index === 0}
+                            quality={85}
+                            sizes="(max-width: 640px) calc(100vw - 112px), (max-width: 1024px) calc(50vw - 80px), 540px"
+                          />
+                        </div>
+                      </div>
+                      <div className="p-4">
+                        <TitleTag className="text-white font-semibold text-lg">{item.title}</TitleTag>
+                        <p className="text-slate-300 text-sm">{item.desc}</p>
                       </div>
                     </div>
-                    <div className="p-4">
-                      <h3 className="text-white font-semibold text-lg">{item.title}</h3>
-                      <p className="text-slate-300 text-sm">{item.desc}</p>
-                    </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
             <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-slate-900 via-cyan-900/50 to-transparent pointer-events-none z-10"></div>
             <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-slate-900 via-cyan-900/50 to-transparent pointer-events-none z-10"></div>

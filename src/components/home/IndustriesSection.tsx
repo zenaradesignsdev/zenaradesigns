@@ -104,7 +104,20 @@ const IndustriesSection = () => {
           <FadeIn delay={240}>
             <p className="text-base sm:text-lg md:text-xl text-white/50 leading-[1.7] font-light tracking-[0.01em]">
               We understand the unique needs of trust-critical industries and build
-              tailored websites that drive real results.
+              tailored websites that drive real results. We&apos;re based in Markham and work
+              across the GTA — see{' '}
+              <Link href="/web-design/markham" className="text-cyan-300/80 underline decoration-cyan-300/30 underline-offset-4 hover:text-cyan-300 transition-colors">
+                web design in Markham
+              </Link>
+              ,{' '}
+              <Link href="/web-design/pickering" className="text-cyan-300/80 underline decoration-cyan-300/30 underline-offset-4 hover:text-cyan-300 transition-colors">
+                web design in Pickering
+              </Link>{' '}
+              and{' '}
+              <Link href="/services/web-design" className="text-cyan-300/80 underline decoration-cyan-300/30 underline-offset-4 hover:text-cyan-300 transition-colors">
+                custom web design in Toronto
+              </Link>
+              .
             </p>
           </FadeIn>
         </div>
