@@ -217,7 +217,9 @@ const SeoGuideTorontoContent = () => {
         <h3>Want Help With Local SEO?</h3>
         <p>
           We do this work for small businesses in Markham and across the GTA: Business Profile setup, service
-          pages, technical fixes and monthly reporting in plain English.
+          pages, technical fixes and monthly reporting in plain English. Our own{' '}
+          <Link href="/web-design/markham">Markham web design</Link> page is an example of a city page with
+          something specific to say.
         </p>
         <p>
           See our <Link href="/services/seo">local SEO services</Link>, or{' '}

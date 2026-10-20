@@ -1,8 +1,11 @@
 import { BlogPost } from '@/types';
 import Link from 'next/link';
 import { ExternalLink } from '@/components/Blog/ExternalLink';
+import { PRICES, formatCad, packagePriceWithRegular, proFromPrice } from '@/lib/pricing-data';
 
 const AODA_WEBSITES = 'https://www.ontario.ca/page/how-make-websites-accessible';
+const WIX_PLANS = 'https://www.wix.com/plans';
+const SQUARESPACE_PRICING = 'https://www.squarespace.com/pricing';
 
 const WebsiteCostTorontoContent = () => {
   return (
@@ -95,8 +98,8 @@ const WebsiteCostTorontoContent = () => {
       </ul>
       <p>
         For a concrete example, our own <Link href="/services/website-maintenance">maintenance plans</Link>{' '}
-        start at $45 a month for managed hosting, SSL and daily backups. That is $540 a year, plus the
-        domain. Whoever you hire, ask for the running costs in writing before you sign, not after launch.
+        start at {formatCad(PRICES.subscriptions.core)} a month for managed hosting, SSL and daily backups. That
+        is {formatCad(PRICES.subscriptions.core * 12)} a year, plus the domain. Whoever you hire, ask for the running costs in writing before you sign, not after launch.
       </p>
 
       <h2 id="how-to-compare-two-quotes">How to Compare Two Quotes</h2>
@@ -134,22 +137,74 @@ const WebsiteCostTorontoContent = () => {
         <Link href="/blog/choosing-web-designer-gta">how to choose a web designer in the GTA</Link>.
       </p>
 
+      <h2 id="wix-squarespace-vs-custom">Wix or Squarespace vs. a Custom Site</h2>
+      <p>
+        Website builders are the obvious alternative to hiring anyone, so it is worth pricing them honestly.
+        In October 2026,{' '}
+        <ExternalLink href={WIX_PLANS}>Wix’s published Canadian plans</ExternalLink> for a business site ran
+        from about CA$21 to CA$44 a month, and{' '}
+        <ExternalLink href={SQUARESPACE_PRICING}>Squarespace’s</ExternalLink> Basic, Core and Plus plans from
+        CA$21 to CA$46 a month when paid monthly. Over three years that is roughly $750 to $1,650 in
+        subscriptions, before paid apps, business email, or the hours you spend building and updating the site
+        yourself.
+      </p>
+      <p>What the subscription buys, and what it doesn’t:</p>
+      <ul>
+        <li>
+          <strong>You rent, you don’t own.</strong> A builder site can’t be moved to another host. If you
+          stop paying, or outgrow the platform, you start again.
+        </li>
+        <li>
+          <strong>The design is a template.</strong> A good one, often, but shared with many other businesses,
+          and the more you change it the more the builder fights you.
+        </li>
+        <li>
+          <strong>Speed and SEO depend on the platform.</strong> Both have improved, but every app you add
+          brings more code to every page, and you can only optimize what the platform exposes.
+        </li>
+        <li>
+          <strong>Your time is the hidden cost.</strong> Writing, laying out and maintaining the site yourself
+          is fine if you enjoy it. For most owners, those hours are worth more spent on the business.
+        </li>
+      </ul>
+      <p>
+        A builder is the right call when the budget is very small and you want to do it yourself. Once the
+        website has to win work on its own, for example in a crowded Toronto search, a custom site usually
+        costs less than three years of subscriptions plus your time, and you own it outright.
+      </p>
+
+      <h2 id="custom-vs-template">Custom vs. Template: What the Difference Buys</h2>
+      <p>
+        Many quotes use the word “custom” for a purchased theme with a new logo and colours. That isn’t a
+        problem in itself, but you should know which one you are paying for. A genuinely custom site is
+        designed for your business before it is built, has no theme or page builder underneath, and loads
+        only the code each page needs. That matters most when you sell on trust, such as a law firm, clinic
+        or accountant, where looking like every other business in the results costs you calls.
+      </p>
+      <p>
+        Our <Link href="/services/web-design">custom web design in Toronto</Link> page compares custom, builder
+        and WordPress side by side, and{' '}
+        <Link href="/blog/custom-website-vs-template-toronto">custom website vs. template</Link> goes through
+        what each option actually gets a small business.
+      </p>
+
       <h2 id="what-zenara-charges">What We Charge</h2>
       <p>
-        Our prices are fixed and published, so here they are. Regular prices are shown; the{' '}
-        <Link href="/pricing">pricing page</Link> always has the current figures and any promotion running.
+        Our prices are fixed and published, so here they are, including any promotion running when you read
+        this. The <Link href="/pricing">pricing page</Link> has the full breakdown of what each package
+        includes.
       </p>
       <ul>
         <li>
-          <strong>Starter, $999:</strong> up to three pages for freelancers and personal brands, with a
+          <strong>Starter, {packagePriceWithRegular('starter')}:</strong> up to three pages for freelancers and personal brands, with a
           contact form, SEO setup and a 3–5 day turnaround once content is received.
         </li>
         <li>
-          <strong>Small Business, $1,999:</strong> up to six pages with custom sections and forms, two
+          <strong>Small Business, {packagePriceWithRegular('smallBusiness')}:</strong> up to six pages with custom sections and forms, two
           revision rounds, and a 1–2 week turnaround once content is received.
         </li>
         <li>
-          <strong>Pro, from $4,999:</strong> larger sites with a custom design system, integrations such as
+          <strong>Pro, from {proFromPrice()}:</strong> larger sites with a custom design system, integrations such as
           booking or payments, or an online store, typically 3–4 weeks.
         </li>
       </ul>
@@ -179,8 +234,9 @@ const WebsiteCostTorontoContent = () => {
           PageSpeed and Search Console audits instead of checking every page by hand.
         </li>
         <li>
-          <strong>No downtown overhead.</strong> We are based in Markham and work directly with clients, which
-          keeps fixed costs low.
+          <strong>No downtown overhead.</strong> We are{' '}
+          <Link href="/web-design/markham">based in Markham</Link> and work directly with clients, which keeps
+          fixed costs low.
         </li>
       </ul>
       <p>
@@ -221,12 +277,12 @@ export const websiteCostTorontoPost: BlogPost = {
   title: 'How Much Does a Website Cost in Toronto and the GTA?',
   seoTitle: 'How Much Does a Website Cost in Toronto? | Zenara Designs',
   description:
-    'What a small business website costs in Toronto and the GTA, what drives the price, the running costs after launch, and how to compare two quotes fairly.',
+    'What a small business website costs in Toronto and the GTA: what drives the price, Wix and Squarespace vs. custom, running costs and how to compare quotes.',
   excerpt:
     'Quotes for a small business website in Toronto can differ by a factor of ten. Here is what actually drives the price, what you keep paying after launch, and how to compare quotes fairly.',
   author: 'Kavin Mural',
   publishedAt: new Date('2026-05-12'),
-  updatedAt: new Date('2026-09-23'),
+  updatedAt: new Date('2026-10-20'),
   tags: ['pricing & planning', 'web design', 'small business'],
   content: WebsiteCostTorontoContent,
 };

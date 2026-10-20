@@ -8,6 +8,10 @@ import { websiteLaunchChecklistPost } from './website-launch-checklist';
 import { ontarioLawFirmWebsiteContentPost } from './ontario-law-firm-website-content';
 import { accountingFirmWebsitePagesPost } from './accounting-firm-website-pages';
 import { renovationProjectPagesPost } from './renovation-company-project-pages-seo';
+import { websiteCostMarkhamPost } from './how-much-does-a-website-cost-markham';
+import { customVsTemplatePost } from './custom-website-vs-template-toronto';
+import { lawFirmSeoTorontoPost } from './law-firm-seo-toronto';
+import { lawFirmWebsiteCostPost } from './law-firm-website-cost-ontario';
 
 // Featured images live in /public/images/blog/<slug>.jpg (1600x900).
 // Photos are from Unsplash under the Unsplash License (free for commercial
@@ -19,11 +23,17 @@ import { renovationProjectPagesPost } from './renovation-company-project-pages-s
 //   choosing-web-designer-gta            Amélie Mourichon  unsplash.com/photos/sv8oOQaUb-o
 //   website-launch-checklist             Jakub Żerdzicki   unsplash.com/photos/yKnIbJV0RbY
 // The law firm, accounting firm and renovation posts use original illustrations,
-// not stock photos.
+// not stock photos. The four posts from 2026-10-20 (Markham cost, custom vs
+// template, law firm SEO, law firm website cost) have no featured image yet;
+// the listing and post layouts render without one.
 const image = (slug: string) => `/images/blog/${slug}.jpg`;
 
 // Posts are ordered by published date (newest first)
 export const blogPosts: BlogPost[] = [
+  websiteCostMarkhamPost,
+  customVsTemplatePost,
+  lawFirmSeoTorontoPost,
+  lawFirmWebsiteCostPost,
   {
     ...accountingFirmWebsitePagesPost,
     featuredImage: image(accountingFirmWebsitePagesPost.slug),

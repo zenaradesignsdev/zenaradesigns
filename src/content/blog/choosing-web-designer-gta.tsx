@@ -188,7 +188,8 @@ const ChoosingWebDesignerGtaContent = () => {
       <div className="blog-callout">
         <h3>Put Us Through the Same Questions</h3>
         <p>
-          We are a small Markham studio building websites for businesses across the GTA. Our process and pricing
+          We are a small <Link href="/web-design/markham">Markham web design studio</Link> building websites for
+          businesses across the GTA. Our process and pricing
           are published, and we are happy to answer every question above, ownership included, on a first call.
         </p>
         <p>

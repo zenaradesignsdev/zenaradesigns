@@ -1,8 +1,6 @@
 import { BlogPost } from '@/types';
 import Link from 'next/link';
-
-const LSO_MARKETING_RULES =
-  'https://lso.ca/about-lso/legislation-rules/rules-of-professional-conduct/chapter-4';
+import { LSO_RULES_URL as LSO_MARKETING_RULES } from '@/lib/constants';
 
 const OntarioLawFirmWebsiteContent = () => {
   return (
@@ -21,7 +19,12 @@ const OntarioLawFirmWebsiteContent = () => {
         establish credibility without sounding self-important, explain legal services without overwhelming
         people, and make it easy for someone under stress to figure out what to do next.
       </p>
-      <p>Here is how we would approach the content.</p>
+      <p>
+        Here is how we approach the content when we design a{' '}
+        <Link href="/lawyers">law firm website in Toronto</Link> or anywhere in the GTA. For the full list of
+        rules, accessibility and privacy items to check before launch, see our{' '}
+        <Link href="/resources/ontario-law-firm-website-checklist">Ontario law firm website checklist</Link>.
+      </p>
 
       <h2 id="start-with-the-clients-problem">Start With the Client’s Problem, Not the Firm’s Biography</h2>
       <p>
