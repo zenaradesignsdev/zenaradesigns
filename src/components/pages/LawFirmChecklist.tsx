@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { ArrowRight } from 'lucide-react';
@@ -10,6 +11,10 @@ import { LSO_RULES_URL } from '@/lib/constants';
 // in CHECKLIST_REVIEWED, which is also the schema's dateModified. Re-check the
 // sources before bumping it.
 export const CHECKLIST_REVIEWED = '2026-10-20';
+
+// Pete Nuij, unsplash.com/photos/MNIaox8_zmI (Unsplash License).
+export const CHECKLIST_IMAGE = '/images/osgoode-hall-law-society-of-ontario.jpg';
+export const CHECKLIST_IMAGE_ALT = 'The front of Osgoode Hall on Queen Street West in Toronto, home of the Law Society of Ontario';
 
 const SOURCES = {
   lsoConfidentiality: 'https://lso.ca/about-lso/legislation-and-rules/rules-of-professional-conduct/chapter-3',
@@ -154,6 +159,18 @@ const LawFirmChecklist = () => (
               Sources last checked <time dateTime={CHECKLIST_REVIEWED}>October 20, 2026</time>
             </p>
           </header>
+
+          <div className="relative mt-10 sm:mt-14 aspect-[16/9] sm:aspect-[21/8] rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+            <Image
+              src={CHECKLIST_IMAGE}
+              alt={CHECKLIST_IMAGE_ALT}
+              fill
+              priority
+              sizes="(max-width: 1280px) 100vw, 1152px"
+              className="object-cover opacity-80"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent" />
+          </div>
 
           <div className="mt-12 sm:mt-16 grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_15rem] gap-12 xl:gap-20">
             <div className="blog-prose min-w-0 max-w-[42rem]">

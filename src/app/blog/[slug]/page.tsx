@@ -38,9 +38,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       url: `https://zenaradesigns.com/blog/${post.slug}`,
       publishedTime: post.publishedAt.toISOString(),
       ...(post.updatedAt && { modifiedTime: post.updatedAt.toISOString() }),
-      ...(post.featuredImage && {
-        images: [{ url: `https://zenaradesigns.com${post.featuredImage}`, ...(post.featuredImageAlt && { alt: post.featuredImageAlt }) }],
-      }),
+      // Setting openGraph here drops the inherited /opengraph-image, so posts
+      // without a featured image need the site default spelled out.
+      images: post.featuredImage
+        ? [{ url: `https://zenaradesigns.com${post.featuredImage}`, ...(post.featuredImageAlt && { alt: post.featuredImageAlt }) }]
+        : ['/opengraph-image'],
     },
     twitter: {
       card: 'summary_large_image',

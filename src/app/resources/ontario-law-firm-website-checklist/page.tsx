@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
-import LawFirmChecklist, { CHECKLIST_REVIEWED } from '@/components/pages/LawFirmChecklist';
+import LawFirmChecklist, { CHECKLIST_IMAGE, CHECKLIST_IMAGE_ALT, CHECKLIST_REVIEWED } from '@/components/pages/LawFirmChecklist';
 import { ORGANIZATION_ID, SITE_URL } from '@/lib/constants';
 import { generateBreadcrumbSchema } from '@/lib/structured-data';
 import { ABOUT_URL, findTeamMember, teamPersonId } from '@/lib/team';
@@ -20,9 +20,9 @@ export const metadata: Metadata = {
     description: DESCRIPTION,
     url: URL,
     type: 'article',
-    images: ['/opengraph-image'],
+    images: [{ url: CHECKLIST_IMAGE, width: 1600, height: 900, alt: CHECKLIST_IMAGE_ALT }],
   },
-  twitter: { card: 'summary_large_image', title: TITLE, description: DESCRIPTION },
+  twitter: { card: 'summary_large_image', title: TITLE, description: DESCRIPTION, images: [CHECKLIST_IMAGE] },
 };
 
 const author = findTeamMember('Kavin Mural');
@@ -45,6 +45,7 @@ export default function OntarioLawFirmChecklistPage() {
           headline: 'Ontario Law Firm Website Checklist',
           description: DESCRIPTION,
           url: URL,
+          image: `${SITE_URL}${CHECKLIST_IMAGE}`,
           mainEntityOfPage: { '@type': 'WebPage', '@id': URL },
           datePublished: CHECKLIST_REVIEWED,
           dateModified: CHECKLIST_REVIEWED,
