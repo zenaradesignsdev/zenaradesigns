@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { RelatedGuide } from '@/components/Blog/RelatedGuide';
-import { Check, ArrowRight, Star, ChevronDown, Layers, Rocket, Gem, Leaf } from 'lucide-react';
+import { Check, ArrowRight, Star, Layers, Rocket, Gem, Leaf } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { FaqDisclosureList } from '@/components/FaqDisclosureList';
 import { memo, useMemo, useEffect, useRef, useState } from 'react';
 import { FadeIn } from '@/components/ui/fade-in';
 import { TextReveal } from '@/components/ui/text-reveal';
@@ -876,45 +876,11 @@ const Pricing = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 md:items-start">
-            {/* Left Column Accordion */}
-            <Accordion type="single" collapsible className="w-full space-y-3 flex flex-col">
-              {faqs.slice(0, faqMidpoint).map((faq, index) => (
-                <AccordionItem
-                  key={`left-item-${index + 1}`}
-                  value={`left-item-${index + 1}`}
-                  className="overflow-hidden border border-white/[0.09] rounded-xl bg-slate-900/50 hover:border-cyan-500/20 data-[state=open]:border-cyan-500/35 data-[state=open]:bg-slate-900/80 transition-all duration-300"
-                >
-                  <AccordionTrigger className="px-5 sm:px-6 py-4 sm:py-5 hover:no-underline text-left group w-full flex items-center relative overflow-hidden">
-                    <span className="absolute inset-0 bg-gradient-to-r from-cyan-500/[0.11] via-purple-500/[0.07] to-transparent -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out pointer-events-none" />
-                    <span className="font-light text-sm sm:text-base text-white/70 group-hover:text-white pr-4 flex-1 transition-colors duration-300 relative z-10">{faq.question}</span>
-                    <ChevronDown className="h-4 w-4 text-white/30 group-hover:text-cyan-400 shrink-0 transition-all duration-300 relative z-10" />
-                  </AccordionTrigger>
-                  <AccordionContent className="px-5 sm:px-6 pb-4 sm:pb-5 text-white/55 text-sm leading-[1.75] font-light tracking-[0.01em]">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+            {/* Left column */}
+            <FaqDisclosureList faqs={faqs.slice(0, faqMidpoint)} variant="card" />
 
-            {/* Right Column Accordion */}
-            <Accordion type="single" collapsible className="w-full space-y-3 flex flex-col">
-              {faqs.slice(faqMidpoint).map((faq, index) => (
-                <AccordionItem
-                  key={`right-item-${index + 1}`}
-                  value={`right-item-${index + 1}`}
-                  className="overflow-hidden border border-white/[0.09] rounded-xl bg-slate-900/50 hover:border-cyan-500/20 data-[state=open]:border-cyan-500/35 data-[state=open]:bg-slate-900/80 transition-all duration-300"
-                >
-                  <AccordionTrigger className="px-5 sm:px-6 py-4 sm:py-5 hover:no-underline text-left group w-full flex items-center relative overflow-hidden">
-                    <span className="absolute inset-0 bg-gradient-to-r from-cyan-500/[0.11] via-purple-500/[0.07] to-transparent -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out pointer-events-none" />
-                    <span className="font-light text-sm sm:text-base text-white/70 group-hover:text-white pr-4 flex-1 transition-colors duration-300 relative z-10">{faq.question}</span>
-                    <ChevronDown className="h-4 w-4 text-white/30 group-hover:text-cyan-400 shrink-0 transition-all duration-300 relative z-10" />
-                  </AccordionTrigger>
-                  <AccordionContent className="px-5 sm:px-6 pb-4 sm:pb-5 text-white/55 text-sm leading-[1.75] font-light tracking-[0.01em]">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+            {/* Right column */}
+            <FaqDisclosureList faqs={faqs.slice(faqMidpoint)} variant="card" />
           </div>
 
           {/* More FAQs CTA */}

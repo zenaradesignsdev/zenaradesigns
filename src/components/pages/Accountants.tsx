@@ -1,5 +1,5 @@
 // Server Component — its copy and headings ship in the initial HTML. The
-// interactive leaves (TextReveal, FadeIn, MiniContactForm, Accordion) are
+// interactive leaves (TextReveal, FadeIn, MiniContactForm) are
 // client components in their own right; page-level JSON-LD is emitted
 // server-side from the matching app/<route>/page.tsx instead of being
 // injected here in a useEffect, where crawlers without JS never saw it.
@@ -9,7 +9,7 @@ import { ArrowRight, ArrowUpRight, Building2, Calculator, ShieldCheck, TrendingU
 import { Button } from '@/components/ui/button';
 import { CONCEPT_DEMOS } from '@/components/industries/ConceptDemoCallout';
 import MiniContactForm from '@/components/forms/LazyMiniContactForm';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { FaqDisclosureList } from '@/components/FaqDisclosureList';
 import { TextReveal } from '@/components/ui/text-reveal';
 import { FadeIn } from '@/components/ui/fade-in';
 import { memo } from 'react';
@@ -414,22 +414,7 @@ const Accountants = () => {
                 </h2>
               </FadeIn>
               <FadeIn delay={150}>
-                <Accordion type="single" collapsible className="w-full space-y-2 sm:space-y-3">
-                  {faqs.slice(0, 4).map((faq, index) => (
-                    <AccordionItem
-                      key={index}
-                      value={`item-${index}`}
-                      className="border border-white/10 rounded-xl bg-white/[0.02] data-[state=open]:bg-gradient-to-r data-[state=open]:from-cyan-500/15 data-[state=open]:via-purple-500/15 data-[state=open]:to-cyan-500/15 data-[state=open]:border-cyan-500/40 transition-all duration-200"
-                    >
-                      <AccordionTrigger className="px-5 py-4 hover:no-underline text-left data-[state=open]:text-white data-[state=closed]:text-white/80">
-                        <span className="font-light text-sm pr-4">{faq.question}</span>
-                      </AccordionTrigger>
-                      <AccordionContent className="px-5 pb-4 text-white/55 text-sm leading-[1.6] font-light">
-                        {faq.answer}
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
+                <FaqDisclosureList faqs={faqs} variant="gradient" />
                 <Link
                   href="/faq"
                   className="inline-flex items-center gap-1.5 mt-6 text-cyan-400 hover:text-purple-400 transition-colors text-sm font-medium group/link"

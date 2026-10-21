@@ -1,16 +1,11 @@
-// Server Component. It has no hooks or browser APIs of its own — Accordion,
+// Server Component. It has no hooks or browser APIs of its own —
 // TextReveal, FadeIn and MiniContactForm are each independently client
 // components, and a Server Component can render those. Keeping the page itself
 // on the server stops all of its static copy (and the form's zod/Radix import
 // graph) from shipping in the initial JS bundle.
 import Link from 'next/link';
 import Image from 'next/image';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from '@/components/ui/accordion';
+import { FaqDisclosureList } from '@/components/FaqDisclosureList';
 import { DollarSign, Clock, Layers, ShieldCheck, MapPin, type LucideIcon } from 'lucide-react';
 import { TextReveal } from '@/components/ui/text-reveal';
 import { FadeIn } from '@/components/ui/fade-in';
@@ -162,22 +157,7 @@ const FAQ = () => {
                 </FadeIn>
 
                 <FadeIn delay={120}>
-                  <Accordion type="single" collapsible className="w-full space-y-2 sm:space-y-3">
-                    {section.faqs.map((faq, faqIndex) => (
-                      <AccordionItem
-                        key={faqIndex}
-                        value={`${section.id}-${faqIndex}`}
-                        className="border border-white/10 rounded-xl bg-white/[0.02] data-[state=open]:bg-gradient-to-r data-[state=open]:from-cyan-500/15 data-[state=open]:via-purple-500/15 data-[state=open]:to-cyan-500/15 data-[state=open]:border-cyan-500/40 transition-all duration-200"
-                      >
-                        <AccordionTrigger className="px-5 py-4 hover:no-underline text-left data-[state=open]:text-white data-[state=closed]:text-white/80">
-                          <span className="font-light text-sm sm:text-base pr-4">{faq.question}</span>
-                        </AccordionTrigger>
-                        <AccordionContent className="px-5 pb-4 text-white/55 text-sm leading-[1.6] font-light">
-                          {faq.answer}
-                        </AccordionContent>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
+                  <FaqDisclosureList faqs={section.faqs} variant="gradient" />
                 </FadeIn>
               </div>
             </section>

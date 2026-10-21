@@ -1,9 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import { Star, CheckCircle, ArrowUpRight, ChevronDown, Globe, ShoppingCart, Paintbrush, Search, Server, Shield, Zap, Sparkles, RefreshCw } from 'lucide-react';
+import { Star, CheckCircle, ArrowUpRight, Globe, ShoppingCart, Paintbrush, Search, Server, Shield, Zap, Sparkles, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { FaqDisclosureList } from '@/components/FaqDisclosureList';
 import { scrollToTop } from '@/hooks';
 import { useState, useEffect, useRef, memo } from 'react';
 import { SafeImage } from '@/components/ui/safe-image';
@@ -745,43 +745,9 @@ const Services = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 md:items-start">
-            <Accordion type="single" collapsible className="w-full space-y-3 flex flex-col">
-              {FAQ_LEFT.map((faq) => (
-                <AccordionItem
-                  key={faq.value}
-                  value={faq.value}
-                  className="overflow-hidden border border-white/[0.09] rounded-xl bg-slate-900/50 hover:border-cyan-500/20 data-[state=open]:border-cyan-500/35 data-[state=open]:bg-slate-900/80 transition-all duration-300"
-                >
-                  <AccordionTrigger className="px-5 sm:px-6 py-4 sm:py-5 hover:no-underline text-left group w-full flex items-center relative overflow-hidden">
-                    <span className="absolute inset-0 bg-gradient-to-r from-cyan-500/[0.11] via-purple-500/[0.07] to-transparent -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out pointer-events-none" />
-                    <span className="font-light text-sm sm:text-base text-white/70 group-hover:text-white pr-4 flex-1 transition-colors duration-300 relative z-10">{faq.question}</span>
-                    <ChevronDown className="h-4 w-4 text-white/30 group-hover:text-cyan-400 shrink-0 transition-all duration-300 relative z-10" />
-                  </AccordionTrigger>
-                  <AccordionContent className="px-5 sm:px-6 pb-4 sm:pb-5 text-white/55 text-sm leading-[1.75] font-light tracking-[0.01em]">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+            <FaqDisclosureList faqs={FAQ_LEFT} variant="card" />
 
-            <Accordion type="single" collapsible className="w-full space-y-3 flex flex-col">
-              {FAQ_RIGHT.map((faq) => (
-                <AccordionItem
-                  key={faq.value}
-                  value={faq.value}
-                  className="overflow-hidden border border-white/[0.09] rounded-xl bg-slate-900/50 hover:border-cyan-500/20 data-[state=open]:border-cyan-500/35 data-[state=open]:bg-slate-900/80 transition-all duration-300"
-                >
-                  <AccordionTrigger className="px-5 sm:px-6 py-4 sm:py-5 hover:no-underline text-left group w-full flex items-center relative overflow-hidden">
-                    <span className="absolute inset-0 bg-gradient-to-r from-cyan-500/[0.11] via-purple-500/[0.07] to-transparent -translate-x-full group-hover:translate-x-0 transition-transform duration-500 ease-out pointer-events-none" />
-                    <span className="font-light text-sm sm:text-base text-white/70 group-hover:text-white pr-4 flex-1 transition-colors duration-300 relative z-10">{faq.question}</span>
-                    <ChevronDown className="h-4 w-4 text-white/30 group-hover:text-cyan-400 shrink-0 transition-all duration-300 relative z-10" />
-                  </AccordionTrigger>
-                  <AccordionContent className="px-5 sm:px-6 pb-4 sm:pb-5 text-white/55 text-sm leading-[1.75] font-light tracking-[0.01em]">
-                    {faq.answer}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
+            <FaqDisclosureList faqs={FAQ_RIGHT} variant="card" />
           </div>
         </div>
       </section>
