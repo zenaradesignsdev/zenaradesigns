@@ -2,7 +2,7 @@ import { BlogPost } from '@/types';
 import Link from 'next/link';
 import { ExternalLink } from '@/components/Blog/ExternalLink';
 import { LSO_RULES_URL } from '@/lib/constants';
-import { PRICES, formatCad, packagePriceWithRegular, proFromPrice } from '@/lib/pricing-data';
+import { PRICES, formatCad, packagePriceWithRegular } from '@/lib/pricing-data';
 
 const AODA_WEBSITES = 'https://www.ontario.ca/page/how-make-websites-accessible';
 
@@ -102,7 +102,7 @@ const LawFirmWebsiteCostContent = () => {
           contact.
         </li>
         <li>
-          <strong>Pro, from {proFromPrice()}:</strong> larger firms with more practice areas and lawyer profiles,
+          <strong>Pro, from {formatCad(PRICES.pro.from)}:</strong> larger firms with more practice areas and lawyer profiles,
           booking or intake integrations, or a second language.
         </li>
       </ul>

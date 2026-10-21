@@ -5,11 +5,11 @@
 // FAQPage + Breadcrumb JSON-LD). Schema builders live in service-content.ts and
 // are reused by the hub route files. See SEO-RANKING-PLAN.md §8.1.
 
-import { packagePriceWithRegular, proFromPrice } from './pricing-data';
+import { PRICES, formatCad, packagePriceWithRegular } from './pricing-data';
 
 // Prices come from PRICES so these answers (which are also FAQPage JSON-LD)
 // can never quote a different figure from /pricing.
-const PLAN_FIT = `our Small Business plan (${packagePriceWithRegular('smallBusiness')}, up to six pages) or our Pro plan (from ${proFromPrice()}).`;
+const PLAN_FIT = `our Small Business plan, ${packagePriceWithRegular('smallBusiness')} for up to six pages, or our Pro plan, from ${formatCad(PRICES.pro.from)}.`;
 
 export interface IndustryFaq {
   question: string;

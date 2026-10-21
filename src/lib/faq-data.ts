@@ -8,7 +8,7 @@
 // than maintaining independent copies — so pricing figures can never drift
 // between a service page and this hub the way they previously did.
 
-import { packagePriceWithRegular, proFromPrice } from './pricing-data';
+import { PRICES, formatCad, packagePriceWithRegular } from './pricing-data';
 import {
   ecommerceFaqs,
   brandingFaqs,
@@ -34,7 +34,7 @@ export interface FaqSection {
 const packagesOverviewFaq: FaqItem = {
   question: 'What are your web design packages and pricing?',
   answer:
-    `We offer three main packages with fixed, transparent pricing: Starter (${packagePriceWithRegular('starter')}) for individuals and freelancers with 1–3 pages and a 3–5 day turnaround, Small Business (${packagePriceWithRegular('smallBusiness')}) for growing businesses with up to 6 pages and a 1–2 week turnaround, and Pro (${proFromPrice()}) for advanced functionality with custom integrations and a 3–4 week turnaround. Every package includes mobile-responsive design, professional SEO setup, and SSL security — affordable pricing with no hidden fees.`,
+    `We offer three main packages with fixed, transparent pricing: Starter at ${packagePriceWithRegular('starter')}, for individuals and freelancers with 1–3 pages and a 3–5 day turnaround; Small Business at ${packagePriceWithRegular('smallBusiness')}, for growing businesses with up to 6 pages and a 1–2 week turnaround; and Pro from ${formatCad(PRICES.pro.from)}, for advanced functionality with custom integrations and a 3–4 week turnaround. Every package includes mobile-responsive design, professional SEO setup, and SSL security — affordable pricing with no hidden fees.`,
 };
 
 const launchPackageFaq: FaqItem = {

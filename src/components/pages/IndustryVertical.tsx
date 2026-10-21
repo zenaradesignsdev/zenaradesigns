@@ -44,7 +44,7 @@ const IndustryVerticalPage = ({ vertical }: IndustryVerticalProps) => {
           <div className="w-12 h-0.5 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 mb-6 mx-auto"></div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-white leading-[1.1] tracking-[-0.04em] mb-6">
             <span className="font-light opacity-90">{vertical.heroLead} </span>
-            <span className={`${GRADIENT_TEXT} font-normal`}>{vertical.heroAccent}</span>
+            <span className={`${GRADIENT_TEXT} font-normal`}>{vertical.heroAccent}</span>{' '}
             <span className="block font-light opacity-90 mt-2">{vertical.heroTail}</span>
           </h1>
           <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-3xl mx-auto leading-[1.7] font-light tracking-[0.01em] mb-8">

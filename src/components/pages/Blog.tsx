@@ -17,7 +17,7 @@ const Blog = () => {
             Web Design, SEO &amp; Growth
           </p>
           <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-white leading-[1.05] tracking-[-0.04em]">
-            <span className="block font-light opacity-90">Notes on Building</span>
+            <span className="block font-light opacity-90">Notes on Building</span>{' '}
             <span className="block mt-1 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">
               Websites That Work.
             </span>

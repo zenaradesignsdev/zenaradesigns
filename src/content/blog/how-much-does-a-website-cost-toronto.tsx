@@ -1,7 +1,7 @@
 import { BlogPost } from '@/types';
 import Link from 'next/link';
 import { ExternalLink } from '@/components/Blog/ExternalLink';
-import { PRICES, formatCad, packagePriceWithRegular, proFromPrice } from '@/lib/pricing-data';
+import { PRICES, formatCad, packagePriceWithRegular } from '@/lib/pricing-data';
 
 const AODA_WEBSITES = 'https://www.ontario.ca/page/how-make-websites-accessible';
 const WIX_PLANS = 'https://www.wix.com/plans';
@@ -204,7 +204,7 @@ const WebsiteCostTorontoContent = () => {
           revision rounds, and a 1–2 week turnaround once content is received.
         </li>
         <li>
-          <strong>Pro, from {proFromPrice()}:</strong> larger sites with a custom design system, integrations such as
+          <strong>Pro, from {formatCad(PRICES.pro.from)}:</strong> larger sites with a custom design system, integrations such as
           booking or payments, or an online store, typically 3–4 weeks.
         </li>
       </ul>

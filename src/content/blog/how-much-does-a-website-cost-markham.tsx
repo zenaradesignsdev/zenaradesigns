@@ -1,7 +1,7 @@
 import { BlogPost } from '@/types';
 import Link from 'next/link';
 import { ExternalLink } from '@/components/Blog/ExternalLink';
-import { PRICES, formatCad, packagePriceWithRegular, proFromPrice } from '@/lib/pricing-data';
+import { PRICES, formatCad, packagePriceWithRegular } from '@/lib/pricing-data';
 
 const AODA_WEBSITES = 'https://www.ontario.ca/page/how-make-websites-accessible';
 
@@ -150,7 +150,7 @@ const WebsiteCostMarkhamContent = () => {
           sections and forms, two rounds of revisions, live in 1–2 weeks.
         </li>
         <li>
-          <strong>Pro, from {proFromPrice()}:</strong> larger sites, integrations such as booking or payments,
+          <strong>Pro, from {formatCad(PRICES.pro.from)}:</strong> larger sites, integrations such as booking or payments,
           an online store, or a second language across the whole site.
         </li>
       </ul>

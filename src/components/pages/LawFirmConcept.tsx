@@ -96,7 +96,7 @@ const LawFirmConcept = () => (
           Concept project · not client work
         </span>
         <h1 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-white leading-[1.05] tracking-[-0.04em] mb-6 max-w-4xl">
-          <span className="block font-light opacity-90">A Law Firm Website,</span>
+          <span className="block font-light opacity-90">A Law Firm Website,</span>{' '}
           <span className="block mt-1 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">
             Built as a Concept
           </span>
