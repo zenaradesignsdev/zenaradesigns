@@ -27,7 +27,11 @@ export function generateMetadata({ params }: Props): Metadata {
     description: content.metaDescription,
     alternates: { canonical: url },
     openGraph: {
-      images: ['/opengraph-image'],
+      // A photo of the city where there is one: Google prefers a
+      // representative image over the generic site card for og:image.
+      images: content.ogImage
+        ? [{ url: content.ogImage.src, width: 1200, height: 630, alt: content.ogImage.alt }]
+        : ['/opengraph-image'],
       title: content.metaTitle,
       description: content.metaDescription,
       url,

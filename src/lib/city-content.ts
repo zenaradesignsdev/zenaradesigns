@@ -53,6 +53,9 @@ export interface CityContent {
   /** Optional — populated as each city page gets the full visual redesign. */
   heroImage?: string;
   heroImageAlt?: string;
+  /** 1200x630 share image (og:image) in /images/og/. Pages without one use the
+   *  site default card; a photo of the city beats a generic one. */
+  ogImage?: { src: string; alt: string };
   /** 2–3 sentences on why local SEO matters specifically in this city. */
   localSeoBody?: string;
   /** 1–2 sentences on local GEO / AI-search visibility for this city. */
@@ -245,6 +248,7 @@ export const cityContent: Record<string, CityContent> = {
       },
     ],
     heroImage: '/images/markham-business-district.jpg',
+    ogImage: { src: '/images/og/stiver-mill-unionville-markham-og.jpg', alt: 'The red Stiver Mill in Unionville, Markham' },
     heroImageAlt: 'Modern glass office building in a business district, representing Markham’s Highway 7 tech corridor',
     localSeoBody:
       'We set up and optimize your Google Business Profile and list you in the directories that matter locally — including the Markham Board of Trade’s member directory if you are a member — instead of running a generic national SEO checklist. Pages that name Unionville or the Highway 7 corridor specifically outrank ones that just say "serving the GTA."',
@@ -344,6 +348,7 @@ export const cityContent: Record<string, CityContent> = {
       },
     ],
     heroImage: '/images/stouffville-main-street.jpg',
+    ogImage: { src: '/images/og/stouffville-main-street-og.jpg', alt: 'Historic storefronts along Main Street Stouffville, Ontario' },
     heroImageAlt: 'Historic storefronts along Main Street Stouffville, Ontario',
     localSeoBody:
       'We optimize your Google Business Profile and build citations with real local organizations — the Whitchurch-Stouffville Chamber of Commerce among them — so your business shows up for Stouffville-specific searches, not just the broader York Region term everyone else is chasing.',
@@ -485,6 +490,7 @@ export const cityContent: Record<string, CityContent> = {
       },
     ],
     heroImage: '/images/toronto-gooderham-building.jpg',
+    ogImage: { src: '/images/og/toronto-gooderham-building-og.jpg', alt: 'The Gooderham (Flatiron) Building at Front and Wellington in downtown Toronto' },
     heroImageAlt: 'The historic Gooderham (Flatiron) Building at Front and Wellington in downtown Toronto',
     localSeoBody:
       'Toronto customers search by neighbourhood — "near Yorkville," "King West," "the Beaches" — so we structure your content and citations around the areas you actually serve, working with organizations like the Toronto Region Board of Trade, rather than competing only for the broad city-wide term everyone else is bidding on.',
