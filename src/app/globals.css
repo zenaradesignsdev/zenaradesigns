@@ -1735,3 +1735,49 @@
     animation: none;
   }
 }
+
+/* Printable resources. On a page that contains a .print-sheet (the Ontario law
+   firm checklist), printing hides everything outside it (navigation, footer,
+   chat launcher, backgrounds) and prints the sheet as black text on white, with
+   tick boxes in place of the list markers. Elements inside the sheet opt out
+   with Tailwind's print:hidden. */
+@media print {
+  body:has(.print-sheet) {
+    background: #fff !important;
+  }
+  body:has(.print-sheet) *:not(:has(.print-sheet)):not(.print-sheet):not(.print-sheet *) {
+    display: none !important;
+  }
+  body:has(.print-sheet) *:has(.print-sheet) {
+    padding-top: 0 !important;
+    margin-top: 0 !important;
+    min-height: 0 !important;
+    background: none !important;
+  }
+  .print-sheet,
+  .print-sheet * {
+    color: #000 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border-color: #999 !important;
+  }
+  .print-sheet a {
+    text-decoration: underline;
+  }
+  .print-sheet h2 {
+    margin-top: 1.5rem;
+    break-after: avoid;
+  }
+  .print-sheet li {
+    break-inside: avoid;
+  }
+  .print-sheet .checklist-items li::before {
+    content: '☐';
+    top: 0;
+    width: auto;
+    height: auto;
+    background: none !important;
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+}

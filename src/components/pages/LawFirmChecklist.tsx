@@ -4,13 +4,41 @@ import type { ReactNode } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { BlogHeroBackdrop } from '@/components/Blog/BlogHeroBackdrop';
 import { ExternalLink } from '@/components/Blog/ExternalLink';
-import { LSO_RULES_URL } from '@/lib/constants';
+import { PrintButton } from '@/components/resources/PrintButton';
+import { LSO_RULES_URL, SITE_URL } from '@/lib/constants';
+import { findTeamMember } from '@/lib/team';
 
 // Server Component. A standing resource rather than a dated blog post: the
 // sources it cites (Law Society rules, AODA, PIPEDA) were checked on the date
 // in CHECKLIST_REVIEWED, which is also the schema's dateModified. Re-check the
 // sources before bumping it.
 export const CHECKLIST_REVIEWED = '2026-10-20';
+
+// Named author, shown in the byline and citation and used as the Article
+// schema's author. Must be a member of `team` in src/lib/team.ts.
+export const CHECKLIST_AUTHOR = 'Pratik Mistry';
+const author = findTeamMember(CHECKLIST_AUTHOR);
+
+// Dated log shown on the page. Add an entry whenever a checklist item or a
+// cited source changes; bump CHECKLIST_REVIEWED only when the sources were
+// actually re-checked.
+const CHANGELOG: { date: string; label: string; change: string }[] = [
+  {
+    date: '2026-10-25',
+    label: 'October 25, 2026',
+    change: 'Added an author byline, a printable version, a citation box and this change log. No checklist items changed.',
+  },
+  {
+    date: '2026-10-20',
+    label: 'October 20, 2026',
+    change:
+      'Published. Sources checked: the Law Society’s Rules of Professional Conduct (chapter 4 and rule 3.3-1), the Government of Ontario’s AODA website guidance, and the Privacy Commissioner’s PIPEDA summary.',
+  },
+];
+
+const CHECKLIST_PATH = '/resources/ontario-law-firm-website-checklist';
+const CITATION = `${CHECKLIST_AUTHOR}, Zenara Designs. “Ontario Law Firm Website Checklist.” Sources last checked October 20, 2026. ${SITE_URL}${CHECKLIST_PATH}`;
+const LINK_SNIPPET = `<a href="${SITE_URL}${CHECKLIST_PATH}">Ontario Law Firm Website Checklist</a> (Zenara Designs)`;
 
 // Pete Nuij, unsplash.com/photos/MNIaox8_zmI (Unsplash License).
 export const CHECKLIST_IMAGE = '/images/osgoode-hall-law-society-of-ontario.jpg';
@@ -133,9 +161,9 @@ const LawFirmChecklist = () => (
     <section className="relative overflow-clip pt-28 sm:pt-32 md:pt-36 pb-16 sm:pb-20">
       <BlogHeroBackdrop />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
-        <article>
+        <article className="print-sheet">
           <header className="max-w-4xl">
-            <nav aria-label="Breadcrumb" className="mb-6 sm:mb-8">
+            <nav aria-label="Breadcrumb" className="mb-6 sm:mb-8 print:hidden">
               <ol className="flex flex-wrap items-center gap-2 text-xs uppercase tracking-[0.2em] font-medium">
                 <li>
                   <Link href="/" className="text-white/40 hover:text-white transition-colors">Home</Link>
@@ -155,12 +183,23 @@ const LawFirmChecklist = () => (
               What to check before an Ontario law firm website goes live: the Law Society’s marketing rules,
               confidentiality, privacy, accessibility, and the content and search basics clients and Google look for.
             </p>
-            <p className="mt-4 text-xs uppercase tracking-[0.15em] text-white/40">
-              Sources last checked <time dateTime={CHECKLIST_REVIEWED}>October 20, 2026</time>
+            <p className="mt-6 text-sm text-white/60">
+              By{' '}
+              <Link href="/about" className="text-white/85 hover:text-cyan-300 transition-colors">
+                {CHECKLIST_AUTHOR}
+              </Link>
+              {author && <span className="text-white/40">, {author.role}</span>}
             </p>
+            <div className="mt-4 flex flex-wrap items-center gap-x-6 gap-y-3">
+              <p className="text-xs uppercase tracking-[0.15em] text-white/40">
+                Sources last checked <time dateTime={CHECKLIST_REVIEWED}>October 20, 2026</time>
+              </p>
+              <PrintButton label="Print or save as PDF" />
+            </div>
+            <p className="hidden print:block mt-2 text-sm">{`${SITE_URL}${CHECKLIST_PATH}`}</p>
           </header>
 
-          <div className="relative mt-10 sm:mt-14 aspect-[16/9] sm:aspect-[21/8] rounded-2xl overflow-hidden border border-white/10 bg-white/5">
+          <div className="print:hidden relative mt-10 sm:mt-14 aspect-[16/9] sm:aspect-[21/8] rounded-2xl overflow-hidden border border-white/10 bg-white/5">
             <Image
               src={CHECKLIST_IMAGE}
               alt={CHECKLIST_IMAGE_ALT}
@@ -185,14 +224,38 @@ const LawFirmChecklist = () => (
                   <section key={section.id} aria-labelledby={section.id}>
                     <h2 id={section.id}>{section.title}</h2>
                     <p>{section.intro}</p>
-                    <ul>
+                    <ul className="checklist-items">
                       {section.items.map((item, index) => (
                         <li key={index}>{item}</li>
                       ))}
                     </ul>
                   </section>
                 ))}
-                <div className="blog-callout">
+                <section aria-labelledby="what-changed">
+                  <h2 id="what-changed">What changed</h2>
+                  <ul>
+                    {CHANGELOG.map((entry) => (
+                      <li key={entry.date}>
+                        <time dateTime={entry.date} className="font-medium text-white/90">{entry.label}</time>: {entry.change}
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+                <section aria-labelledby="cite-this-checklist" className="print:hidden">
+                  <h2 id="cite-this-checklist">Cite this checklist</h2>
+                  <p>
+                    You are welcome to share or link to this checklist. If you reference it in an article, newsletter or
+                    course material, please cite it as:
+                  </p>
+                  <blockquote>
+                    <p>{CITATION}</p>
+                  </blockquote>
+                  <p>Or link to it with:</p>
+                  <pre className="overflow-x-auto whitespace-pre-wrap break-all rounded-xl border border-white/10 bg-white/[0.03] p-4 text-sm font-mono text-white/70">
+                    <code>{LINK_SNIPPET}</code>
+                  </pre>
+                </section>
+                <div className="blog-callout print:hidden">
                   <h3>Want a Second Pair of Eyes?</h3>
                   <p>
                     We build law firm websites with this checklist in from the first draft, at fixed, published prices.
@@ -206,7 +269,7 @@ const LawFirmChecklist = () => (
               </div>
             </div>
 
-            <aside className="hidden lg:block">
+            <aside className="hidden lg:block print:hidden">
               <nav aria-label="On this page" className="sticky top-28">
                 <p className="text-xs font-mono uppercase tracking-[0.2em] text-white/40 mb-4">On this page</p>
                 <ol className="space-y-2.5 text-sm">
@@ -217,6 +280,11 @@ const LawFirmChecklist = () => (
                       </a>
                     </li>
                   ))}
+                  <li>
+                    <a href="#what-changed" className="text-white/55 hover:text-cyan-300 transition-colors">
+                      What changed
+                    </a>
+                  </li>
                 </ol>
                 <Link
                   href="/blog/law-firm-seo-toronto"

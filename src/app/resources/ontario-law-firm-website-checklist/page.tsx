@@ -1,15 +1,20 @@
 import type { Metadata } from 'next';
 import { JsonLd } from '@/components/JsonLd';
-import LawFirmChecklist, { CHECKLIST_IMAGE, CHECKLIST_IMAGE_ALT, CHECKLIST_REVIEWED } from '@/components/pages/LawFirmChecklist';
+import LawFirmChecklist, {
+  CHECKLIST_AUTHOR,
+  CHECKLIST_IMAGE,
+  CHECKLIST_IMAGE_ALT,
+  CHECKLIST_REVIEWED,
+} from '@/components/pages/LawFirmChecklist';
 import { ORGANIZATION_ID, SITE_URL } from '@/lib/constants';
 import { generateBreadcrumbSchema } from '@/lib/structured-data';
 import { ABOUT_URL, findTeamMember, teamPersonId } from '@/lib/team';
 
 const PATH = '/resources/ontario-law-firm-website-checklist';
 const URL = `${SITE_URL}${PATH}`;
-const TITLE = 'Ontario Law Firm Website Checklist: LSO, AODA, PIPEDA | Zenara';
+const TITLE = 'Ontario Law Firm Website Checklist (LSO, AODA) | Zenara Designs';
 const DESCRIPTION =
-  'A pre-launch checklist for Ontario law firm websites: Law Society marketing rules, confidentiality, PIPEDA privacy, AODA accessibility, content and local search.';
+  'A pre-launch checklist for Ontario law firm websites: Law Society marketing rules, confidentiality, PIPEDA privacy, AODA accessibility, content and search.';
 
 export const metadata: Metadata = {
   title: TITLE,
@@ -25,7 +30,7 @@ export const metadata: Metadata = {
   twitter: { card: 'summary_large_image', title: TITLE, description: DESCRIPTION, images: [CHECKLIST_IMAGE] },
 };
 
-const author = findTeamMember('Kavin Mural');
+const author = findTeamMember(CHECKLIST_AUTHOR);
 
 export default function OntarioLawFirmChecklistPage() {
   return (
