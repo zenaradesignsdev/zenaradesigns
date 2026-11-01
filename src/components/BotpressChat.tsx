@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Script from 'next/script';
 import { Loader2, MessageCircle, X } from 'lucide-react';
-import { useFirstInteraction } from '@/hooks';
 
 type Botpress = {
   on: (event: string, handler: () => void) => void;
@@ -68,16 +67,19 @@ function styleWebchat() {
 // renders straight away and doesn't depend on Botpress having loaded.
 export default function BotpressChat() {
   const [mounted, setMounted] = useState(false);
-  // inject.js is ~520 KB gzipped, so it is only fetched once the visitor
-  // interacts with the page (or taps the launcher).
-  const hasInteracted = useFirstInteraction();
-  const [launcherTapped, setLauncherTapped] = useState(false);
-  const shouldLoad = hasInteracted || launcherTapped;
+  // Botpress is ~1.9 MB uncompressed and costs ~250 ms of main-thread work on a
+  // throttled phone (measured 2026-10-25). Loading it on the visitor's first
+  // scroll put a ~200 ms long task right where they start interacting, so it
+  // now loads only when they reach for the chat: hover, focus or tap on the
+  // launcher. The launcher shows a spinner until it's ready.
+  const [loadRequested, setLoadRequested] = useState(false);
+  const requestLoad = () => setLoadRequested(true);
   const [injected, setInjected] = useState(false);
   const [ready, setReady] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [pendingOpen, setPendingOpen] = useState(false);
   const [showGreeting, setShowGreeting] = useState(false);
+  const [formInView, setFormInView] = useState(false);
 
   const handleInjected = () => {
     window.botpress?.on('webchat:initialized', () => setReady(true));
@@ -118,6 +120,43 @@ export default function BotpressChat() {
     return () => clearTimeout(timer);
   }, [mounted]);
 
+  // On phones the launcher sits over the right edge of full-width form fields
+  // and submit buttons, so it steps aside while a form passes through the
+  // bottom strip of the screen where the launcher lives (the root margin trims
+  // the observed area to the bottom 15%). Forms can mount late (lazy-loaded
+  // quote forms), hence the MutationObserver.
+  useEffect(() => {
+    if (!mounted) return;
+    const visible = new Set<Element>();
+    const observed = new WeakSet<Element>();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => (entry.isIntersecting ? visible.add(entry.target) : visible.delete(entry.target)));
+      setFormInView(visible.size > 0);
+    }, { rootMargin: '-85% 0px 0px 0px' });
+    const observeForms = () => {
+      document.querySelectorAll('form').forEach((form) => {
+        if (observed.has(form)) return;
+        observed.add(form);
+        io.observe(form);
+      });
+      // A form removed by client-side navigation never reports leaving the
+      // viewport, so drop it here or the launcher would stay hidden.
+      visible.forEach((form) => {
+        if (form.isConnected) return;
+        visible.delete(form);
+        io.unobserve(form);
+      });
+      setFormInView(visible.size > 0);
+    };
+    observeForms();
+    const mo = new MutationObserver(observeForms);
+    mo.observe(document.body, { childList: true, subtree: true });
+    return () => {
+      io.disconnect();
+      mo.disconnect();
+    };
+  }, [mounted]);
+
   const dismissGreeting = () => {
     setShowGreeting(false);
     try {
@@ -130,7 +169,7 @@ export default function BotpressChat() {
   const openChat = () => {
     dismissGreeting();
     if (!ready) {
-      setLauncherTapped(true);
+      requestLoad();
       setPendingOpen(true);
       return;
     }
@@ -140,7 +179,7 @@ export default function BotpressChat() {
 
   return (
     <>
-      {shouldLoad && (
+      {loadRequested && (
         <Script
           src="https://cdn.botpress.cloud/webchat/v5.0/inject.js"
           strategy="afterInteractive"
@@ -156,7 +195,7 @@ export default function BotpressChat() {
 
       {mounted && !isOpen && (
         // Delayed so the launcher rises in as the chat window finishes fading out.
-        <div className="fixed bottom-4 right-4 z-40 flex flex-col items-end gap-3 animate-in fade-in zoom-in-95 slide-in-from-bottom-3 duration-300 delay-150 fill-mode-backwards motion-reduce:animate-none sm:bottom-6 sm:right-6">
+        <div className={`${formInView ? 'max-sm:hidden ' : ''}fixed bottom-4 right-4 z-40 flex flex-col items-end gap-3 animate-in fade-in zoom-in-95 slide-in-from-bottom-3 duration-300 delay-150 fill-mode-backwards motion-reduce:animate-none sm:bottom-6 sm:right-6`}>
           {/* Not on phones: there it would cover the hero CTAs. */}
           {showGreeting && (
             <div className="relative hidden max-w-[240px] sm:block rounded-2xl rounded-br-sm border border-white/10 bg-slate-900/95 px-4 py-3 text-sm text-slate-100 shadow-xl backdrop-blur animate-in fade-in slide-in-from-bottom-2 duration-300 motion-reduce:animate-none">
@@ -168,7 +207,7 @@ export default function BotpressChat() {
               >
                 <X className="h-3.5 w-3.5" aria-hidden="true" />
               </button>
-              <button type="button" onClick={openChat} className="text-left">
+              <button type="button" onClick={openChat} onPointerEnter={requestLoad} onFocus={requestLoad} className="text-left">
                 <span className="font-semibold">Hi, I&apos;m Zenari! 👋</span>
                 <br />
                 Questions about pricing or getting a website? Ask me.
@@ -179,6 +218,9 @@ export default function BotpressChat() {
           <button
             type="button"
             onClick={openChat}
+            onPointerEnter={requestLoad}
+            onFocus={requestLoad}
+            onTouchStart={requestLoad}
             aria-label="Chat with Zenari, our AI assistant"
             aria-busy={pendingOpen}
             className="group rounded-full bg-gradient-primary p-[2px] shadow-lg shadow-violet-500/30 transition-transform hover:scale-105 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-900"
