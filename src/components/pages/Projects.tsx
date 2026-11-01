@@ -41,7 +41,7 @@ const featured: FeaturedProject[] = [
     description:
       'Website for FunGen Events, built to showcase their event planning services and offerings with a polished, professional online presence.',
     url: 'https://fungenevents.ca/',
-    image: '/images/fungen-events.png',
+    image: '/images/fungen-events.jpg',
     imageAlt: 'FunGen Events Website — event planning business website design',
     flip: false,
     caseStudy: '/projects/fungen-events',
@@ -65,7 +65,7 @@ const featured: FeaturedProject[] = [
     description:
       'Construction company specializing in cutting blades and equipment. Modern e-commerce platform designed for industrial customers.',
     url: 'https://ashcamcuttingsolution.ca/',
-    image: '/images/ashcam-site.png',
+    image: '/images/ashcam-site.jpg',
     imageAlt: 'AshCam Cutting Solutions Website — construction blades and equipment platform',
     flip: false,
     caseStudy: '/projects/ashcam-cutting-solutions',
@@ -77,7 +77,7 @@ const featured: FeaturedProject[] = [
     description:
       'Website for a Toronto security systems integrator specializing in custom surveillance, access control, and smart home installations for residential and commercial properties.',
     url: 'https://www.iksmartsolution.ca/',
-    image: '/images/iksmartsolutions.png',
+    image: '/images/iksmartsolutions.jpg',
     imageAlt: 'IK Smart Solution Website — custom security and smart home systems integrator',
     flip: true,
     caseStudy: '/projects/ik-smart-solution',
@@ -85,24 +85,26 @@ const featured: FeaturedProject[] = [
   {
     number: '05',
     name: 'JB Loans',
-    tags: ['Web Design', 'Mortgage Broker'],
+    tags: ['Web Design', 'Mortgage Agent'],
     description:
-      'Professional mortgage broker website helping clients find the best loan solutions with a seamless application process.',
+      'Website for a licensed mortgage agent serving Scarborough, Markham and the GTA, with a mortgage calculator and free-call booking. Built in five days.',
     url: 'https://jbloans.ca/',
-    image: '/images/jbloans.png',
-    imageAlt: 'JB Loans Mortgage Broker Website — professional mortgage services platform',
+    image: '/images/jbloans.jpg',
+    imageAlt: 'JB Loans website for a licensed mortgage agent, with a mortgage calculator and free-call booking',
     flip: false,
+    caseStudy: '/projects/jb-loans',
   },
   {
     number: '06',
     name: 'Heroes Catering',
     tags: ['Web Design', 'Food & Beverage'],
     description:
-      'Website for Heroes Catering, built to showcase their catering services and menu offerings with a clean, appetizing online presence.',
+      'Website and Google Business Profile setup for a Tamil and South Asian food counter and caterer in Scarborough’s GTA Mall.',
     url: 'https://heroes-catering.com/',
     image: '/images/heroes-catering.jpg',
-    imageAlt: 'Heroes Catering Website — catering business website design',
+    imageAlt: 'Heroes Catering website — Tamil and South Asian food and catering in Scarborough',
     flip: true,
+    caseStudy: '/projects/heroes-catering',
   },
 ];
 
@@ -113,7 +115,7 @@ const more: TileProject[] = [
     description:
       'Luxury renovation and construction services website designed for Toronto businesses. Modern, responsive design with seamless user experience. Showcasing premium craftsmanship and attention to detail.',
     url: 'https://projectone.zenaradesigns.com',
-    image: '/images/reno-project.png',
+    image: '/images/reno-project.jpg',
     imageAlt: 'Luxury Renovation Website — professional renovation and construction services',
     whyText: 'Renovation clients scroll through project photos before they ever call. A polished portfolio site showcases finished work and captures leads before your competitors do.',
     industryLabel: 'Renovation Companies',
@@ -126,7 +128,7 @@ const more: TileProject[] = [
     description:
       'Professional physiotherapy and wellness clinic website designed to showcase services and enable online appointment booking. Modern, clean design that builds trust and converts visitors into clients.',
     url: 'https://projectthree.zenaradesigns.com',
-    image: '/images/nova-motion-physio.png',
+    image: '/images/nova-motion-physio.jpg',
     imageAlt: 'Nova Motion Physio Website — physiotherapy and wellness clinic platform',
     whyText: 'A modern, booking-ready site builds a patient’s trust before they ever walk through your door.',
     industryLabel: 'Wellness Clinics',
@@ -139,7 +141,7 @@ const more: TileProject[] = [
     description:
       'Professional accounting firm website designed to showcase tax preparation, bookkeeping, and advisory services. Secure platform with client portal integration and modern design that builds credibility.',
     url: 'https://projectfour.zenaradesigns.com',
-    image: '/images/accounting-firm-project.png',
+    image: '/images/accounting-firm-project.jpg',
     imageAlt: 'Accounting Firm Website — professional accounting and tax services platform',
     whyText: 'A secure, compliant platform with client portals reads as professional from the very first click.',
     industryLabel: 'Accounting Agencies',
@@ -152,7 +154,7 @@ const more: TileProject[] = [
     description:
       'Professional law firm website designed to showcase legal expertise and build client trust. Modern, authoritative design with clear navigation and comprehensive service information.',
     url: 'https://projecttwo.zenaradesigns.com/',
-    image: '/images/project2.png',
+    image: '/images/project2.jpg',
     imageAlt: 'Pickering Law Firm Website — professional legal services website design',
     whyText: "Most clients check a law firm's website before they call, so that first impression has to count.",
     industryLabel: 'Law Firms',

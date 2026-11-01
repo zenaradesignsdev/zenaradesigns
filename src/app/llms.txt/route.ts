@@ -43,7 +43,7 @@ const body = () => `# Zenara Designs
 - E-commerce websites: ${url('/services/ecommerce')}
 - Logo design, brand identity and business cards: ${url('/services/branding')}
 - Local SEO: ${url('/services/seo')}
-- GEO / AI search visibility (ChatGPT, Perplexity, Gemini, AI Overviews): ${url('/services/geo')}
+- GEO / AI search visibility (ChatGPT, Perplexity, Gemini, AI Overviews), from ${formatCad(PRICES.geo.from)}/month: ${url('/services/geo')}
 - Website maintenance, hosting and analytics: ${url('/services/website-maintenance')}
 - Website redesign and migration: ${url('/services/website-redesign')}
 
@@ -71,10 +71,10 @@ Portfolio: ${url('/projects')}
 
 - AshCam Cutting Solutions (industrial e-commerce): https://ashcamcuttingsolution.ca/
 - FunGen Events (event planning): https://fungenevents.ca/
-- JB Loans (mortgage brokerage): https://jbloans.ca/
+- JB Loans (licensed mortgage agent; built in five days): ${url('/projects/jb-loans')}
 - IK Smart Solution (security and smart home): https://www.iksmartsolution.ca/
 - Patty's Delights (food and beverage): https://pattysdelights.com/
-- Heroes Catering (catering): https://heroes-catering.com/
+- Heroes Catering (Scarborough restaurant and caterer; website and Google Business Profile): ${url('/projects/heroes-catering')}
 - Law firm concept (a fictional firm, not client work): ${url('/projects/law-firm-concept')}
 
 ## Guides
@@ -85,6 +85,7 @@ Portfolio: ${url('/projects')}
 - Ontario law firm website checklist: ${url('/resources/ontario-law-firm-website-checklist')}
 - Law firm website cost in Ontario: ${url('/blog/law-firm-website-cost-ontario')}
 - Law firm SEO in Toronto: ${url('/blog/law-firm-seo-toronto')}
+- Does the AODA apply to a small business website: ${url('/blog/aoda-small-business-website')}
 - All articles: ${url('/blog')}
 
 ## Key pages

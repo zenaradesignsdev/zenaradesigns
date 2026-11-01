@@ -1,10 +1,15 @@
 import {
+  Calculator,
   CalendarCheck,
   LayoutGrid,
   MapPin,
   MessageSquareQuote,
+  Phone,
+  ShieldCheck,
   Smartphone,
   Star,
+  Users,
+  UtensilsCrossed,
   type LucideIcon,
 } from 'lucide-react';
 import type { CaseStudyFont } from '@/lib/case-study-fonts';
@@ -52,7 +57,8 @@ export interface CaseStudy {
     heading: [string, string];
     highlights: { icon: LucideIcon; title: string; body: string }[];
   };
-  branding: {
+  /** Website-only projects have no branding or card sections. */
+  branding?: {
     heading: [string, string];
     body: string;
     logo: Img & { maxWidth: number };
@@ -69,7 +75,7 @@ export interface CaseStudy {
     typography?: { role: string; family: string; font: CaseStudyFont; weight?: number }[];
     palette: Swatch[];
   };
-  card: {
+  card?: {
     heading: [string, string];
     body: string;
     bullets: string[];
@@ -79,6 +85,21 @@ export interface CaseStudy {
     back: Img;
     /** Bullet dot colour */
     accent: string;
+  };
+  /**
+   * A text section for work that isn't branding: a fast turnaround, a tool we
+   * built, or a Google Business Profile we set up alongside the site.
+   */
+  highlight?: {
+    eyebrow: string;
+    heading: [string, string];
+    body: string;
+    bullets: string[];
+  };
+  /** Closing call to action. Defaults to the brand-and-site pitch. */
+  cta?: {
+    lines: [string, string];
+    body: string;
   };
   flyer?: {
     heading: [string, string];
@@ -99,7 +120,7 @@ export const caseStudies: CaseStudy[] = [
       'A new website, logo and business cards for a Scarborough event planning studio. One identity, from the card handed over at a venue walkthrough to the page where the booking happens.',
     liveUrl: 'https://fungenevents.ca/',
     liveLabel: 'fungenevents.ca',
-    metaTitle: 'FunGen Events Case Study: Website & Branding | Zenara',
+    metaTitle: 'FunGen Events Case Study: Website & Branding | Zenara Designs',
     metaDescription:
       'How we built a new website, logo and business cards for FunGen Events, a Scarborough event planning studio serving the GTA.',
     deliverables: ['Custom website', 'Logo & brand identity', 'Business card design'],
@@ -207,7 +228,7 @@ export const caseStudies: CaseStudy[] = [
       'A new website, logo and business cards for a home-grown party food business. Fruit art, dessert tables and beverage stations, presented as warmly as they are served.',
     liveUrl: 'https://pattysdelights.com/',
     liveLabel: 'pattysdelights.com',
-    metaTitle: "Patty's Delights Case Study: Website & Branding | Zenara",
+    metaTitle: "Patty's Delights Case Study: Website & Brand | Zenara Designs",
     metaDescription:
       "How we built a new website, logo and business cards for Patty's Delights, a GTA party food business known for fruit carving and dessert tables.",
     deliverables: ['Custom website', 'Logo design', 'Business card design', 'Brand palette'],
@@ -311,7 +332,7 @@ export const caseStudies: CaseStudy[] = [
       'A new website, logo and business cards for a Toronto supplier of Japanese-made T.C.T cutting blades. Six decades of trade know-how, with a brand as sharp as the blades.',
     liveUrl: 'https://ashcamcuttingsolution.ca/',
     liveLabel: 'ashcamcuttingsolution.ca',
-    metaTitle: 'AshCam Case Study: Website, Logo & Business Cards | Zenara',
+    metaTitle: 'AshCam Case Study: Website, Logo & Cards | Zenara Designs',
     metaDescription:
       'How we built a new website, logo and business cards for AshCam Cutting Solutions, a Toronto supplier of T.C.T cutting blades and industrial tools.',
     deliverables: ['Custom website', 'Logo design', 'Business card design', 'Brand palette'],
@@ -414,7 +435,7 @@ export const caseStudies: CaseStudy[] = [
       'A new website, logo, business cards and a print flyer for a Toronto security systems integrator. Cameras, access control and smart home installs, sold on trust rather than brand names.',
     liveUrl: 'https://www.iksmartsolution.ca/',
     liveLabel: 'iksmartsolution.ca',
-    metaTitle: 'IK Smart Solution Case Study: Website & Branding | Zenara',
+    metaTitle: 'IK Smart Solution Case Study: Website & Brand | Zenara Designs',
     metaDescription:
       'How we built a new website, logo, business cards and print flyer for IK Smart Solution, a Toronto security and smart home systems integrator.',
     deliverables: ['Custom website', 'Logo design', 'Business card design', 'Print flyer', 'Brand palette'],
@@ -527,6 +548,150 @@ export const caseStudies: CaseStudy[] = [
           alt: 'IK Smart Solution flyer, dark version: the same layout in white and yellow on black',
         },
       ],
+    },
+  },
+  {
+    slug: 'jb-loans',
+    name: 'JB Loans',
+    titleLines: ['JB', 'Loans'],
+    eyebrow: 'Case Study · Mortgage Agent',
+    intro:
+      'A website for Jirosh Balaganesan, a licensed mortgage agent with Caliber Mortgage serving Scarborough, Markham and the GTA. Built and launched in five days, with a mortgage calculator and a free-call booking path on every screen.',
+    liveUrl: 'https://jbloans.ca/',
+    liveLabel: 'jbloans.ca',
+    metaTitle: 'JB Loans Case Study: Mortgage Agent Website | Zenara Designs',
+    metaDescription:
+      'How we built a website for a licensed Ontario mortgage agent in five days, with a mortgage calculator, free-call booking and licence details up front.',
+    deliverables: ['Custom website', 'Mortgage calculator', 'Contact & booking form', 'Five-day turnaround'],
+    facts: [
+      { label: 'Client', value: 'Jirosh Balaganesan, Caliber Mortgage Inc.' },
+      { label: 'Industry', value: 'Mortgage agent' },
+      { label: 'Location', value: 'Richmond Hill office, serving the GTA' },
+      { label: 'Turnaround', value: 'Five days' },
+    ],
+    accent: 'rgba(37,99,235,0.18)',
+    screens: {
+      desktop: {
+        src: '/images/case-studies/jb-loans/site-desktop-full.jpg',
+        width: 1440,
+        height: 5278,
+        alt: 'The JB Loans homepage on a laptop, from the hero down to the footer',
+      },
+      mobile: {
+        src: '/images/case-studies/jb-loans/site-mobile-full.jpg',
+        width: 780,
+        height: 14130,
+        alt: 'The JB Loans homepage on a phone',
+      },
+      hero: {
+        src: '/images/case-studies/jb-loans/site-desktop-hero.jpg',
+        width: 1600,
+        height: 1000,
+        alt: 'JB Loans homepage hero: “Mortgage Help for Ontario Buyers” beside a portrait of Jirosh Balaganesan',
+      },
+    },
+    brief: {
+      heading: ['A licensed agent,', 'ready to be booked.'],
+      paragraphs: [
+        'Jirosh Balaganesan is a Level 1 mortgage agent with Caliber Mortgage Inc., helping first-time buyers and homeowners across Scarborough, Markham and the rest of the GTA. He works evenings and weekends, when most of his clients are free, and needed a site that let them start the conversation then too.',
+        'We built it in five days: a clear introduction, what clients can expect at each step, a mortgage calculator for a quick monthly estimate, and a short form that sends residential, commercial and general questions straight to him.',
+      ],
+    },
+    website: {
+      heading: ['Clear numbers,', 'clear next steps.'],
+      highlights: [
+        { icon: Calculator, title: 'Mortgage calculator', body: 'A monthly estimate in seconds.' },
+        { icon: CalendarCheck, title: 'Book a free call', body: 'On every screen, top to bottom.' },
+        { icon: ShieldCheck, title: 'Licence up front', body: 'Licence and brokerage on every page.' },
+        { icon: Smartphone, title: 'Phone first', body: 'Tuned for thumbs, then desktop.' },
+      ],
+    },
+    highlight: {
+      eyebrow: 'Five-Day Build',
+      heading: ['Kickoff to launch', 'in five days.'],
+      body: 'A mortgage agent’s enquiries don’t wait, so we kept the scope tight: one page that answers who he is, how the process works and roughly what a mortgage would cost, with every call to action pointing to a free call. It went from kickoff to live in five days.',
+      bullets: [
+        'A calculator for home price, down payment, interest rate and amortization',
+        'Licence number and brokerage details on every page',
+        'Reviews from his clients, with the city each one lives in',
+        'A service-area list covering ten GTA cities',
+      ],
+    },
+    cta: {
+      lines: ['Need a site in', 'days, not months?'],
+      body: 'A fixed price and a written quote before any work starts.',
+    },
+  },
+  {
+    slug: 'heroes-catering',
+    name: 'Heroes Catering',
+    titleLines: ['Heroes', 'Catering'],
+    eyebrow: 'Case Study · Restaurant & Catering',
+    intro:
+      'A website and Google Business Profile setup for a Tamil and South Asian food counter in Scarborough’s GTA Mall. Menu favourites, catering for events, and a one-tap call on every screen.',
+    liveUrl: 'https://heroes-catering.com/',
+    liveLabel: 'heroes-catering.com',
+    metaTitle: 'Heroes Catering Case Study | Scarborough | Zenara Designs',
+    metaDescription:
+      'How we built a website and set up the Google Business Profile for Heroes Catering, a Tamil and South Asian food counter and caterer in Scarborough.',
+    deliverables: ['Custom website', 'Google Business Profile setup', 'Menu highlights', 'Catering section'],
+    facts: [
+      { label: 'Client', value: 'Heroes Catering' },
+      { label: 'Industry', value: 'Restaurant & catering' },
+      { label: 'Location', value: 'Scarborough (GTA Mall)' },
+      { label: 'Year', value: '2026' },
+    ],
+    accent: 'rgba(38,103,69,0.22)',
+    screens: {
+      desktop: {
+        src: '/images/case-studies/heroes/site-desktop-full.jpg',
+        width: 1440,
+        height: 7669,
+        alt: 'The Heroes Catering homepage on a laptop, from the hero down to the footer',
+      },
+      mobile: {
+        src: '/images/case-studies/heroes/site-mobile-full.jpg',
+        width: 780,
+        height: 25762,
+        alt: 'The Heroes Catering homepage on a phone',
+      },
+      hero: {
+        src: '/images/case-studies/heroes/site-desktop-hero.jpg',
+        width: 1600,
+        height: 1000,
+        alt: 'Heroes Catering homepage hero: “Authentic Tamil & South Asian cooking” beside a spread of curries, samosas and dosa',
+      },
+    },
+    brief: {
+      heading: ['Home cooking,', 'easy to find.'],
+      paragraphs: [
+        'Heroes Catering cooks traditional Tamil and South Asian food from scratch every morning at its counter on the second floor of GTA Mall in Scarborough: kothu roti, biryani, short eats, falooda and Bru coffee. It also caters family gatherings, office lunches and parties in custom quantities.',
+        'Customers needed two things: to find the counter, and to know they could order for a crowd. We built a site that puts the menu favourites, hours and directions up front and gives catering its own section with a call button, and we set up the Google Business Profile alongside it.',
+      ],
+    },
+    website: {
+      heading: ['Warm, local,', 'one tap to call.'],
+      highlights: [
+        { icon: UtensilsCrossed, title: 'Menu up front', body: 'Favourites, short eats and drinks.' },
+        { icon: Users, title: 'Catering', body: 'Gatherings, offices and parties.' },
+        { icon: MapPin, title: 'Easy to find', body: 'Mall, floor, hours and directions.' },
+        { icon: Phone, title: 'Call first', body: 'One-tap call on every screen.' },
+      ],
+    },
+    highlight: {
+      eyebrow: 'Google Business Profile',
+      heading: ['Found on the', 'map as well.'],
+      body: 'Plenty of people choose where to eat from Google Maps without ever opening a website. So we set up Heroes Catering’s Google Business Profile alongside the site, and gave the site the details a hungry customer looks for first.',
+      bullets: [
+        'Opening hours with a live “Open now” status',
+        'The mall, floor and street address, with one-tap directions',
+        'Customer reviews quoted on the page',
+        'Catering occasions and minimum quantities spelled out',
+      ],
+    },
+    cta: {
+      lines: ['Want to be easy', 'to find nearby?'],
+      body: 'A website and a Google Business Profile, set up together.',
     },
   },
 ];

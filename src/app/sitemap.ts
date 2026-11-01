@@ -32,7 +32,28 @@ const UPDATED_PATHS = new Set([
   '/industries/family-law',
   '/industries/real-estate-law',
 ]);
-const modifiedFor = (path: string) => (UPDATED_PATHS.has(path) ? contentUpdated : lastModified);
+// Substantive edits on 2026-10-25: unverifiable claims removed, real reviews
+// and case studies routed in, the SEO service page rewritten, and five city
+// pages expanded. Pages that only had a title or H1 reworded keep their date.
+const claimsAndProofUpdated = new Date('2026-10-25T00:00:00Z');
+const REFRESHED_PATHS = new Set([
+  '/',
+  '/services',
+  '/services/seo',
+  '/services/website-maintenance',
+  '/about',
+  '/faq',
+  '/locations',
+  '/lawyers',
+  '/web-design/scarborough',
+  '/web-design/stouffville',
+  '/web-design/richmond-hill',
+  '/web-design/vaughan',
+  '/web-design/mississauga',
+  '/projects',
+]);
+const modifiedFor = (path: string) =>
+  REFRESHED_PATHS.has(path) ? claimsAndProofUpdated : UPDATED_PATHS.has(path) ? contentUpdated : lastModified;
 
 // Markham (home base), Stouffville and Scarborough lead the campaign, so they
 // outrank the other city pages in priority. The full set of city slugs comes
@@ -86,9 +107,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }));
 
+  // The first four case studies went live 2026-09-30; later ones carry their own date.
+  const caseStudyPublished: Record<string, Date> = {
+    'jb-loans': new Date('2026-10-25T00:00:00Z'),
+    'heroes-catering': new Date('2026-10-25T00:00:00Z'),
+  };
   const caseStudyRoutes: MetadataRoute.Sitemap = caseStudySlugs.map((slug) => ({
     url: `${baseUrl}/projects/${slug}`,
-    lastModified: new Date('2026-09-30T00:00:00Z'),
+    lastModified: caseStudyPublished[slug] ?? new Date('2026-09-30T00:00:00Z'),
     changeFrequency: 'yearly' as const,
     priority: 0.6,
   }));
