@@ -2,36 +2,65 @@
 // (TextReveal, FadeIn, Accordion, MiniContactForm) are client components in
 // their own right, so the page copy stays out of the client bundle.
 import Link from 'next/link';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { RelatedGuide } from '@/components/Blog/RelatedGuide';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SafeImage } from '@/components/ui/safe-image';
 import { FadeIn } from '@/components/ui/fade-in';
 import { TextReveal } from '@/components/ui/text-reveal';
-import { seoFaqs as faqs } from '@/lib/service-content';
+import { seoFaqs as faqs, serviceContent } from '@/lib/service-content';
 
-const INCLUDED = ['Local SEO', 'Technical SEO Audit', 'Keyword Research', 'On-Page Optimization', 'Monthly Ranking Reports', 'Content Strategy'];
+const INCLUDED = ['Google Business Profile', 'Review Strategy', 'Location & Service Pages', 'Core Citations', 'Technical SEO', 'Bing & AI Search', 'Monthly Reporting'];
+
+// How Google says it ranks local results (Google Business Profile Help,
+// "Tips to improve your local ranking on Google").
+const GOOGLE_LOCAL_RANKING_URL = 'https://support.google.com/business/answer/7091';
+
+const LOCAL_FACTORS = [
+  {
+    title: 'Relevance',
+    body: 'How well your listing and website match what someone searched for. This is the part we control most: accurate categories, a service list that says what you actually do, and a page for each service.',
+  },
+  {
+    title: 'Distance',
+    body: 'How far you are from the searcher. Nobody can change this, which is why a Markham business rarely shows in the map pack for a search made in Mississauga. For towns further out we focus on your organic pages instead.',
+  },
+  {
+    title: 'Prominence',
+    body: 'How well known you are: reviews, links and mentions from other sites. Google says it plainly: more reviews and positive ratings can help. We build a steady, rule-abiding way to earn them.',
+  },
+];
 
 const CAPABILITIES = [
-  { title: 'Local SEO', body: 'Google Business Profile optimization, local citations, and geo-targeted content built for Markham, Stouffville, and Scarborough.' },
-  { title: 'Technical SEO', body: 'Site speed, crawlability, structured data, XML sitemaps, and Core Web Vitals tuning — the foundation rankings actually depend on.' },
-  { title: 'Keyword Research', body: 'High-intent, low-competition opportunities specific to your industry and your local GTA market.' },
-  { title: 'On-Page Optimization', body: 'Title tags, meta descriptions, header hierarchy, internal linking, and image alt text, tuned page by page.' },
-  { title: 'Competitor Analysis', body: 'Audits revealing your competitors\' ranking strategies and content gaps — where they\'re winning and where you can.' },
-  { title: 'Monthly Reporting', body: 'Ranking positions, traffic growth, and conversion tracking, reported in plain English.' },
+  { title: 'Google Business Profile', body: 'The right primary category, a service list with real prices, genuine hours, a service area you actually cover, and real photos. Completed properly, then kept current.' },
+  { title: 'A Review System', body: 'A short request every happy and unhappy customer gets at handoff, with your review link in emails and invoices. No incentives, no filtering, no asking for keywords.' },
+  { title: 'Location & Service Pages', body: 'A page for each service, and a page for a town only where you have something real to say about it. No city-swapped copies.' },
+  { title: 'Core Citations', body: 'Your name, phone and website identical on Bing Places, Apple Business, Yelp and the few directories that matter, rather than a hundred that don’t.' },
+  { title: 'Technical SEO', body: 'Crawlability, speed, Core Web Vitals, clean titles and headings, structured data and a sitemap that matches the site, all in the initial HTML.' },
+  { title: 'Bing & AI Search', body: 'Bing Webmaster Tools and IndexNow, so Bing, and the AI assistants that search with it, see your changes in days rather than months.' },
 ];
 
 const PROOF_POINTS = [
-  { title: 'Server-Rendered Schema', body: 'Every page on this site ships LocalBusiness, Service, and FAQ structured data in the initial HTML — not injected after the page loads.' },
-  { title: 'A Real, Synced Sitemap', body: 'Our sitemap.xml is generated from the same data that builds the pages, so it never drifts out of date with what actually exists.' },
-  { title: 'llms.txt for AI Crawlers', body: 'A plain-language file at our root stating who we are and what we do, for the crawlers that don\'t run JavaScript.' },
-  { title: 'Real, Unique City Pages', body: 'Our own local landing pages carry different research, images, and FAQs per city — the same discipline we bring to client sites.' },
+  { title: 'Server-Rendered Schema', body: 'Every page on this site ships its LocalBusiness, Service and FAQ structured data in the initial HTML, not injected after the page loads.' },
+  { title: 'A Real, Synced Sitemap', body: 'Our sitemap.xml is generated from the same data that builds the pages, so it never lists a page that doesn’t exist or a date that didn’t change.' },
+  { title: 'IndexNow on Every Update', body: 'When we change a page we notify Bing through IndexNow, the same setup we put in place for clients.' },
+  { title: 'Real, Unique City Pages', body: 'Our own location pages carry different research, photos and FAQs per city, and we cut the ones we couldn’t make genuinely useful.' },
+];
+
+const WONT_DO = [
+  'Buy links, or swap them with other businesses',
+  'Put keywords in your Google Business Profile name',
+  'Offer customers anything in return for a review, or tell them what to write',
+  'Build near-identical pages for every town on the map',
+  'Submit you to “100+ directories”',
+  'Guarantee a ranking. Nobody can, and Google says so',
 ];
 
 const DIFFERENTIATORS = [
   {
-    title: 'GTA-Focused Expertise',
-    body: 'Our local SEO strategies are built on how people actually search in Markham, Stouffville, Scarborough, and the surrounding GTA — not generic national playbooks.',
+    title: 'Built for GTA Small Businesses',
+    body: 'Clinics, law and accounting practices, trades and shops in Markham, Scarborough, Pickering and the rest of the GTA, where a handful of good local searches is worth more than national traffic.',
     href: '/locations',
     linkText: 'Areas we serve',
   },
@@ -43,13 +72,13 @@ const DIFFERENTIATORS = [
   },
   {
     title: 'SEO + Web Design, One Team',
-    body: 'Sites we design and build are optimized from the first line of code — not bolted on after the fact by a separate SEO vendor.',
+    body: 'Sites we design and build are optimized from the first line of code, not bolted on after the fact by a separate SEO vendor.',
     href: '/services/web-design',
     linkText: 'Web design',
   },
   {
-    title: 'White-Hat Only',
-    body: 'No PBNs, no black-hat shortcuts. We follow Google\'s guidelines because sustainable rankings beat a temporary spike that gets penalized later.',
+    title: 'Within Google’s Rules',
+    body: 'Every tactic we use is one Google’s own guidelines allow, so the rankings you earn don’t disappear in the next spam update.',
     href: '/contact',
     linkText: 'Get a free audit',
   },
@@ -75,21 +104,28 @@ const SeoService = () => {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-center">
             {/* Left — heading */}
             <div className="lg:col-span-3">
+              <Breadcrumbs
+                items={[
+                  { name: 'Home', href: '/' },
+                  { name: 'Services', href: '/services' },
+                  { name: serviceContent['seo'].breadcrumbLabel },
+                ]}
+              />
               <FadeIn>
-                <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">SEO — Markham &amp; the GTA</p>
+                <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">Search visibility, not vanity metrics</p>
               </FadeIn>
               <TextReveal
                 as="h1"
                 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-white leading-[1.05] tracking-[-0.04em] mb-6"
                 staggerMs={120}
                 lines={[
-                  <span key="l1" className="block font-light opacity-90">Search Visibility,</span>,
-                  <span key="l2" className="block mt-1 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Not Vanity Metrics.</span>,
+                  <span key="l1" className="block font-light opacity-90">Local SEO for</span>,
+                  <span key="l2" className="block mt-1 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">GTA Small Businesses</span>,
                 ]}
               />
               <FadeIn delay={240}>
                 <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-xl leading-relaxed font-light tracking-[0.01em] mb-8">
-                  Local and technical SEO for GTA businesses — Google Business Profile, structured data, and content that targets how people actually search. Month-to-month, no contracts.
+                  Get found by the people searching for what you do, near where you do it. We set up your Google Business Profile, earn reviews the right way, build the pages your customers search for and fix what holds your site back. Month-to-month, no contracts.
                 </p>
               </FadeIn>
               <FadeIn delay={320}>
@@ -148,7 +184,7 @@ const SeoService = () => {
             {/* Left — what's included */}
             <div className="lg:col-span-2">
               <h2 className="text-2xl sm:text-3xl font-light text-white leading-snug tracking-tight mb-6">
-                Every SEO engagement covers the same ground — local, technical, and content — reported monthly.
+                Every engagement covers your listing, your reviews, your pages and your site’s technical health, reported monthly.
               </h2>
               <div className="flex flex-wrap gap-2.5">
                 {INCLUDED.map((item) => (
@@ -171,6 +207,69 @@ const SeoService = () => {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* How Local Search Works */}
+      <section className="relative overflow-hidden py-16 sm:py-20 md:py-24 bg-black">
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <div className="absolute inset-0 bg-gradient-to-tl from-black via-cyan-900/30 to-black" />
+        </div>
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+          <p className="text-xs font-mono text-cyan-400/60 tracking-[0.2em] uppercase mb-6">How Local Search Works</p>
+          <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 lg:items-start">
+            <div className="lg:col-span-2">
+              <h2 className="text-3xl sm:text-4xl font-extralight text-white leading-[1.1] tracking-[-0.04em] mb-6">
+                Three things decide who shows up on the map
+              </h2>
+              <p className="text-white/60 leading-relaxed font-light">
+                Google ranks local results on relevance, distance and prominence, and says{' '}
+                <a
+                  href={GOOGLE_LOCAL_RANKING_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-cyan-300/90 underline decoration-cyan-300/30 underline-offset-4 hover:text-cyan-300"
+                >
+                  there’s no way to pay for a better local ranking
+                </a>
+                . Below the map, the ordinary results work differently, and that is where a business can reach towns it isn’t based in.
+              </p>
+            </div>
+            <ol className="lg:col-span-3 grid grid-cols-1 gap-4">
+              {LOCAL_FACTORS.map((factor, i) => (
+                <li key={factor.title} className="rounded-xl border border-white/10 bg-slate-950/60 p-6">
+                  <p className="text-white font-medium mb-2">
+                    <span className="text-cyan-300/70 font-mono text-sm mr-3">0{i + 1}</span>
+                    {factor.title}
+                  </p>
+                  <p className="text-white/55 text-sm font-light leading-relaxed">{factor.body}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      {/* What We Won't Do */}
+      <section className="relative overflow-hidden py-16 sm:py-20 md:py-24 bg-black">
+        <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+          <div className="absolute inset-0 bg-gradient-to-br from-black via-purple-900/25 to-black" />
+        </div>
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 relative z-10">
+          <h2 className="text-3xl sm:text-4xl font-extralight text-white leading-[1.1] tracking-[-0.04em] mb-4">
+            What we won’t do
+          </h2>
+          <p className="text-white/55 font-light leading-relaxed mb-8 max-w-2xl">
+            Most of the shortcuts sold as local SEO break Google’s spam or review policies. They can work for a while; then a
+            listing gets suspended or a site drops overnight. We don’t use them on our site or yours.
+          </p>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-3">
+            {WONT_DO.map((item) => (
+              <li key={item} className="pl-4 border-l-2 border-purple-400/40 text-white/65 text-sm font-light leading-relaxed">
+                {item}
+              </li>
+            ))}
+          </ul>
         </div>
       </section>
 

@@ -5,7 +5,7 @@
 // route files (server-rendered JSON-LD). See SEO-RANKING-PLAN.md §8.1.
 
 import { ORGANIZATION_ID, SITE_URL } from './constants';
-import { packagePriceWithRegular, packageRangeSentence } from './pricing-data';
+import { geoFromPrice, packagePriceWithRegular, packageRangeSentence } from './pricing-data';
 
 const BASE = SITE_URL;
 
@@ -202,14 +202,24 @@ export const brandingFaqs: ServiceFaq[] = [
 
 export const seoFaqs: ServiceFaq[] = [
   {
-    question: 'How long does SEO take to show results in the GTA?',
+    question: 'How long does local SEO take to show results?',
     answer:
-      'Most GTA businesses start seeing meaningful ranking improvements within 3–6 months of starting SEO. Local SEO and Google Business Profile optimization can show results faster — sometimes within 4–8 weeks. Technical fixes like site speed and structured data improvements can have an immediate positive impact on Core Web Vitals scores.',
+      'Technical fixes and a properly completed Google Business Profile can show up within weeks, as soon as Google recrawls. Rankings for competitive searches usually take three to six months, and reviews build over months rather than days. We report monthly so you can see what is moving and what isn’t.',
   },
   {
-    question: 'Do you offer local SEO for GTA businesses?',
+    question: 'Can you get my business into the Google Maps results?',
     answer:
-      'Yes — local SEO is our specialty. We optimize your Google Business Profile, build local citations on Canadian directories, create geo-targeted landing pages, and implement LocalBusiness schema markup. Our strategies are built specifically for Markham, Stouffville, Scarborough, and the surrounding GTA markets.',
+      'We can improve your chances, not guarantee them. Google ranks map results on relevance, distance and prominence. We work on relevance (your categories, services and pages) and prominence (reviews and mentions). Distance we cannot change: the map favours businesses near the person searching, so for towns further from your location we focus on your organic pages instead.',
+  },
+  {
+    question: 'Will you help us get more Google reviews?',
+    answer:
+      'Yes, within Google’s rules. We set up a simple request every customer gets after the work is done, with your review link in your emails and invoices, and we help you reply to each review. Google does not allow offering anything for a review, asking only happy customers, or telling reviewers what to write, so we don’t do any of those.',
+  },
+  {
+    question: 'Do you build a page for every city we serve?',
+    answer:
+      'Only where there is something genuine to say: local clients, projects, or how you actually work in that area. Near-identical pages for a long list of towns are what Google calls doorway pages, and they tend to hurt more than help. One strong page for your home area and pages for each service usually do more.',
   },
   {
     question: 'What is included in a free SEO audit?',
@@ -232,7 +242,7 @@ export const geoFaqs: ServiceFaq[] = [
   {
     question: 'What is GEO, and how is it different from SEO?',
     answer:
-      'SEO gets you ranked in a list of blue links. GEO — generative engine optimization — gets you cited inside an answer written by ChatGPT, Perplexity, Google AI Overviews, or Gemini. The mechanics differ: AI systems favour content with clear factual statements, explicit entity information, structured data they can parse without running JavaScript, and sources they can attribute. Both matter, and the work overlaps, but optimising only for one leaves the other on the table.',
+      'SEO gets you ranked in a list of blue links. GEO — generative engine optimization — gets you cited inside an answer written by ChatGPT, Perplexity, Google AI Overviews, or Gemini. The two overlap more than the name suggests: assistants mostly draw on pages search engines already rank (ChatGPT’s search runs on Bing), plus reviews, directories and other sites that mention you, and they quote content that states facts plainly. GEO is the work of making sure you are in those sources and easy to quote.',
   },
   {
     question: 'Do AI search engines actually send traffic?',
@@ -242,7 +252,16 @@ export const geoFaqs: ServiceFaq[] = [
   {
     question: 'What do you actually change on my site?',
     answer:
-      'We make your business facts machine-readable: server-rendered JSON-LD so crawlers that do not execute JavaScript still see your data, an llms.txt file stating who you are and what you sell, entity consistency across your site, Google Business Profile and citations, and content restructured to answer real questions directly rather than burying the answer in marketing copy. We also add clear, quotable factual statements — the kind an assistant can lift and attribute.',
+      'We make sure crawlers can read every page without running JavaScript, get the site indexed in Bing as well as Google, keep your business facts identical across the site, your Google Business Profile and the directories assistants rely on, and rewrite key pages so the answer to a real question comes first. We also add clear, quotable factual statements: prices, service areas, what you do and for whom.',
+  },
+  {
+    question: 'Do llms.txt files or special “AI schema” help?',
+    answer:
+      'Not in any way anyone has shown. Google says its AI features need no special files or markup, and a large study of sites with llms.txt found no clear effect on AI citations. Structured data helps machines understand a page, but it does not earn citations on its own. We keep an llms.txt on our own site because it costs nothing, but we will not sell it to you as a ranking lever.',
+  },
+  {
+    question: 'How much does GEO cost?',
+    answer: `From ${geoFromPrice()}, month-to-month. The exact price depends on how many assistants and prompts we track and how much of your site needs work, and you get a written quote after a free audit. Most clients run it alongside SEO, and we price the two together when they do.`,
   },
   {
     question: 'Can you guarantee I will show up in ChatGPT or Perplexity?',
@@ -252,7 +271,7 @@ export const geoFaqs: ServiceFaq[] = [
   {
     question: 'Is GEO available on its own, or only bundled with SEO?',
     answer:
-      'It can be scoped on its own, but the two overlap in practice — clean structured data and answer-shaped content help conventional rankings too. Most clients add GEO alongside an existing SEO engagement rather than running it in isolation, and we\'ll say so upfront if that\'s the better starting point for your site.',
+      'It can be scoped on its own, but the two overlap in practice: indexing, reviews and answer-first content help conventional rankings too. Most clients add GEO alongside an existing SEO engagement rather than running it in isolation, and we\'ll say so upfront if that\'s the better starting point for your site.',
   },
 ];
 
@@ -278,9 +297,9 @@ export const websiteMaintenanceFaqs: ServiceFaq[] = [
       'Yes, on the Grow and Prime plans — both set up properly and verified, in accounts you own, plus conversion tracking on your forms and click-to-call links so enquiries are actually measured. If you already have GA4 running, we audit the setup first; a misconfigured property produces numbers that look fine and mean nothing.',
   },
   {
-    question: 'What is your uptime guarantee?',
+    question: 'How do you keep my site online?',
     answer:
-      'We offer a 99.9% uptime SLA — less than 9 hours of unplanned downtime a year — backed by 24/7 automated monitoring that alerts us the moment something breaks. How fast a human responds depends on your plan: same-day on Prime, 1 business day on Grow, 1–2 business days on Core.',
+      'Your site runs on Vercel’s global hosting network, and 24/7 automated monitoring alerts us the moment it stops responding. How fast a human responds depends on your plan: same-day on Prime, 1 business day on Grow, 1–2 business days on Core.',
   },
   {
     question: 'Can you migrate my website from another host?',
@@ -326,10 +345,10 @@ export const serviceContent: Record<string, ServiceEntry> = {
   geo: {
     path: '/services/geo',
     breadcrumbLabel: 'GEO / AI Search',
-    schemaName: 'Generative Engine Optimization (GEO) — Markham & the GTA',
+    schemaName: 'Generative Engine Optimization (GEO) for GTA Businesses',
     schemaDescription:
-      'Generative engine optimization for GTA businesses. Get cited by ChatGPT, Perplexity, Google AI Overviews, and Gemini with server-rendered structured data, entity consistency, and answer-shaped content.',
-    features: ['AI Search Visibility Audit', 'Server-Rendered Structured Data', 'llms.txt & Entity Signals', 'Answer-Shaped Content', 'Citation & Mention Tracking', 'Google Business Profile'],
+      'Generative engine optimization for GTA businesses: AI visibility audits, Bing and Google indexing, consistent listings and reviews, answer-first content and monthly citation tracking for ChatGPT, Perplexity, Gemini and Google AI Overviews.',
+    features: ['AI Search Visibility Audit', 'Bing Indexing & IndexNow', 'Answer-Shaped Content', 'Reviews & Listings', 'Citation & Mention Tracking', 'Google Business Profile'],
     faqs: geoFaqs,
   },
   'website-redesign': {
@@ -371,10 +390,10 @@ export const serviceContent: Record<string, ServiceEntry> = {
   seo: {
     path: '/services/seo',
     breadcrumbLabel: 'SEO Services',
-    schemaName: 'SEO Services — Markham & the GTA',
+    schemaName: 'Local SEO Services for GTA Small Businesses',
     schemaDescription:
-      'Professional SEO services for GTA businesses. Local SEO, technical optimization, keyword research, and Google ranking improvements. Month-to-month, no contracts.',
-    features: ['Local SEO', 'Technical SEO', 'Content Strategy', 'Keyword Research', 'On-Page Optimization', 'Link Building'],
+      'Local SEO for GTA small businesses: Google Business Profile, a review system, location and service pages, core citations and technical SEO. Month-to-month, no contracts.',
+    features: ['Google Business Profile', 'Review Strategy', 'Location & Service Pages', 'Core Citations', 'Technical SEO', 'Bing & AI Search'],
     faqs: seoFaqs,
   },
   'website-maintenance': {
@@ -382,7 +401,7 @@ export const serviceContent: Record<string, ServiceEntry> = {
     breadcrumbLabel: 'Website Maintenance',
     schemaName: 'Website Maintenance, Hosting & Analytics — Markham & the GTA',
     schemaDescription:
-      'Managed hosting, uptime monitoring, and monthly analytics reporting for GTA businesses. 99.9% uptime SLA, SSL, daily backups, GA4 setup, and plain-English traffic reports. Plans from $45/month.',
+      'Managed hosting, uptime monitoring, and monthly analytics reporting for GTA businesses. SSL, daily backups, GA4 setup, and plain-English traffic reports. Plans from $45/month.',
     features: ['Managed Hosting & SSL', 'Daily Backups', 'Uptime & Error Monitoring', 'GA4 & Search Console Setup', 'Monthly Traffic Report', 'Content Updates'],
     faqs: websiteMaintenanceFaqs,
   },

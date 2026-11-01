@@ -2,19 +2,21 @@
 // (TextReveal, FadeIn, Accordion, MiniContactForm) are client components in
 // their own right, so the page copy stays out of the client bundle.
 import Link from 'next/link';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SafeImage } from '@/components/ui/safe-image';
 import { FadeIn } from '@/components/ui/fade-in';
 import { TextReveal } from '@/components/ui/text-reveal';
-import { geoFaqs as faqs } from '@/lib/service-content';
+import { geoFaqs as faqs, serviceContent } from '@/lib/service-content';
+import { geoFromPrice } from '@/lib/pricing-data';
 
-const INCLUDED = ['AI Visibility Audit', 'Server-Rendered Schema', 'llms.txt Setup', 'Answer-Shaped Content', 'Citation Tracking', 'Local Entity Grounding'];
+const INCLUDED = ['AI Visibility Audit', 'Bing Indexing & IndexNow', 'Answer-Shaped Content', 'Reviews & Listings', 'Consistent Business Facts', 'Citation Tracking'];
 
 const CAPABILITIES = [
   { title: 'AI Search Visibility Audit', body: 'We ask the assistants your customers ask and record what comes back — who gets named for your service in your city, and where you appear or don\'t.' },
-  { title: 'Server-Rendered Structured Data', body: 'JSON-LD delivered in the initial HTML, not injected by JavaScript, so crawlers that never run your scripts still see your data.' },
-  { title: 'llms.txt & Entity Signals', body: 'A plain-language file stating who you are, what you sell, and where you operate, plus consistent naming everywhere else so machines resolve you as one entity.' },
+  { title: 'Found by the Search Engines Assistants Use', body: 'ChatGPT’s search runs on Bing, and Google’s AI answers mostly cite pages that already rank. We get you properly indexed in both, and notify Bing through IndexNow whenever a page changes.' },
+  { title: 'The Sources Assistants Quote', body: 'Assistants lean heavily on your Google Business Profile, your reviews and the directories they trust. We make sure your name, services and facts are the same everywhere they look.' },
   { title: 'Answer-Shaped Content', body: 'Pages restructured so the answer comes first and the marketing follows — assistants rarely quote a paragraph that takes three sentences to reach the point.' },
   { title: 'Crawlability for AI Agents', body: 'GPTBot, PerplexityBot, ClaudeBot, and Google-Extended each read differently. We check what each can actually reach.' },
   { title: 'Citation & Mention Tracking', body: 'A repeatable set of prompts run monthly and logged over time, since outputs vary between sessions and only the trend tells you anything.' },
@@ -29,7 +31,7 @@ const PROCESS = [
 const DIFFERENTIATORS = [
   {
     title: 'We Fixed This On Our Own Site First',
-    body: 'Our JSON-LD is server-rendered, our llms.txt is current, and our own AI visibility is something we track monthly — not a service we invented to sell.',
+    body: 'Our pages are server-rendered, submitted to Bing through IndexNow, and our own AI visibility is something we track monthly. Not a service we invented to sell.',
     href: '/about',
     linkText: 'How we work',
   },
@@ -41,13 +43,13 @@ const DIFFERENTIATORS = [
   },
   {
     title: 'It Compounds With Your SEO',
-    body: 'Clean structured data, resolvable entities, and answer-first content help conventional rankings too. There\'s no version of this that helps AI search and hurts Google.',
+    body: 'Assistants mostly cite pages that already rank, so the same work that improves your Google and Bing rankings is most of what gets you named. There\'s no version of this that helps AI search and hurts Google.',
     href: '/services/seo',
     linkText: 'SEO services',
   },
   {
     title: 'Built Into the Site, Not Bolted On',
-    body: 'Because we build on Next.js, structured data and server rendering are how the page is made, not a plugin layered over a template afterward.',
+    body: 'Because we build on Next.js, every page arrives as complete HTML that any crawler can read, without waiting for scripts to run. Nothing is a plugin layered over a template afterward.',
     href: '/services/web-design',
     linkText: 'Web design',
   },
@@ -73,8 +75,15 @@ const GeoService = () => {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-center">
             {/* Left — heading */}
             <div className="lg:col-span-3">
+              <Breadcrumbs
+                items={[
+                  { name: 'Home', href: '/' },
+                  { name: 'Services', href: '/services' },
+                  { name: serviceContent['geo'].breadcrumbLabel },
+                ]}
+              />
               <FadeIn>
-                <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">GEO / AI Search — Markham &amp; the GTA</p>
+                <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">GEO / AI Search for GTA businesses</p>
               </FadeIn>
               <TextReveal
                 as="h1"
@@ -146,7 +155,7 @@ const GeoService = () => {
             {/* Left — what's included */}
             <div className="lg:col-span-2">
               <h2 className="text-2xl sm:text-3xl font-light text-white leading-snug tracking-tight mb-6">
-                We make your business facts machine-readable — for the crawlers that never run a script.
+                We make sure assistants can find you, read you and quote you accurately.
               </h2>
               <div className="flex flex-wrap gap-2.5">
                 {INCLUDED.map((item) => (
@@ -255,20 +264,23 @@ const GeoService = () => {
         <div className="max-w-2xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-8 sm:mb-10">
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-extralight text-white leading-[1.1] tracking-[-0.04em] mb-4">
-              <span className="font-light opacity-90">Custom Quote,</span>{' '}
-              <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">Often Bundled with SEO</span>
+              <span className="font-light opacity-90">Monthly,</span>{' '}
+              <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">No Lock-In</span>
             </h2>
             <p className="text-white/55 text-base sm:text-lg font-light max-w-xl mx-auto">
-              Priced individually — here&apos;s what determines it.
+              A published starting price, then a written quote once we&apos;ve seen your site.
             </p>
           </div>
 
           <FadeIn>
             <div className="relative rounded-2xl border border-cyan-400/30 bg-slate-900/90 backdrop-blur-sm p-8 sm:p-10 text-center shadow-lg shadow-cyan-500/10">
               <p className="text-white/50 text-xs uppercase tracking-[0.15em] font-medium mb-3">GEO / AI Search</p>
-              <p className="text-4xl sm:text-5xl font-light text-white mb-3">Custom Quote</p>
+              <p className="text-4xl sm:text-5xl font-light text-white mb-3">
+                <span className="text-lg sm:text-xl text-white/50 align-middle mr-2">From</span>
+                {geoFromPrice()}
+              </p>
               <p className="text-white/50 text-sm font-light max-w-md mx-auto">
-                Based on your current AI visibility, industry, and how many assistants and prompts we track monthly. Often paired with an SEO engagement — ask about combined pricing.
+                Month-to-month. The exact price depends on how many assistants and prompts we track and how much of your site needs work. Often paired with an SEO engagement — ask about combined pricing.
               </p>
             </div>
           </FadeIn>

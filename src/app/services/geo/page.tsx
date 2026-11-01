@@ -6,23 +6,23 @@ import { serviceContent, serviceSchema, faqPageSchema, serviceBreadcrumb } from 
 const entry = serviceContent['geo'];
 
 export const metadata: Metadata = {
-  title: 'GEO & AI Search Optimization | Markham & GTA | Zenara',
+  title: 'GEO & AI Search Optimization, GTA | Zenara Designs',
   description:
-    'Get cited by ChatGPT, Perplexity, Gemini and Google AI Overviews. GEO for GTA businesses: structured data, entity signals and answer-shaped content.',
+    'Get cited by ChatGPT, Perplexity, Gemini and Google AI Overviews. GEO for GTA businesses: Bing indexing, consistent listings and answer-first content.',
   keywords: ['generative engine optimization', 'GEO services Toronto', 'AI search optimization', 'ChatGPT SEO', 'Perplexity optimization', 'AI Overviews optimization Markham'],
   alternates: { canonical: 'https://zenaradesigns.com/services/geo' },
   openGraph: {
     images: ['/opengraph-image'],
-    title: 'GEO & AI Search Optimization | Markham & GTA | Zenara',
+    title: 'GEO & AI Search Optimization, GTA | Zenara Designs',
     description:
       'Get cited by ChatGPT, Perplexity, Gemini and Google AI Overviews. Generative engine optimization for GTA businesses.',
     url: 'https://zenaradesigns.com/services/geo',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'GEO & AI Search Optimization | Markham & GTA | Zenara',
+    title: 'GEO & AI Search Optimization, GTA | Zenara Designs',
     description:
-      'Get cited by ChatGPT, Perplexity, Gemini and Google AI Overviews. GEO for GTA businesses: structured data, entity signals and answer-shaped content.',
+      'Get cited by ChatGPT, Perplexity, Gemini and Google AI Overviews. GEO for GTA businesses: Bing indexing, consistent listings and answer-first content.',
   },
 };
 

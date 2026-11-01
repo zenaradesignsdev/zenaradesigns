@@ -9,7 +9,7 @@ import { memo, useMemo, useEffect, useRef, useState } from 'react';
 import { FadeIn } from '@/components/ui/fade-in';
 import { TextReveal } from '@/components/ui/text-reveal';
 import { pricingPageFaqs } from '@/lib/faq-data';
-import { PRICES, formatCad, formatCadRange } from '@/lib/pricing-data';
+import { PRICES, formatCad, formatCadRange, geoFromPrice } from '@/lib/pricing-data';
 
 interface PricingPlan {
   name: string;
@@ -157,9 +157,9 @@ const Pricing = () => {
         },
         {
           name: "GEO & AI Search",
-          price: "Custom Quote",
+          price: `From ${geoFromPrice()}`,
           description: "Get found and cited by ChatGPT, Perplexity, and Gemini — not just Google.",
-          features: ["AI-readable structured content", "Server-rendered schema", "Monthly AI visibility tracking", "Built alongside your SEO"],
+          features: ["Bing and Google indexing", "Consistent listings and reviews", "Monthly AI visibility tracking", "Built alongside your SEO"],
           idealFor: "Businesses that want to show up in AI search answers",
           href: "/services/geo"
         }
@@ -245,7 +245,7 @@ const Pricing = () => {
   const faqMidpoint = Math.ceil(faqs.length / 2);
 
   return (
-    <div className="min-h-screen" role="main" aria-label="Pricing page">
+    <div className="min-h-screen">
 
       {/* Pricing Cards - Space Theme */}
       <section className="pricing-hero py-16 sm:py-20 md:py-24 relative overflow-hidden" style={{ backgroundColor: '#090614' }}>
@@ -282,15 +282,15 @@ const Pricing = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10 pt-16 sm:pt-20 md:pt-24">
           <div className="text-center mb-12 sm:mb-16">
             <FadeIn>
-              <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">Web Design Agency — the GTA</p>
+              <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">Simple, affordable pricing</p>
             </FadeIn>
             <TextReveal
               as="h1"
               className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extralight mb-6 sm:mb-8 text-white leading-[0.95] tracking-[-0.04em]"
               staggerMs={130}
               lines={[
-                <span key="l1" className="block font-light">Simple,</span>,
-                <span key="l2" className="block bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Affordable Pricing.</span>,
+                <span key="l1" className="block font-light">Web Design</span>,
+                <span key="l2" className="block bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Pricing</span>,
               ]}
             />
             <FadeIn delay={260}>

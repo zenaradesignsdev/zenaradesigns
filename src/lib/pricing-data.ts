@@ -19,6 +19,8 @@ export const PRICES = {
   businessCards: { min: 149, max: 399 },
   // Monthly; annual billing is 10% off.
   subscriptions: { core: 45, grow: 70, prime: 150 },
+  // Monthly starting price for GEO / AI search work; scoped after a free audit.
+  geo: { from: 99 },
 } as const;
 
 export const formatCad = (amount: number) => `$${amount.toLocaleString('en-US')}`;
@@ -42,6 +44,9 @@ export const packagePriceWithRegular = (tier: PackageTier) =>
     : formatCad(PRICES[tier].price);
 
 export const proFromPrice = () => `${formatCad(PRICES.pro.from)}+`;
+
+/** "$99/month" */
+export const geoFromPrice = () => `${formatCad(PRICES.geo.from)}/month`;
 
 export interface WebsitePlanSummary {
   name: string;
