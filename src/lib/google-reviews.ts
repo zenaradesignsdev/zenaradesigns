@@ -1,11 +1,10 @@
-// Google Business Profile reviews via the Places API (v1). Shared by the
-// /api/reviews route (the homepage carousel, client-side) and ReviewsStrip
-// (server-rendered on the city, service and industry pages, so the review text
-// is in the initial HTML).
+// Google Business Profile reviews via the Places API (v1), read by ReviewsStrip
+// (server-rendered on the homepage and the city, service and industry pages,
+// so the review text is in the initial HTML).
 //
-// Server-only: reads GOOGLE_PLACES_API_KEY. Both callers hit the same URL with
+// Server-only: reads GOOGLE_PLACES_API_KEY. Every page hits the same URL with
 // the same headers and a one-day revalidate, so Next's data cache serves them
-// from one Places call a day.
+// all from one Places call a day.
 
 export interface GoogleReview {
   name: string;

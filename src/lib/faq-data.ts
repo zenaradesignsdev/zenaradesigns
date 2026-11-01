@@ -184,7 +184,7 @@ export const faqSections: FaqSection[] = [
       {
         question: 'Do you actually work in the GTA?',
         answer:
-          "Yes. the GTA is our primary service area — Markham, Stouffville, and Scarborough. We're based in Markham, about twenty minutes from Pickering, and we also serve Vaughan, Scarborough, and Toronto. We'll tell you plainly where we are rather than implying an office on every street corner.",
+          "Yes. The GTA is our primary service area: Markham, Stouffville, Scarborough and Pickering. We're based in Markham, about twenty minutes from Pickering, and we also serve Richmond Hill, Vaughan, Toronto and Mississauga. We'll tell you plainly where we are rather than implying an office on every street corner.",
       },
       {
         question: 'Do you offer in-person meetings in the GTA?',
@@ -199,7 +199,7 @@ export const faqSections: FaqSection[] = [
       {
         question: 'Can you help my business rank in the GTA searches?',
         answer:
-          "That's the core of what we do. We build city-specific landing pages, implement LocalBusiness schema, optimize your Google Business Profile, and build citations with local organizations like the Markham Board of Trade and your municipal chamber of commerce. Local organic rankings in these markets are winnable in a way they are not for the broad Toronto terms.",
+          "That's the core of what we do. We build city-specific landing pages, implement LocalBusiness schema, optimize your Google Business Profile, and list you in the directories that matter locally, including your board of trade or chamber of commerce if you're a member. Local organic rankings in these markets are winnable in a way they are not for the broad Toronto terms.",
       },
       {
         question: 'Why focus on the GTA instead of Toronto?',

@@ -200,7 +200,7 @@ const DifferentiatorsSection = () => {
                   </div>
                   <h3 className="text-lg sm:text-xl font-semibold text-white mb-3 tracking-tight">Secure &amp; Reliable</h3>
                   <p className="text-white/60 text-sm sm:text-base leading-[1.6] font-light tracking-[0.01em]">
-                    Enterprise-grade security and 99.9% uptime. Your site stays online, your data stays safe.
+                    HTTPS, security headers and 24/7 uptime monitoring on every site. If something breaks, we hear about it first.
                   </p>
                 </div>
               </div>

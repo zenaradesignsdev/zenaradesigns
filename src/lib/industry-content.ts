@@ -61,7 +61,7 @@ export const lawyersFaqs: IndustryFaq[] = [
   },
   {
     question: "Can I update my law firm website content myself?",
-    answer: "Yes. Zenara Designs integrates an intuitive, no-code backend that allows your staff to easily update practice area descriptions, publish blog articles, manage lawyer bios, add articles and news, and modify consultation availability without technical expertise."
+    answer: "You do not have to. Your care plan includes text and content edits: send us a new lawyer bio, a practice area change or an article, and we publish it for you within your plan’s response time. If your firm publishes often and wants to edit pages directly, ask us about adding a content editor when we scope the project."
   }
 ];
 

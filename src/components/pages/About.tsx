@@ -16,11 +16,10 @@ const saturnImage = '/images/saturn.png';
 
 
 const stackItems = [
-  { name: 'Next.js 14', category: 'Framework', desc: 'App Router, SSR, static generation for Lighthouse 90+ scores' },
+  { name: 'Next.js 14', category: 'Framework', desc: 'App Router, server rendering and static generation, so pages arrive as ready-made HTML' },
   { name: 'TypeScript', category: 'Language', desc: 'Strict-mode across every project — zero runtime surprises' },
   { name: 'Tailwind CSS', category: 'Styling', desc: 'Utility-first, purged at build — no unused CSS ever ships' },
   { name: 'Vercel', category: 'Deployment', desc: 'Edge network, instant rollbacks, automatic preview environments' },
-  { name: 'Cloudflare', category: 'Security & CDN', desc: 'DDoS protection, DNS, WAF, and global cache layer' },
   { name: 'Figma', category: 'Design', desc: 'High-fidelity prototypes reviewed and approved before any code is written' },
   { name: 'Stripe', category: 'Payments', desc: 'PCI-compliant payment flows for e-commerce and booking integrations' },
   { name: 'Google Analytics 4', category: 'Analytics', desc: 'Privacy-first tracking with anonymised IP and custom event funnels' },
@@ -78,7 +77,7 @@ const About = () => {
   }, []);
 
   return (
-    <div className="min-h-screen" role="main" aria-label="About page">
+    <div className="min-h-screen">
 
       {/* ─── HERO ────────────────────────────────────────────────────── */}
       <section
@@ -230,10 +229,10 @@ const About = () => {
                 {/* 2×2 stat grid */}
                 <div className="relative grid grid-cols-2 divide-x divide-y divide-white/6">
                   {[
-                    { value: '2024', label: 'Year founded', sub: 'Markham, Ontario' },
+                    { value: '2025', label: 'Year founded', sub: 'Markham, Ontario' },
                     { value: '1–2', label: 'Weeks to launch', sub: 'From first call to live' },
-                    { value: '3', label: 'Person team', sub: 'Engineers + designer' },
-                    { value: '90+', label: 'Lighthouse score', sub: 'On every site we ship' },
+                    { value: '2', label: 'Founding engineers', sub: 'Plus a contract designer' },
+                    { value: 'Fixed', label: 'Published prices', sub: 'Written quote before any work' },
                   ].map((stat, i) => (
                     <div key={i} className="group px-4 py-6 sm:px-8 sm:py-8 flex flex-col gap-2 hover:bg-white/[0.02] transition-colors duration-300">
                       <div className="text-4xl sm:text-5xl md:text-6xl font-extralight bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient tracking-[-0.04em] leading-none">

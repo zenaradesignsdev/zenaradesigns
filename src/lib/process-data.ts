@@ -5,7 +5,7 @@
 //
 // Every deliverable and tool named here is something we actually use —
 // see the stack list on the About page (Next.js, TypeScript, Tailwind,
-// Vercel, Cloudflare, Figma, GA4). No invented tooling, no per-phase day
+// Vercel, Figma, GA4). No invented tooling, no per-phase day
 // counts — actual timelines vary by package and live on /pricing.
 
 export interface ProcessPhase {

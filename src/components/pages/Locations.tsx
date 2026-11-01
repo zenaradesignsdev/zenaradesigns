@@ -128,7 +128,7 @@ const Locations = () => {
           />
           <FadeIn delay={260}>
             <p className="text-base sm:text-lg md:text-xl text-white/60 max-w-4xl mx-auto leading-[1.7] font-light tracking-[0.01em] px-4">
-              We&apos;re headquartered in Markham, not a call centre three time zones away. That means local SEO built around the searches your GTA customers actually run, sites tuned for how they actually browse, and — for the right project — a kickoff meeting in person instead of over a webcam.
+              We&apos;re based in Markham, not a call centre three time zones away. That means local SEO built around the searches your GTA customers actually run, sites tuned for how they actually browse, and — for the right project — a kickoff meeting in person instead of over a webcam.
             </p>
           </FadeIn>
           <FadeIn delay={360}>
@@ -170,7 +170,7 @@ const Locations = () => {
               {[
                 {
                   label: 'We’re Based Here',
-                  body: 'Our office is in Markham, about twenty minutes from Pickering. For the right-sized project, we’ll meet you in person for the kickoff — day-to-day work then moves to video and email, which is what keeps timelines short.',
+                  body: 'We’re based in Markham, about twenty minutes from Pickering and Scarborough. For the right-sized project, we’ll meet you in person for the kickoff — day-to-day work then moves to video and email, which is what keeps timelines short.',
                 },
                 {
                   label: 'We Know the Communities',
@@ -178,7 +178,7 @@ const Locations = () => {
                 },
                 {
                   label: 'Local SEO',
-                  body: 'We optimize your Google Business Profile and build citations with real local organizations — the Markham Board of Trade, your municipal chamber of commerce — not a generic national SEO checklist.',
+                  body: 'We optimize your Google Business Profile and list you in the directories that matter locally, including your board of trade or chamber of commerce if you’re a member, not a generic national SEO checklist.',
                   href: '/services/seo',
                   linkText: 'Local SEO services',
                 },

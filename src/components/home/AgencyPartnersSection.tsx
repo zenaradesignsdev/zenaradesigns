@@ -7,7 +7,6 @@ import { FadeIn } from '@/components/ui/fade-in';
 
 const shopifyLogo = '/images/shopify.svg';
 const vercelLogo = '/images/vercel.svg';
-const cloudflareLogo = '/images/cloudflare.svg';
 const stripeLogo = '/images/stripe-2.svg';
 const figmaLogo = '/images/figma.svg';
 const calendlyLogo = '/images/calendly.svg';
@@ -18,7 +17,6 @@ const instagramLogo = '/images/instagram.svg';
 const PARTNERS = [
   { name: 'Shopify', logo: shopifyLogo },
   { name: 'Vercel', logo: vercelLogo },
-  { name: 'Cloudflare', logo: cloudflareLogo },
   { name: 'Stripe', logo: stripeLogo },
   { name: 'Figma', logo: figmaLogo },
   { name: 'Calendly', logo: calendlyLogo },

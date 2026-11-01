@@ -8,16 +8,18 @@ import { memo } from 'react';
 import { TextReveal } from '@/components/ui/text-reveal';
 import { FadeIn } from '@/components/ui/fade-in';
 
+// Concept layouts, not client work: each card is labelled "Concept" so it
+// doesn't read as a client project next to "See What We Built".
 const realEstateWebImage = '/images/website-example-realestate.png';
 const rocketWebImage = '/images/website-example-rocket.png';
 const gardenWebImage = '/images/website-example-garden.png';
 const travelWebImage = '/images/website-example-travel.png';
 
 const PORTFOLIO_ITEMS = [
-  { src: realEstateWebImage, alt: 'Real Estate Website Design GTA - Professional Property Showcase Platform', title: 'Real Estate', desc: 'Property showcase platform', gradient: 'from-cyan-500/20 to-purple-500/20' },
-  { src: rocketWebImage, alt: 'Rocket Launch Website Design GTA - Modern Tech Startup Platform', title: 'Tech Startup', desc: 'Innovative tech platform', gradient: 'from-purple-500/20 to-pink-500/20' },
-  { src: gardenWebImage, alt: 'Garden & Landscaping Website Design GTA - Professional Horticulture Business Platform', title: 'Garden Center', desc: 'Eco-friendly business site', gradient: 'from-pink-500/20 to-cyan-500/20' },
-  { src: travelWebImage, alt: 'Travel & Tourism Website Design GTA - Adventure Booking Platform', title: 'Travel Agency', desc: 'Adventure booking platform', gradient: 'from-teal-500/20 to-purple-500/20' },
+  { src: realEstateWebImage, alt: 'Concept homepage for a real estate property showcase website', title: 'Real Estate', desc: 'Concept · Property showcase platform', gradient: 'from-cyan-500/20 to-purple-500/20' },
+  { src: rocketWebImage, alt: 'Concept homepage for a tech startup website', title: 'Tech Startup', desc: 'Concept · Innovative tech platform', gradient: 'from-purple-500/20 to-pink-500/20' },
+  { src: gardenWebImage, alt: 'Concept homepage for a garden centre and landscaping website', title: 'Garden Centre', desc: 'Concept · Eco-friendly business site', gradient: 'from-pink-500/20 to-cyan-500/20' },
+  { src: travelWebImage, alt: 'Concept homepage for a travel and adventure booking website', title: 'Travel Agency', desc: 'Concept · Adventure booking platform', gradient: 'from-teal-500/20 to-purple-500/20' },
 ];
 
 const PortfolioSection = () => {

@@ -63,10 +63,6 @@ const CTABand = () => {
         </div>
       </div>
 
-      {/* Content Updated Date */}
-      <div className="text-center py-4 relative z-10">
-        <p className="text-transparent text-sm">Content updated: January 2026</p>
-      </div>
     </section>
   );
 };

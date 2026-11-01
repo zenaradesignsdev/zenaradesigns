@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Mail, Phone, CheckCircle, Instagram, Youtube } from 'lucide-react';
+import { Mail, MapPin, Phone, CheckCircle, Instagram, Youtube } from 'lucide-react';
 import { BUSINESS_EMAIL, BUSINESS_PHONE, BUSINESS_PHONE_E164, NAVIGATION_LINKS, FOOTER_ADDITIONAL_LINKS, SERVICE_LINKS, SERVICE_AREA_LINKS, INSTAGRAM_URL, TIKTOK_URL, YOUTUBE_URL, LINKTREE_URL } from '@/lib/constants';
 import { TikTokIcon, LinktreeIcon } from '@/components/Layout/BrandIcons';
 import { useState, FormEvent } from 'react';
@@ -172,6 +172,11 @@ const Footer = () => {
                 Creating high-performing websites for small businesses and professionals using modern development workflows.
               </p>
               <div className="space-y-3">
+                {/* One location line, matching the Google Business Profile and schema. */}
+                <div className="flex items-baseline space-x-2 text-slate-300">
+                  <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5" aria-hidden="true" />
+                  <span className="text-xs sm:text-sm">Markham, ON · Websites for GTA businesses</span>
+                </div>
                 <div className="flex items-baseline space-x-2 text-slate-300">
                   <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5" />
                   <a href={`mailto:${BUSINESS_EMAIL}`} className="hover:text-cyan-400 transition-colors break-all text-xs sm:text-sm" rel="noopener noreferrer">

@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { Star, CheckCircle, ArrowUpRight, Globe, ShoppingCart, Paintbrush, Search, Server, Shield, Zap, Sparkles, RefreshCw } from 'lucide-react';
+import { CheckCircle, ArrowUpRight, Globe, ShoppingCart, Paintbrush, Search, Server, Shield, Zap, Sparkles, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { FaqDisclosureList } from '@/components/FaqDisclosureList';
 import { scrollToTop } from '@/hooks';
-import { useState, useEffect, useRef, memo } from 'react';
+import { useState, useEffect, useRef, memo, type ReactNode } from 'react';
 import { SafeImage } from '@/components/ui/safe-image';
 import { TextReveal } from '@/components/ui/text-reveal';
 import { FadeIn } from '@/components/ui/fade-in';
@@ -25,7 +25,7 @@ const SERVICES = [
     description: 'Complete web solutions built for performance and conversion.',
     tag: 'Core Service',
     image: realEstateWebImage,
-    imageAlt: 'Real Estate Website Design GTA — Professional Property Showcase',
+    imageAlt: 'Concept layout for a real estate website, illustrating our web design service',
     gradient: 'from-cyan-500/20 to-purple-500/20',
     features: [
       'Dedicated web designer and mock-ups made for customers',
@@ -44,7 +44,7 @@ const SERVICES = [
     description: 'Enterprise-grade hosting with built-in security and monitoring.',
     tag: 'Infrastructure',
     image: rocketWebImage,
-    imageAlt: 'Tech Startup Website Design GTA — Modern Platform Example',
+    imageAlt: 'Concept layout for a tech startup website, illustrating our hosting service',
     gradient: 'from-purple-500/20 to-cyan-500/20',
     features: [
       'Affordable plans that fit your budget',
@@ -64,11 +64,11 @@ const SERVICES = [
     description: 'Keep your site running smoothly with ongoing care.',
     tag: 'Ongoing Care',
     image: gardenWebImage,
-    imageAlt: 'Garden & Landscaping Website Design GTA — Business Platform Example',
+    imageAlt: 'Concept layout for a garden centre website, illustrating our maintenance service',
     gradient: 'from-teal-500/20 to-purple-500/20',
     features: [
       'Monthly security and performance updates',
-      'Amazing uptime with 99.9% reliability',
+      'Uptime monitoring with alerts when something breaks',
       'Content changes and copy revisions',
       'Bug fixes and compatibility updates',
       'Small feature additions and improvements',
@@ -84,7 +84,7 @@ const SERVICES = [
     description: 'Complete brand identity and marketing materials.',
     tag: 'Brand Identity',
     image: travelWebImage,
-    imageAlt: 'Travel Agency Website Design GTA — Adventure Booking Platform Example',
+    imageAlt: 'Concept layout for a travel agency website, illustrating our branding service',
     gradient: 'from-pink-500/20 to-cyan-500/20',
     features: [
       'Custom logo design and comprehensive brand guidelines',
@@ -103,8 +103,8 @@ const SUB_SERVICES = [
   { icon: ShoppingCart, title: 'E-Commerce', href: '/services/ecommerce', desc: 'Online stores with Shopify, payment integration, and product management.' },
   { icon: Paintbrush, title: 'Branding', href: '/services/branding', desc: 'Custom logo design and print-ready business cards, designed as one identity.' },
   { icon: Search, title: 'SEO', href: '/services/seo', desc: 'Local SEO, technical optimization, and content strategy for visibility.' },
-  { icon: Server, title: 'Website Maintenance', href: '/services/website-maintenance', desc: 'Managed hosting, 99.9% uptime, and a monthly analytics report — from $45/month.' },
-  { icon: Sparkles, title: 'GEO', href: '/services/geo', desc: 'Get cited by ChatGPT, Perplexity, and AI search — the channel replacing "10 blue links".' },
+  { icon: Server, title: 'Website Maintenance', href: '/services/website-maintenance', desc: 'Managed hosting, uptime monitoring, and a monthly analytics report — from $45/month.' },
+  { icon: Sparkles, title: 'GEO', href: '/services/geo', desc: 'Get named when customers ask ChatGPT, Perplexity and Google’s AI answers — from $99/month.' },
   { icon: RefreshCw, title: 'Website Redesign', href: '/services/website-redesign', desc: 'Rebuild an ageing site into something fast, modern, and built to convert.' },
 ];
 
@@ -115,21 +115,10 @@ const INDUSTRIES = [
   { title: 'Wellness Clinics', href: '/clinics', description: 'Modern websites designed for wellness and healthcare practices. Enable online booking, showcase services, and build trust with potential patients.', tag: 'Patient-First' },
 ];
 
-const TESTIMONIALS = [
-  { quote: 'Zenara delivered a clean, fast site in days. Our conversion rate jumped 40% within the first month.', author: 'Taylor R.', role: 'Small Business Owner', rating: 5 },
-  { quote: 'Traffic up, inquiries doubled. The team understood exactly what we needed and delivered beyond expectations.', author: 'Dr. Lina P.', role: 'Clinic Director', rating: 5 },
-  { quote: 'Seamless process from mockup to launch. Professional, responsive, and the site performs beautifully.', author: 'Mark H.', role: 'Contractor', rating: 5 },
-  { quote: 'Finally, a web team that speaks our language. Fast delivery without compromising on quality.', author: 'Emma K.', role: 'Marketing Director', rating: 5 },
-  { quote: 'Our new website has been a game-changer. Professional, fast, and exactly what we envisioned.', author: 'Sarah M.', role: 'E-commerce Owner', rating: 5 },
-  { quote: 'Outstanding work! The team was responsive, creative, and delivered on time. Highly recommended.', author: 'James L.', role: 'Startup Founder', rating: 5 },
-  { quote: 'The attention to detail and user experience is incredible. Our customers love the new site.', author: 'Maria G.', role: 'Restaurant Owner', rating: 5 },
-  { quote: 'From concept to completion, Zenara made the entire process smooth and stress-free.', author: 'David C.', role: 'Consultant', rating: 5 },
-];
-
 const FAQ_LEFT = [
   { value: 'l1', question: 'How long does it take to build a website?', answer: 'Most websites are completed within 1–4 weeks, depending on complexity and requirements. Starter sites can be ready in 3–5 days, while more complex projects with custom features may take 3–4 weeks. We work efficiently while ensuring quality results.' },
   { value: 'l2', question: "What's included in your web design package?", answer: 'Our packages include custom design, fully responsive development, SEO optimization, SSL security setup, performance optimization, and post-launch support. We also provide brand guidelines, logo design options, and business card design as part of our comprehensive service.' },
-  { value: 'l3', question: 'Do you provide hosting and maintenance?', answer: "Yes! We offer comprehensive hosting solutions with 99.9% uptime guarantee, automated backups, and ongoing maintenance support. Our hosting plans include SSL certificates, CDN integration, and 24/7 monitoring. We also provide monthly maintenance packages for updates and support." },
+  { value: 'l3', question: 'Do you provide hosting and maintenance?', answer: "Yes! We host on Vercel's global network with automated backups, SSL, a CDN and 24/7 uptime monitoring that alerts us when something breaks. We also provide monthly maintenance packages for updates and support." },
   { value: 'l4', question: 'Can you help with existing websites?', answer: 'We can assist with existing websites if they use a similar technology stack to our preferred modern frameworks. If your current site uses a different technology stack, we typically recommend building a new site with our modern approach for optimal performance and maintainability.' },
   { value: 'l5', question: 'What makes your websites different?', answer: "We focus on business results, not just aesthetics. Every design decision is made with conversion optimization in mind. We use modern, fast-loading technologies, ensure mobile-first responsive design, and build with SEO best practices from day one. Plus, you get direct access to our team throughout the project." },
 ];
@@ -159,7 +148,12 @@ const CITIES_BOTTOM = [
   'Oak Ridges', 'Port Credit', 'Streetsville',
 ];
 
-const Services = () => {
+interface ServicesProps {
+  /** Server-rendered <ReviewsStrip>, passed in by the route because this is a client component. */
+  reviews?: ReactNode;
+}
+
+const Services = ({ reviews }: ServicesProps) => {
   const serviceCardsRef = useRef<HTMLDivElement>(null);
   const [visibleServiceCards, setVisibleServiceCards] = useState<Set<number>>(new Set());
 
@@ -205,7 +199,7 @@ const Services = () => {
   }, []);
 
   return (
-    <div className="min-h-screen" role="main" aria-label="Services page">
+    <div className="min-h-screen">
 
       {/* ── HERO ── bg-black with blooms ────────────────────── */}
       <section className="pt-32 sm:pt-36 md:pt-40 lg:pt-44 pb-20 sm:pb-24 md:pb-28 relative overflow-hidden bg-black">
@@ -645,69 +639,8 @@ const Services = () => {
         </div>
       </section>
 
-      {/* ── TESTIMONIALS ── bg-black with blooms ─────────────── */}
-      <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-black">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute -top-10 -left-10 w-[500px] h-[400px] bg-cyan-500/[0.09] rounded-full blur-[120px]" />
-          <div className="absolute -bottom-10 -right-10 w-[500px] h-[400px] bg-purple-600/[0.10] rounded-full blur-[120px]" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[200px] bg-gradient-to-r from-cyan-800/10 via-purple-800/10 to-cyan-800/10 rounded-full blur-[80px]" />
-        </div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-          <div className="text-center mb-12 sm:mb-14">
-            <TextReveal
-              as="h2"
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extralight text-white mb-4 leading-[0.95] tracking-[-0.04em]"
-              staggerMs={120}
-              lines={[
-                <span key="l1">
-                  <span className="font-light opacity-90">What our </span>
-                  <span className="bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal">clients say.</span>
-                </span>,
-              ]}
-            />
-            <FadeIn delay={240}>
-              <p className="text-base sm:text-lg text-white/50 max-w-2xl mx-auto leading-[1.7] font-light mt-4">
-                Real results from real businesses who trusted us with their digital transformation.
-              </p>
-            </FadeIn>
-          </div>
-
-          <div className="relative overflow-hidden -mx-4 sm:-mx-6" style={{ maskImage: 'linear-gradient(to right, transparent, black 8%, black 92%, transparent)' }}>
-            <div className="flex animate-scroll-smooth space-x-4 sm:space-x-5 py-4">
-              {[...TESTIMONIALS, ...TESTIMONIALS].map((t, index) => (
-                <div key={index} className="flex-shrink-0 w-[280px] sm:w-[320px] md:w-[360px]">
-                  <div className="relative rounded-2xl border border-white/[0.09] bg-slate-900/60 backdrop-blur-sm p-5 sm:p-6 h-full flex flex-col overflow-hidden group hover:border-white/[0.18] transition-all duration-300">
-                    <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-cyan-500/[0.06] to-purple-500/[0.06] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <div className="relative z-10 flex flex-col h-full">
-                      {/* Quote mark + Stars */}
-                      <div className="flex items-start justify-between mb-4">
-                        <span className="text-6xl leading-none text-cyan-400/20 font-serif select-none">&ldquo;</span>
-                        <div className="flex items-center gap-0.5 pt-2">
-                          {[...Array(t.rating)].map((_, i) => (
-                            <Star key={i} className="h-3.5 w-3.5 text-cyan-400/80 fill-cyan-400/80" />
-                          ))}
-                        </div>
-                      </div>
-                      <blockquote className="text-white/75 text-sm sm:text-base leading-[1.65] font-light tracking-[0.01em] flex-grow mb-5">
-                        {t.quote}
-                      </blockquote>
-                      <div className="flex items-center gap-3 border-t border-white/[0.07] pt-4">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-cyan-400/25 to-purple-400/25 flex items-center justify-center text-xs text-white/70 font-medium flex-shrink-0">
-                          {t.author.split(' ').map(n => n[0]).join('')}
-                        </div>
-                        <div>
-                          <div className="text-sm text-white/75 font-light">{t.author}</div>
-                          <div className="text-xs text-white/38 font-light">{t.role}</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* ── REVIEWS ── real Google reviews, server-rendered by the route ── */}
+      {reviews}
 
       {/* ── FAQ ── bg-black with corner glows ─────────────────── */}
       <section className="py-16 sm:py-20 md:py-24 relative overflow-hidden bg-black">
@@ -802,10 +735,6 @@ const Services = () => {
         </div>
       </section>
 
-      {/* Content Updated Date */}
-      <div className="h-0 overflow-hidden">
-        <p className="text-transparent text-sm">Content updated: January 2026</p>
-      </div>
       {/* Review structured data intentionally omitted — schema must mark up
           real, verifiable reviews with an itemReviewed field (Google policy). */}
     </div>
