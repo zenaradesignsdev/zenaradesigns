@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ArrowRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ConceptDemoCallout, { CONCEPT_DEMOS } from '@/components/industries/ConceptDemoCallout';
@@ -34,13 +35,14 @@ const IndustryVerticalPage = ({ vertical }: IndustryVerticalProps) => {
       {/* Hero */}
       <div className="relative z-10 pt-28 sm:pt-32 md:pt-40 pb-16 sm:pb-20 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <Link
-            href={vertical.parentHref}
-            className="inline-flex items-center gap-2 text-sm text-cyan-400 hover:text-cyan-200 transition-colors mb-6 font-light"
-          >
-            {vertical.parentLabel}
-            <ArrowRight className="h-3.5 w-3.5" />
-          </Link>
+          <Breadcrumbs
+            className="flex justify-center"
+            items={[
+              { name: 'Home', href: '/' },
+              { name: vertical.parentLabel, href: vertical.parentHref },
+              { name: vertical.name },
+            ]}
+          />
           <div className="w-12 h-0.5 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 mb-6 mx-auto"></div>
           <h1 className="text-4xl sm:text-5xl md:text-6xl font-extralight text-white leading-[1.1] tracking-[-0.04em] mb-6">
             <span className="font-light opacity-90">{vertical.heroLead} </span>

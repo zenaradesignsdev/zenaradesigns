@@ -2,13 +2,14 @@
 // (TextReveal, FadeIn, Accordion, MiniContactForm) are client components in
 // their own right, so the page copy stays out of the client bundle.
 import Link from 'next/link';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { RelatedGuide } from '@/components/Blog/RelatedGuide';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SafeImage } from '@/components/ui/safe-image';
 import { FadeIn } from '@/components/ui/fade-in';
 import { TextReveal } from '@/components/ui/text-reveal';
-import { websiteRedesignFaqs as faqs } from '@/lib/service-content';
+import { websiteRedesignFaqs as faqs, serviceContent } from '@/lib/service-content';
 
 const INCLUDED = ['Content & URL Audit', 'Redirect Mapping', 'Rebuild on Next.js', 'SEO Carried Forward', 'Performance Overhaul', 'Post-Launch Monitoring'];
 
@@ -74,6 +75,13 @@ const WebsiteRedesignService = () => {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-center">
             {/* Left — heading */}
             <div className="lg:col-span-3">
+              <Breadcrumbs
+                items={[
+                  { name: 'Home', href: '/' },
+                  { name: 'Services', href: '/services' },
+                  { name: serviceContent['website-redesign'].breadcrumbLabel },
+                ]}
+              />
               <FadeIn>
                 <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">Website Redesign — Markham &amp; the GTA</p>
               </FadeIn>

@@ -32,7 +32,7 @@ const Contact = () => {
 
   return (
     <>
-    <div className="min-h-screen" role="main" aria-label="Contact page">
+    <div className="min-h-screen">
 
       {/* Main Section */}
       <section id="contact-form" className="pt-24 sm:pt-28 md:pt-32 lg:pt-36 pb-20 sm:pb-24 md:pb-32 relative overflow-hidden" style={{ backgroundColor: '#07071a' }}>

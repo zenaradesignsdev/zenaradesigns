@@ -177,7 +177,7 @@ const WebsiteCostMarkhamContent = () => {
 export const websiteCostMarkhamPost: BlogPost = {
   slug: 'how-much-does-a-website-cost-markham',
   title: 'How Much Does a Website Cost in Markham? (2026 Prices)',
-  seoTitle: 'How Much Does a Website Cost in Markham? (2026) | Zenara',
+  seoTitle: 'Website Cost in Markham (2026 Prices) | Zenara Designs',
   description:
     'What a small business website costs in Markham in 2026: freelancer, studio and agency price bands, multilingual sites, running costs, and how to judge a quote.',
   excerpt:

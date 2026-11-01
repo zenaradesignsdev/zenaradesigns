@@ -2,12 +2,13 @@
 // (TextReveal, FadeIn, Accordion, MiniContactForm) are client components in
 // their own right, so the page copy stays out of the client bundle.
 import Link from 'next/link';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SafeImage } from '@/components/ui/safe-image';
 import { FadeIn } from '@/components/ui/fade-in';
 import { TextReveal } from '@/components/ui/text-reveal';
-import { ecommerceFaqs as faqs } from '@/lib/service-content';
+import { ecommerceFaqs as faqs, serviceContent } from '@/lib/service-content';
 
 const INCLUDED = ['Shopify Development', 'Custom Storefronts', 'Payment Integration', 'Product Catalogue', 'Canadian Tax Setup', 'Order Automation'];
 
@@ -67,16 +68,23 @@ const EcommerceService = () => {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-center">
             {/* Left — heading */}
             <div className="lg:col-span-3">
+              <Breadcrumbs
+                items={[
+                  { name: 'Home', href: '/' },
+                  { name: 'Services', href: '/services' },
+                  { name: serviceContent['ecommerce'].breadcrumbLabel },
+                ]}
+              />
               <FadeIn>
-                <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">E-Commerce — Markham &amp; the GTA</p>
+                <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">Online stores that sell, not just look good</p>
               </FadeIn>
               <TextReveal
                 as="h1"
                 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight text-white leading-[1.05] tracking-[-0.04em] mb-6"
                 staggerMs={120}
                 lines={[
-                  <span key="l1" className="block font-light opacity-90">Online Stores That Sell,</span>,
-                  <span key="l2" className="block mt-1 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Not Just Look Good.</span>,
+                  <span key="l1" className="block font-light opacity-90">E-Commerce Website Design</span>,
+                  <span key="l2" className="block mt-1 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">for GTA Businesses</span>,
                 ]}
               />
               <FadeIn delay={240}>
@@ -197,7 +205,7 @@ const EcommerceService = () => {
           >
             <div className="relative w-full h-56 sm:h-auto min-h-[220px] overflow-hidden">
               <SafeImage
-                src="/images/ashcam-site.png"
+                src="/images/ashcam-site.jpg"
                 alt="AshCam Cutting Solutions website — construction blades and equipment e-commerce platform"
                 className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
               />

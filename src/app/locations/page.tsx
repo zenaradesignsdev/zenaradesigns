@@ -28,20 +28,20 @@ const areasServedSchema = {
 };
 
 export const metadata: Metadata = {
-  title: 'Web Design Near You | Markham & the GTA | Zenara',
+  title: 'Web Design Across the GTA: Areas We Serve | Zenara Designs',
   description:
     'Web design for businesses in Markham, Stouffville, Scarborough, Toronto, Richmond Hill and across the GTA. Check your area and book a free consultation.',
   alternates: { canonical: 'https://zenaradesigns.com/locations' },
   openGraph: {
     images: ['/opengraph-image'],
-    title: 'Web Design Near You | Markham & the GTA | Zenara',
+    title: 'Web Design Across the GTA: Areas We Serve | Zenara Designs',
     description:
       'Web design for businesses in Markham, Stouffville, Scarborough, Toronto, Richmond Hill and across the GTA. Check your area and book a free consultation.',
     url: 'https://zenaradesigns.com/locations',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Web Design Near You | Markham & the GTA | Zenara',
+    title: 'Web Design Across the GTA: Areas We Serve | Zenara Designs',
     description:
       'Web design for businesses in Markham, Stouffville, Scarborough, Toronto, Richmond Hill and across the GTA. Check your area and book a free consultation.',
   },

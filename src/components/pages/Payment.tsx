@@ -93,7 +93,7 @@ const Payment = () => {
   }, []);
 
   return (
-    <div className="min-h-screen" role="main" aria-label="Payment and subscription plans">
+    <div className="min-h-screen">
 
       {/* Subscription Plans — matches Pricing page's Hosting & Maintenance section */}
       <section className="pt-28 sm:pt-32 md:pt-36 pb-16 sm:pb-20 md:pb-24 relative overflow-hidden bg-gradient-to-br from-slate-900 via-cyan-900 to-slate-900">

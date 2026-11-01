@@ -8,20 +8,20 @@ import { industryContent } from '@/lib/industry-content';
 const entry = industryContent['accountants'];
 
 export const metadata: Metadata = {
-  title: 'Accountant Web Design Markham & GTA | Zenara',
+  title: 'Accountant Website Design, Toronto & GTA | Zenara Designs',
   description:
     'Websites for GTA CPAs, bookkeepers, and mortgage brokers. Secure client portals and document intake. Fixed pricing, live in 1–2 weeks.',
   alternates: { canonical: 'https://zenaradesigns.com/accountants' },
   openGraph: {
-    title: 'Accountant Web Design Markham & GTA | Zenara',
+    title: 'Accountant Website Design, Toronto & GTA | Zenara Designs',
     description:
       'Websites for GTA CPAs, bookkeepers, and mortgage brokers. Secure client portals and document intake. Fixed pricing, live in 1–2 weeks.',
     url: 'https://zenaradesigns.com/accountants',
-    images: [{ url: 'https://zenaradesigns.com/images/accountant-computer-office.png' }],
+    images: [{ url: 'https://zenaradesigns.com/images/accountant-computer-office.jpg' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Accountant Web Design Markham & GTA | Zenara',
+    title: 'Accountant Website Design, Toronto & GTA | Zenara Designs',
     description:
       'Websites for GTA CPAs, bookkeepers, and mortgage brokers. Secure client portals and document intake. Fixed pricing, live in 1–2 weeks.',
   },

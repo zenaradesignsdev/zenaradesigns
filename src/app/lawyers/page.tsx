@@ -8,20 +8,20 @@ import { industryContent } from '@/lib/industry-content';
 const entry = industryContent['lawyers'];
 
 export const metadata: Metadata = {
-  title: 'Law Firm Website Design Toronto & GTA | Zenara',
+  title: 'Law Firm Website Design Toronto & GTA | Zenara Designs',
   description:
     'Websites for small and mid-size Ontario law firms in Toronto and the GTA, written to the Law Society’s marketing rules. Fixed pricing, live in 1–2 weeks.',
   alternates: { canonical: 'https://zenaradesigns.com/lawyers' },
   openGraph: {
-    title: 'Law Firm Website Design Toronto & GTA | Zenara',
+    title: 'Law Firm Website Design Toronto & GTA | Zenara Designs',
     description:
       'Websites for small and mid-size Ontario law firms in Toronto and the GTA, written to the Law Society’s marketing rules. Fixed pricing, live in 1–2 weeks.',
     url: 'https://zenaradesigns.com/lawyers',
-    images: [{ url: 'https://zenaradesigns.com/images/lawyer-gavel-office.png' }],
+    images: [{ url: 'https://zenaradesigns.com/images/lawyer-gavel-office.jpg' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Law Firm Website Design Toronto & GTA | Zenara',
+    title: 'Law Firm Website Design Toronto & GTA | Zenara Designs',
     description:
       'Websites for small and mid-size Ontario law firms in Toronto and the GTA, written to the Law Society’s marketing rules. Fixed pricing, live in 1–2 weeks.',
   },

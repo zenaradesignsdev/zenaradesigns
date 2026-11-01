@@ -8,12 +8,12 @@ import { industryContent } from '@/lib/industry-content';
 const entry = industryContent['renovations'];
 
 export const metadata: Metadata = {
-  title: 'Contractor Web Design Markham & GTA | Zenara',
+  title: 'Contractor Website Design, Toronto & GTA | Zenara Designs',
   description:
     'Websites for GTA renovators, roofers, HVAC, electrical, and landscaping. Project galleries and quote forms. Fixed pricing, live in 1–2 weeks.',
   alternates: { canonical: 'https://zenaradesigns.com/renovations' },
   openGraph: {
-    title: 'Contractor Web Design Markham & GTA | Zenara',
+    title: 'Contractor Website Design, Toronto & GTA | Zenara Designs',
     description:
       'Websites for GTA renovators, roofers, HVAC, electrical, and landscaping. Project galleries and quote forms. Fixed pricing, live in 1–2 weeks.',
     url: 'https://zenaradesigns.com/renovations',
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Contractor Web Design Markham & GTA | Zenara',
+    title: 'Contractor Website Design, Toronto & GTA | Zenara Designs',
     description:
       'Websites for GTA renovators, roofers, HVAC, electrical, and landscaping. Project galleries and quote forms. Fixed pricing, live in 1–2 weeks.',
   },

@@ -44,7 +44,7 @@ const Process = () => {
   }, []);
 
   return (
-    <div className="min-h-screen" role="main" aria-label="Our web design process">
+    <div className="min-h-screen">
 
       {/* Hero */}
       <section className="pt-20 sm:pt-24 md:pt-28 pb-16 sm:pb-20 relative overflow-hidden" style={{ backgroundColor: '#090614' }}>
@@ -70,15 +70,15 @@ const Process = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
           <div className="text-center mb-10 sm:mb-14">
             <FadeIn>
-              <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">Web Design Process — Markham &amp; the GTA</p>
+              <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">How we build your website</p>
             </FadeIn>
             <TextReveal
               as="h1"
               className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl font-extralight mb-6 sm:mb-8 text-white leading-[0.95] tracking-[-0.04em]"
               staggerMs={130}
               lines={[
-                <span key="l1" className="block font-light">How We Build</span>,
-                <span key="l2" className="block bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Your Website.</span>,
+                <span key="l1" className="block font-light">Our Web Design</span>,
+                <span key="l2" className="block bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">Process</span>,
               ]}
             />
             <FadeIn delay={260}>

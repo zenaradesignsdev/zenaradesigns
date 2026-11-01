@@ -52,6 +52,8 @@ export const BUSINESS_INFO = {
     'Richmond Hill',
     'Vaughan',
     'Pickering',
+    'Ajax',
+    'Whitby',
   ],
   googleMapsUrl: GOOGLE_MAPS_URL,
   sameAs: [INSTAGRAM_URL, TIKTOK_URL, YOUTUBE_URL, LINKTREE_URL, GOOGLE_MAPS_URL],
@@ -103,7 +105,7 @@ export const generateBusinessSchema = () => ({
   priceRange: '$$',
   currenciesAccepted: 'CAD',
   paymentAccepted: BUSINESS_INFO.paymentAccepted,
-  foundingDate: '2024',
+  foundingDate: '2025',
   hasOfferCatalog: {
     '@type': 'OfferCatalog',
     name: 'Web Design & Development Services',
@@ -123,6 +125,9 @@ export const generateWebSiteSchema = () => ({
   '@type': 'WebSite',
   '@id': WEBSITE_ID,
   name: BUSINESS_INFO.name,
+  // "Zenara" alone collides with other businesses (Zenara Rentals, Zenara
+  // Studios); these help Google's site-name system tie the variants to us.
+  alternateName: ['Zenara', 'zenaradesigns.com'],
   url: BUSINESS_INFO.url,
   inLanguage: 'en-CA',
   publisher: { '@id': ORGANIZATION_ID },

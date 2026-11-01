@@ -4,6 +4,7 @@
 // server-side from the matching app/<route>/page.tsx instead of being
 // injected here in a useEffect, where crawlers without JS never saw it.
 import Link from 'next/link';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import Image from 'next/image';
 import { ArrowRight, ArrowUpRight, Users, Home, Scale, BookOpen, Gavel, Briefcase, type LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -12,15 +13,15 @@ import MiniContactForm from '@/components/forms/LazyMiniContactForm';
 import { TextReveal } from '@/components/ui/text-reveal';
 import { FadeIn } from '@/components/ui/fade-in';
 import { memo } from 'react';
-import { lawyersFaqs as faqs } from '@/lib/industry-content';
+import { lawyersFaqs as faqs, industryContent } from '@/lib/industry-content';
 import { SafeImage } from '@/components/ui/safe-image';
 import { ReviewsStrip } from '@/components/ReviewsStrip';
 import { FaqDisclosureList } from '@/components/FaqDisclosureList';
 import { LSO_RULES_URL } from '@/lib/constants';
 
-const lawyerHeroOffice = '/images/lawyer-gavel-office.png';
-const lawyerResearchImage = '/images/lawyer-consultation-document.png';
-const lawyerProjectDemo = '/images/project2.png';
+const lawyerHeroOffice = '/images/lawyer-gavel-office.jpg';
+const lawyerResearchImage = '/images/lawyer-consultation-document.jpg';
+const lawyerProjectDemo = '/images/project2.jpg';
 const zenaraMark = '/images/zenara-logo-v5.svg';
 
 interface PracticeAreaCard {
@@ -188,6 +189,7 @@ const Lawyers = () => {
           {/* Left — Text */}
           <div className="bg-slate-900/95 backdrop-blur-sm flex items-center py-12 sm:py-16 md:py-20 lg:py-24 px-6 sm:px-8 md:px-12 lg:px-16 border-r border-slate-800/50 pt-24 sm:pt-28 md:pt-32 lg:pt-40">
             <div className="w-full max-w-2xl mx-auto lg:mx-0">
+              <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: industryContent['lawyers'].breadcrumbLabel }]} />
               <div className="w-12 h-0.5 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 mb-6"></div>
 
               <TextReveal

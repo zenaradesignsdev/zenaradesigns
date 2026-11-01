@@ -10,7 +10,7 @@ import { generateBusinessSchema, generateWebSiteSchema } from '@/lib/structured-
 
 export const metadata: Metadata = {
   title: {
-    default: 'Markham Web Design | Websites for GTA Businesses | Zenara',
+    default: 'Markham Web Design for GTA Businesses | Zenara Designs',
     // Page titles already include the brand, so the template must not append it
     // again (was producing "… | Zenara | Zenara Designs").
     template: '%s',
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: 'Markham Web Design | Websites for GTA Businesses | Zenara',
+    title: 'Markham Web Design for GTA Businesses | Zenara Designs',
     description:
       'Custom, lead-focused websites for GTA service businesses, built from our Markham base. Fixed pricing, direct developer access, launch in 1–2 weeks.',
     type: 'website',
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Markham Web Design | Websites for GTA Businesses | Zenara',
+    title: 'Markham Web Design for GTA Businesses | Zenara Designs',
     description:
       'Custom, lead-focused websites for GTA service businesses, built from our Markham base. Fixed pricing, direct developer access, launch in 1–2 weeks.',
     images: {

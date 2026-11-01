@@ -13,20 +13,20 @@ const breadcrumbSchema = {
 };
 
 export const metadata: Metadata = {
-  title: 'FAQ | Markham Web Design | Pricing & Process | Zenara',
+  title: 'Web Design FAQ: Pricing, Timelines & Process | Zenara Designs',
   description:
     'Answers to common web design questions for GTA businesses — pricing, timelines, and how our process works from kickoff to launch.',
   alternates: { canonical: 'https://zenaradesigns.com/faq' },
   openGraph: {
     images: ['/opengraph-image'],
-    title: 'FAQ | Markham Web Design | Pricing & Process | Zenara',
+    title: 'Web Design FAQ: Pricing, Timelines & Process | Zenara Designs',
     description:
       'Answers to common web design questions for GTA businesses — pricing, timelines, and how our process works from kickoff to launch.',
     url: 'https://zenaradesigns.com/faq',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'FAQ | Markham Web Design | Pricing & Process | Zenara',
+    title: 'Web Design FAQ: Pricing, Timelines & Process | Zenara Designs',
     description:
       'Answers to common web design questions for GTA businesses — pricing, timelines, and how our process works from kickoff to launch.',
   },

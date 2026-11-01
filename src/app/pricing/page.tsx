@@ -11,7 +11,7 @@ const pricingBreadcrumb = breadcrumbSchema('/pricing', [
 ]);
 
 // Built from the live prices so the search snippet always matches the page.
-const TITLE = `Web Design Pricing from ${formatCad(PRICES.starter.price)} | Markham & GTA | Zenara`;
+const TITLE = `Web Design Pricing from ${formatCad(PRICES.starter.price)} | GTA | Zenara Designs`;
 const DESCRIPTION = `Fixed, transparent web design pricing for GTA businesses: websites from ${formatCad(PRICES.starter.price)}, a ${formatCad(PRICES.launchPackage.price)} launch package and care plans from ${formatCad(PRICES.subscriptions.core)}/month. No hidden fees.`;
 
 export const metadata: Metadata = {

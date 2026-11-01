@@ -63,15 +63,15 @@ const FAQ = () => {
 
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
           <FadeIn>
-            <p className="text-xs font-mono text-cyan-400/60 tracking-[0.2em] uppercase mb-5">FAQ</p>
+            <p className="text-xs font-mono text-cyan-400/60 tracking-[0.2em] uppercase mb-5">Everything you need to know</p>
           </FadeIn>
           <TextReveal
             as="h1"
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extralight mb-6 text-white leading-[1.1] tracking-[-0.04em]"
             staggerMs={110}
             lines={[
-              <span key="l1" className="block font-light opacity-90">Everything You Need</span>,
-              <span key="l2" className="block mt-1 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">to Know</span>,
+              <span key="l1" className="block font-light opacity-90">Web Design</span>,
+              <span key="l2" className="block mt-1 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 bg-clip-text text-transparent bg-[length:200%_auto] animate-gradient font-normal pb-1">FAQ</span>,
             ]}
           />
           <FadeIn delay={220}>

@@ -6,19 +6,19 @@ import { serviceContent, serviceSchema, faqPageSchema, serviceBreadcrumb } from 
 const entry = serviceContent['website-maintenance'];
 
 export const metadata: Metadata = {
-  title: 'Website Maintenance & Hosting | Markham & GTA | Zenara',
+  title: 'Website Maintenance & Hosting, GTA | Zenara Designs',
   description: 'Managed hosting, uptime monitoring and a plain-English monthly traffic report for GTA businesses. SSL, daily backups and GA4 setup. From $45/month.',
   keywords: ['web hosting Toronto', 'managed hosting GTA', 'website maintenance Toronto', 'Next.js hosting', 'Google Analytics setup', 'monthly traffic report', 'website support Markham'],
   alternates: { canonical: 'https://zenaradesigns.com/services/website-maintenance' },
   openGraph: {
     images: ['/opengraph-image'],
-    title: 'Website Maintenance & Hosting | Markham & GTA | Zenara',
+    title: 'Website Maintenance & Hosting, GTA | Zenara Designs',
     description: 'Managed hosting, uptime monitoring and a plain-English monthly traffic report for GTA businesses. SSL, daily backups and GA4 setup. From $45/month.',
     url: 'https://zenaradesigns.com/services/website-maintenance',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Website Maintenance & Hosting | Markham & GTA | Zenara',
+    title: 'Website Maintenance & Hosting, GTA | Zenara Designs',
     description:
       'Managed hosting, uptime monitoring and a plain-English monthly traffic report for GTA businesses. SSL, daily backups and GA4 setup. From $45/month.',
   },

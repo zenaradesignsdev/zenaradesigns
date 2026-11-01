@@ -4,7 +4,7 @@ import { generateBreadcrumbSchema } from '@/lib/structured-data';
 import Schedule from '@/components/pages/Schedule';
 
 export const metadata: Metadata = {
-  title: 'Book a Free Web Design Consultation | GTA | Zenara',
+  title: 'Book a Free Web Design Consultation | Zenara Designs',
   description:
     'Schedule a free 30-minute call with Zenara Designs to discuss your website project. Easy online booking, flexible times. Serving Toronto & all GTA.',
   alternates: { canonical: 'https://zenaradesigns.com/contact/schedule' },
@@ -14,14 +14,14 @@ export const metadata: Metadata = {
   robots: { index: false, follow: true },
   openGraph: {
     images: ['/opengraph-image'],
-    title: 'Book a Free Web Design Consultation | GTA | Zenara',
+    title: 'Book a Free Web Design Consultation | Zenara Designs',
     description:
       'Schedule a free 30-minute call with Zenara Designs to discuss your website project. Easy online booking, flexible times. Serving Toronto & all GTA.',
     url: 'https://zenaradesigns.com/contact/schedule',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Book a Free Web Design Consultation | GTA | Zenara',
+    title: 'Book a Free Web Design Consultation | Zenara Designs',
     description:
       'Schedule a free 30-minute call with Zenara Designs to discuss your website project. Easy online booking, flexible times. Serving Toronto & all GTA.',
   },

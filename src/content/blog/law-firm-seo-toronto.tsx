@@ -173,9 +173,9 @@ const LawFirmSeoTorontoContent = () => {
 export const lawFirmSeoTorontoPost: BlogPost = {
   slug: 'law-firm-seo-toronto',
   title: 'Law Firm SEO in Toronto: A Practical Guide for Small Firms',
-  seoTitle: 'Law Firm SEO Toronto: A Guide for Small Firms | Zenara',
+  seoTitle: 'Law Firm SEO Toronto: Guide for Small Firms | Zenara Designs',
   description:
-    'Local SEO for small Toronto and GTA law firms: Google Business Profile, reviews within the Law Society rules, practice-area pages, local links and what to measure.',
+    'Local SEO for small Toronto and GTA law firms: Google Business Profile, reviews within Law Society rules, practice-area pages, local links and what to measure.',
   excerpt:
     'A sole practitioner won’t outspend the big firms in search, and doesn’t need to. Here is what matters most for a small Toronto law firm, and where the Law Society’s rules change the usual SEO advice.',
   author: 'Kavin Mural',

@@ -130,7 +130,7 @@ const LawFirmWebsiteCostContent = () => {
 export const lawFirmWebsiteCostPost: BlogPost = {
   slug: 'law-firm-website-cost-ontario',
   title: 'How Much Does a Law Firm Website Cost in Ontario? (2026)',
-  seoTitle: 'How Much Does a Law Firm Website Cost in Ontario? | Zenara',
+  seoTitle: 'Law Firm Website Cost in Ontario (2026) | Zenara Designs',
   description:
     'What a law firm website costs in Ontario in 2026, from freelancers to legal marketing agencies, what drives the price for a small firm, and what you can skip.',
   excerpt:

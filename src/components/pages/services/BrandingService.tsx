@@ -2,12 +2,13 @@
 // (TextReveal, FadeIn, Accordion, MiniContactForm) are client components in
 // their own right, so the page copy stays out of the client bundle.
 import Link from 'next/link';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { SafeImage } from '@/components/ui/safe-image';
 import { FadeIn } from '@/components/ui/fade-in';
 import { TextReveal } from '@/components/ui/text-reveal';
-import { brandingFaqs as faqs } from '@/lib/service-content';
+import { brandingFaqs as faqs, serviceContent } from '@/lib/service-content';
 import { PRICES, formatCadRange } from '@/lib/pricing-data';
 
 const INCLUDED = ['Custom Logo Mark', 'Colour Palette', 'Typography Pairing', 'Business Card Design', 'Print-Ready Files', 'Source Files (AI/SVG/PDF)'];
@@ -80,6 +81,13 @@ const BrandingService = () => {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-center">
             {/* Left — heading */}
             <div className="lg:col-span-3">
+              <Breadcrumbs
+                items={[
+                  { name: 'Home', href: '/' },
+                  { name: 'Services', href: '/services' },
+                  { name: serviceContent['branding'].breadcrumbLabel },
+                ]}
+              />
               <FadeIn>
                 <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">Branding — Markham &amp; the GTA</p>
               </FadeIn>

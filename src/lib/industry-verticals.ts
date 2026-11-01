@@ -49,7 +49,7 @@ export const industryVerticals: IndustryVertical[] = [
     parentLabel: 'Law firm website design',
     demoKey: 'lawyers',
     demoLabel: 'law firm',
-    metaTitle: 'Family Law Website Design | Markham & GTA | Zenara',
+    metaTitle: 'Family Law Website Design, Toronto & GTA | Zenara Designs',
     metaDescription:
       'Websites for family law firms across the GTA. Built for clients researching quietly during a difficult time — discreet, reassuring, and easy to contact.',
     heroLead: 'Website Design for',
@@ -113,7 +113,7 @@ export const industryVerticals: IndustryVertical[] = [
     parentLabel: 'Law firm website design',
     demoKey: 'lawyers',
     demoLabel: 'law firm',
-    metaTitle: 'Real Estate Law Website Design | Markham & GTA | Zenara',
+    metaTitle: 'Real Estate Law Website Design, GTA | Zenara Designs',
     metaDescription:
       'Websites for real estate lawyers across the GTA. Built for a fast, price-sensitive, referral-heavy transaction — clear closing costs and a quick quote path.',
     heroLead: 'Website Design for',
@@ -177,7 +177,7 @@ export const industryVerticals: IndustryVertical[] = [
     parentLabel: 'Clinics & wellness',
     demoKey: 'clinics',
     demoLabel: 'clinic',
-    metaTitle: 'Physiotherapy Website Design | Markham & GTA | Zenara',
+    metaTitle: 'Physiotherapy Clinic Website Design, GTA | Zenara Designs',
     metaDescription:
       'Websites for physiotherapy clinics across the GTA. Online booking, condition pages, practitioner profiles, and the insurance answers patients look for first.',
     heroLead: 'Website Design for',
@@ -241,7 +241,7 @@ export const industryVerticals: IndustryVertical[] = [
     parentLabel: 'Clinics & wellness',
     demoKey: 'clinics',
     demoLabel: 'clinic',
-    metaTitle: 'Dental Website Design | Markham & GTA | Zenara',
+    metaTitle: 'Dental Website Design, Toronto & GTA | Zenara Designs',
     metaDescription:
       'Websites for dental practices across the GTA. New-patient booking, treatment pages, insurance and financing clarity, and an anxious-patient path that converts.',
     heroLead: 'Website Design for',

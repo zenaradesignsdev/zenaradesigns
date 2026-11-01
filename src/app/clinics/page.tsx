@@ -8,20 +8,20 @@ import { industryContent } from '@/lib/industry-content';
 const entry = industryContent['clinics'];
 
 export const metadata: Metadata = {
-  title: 'Clinic Web Design Markham & GTA | Zenara',
+  title: 'Clinic Website Design, Toronto & GTA | Zenara Designs',
   description:
     'Websites for GTA physio, chiro, RMT, and dental clinics. Online booking, practitioner profiles, insurance info. Fixed pricing, live in 1–2 weeks.',
   alternates: { canonical: 'https://zenaradesigns.com/clinics' },
   openGraph: {
-    title: 'Clinic Web Design Markham & GTA | Zenara',
+    title: 'Clinic Website Design, Toronto & GTA | Zenara Designs',
     description:
       'Websites for GTA physio, chiro, RMT, and dental clinics. Online booking, practitioner profiles, insurance info. Fixed pricing, live in 1–2 weeks.',
     url: 'https://zenaradesigns.com/clinics',
-    images: [{ url: 'https://zenaradesigns.com/images/clinic-practitioner.png' }],
+    images: [{ url: 'https://zenaradesigns.com/images/clinic-practitioner.jpg' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Clinic Web Design Markham & GTA | Zenara',
+    title: 'Clinic Website Design, Toronto & GTA | Zenara Designs',
     description:
       'Websites for GTA physio, chiro, RMT, and dental clinics. Online booking, practitioner profiles, insurance info. Fixed pricing, live in 1–2 weeks.',
   },

@@ -50,20 +50,20 @@ const aboutBreadcrumb = breadcrumbSchema('/about', [
 ]);
 
 export const metadata: Metadata = {
-  title: 'Meet the Team Behind Zenara — Markham Web Design | Zenara',
+  title: 'About Zenara Designs | Web Design Studio, Markham ON',
   description:
     'Zenara Designs is a Markham web design studio founded by engineers from Waterloo and Ottawa, building fast websites for law firms, clinics and GTA businesses.',
   alternates: { canonical: 'https://zenaradesigns.com/about' },
   openGraph: {
     images: ['/opengraph-image'],
-    title: 'Meet the Team Behind Zenara — Markham Web Design | Zenara',
+    title: 'About Zenara Designs | Web Design Studio, Markham ON',
     description:
       'Zenara Designs is a Markham web design studio founded by engineers from Waterloo and Ottawa, building fast websites for law firms, clinics and GTA businesses.',
     url: 'https://zenaradesigns.com/about',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Meet the Team Behind Zenara — Markham Web Design | Zenara',
+    title: 'About Zenara Designs | Web Design Studio, Markham ON',
     description:
       'Zenara Designs is a Markham web design studio founded by engineers from Waterloo and Ottawa, building fast websites for law firms, clinics and GTA businesses.',
   },

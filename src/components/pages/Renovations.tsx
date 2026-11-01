@@ -4,6 +4,7 @@
 // server-side from the matching app/<route>/page.tsx instead of being
 // injected here in a useEffect, where crawlers without JS never saw it.
 import Link from 'next/link';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import Image from 'next/image';
 import { ArrowRight, ArrowUpRight, Hammer, Building2, Zap, Wind, Trees, Home, type LucideIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -13,12 +14,12 @@ import { FaqDisclosureList } from '@/components/FaqDisclosureList';
 import { TextReveal } from '@/components/ui/text-reveal';
 import { FadeIn } from '@/components/ui/fade-in';
 import { memo } from 'react';
-import { renovationsFaqs as faqs } from '@/lib/industry-content';
+import { renovationsFaqs as faqs, industryContent } from '@/lib/industry-content';
 import { SafeImage } from '@/components/ui/safe-image';
 
 const renovationHeroExterior = '/images/renovation-hero-exterior.jpg';
 const renovationBlueprintConsult = '/images/renovation-blueprint-consult.jpg';
-const renoProjectDemo = '/images/reno-project.png';
+const renoProjectDemo = '/images/reno-project.jpg';
 const zenaraMark = '/images/zenara-logo-v5.svg';
 
 interface TradeCard {
@@ -133,6 +134,7 @@ const Renovations = () => {
           {/* Left — Text */}
           <div className="bg-slate-900/95 backdrop-blur-sm flex items-center py-12 sm:py-16 md:py-20 lg:py-24 px-6 sm:px-8 md:px-12 lg:px-16 border-r border-slate-800/50 pt-24 sm:pt-28 md:pt-32 lg:pt-40">
             <div className="w-full max-w-2xl mx-auto lg:mx-0">
+              <Breadcrumbs items={[{ name: 'Home', href: '/' }, { name: industryContent['renovations'].breadcrumbLabel }]} />
               <div className="w-12 h-0.5 bg-gradient-to-r from-cyan-300 via-purple-300 to-cyan-300 mb-6"></div>
 
               <TextReveal

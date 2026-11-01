@@ -134,9 +134,9 @@ const CustomVsTemplateContent = () => {
 export const customVsTemplatePost: BlogPost = {
   slug: 'custom-website-vs-template-toronto',
   title: 'Custom Website vs. Template: What a Toronto Small Business Actually Gets for the Money',
-  seoTitle: 'Custom Website vs. Template: Toronto Small Business Guide | Zenara',
+  seoTitle: 'Custom Website vs. Template: Toronto Guide | Zenara Designs',
   description:
-    'Custom website, Wix or Squarespace template, or WordPress theme? What each gets a Toronto small business for the money, what they cost, and how to tell quotes apart.',
+    'Custom website, Wix or Squarespace template, or WordPress theme? What each gets a Toronto small business, what it costs, and how to tell quotes apart.',
   excerpt:
     'Almost every Toronto web designer calls their work custom. Here is what custom, template and WordPress sites actually get you for the money, and how to tell which one a quote describes.',
   author: 'Kavin Mural',
