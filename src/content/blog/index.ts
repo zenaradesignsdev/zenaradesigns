@@ -12,6 +12,7 @@ import { websiteCostMarkhamPost } from './how-much-does-a-website-cost-markham';
 import { customVsTemplatePost } from './custom-website-vs-template-toronto';
 import { lawFirmSeoTorontoPost } from './law-firm-seo-toronto';
 import { lawFirmWebsiteCostPost } from './law-firm-website-cost-ontario';
+import { aodaSmallBusinessWebsitePost } from './aoda-small-business-website';
 
 // Featured images live in /public/images/blog/<slug>.jpg (1600x900).
 // Photos are from Unsplash under the Unsplash License (free for commercial
@@ -26,13 +27,19 @@ import { lawFirmWebsiteCostPost } from './law-firm-website-cost-ontario';
 //   made-to-measure-suit-fabric-swatches Yasamine June     unsplash.com/photos/9pFE-9CWEBI
 //   bay-street-sign-toronto              Jonathan Gong     unsplash.com/photos/hValjGcbDmk
 //   osgoode-hall-old-city-hall-toronto   Hazwan Kosni      unsplash.com/photos/6HUS2Ghxdac
-// The law firm, accounting firm and renovation posts use original illustrations,
+// The law firm, accounting firm, renovation and AODA posts use original illustrations,
 // not stock photos. Posts from 2026-10-20 on name the file after what the photo
 // shows (e.g. stiver-mill-unionville-markham.jpg) rather than the post slug.
 const image = (slug: string) => `/images/blog/${slug}.jpg`;
 
 // Posts are ordered by published date (newest first)
 export const blogPosts: BlogPost[] = [
+  {
+    ...aodaSmallBusinessWebsitePost,
+    featuredImage: image('aoda-website-accessibility-checks'),
+    featuredImageAlt:
+      'Illustration of a small business website annotated with six accessibility checks: keyboard focus, alt text, contrast, form labels, captions and 200% zoom',
+  },
   {
     ...websiteCostMarkhamPost,
     featuredImage: image('stiver-mill-unionville-markham'),

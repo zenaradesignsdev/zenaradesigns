@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { BlogMetadata } from './BlogMetadata';
 import { BlogOutline } from './BlogOutline';
 import type { PostOutline } from '@/lib/blog-outline';
+import { findTeamMember } from '@/lib/team';
 import type { BlogPost } from '@/types';
 
 interface BlogPostLayoutProps {
@@ -13,6 +14,7 @@ interface BlogPostLayoutProps {
 export const BlogPostLayout = ({ post, outline }: BlogPostLayoutProps) => {
   const ContentComponent = post.content;
   const tag = post.tags?.[0];
+  const author = findTeamMember(post.author);
 
   return (
     <article>
@@ -76,6 +78,25 @@ export const BlogPostLayout = ({ post, outline }: BlogPostLayoutProps) => {
             </li>
           ))}
         </ul>
+      )}
+
+      {/* Who wrote it and what they know: role and education from team.ts. */}
+      {author && (
+        <aside aria-label="About the author" className="mt-10 max-w-[42rem] flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+          <span
+            aria-hidden="true"
+            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-cyan-500/30 bg-cyan-500/10 text-sm font-medium text-cyan-200"
+          >
+            {author.initials}
+          </span>
+          <p className="text-sm text-white/55 font-light leading-relaxed">
+            Written by{' '}
+            <Link href="/about" className="text-white/85 hover:text-cyan-300 transition-colors">
+              {author.name}
+            </Link>
+            , {author.role} at Zenara Designs. {author.degree}, {author.school}.
+          </p>
+        </aside>
       )}
     </article>
   );
