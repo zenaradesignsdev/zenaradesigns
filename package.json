@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "type-check": "tsc --noEmit",
     "gsc-audit": "node scripts/gsc-audit.js",
-    "pagespeed-audit": "node scripts/pagespeed-audit.js"
+    "pagespeed-audit": "node scripts/pagespeed-audit.js",
+    "indexnow": "node scripts/indexnow-submit.mjs"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "^1.2.11",

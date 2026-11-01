@@ -1,0 +1,46 @@
+# Tells Bing (and the other IndexNow engines) which pages changed, right after
+# Vercel finishes a production deploy. Vercel's GitHub integration reports each
+# deploy as a GitHub deployment named "Production – zenaradesigns"; this runs
+# when one of those succeeds.
+#
+# Pages count as changed when their sitemap lastmod is on or after the day of
+# the previous production deploy, so bump lastmod in src/app/sitemap.ts (or a
+# post's updatedAt) whenever a page's content changes.
+name: IndexNow
+
+on: deployment_status
+
+permissions:
+  contents: read
+  deployments: read
+
+jobs:
+  submit:
+    if: github.event.deployment_status.state == 'success' && startsWith(github.event.deployment.environment, 'Production')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Find the previous production deploy
+        id: previous
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DEPLOY_ENV: ${{ github.event.deployment.environment }}
+        run: |
+          # Newest first: [0] is this deploy, [1] the one before it.
+          created=$(gh api -X GET "repos/${{ github.repository }}/deployments" \
+            -f environment="$DEPLOY_ENV" -f per_page=2 --jq '.[1].created_at // empty')
+          # With no earlier deploy on record, look back a week.
+          echo "since=${created:-$(date -u -d '7 days ago' +%Y-%m-%dT%H:%M:%SZ)}" >> "$GITHUB_OUTPUT"
+
+      # The production domain can take a few seconds to point at the new
+      # deploy after it reports success.
+      - name: Wait for the domain to switch over
+        run: sleep 30
+
+      - name: Submit changed URLs
+        run: node scripts/indexnow-submit.mjs --changed-since "${{ steps.previous.outputs.since }}"
