@@ -10,6 +10,7 @@ import { ReviewsStrip } from '@/components/ReviewsStrip';
 import { websitePlanSummaries } from '@/lib/pricing-data';
 import { processPhases } from '@/lib/process-data';
 import { team } from '@/lib/team';
+import { hasCaseStudy } from '@/lib/case-study-index';
 
 // Three background treatments cycled by section position (not identity), so
 // however a city's sectionOrder is arranged, no two adjacent sections ever
@@ -59,10 +60,10 @@ const SERVICE_HIGHLIGHTS = [
 ];
 
 const INDUSTRY_IMAGES: Record<string, { src: string; alt: string }> = {
-  '/lawyers': { src: '/images/lawyer-professional-meeting.png', alt: 'Lawyer meeting with a client in a professional office setting' },
-  '/accountants': { src: '/images/accountant-computer-office.png', alt: 'Accountant working at a desk with financial documents and a computer' },
+  '/lawyers': { src: '/images/lawyer-professional-meeting.jpg', alt: 'Lawyer meeting with a client in a professional office setting' },
+  '/accountants': { src: '/images/accountant-computer-office.jpg', alt: 'Accountant working at a desk with financial documents and a computer' },
   '/renovations': { src: '/images/renovation-kitchen-modern.jpg', alt: 'Modern renovated kitchen showcasing finished contractor work' },
-  '/clinics': { src: '/images/clinic-practitioner.png', alt: 'Physiotherapy practitioner working with a patient in a treatment room' },
+  '/clinics': { src: '/images/clinic-practitioner.jpg', alt: 'Physiotherapy practitioner working with a patient in a treatment room' },
 };
 
 interface WebDesignCityProps {
@@ -135,6 +136,14 @@ const WebDesignCity = ({ content }: WebDesignCityProps) => {
                 <p key={paragraph} className="text-white/60 leading-relaxed font-light">{paragraph}</p>
               ))}
             </div>
+            {spotlight.link && (
+              <Link
+                href={spotlight.link.href}
+                className="inline-flex items-center mt-6 text-sm font-medium text-cyan-300/80 hover:text-cyan-300 transition-colors group"
+              >
+                {spotlight.link.label} <ArrowRight className="ml-1.5 h-3.5 w-3.5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            )}
           </div>
           {spotlight.points && spotlight.points.length > 0 && (
             <div className="lg:col-span-3 grid grid-cols-1 gap-4">
@@ -329,33 +338,56 @@ const WebDesignCity = ({ content }: WebDesignCityProps) => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8 mb-10">
-          {featuredProjects.map((project) => (
-            <a
-              key={project.slug}
-              href={project.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`${project.name} — view the live site (opens in a new tab)`}
-              className="group relative flex flex-col bg-slate-900/80 rounded-xl overflow-hidden border border-slate-800/50 hover:border-cyan-500/40 transition-all duration-300 hover:-translate-y-1"
-            >
-              <div className="relative w-full h-44 sm:h-48 overflow-hidden">
-                <SafeImage
-                  src={project.image}
-                  alt={project.imageAlt}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
-              </div>
-              <div className="p-5 flex flex-col flex-1">
-                <span className="text-cyan-300/60 text-xs font-medium uppercase tracking-wide mb-1.5">{project.tag}</span>
-                <h3 className="text-white font-semibold text-base mb-2 group-hover:text-cyan-300 transition-colors duration-300">{project.name}</h3>
-                <p className="text-white/55 text-sm font-light leading-relaxed flex-grow">{project.description}</p>
-                <span className="inline-flex items-center text-cyan-300 text-sm font-medium mt-4">
-                  View live site <ArrowUpRight className="ml-1.5 h-3.5 w-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </span>
-              </div>
-            </a>
-          ))}
+          {featuredProjects.map((project) => {
+            // Projects with a case study link to it, so the proof (and the
+            // link equity) stays on this site; the case study links out to the
+            // live site. The rest still go straight to the client's site.
+            const caseStudy = hasCaseStudy(project.slug);
+            const cardClass =
+              'group relative flex flex-col bg-slate-900/80 rounded-xl overflow-hidden border border-slate-800/50 hover:border-cyan-500/40 transition-all duration-300 hover:-translate-y-1';
+            const body = (
+              <>
+                <div className="relative w-full h-44 sm:h-48 overflow-hidden">
+                  <SafeImage
+                    src={project.image}
+                    alt={project.imageAlt}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.05]"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent" />
+                </div>
+                <div className="p-5 flex flex-col flex-1">
+                  <span className="text-cyan-300/60 text-xs font-medium uppercase tracking-wide mb-1.5">{project.tag}</span>
+                  <h3 className="text-white font-semibold text-base mb-2 group-hover:text-cyan-300 transition-colors duration-300">{project.name}</h3>
+                  <p className="text-white/55 text-sm font-light leading-relaxed flex-grow">{project.description}</p>
+                  {caseStudy ? (
+                    <span className="inline-flex items-center text-cyan-300 text-sm font-medium mt-4">
+                      Read the {project.name} case study <ArrowRight className="ml-1.5 h-3.5 w-3.5 shrink-0 group-hover:translate-x-1 transition-transform" />
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center text-cyan-300 text-sm font-medium mt-4">
+                      View live site <ArrowUpRight className="ml-1.5 h-3.5 w-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </span>
+                  )}
+                </div>
+              </>
+            );
+            return caseStudy ? (
+              <Link key={project.slug} href={`/projects/${project.slug}`} className={cardClass}>
+                {body}
+              </Link>
+            ) : (
+              <a
+                key={project.slug}
+                href={project.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${project.name} — view the live site (opens in a new tab)`}
+                className={cardClass}
+              >
+                {body}
+              </a>
+            );
+          })}
         </div>
 
         <div className="text-center">

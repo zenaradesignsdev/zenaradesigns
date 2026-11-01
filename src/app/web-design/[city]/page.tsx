@@ -80,7 +80,8 @@ export default function WebDesignCityPage({ params }: Props) {
     '@id': `${url}#breadcrumb`,
     itemListElement: [
       { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://zenaradesigns.com' },
-      { '@type': 'ListItem', position: 2, name: 'Web Design', item: 'https://zenaradesigns.com/services/web-design' },
+      // Matches the visible trail: Home / Locations / City.
+      { '@type': 'ListItem', position: 2, name: 'Locations', item: 'https://zenaradesigns.com/locations' },
       { '@type': 'ListItem', position: 3, name: content.city, item: url },
     ],
   };

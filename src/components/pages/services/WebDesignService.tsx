@@ -2,6 +2,7 @@
 // (TextReveal, FadeIn, Accordion, MiniContactForm) are client components in
 // their own right, so the page copy stays out of the client bundle.
 import Link from 'next/link';
+import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { RelatedGuide } from '@/components/Blog/RelatedGuide';
 import { ArrowRight, ArrowUpRight, Check, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -9,10 +10,11 @@ import { SafeImage } from '@/components/ui/safe-image';
 import { FadeIn } from '@/components/ui/fade-in';
 import { TextReveal } from '@/components/ui/text-reveal';
 import { ReviewsStrip } from '@/components/ReviewsStrip';
-import { webDesignFaqs as faqs } from '@/lib/service-content';
+import { hasCaseStudy } from '@/lib/case-study-index';
+import { webDesignFaqs as faqs, serviceContent } from '@/lib/service-content';
 import { PRICES, formatCad, packagePrice, websitePlanSummaries } from '@/lib/pricing-data';
 
-const STACK = ['Next.js 14', 'TypeScript', 'Tailwind CSS', 'Vercel', 'Cloudflare', 'Figma'];
+const STACK = ['Next.js 14', 'TypeScript', 'Tailwind CSS', 'Vercel', 'Figma'];
 
 const CAPABILITIES = [
   { title: 'Custom UI/UX Design', body: 'Bespoke layouts built around your brand — no templates, no page builders.' },
@@ -139,7 +141,7 @@ const FEATURED_WORK = [
     industry: 'Construction supply & e-commerce',
     url: 'ashcamcuttingsolution.ca',
     href: 'https://ashcamcuttingsolution.ca/',
-    image: '/images/ashcam-site.png',
+    image: '/images/ashcam-site.jpg',
     imageAlt: 'AshCam Cutting Solutions website — construction blades and equipment e-commerce platform',
   },
   {
@@ -149,17 +151,17 @@ const FEATURED_WORK = [
     industry: 'Event planning',
     url: 'fungenevents.ca',
     href: 'https://fungenevents.ca/',
-    image: '/images/fungen-events.png',
+    image: '/images/fungen-events.jpg',
     imageAlt: 'FunGen Events website — event planning services with a showcase of recent events',
   },
   {
     slug: 'jb-loans',
     name: 'JB Loans',
-    industry: 'Mortgage brokerage',
+    industry: 'Mortgage agent',
     url: 'jbloans.ca',
     href: 'https://jbloans.ca/',
-    image: '/images/jbloans.png',
-    imageAlt: 'JB Loans website — mortgage broker site with application enquiry flow',
+    image: '/images/jbloans.jpg',
+    imageAlt: 'JB Loans website — licensed mortgage agent site with a mortgage calculator and free-call booking',
   },
   {
     slug: 'ik-smart-solution',
@@ -168,13 +170,14 @@ const FEATURED_WORK = [
     industry: 'Security & smart home',
     url: 'iksmartsolution.ca',
     href: 'https://www.iksmartsolution.ca/',
-    image: '/images/iksmartsolutions.png',
+    image: '/images/iksmartsolutions.jpg',
     imageAlt: 'IK Smart Solution website — security systems and smart home integrator',
   },
   {
     slug: 'heroes-catering',
     name: 'Heroes Catering',
-    industry: 'Catering & hospitality',
+    location: 'Scarborough',
+    industry: 'Restaurant & catering',
     url: 'heroes-catering.com',
     href: 'https://heroes-catering.com/',
     image: '/images/heroes-catering.jpg',
@@ -204,6 +207,13 @@ const WebDesignService = () => {
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 lg:gap-16 items-center">
             {/* Left — heading */}
             <div className="lg:col-span-3">
+              <Breadcrumbs
+                items={[
+                  { name: 'Home', href: '/' },
+                  { name: 'Services', href: '/services' },
+                  { name: serviceContent['web-design'].breadcrumbLabel },
+                ]}
+              />
               <FadeIn>
                 <p className="text-xs sm:text-sm uppercase tracking-[0.2em] text-white/40 mb-4 sm:mb-6 font-medium">Not a Template</p>
               </FadeIn>
@@ -400,41 +410,63 @@ const WebDesignService = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8 mb-10">
-            {FEATURED_WORK.map((project) => (
-              <a
-                key={project.slug}
-                href={project.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={`${project.name} — view the live site (opens in a new tab)`}
-                className="group relative flex flex-col rounded-xl overflow-hidden border border-slate-800/50 hover:border-cyan-500/40 bg-slate-950/60 sm:last:odd:col-span-2 sm:last:odd:justify-self-center sm:last:odd:w-[calc(50%-1rem)] transition-all duration-300 hover:-translate-y-1"
-              >
-                {/* Browser chrome frame */}
-                <div className="flex items-center gap-1.5 px-3 py-2.5 bg-slate-900/90 border-b border-white/5">
-                  <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
-                  <span className="ml-2 text-[11px] text-white/35 font-mono truncate">{project.url}</span>
-                </div>
-                <div className="relative w-full h-48 sm:h-56 overflow-hidden">
-                  <SafeImage
-                    src={project.image}
-                    alt={project.imageAlt}
-                    className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
-                  />
-                </div>
-                <div className="p-5 flex items-center justify-between">
-                  <div>
-                    <span className="text-cyan-300/60 text-xs font-medium uppercase tracking-wide">
-                      {project.industry}
-                      {project.location && <span className="text-white/40"> · {project.location}</span>}
-                    </span>
-                    <h3 className="text-white font-semibold text-base group-hover:text-cyan-300 transition-colors duration-300">{project.name}</h3>
+            {FEATURED_WORK.map((project) => {
+              // Case-study projects link to the case study (which links out to
+              // the live site); the rest go straight to the client's site.
+              const caseStudy = hasCaseStudy(project.slug);
+              const cardClass =
+                'group relative flex flex-col rounded-xl overflow-hidden border border-slate-800/50 hover:border-cyan-500/40 bg-slate-950/60 sm:last:odd:col-span-2 sm:last:odd:justify-self-center sm:last:odd:w-[calc(50%-1rem)] transition-all duration-300 hover:-translate-y-1';
+              const body = (
+                <>
+                  {/* Browser chrome frame */}
+                  <div className="flex items-center gap-1.5 px-3 py-2.5 bg-slate-900/90 border-b border-white/5">
+                    <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-white/15" />
+                    <span className="ml-2 text-[11px] text-white/35 font-mono truncate">{project.url}</span>
                   </div>
-                  <ArrowUpRight className="h-4 w-4 text-cyan-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform flex-shrink-0" />
-                </div>
-              </a>
-            ))}
+                  <div className="relative w-full h-48 sm:h-56 overflow-hidden">
+                    <SafeImage
+                      src={project.image}
+                      alt={project.imageAlt}
+                      className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-[1.04]"
+                    />
+                  </div>
+                  <div className="p-5 flex items-center justify-between gap-4">
+                    <div>
+                      <span className="text-cyan-300/60 text-xs font-medium uppercase tracking-wide">
+                        {project.industry}
+                        {project.location && <span className="text-white/40"> · {project.location}</span>}
+                      </span>
+                      <h3 className="text-white font-semibold text-base group-hover:text-cyan-300 transition-colors duration-300">
+                        {caseStudy ? `${project.name} case study` : project.name}
+                      </h3>
+                    </div>
+                    {caseStudy ? (
+                      <ArrowRight aria-hidden="true" className="h-4 w-4 text-cyan-300 group-hover:translate-x-1 transition-transform flex-shrink-0" />
+                    ) : (
+                      <ArrowUpRight aria-hidden="true" className="h-4 w-4 text-cyan-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform flex-shrink-0" />
+                    )}
+                  </div>
+                </>
+              );
+              return caseStudy ? (
+                <Link key={project.slug} href={`/projects/${project.slug}`} className={cardClass}>
+                  {body}
+                </Link>
+              ) : (
+                <a
+                  key={project.slug}
+                  href={project.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`${project.name} — view the live site (opens in a new tab)`}
+                  className={cardClass}
+                >
+                  {body}
+                </a>
+              );
+            })}
           </div>
 
           <div className="text-center">

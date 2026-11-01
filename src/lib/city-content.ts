@@ -30,6 +30,8 @@ export interface CitySpotlight {
   heading: string;
   paragraphs: string[];
   points?: CityWhyPoint[];
+  /** Internal link under the paragraphs, e.g. to a local client's case study. */
+  link?: { href: string; label: string };
 }
 
 export interface CityLocalTeam {
@@ -68,7 +70,7 @@ export interface CityContent {
   featuredProjectSlugs?: string[];
   /** "Who you'd work with" section — only for cities we genuinely work in person. */
   localTeam?: CityLocalTeam;
-  /** One city-specific deep-dive section (Markham: multilingual sites; Pickering: Durham Region). */
+  /** One city-specific deep-dive section (e.g. Markham: multilingual sites; Pickering: Durham Region; Scarborough: a local client). */
   spotlight?: CitySpotlight;
   /**
    * Anchor text for the link to /services/web-design. Toronto sets it so the
@@ -129,17 +131,17 @@ export const allProjects: RecentWorkProject[] = [
     name: 'AshCam Cutting Solutions',
     tag: 'E-commerce & Construction',
     description: 'A modern e-commerce platform for a construction supplier, built for industrial customers who order online.',
-    image: '/images/ashcam-site.png',
+    image: '/images/ashcam-site.jpg',
     imageAlt: 'AshCam Cutting Solutions website — construction blades and equipment e-commerce platform',
     slug: 'ashcam-cutting-solutions',
     url: 'https://ashcamcuttingsolution.ca/',
   },
   {
     name: 'JB Loans',
-    tag: 'Mortgage Broker',
-    description: 'A professional mortgage broker site helping clients find the right loan with a seamless application process.',
-    image: '/images/jbloans.png',
-    imageAlt: 'JB Loans mortgage broker website — professional mortgage services platform',
+    tag: 'Mortgage Agent',
+    description: 'A site for a licensed mortgage agent, with a mortgage calculator and free-call booking. Built in five days.',
+    image: '/images/jbloans.jpg',
+    imageAlt: 'JB Loans website for a licensed mortgage agent, with a mortgage calculator',
     slug: 'jb-loans',
     url: 'https://jbloans.ca/',
   },
@@ -147,7 +149,7 @@ export const allProjects: RecentWorkProject[] = [
     name: 'IK Smart Solution',
     tag: 'Security & Smart Home',
     description: 'Custom surveillance, access control, and smart home installations for residential and commercial properties.',
-    image: '/images/iksmartsolutions.png',
+    image: '/images/iksmartsolutions.jpg',
     imageAlt: 'IK Smart Solution website — custom security and smart home systems integrator',
     slug: 'ik-smart-solution',
     url: 'https://www.iksmartsolution.ca/',
@@ -156,7 +158,7 @@ export const allProjects: RecentWorkProject[] = [
     name: 'FunGen Events',
     tag: 'Event Planning',
     description: 'A polished, professional online presence built to showcase an event planning company’s services and offerings.',
-    image: '/images/fungen-events.png',
+    image: '/images/fungen-events.jpg',
     imageAlt: 'FunGen Events website — event planning business website design',
     slug: 'fungen-events',
     url: 'https://fungenevents.ca/',
@@ -172,10 +174,10 @@ export const allProjects: RecentWorkProject[] = [
   },
   {
     name: 'Heroes Catering',
-    tag: 'Catering',
-    description: 'A clean, appetizing online presence showcasing catering services and menu offerings.',
+    tag: 'Restaurant & Catering',
+    description: 'A website and Google Business Profile for a Tamil and South Asian food counter and caterer in Scarborough.',
     image: '/images/heroes-catering.jpg',
-    imageAlt: 'Heroes Catering website — catering business website design',
+    imageAlt: 'Heroes Catering website — Tamil and South Asian food and catering in Scarborough',
     slug: 'heroes-catering',
     url: 'https://heroes-catering.com/',
   },
@@ -186,7 +188,7 @@ export const cityContent: Record<string, CityContent> = {
     slug: 'markham',
     city: 'Markham',
     region: 'York Region',
-    metaTitle: 'Web Design Markham, ON | Fixed-Price Custom Websites | Zenara',
+    metaTitle: 'Web Design Markham, ON | Fixed-Price Sites | Zenara Designs',
     metaDescription: `Markham-based web design studio building custom, fast websites for local businesses. Fixed prices from ${packagePrice('starter')}, live in 1–2 weeks. Free consultation.`,
     heroIntro: 'Custom websites for Markham businesses, from a studio based right here in Markham.',
     intro:
@@ -293,9 +295,8 @@ export const cityContent: Record<string, CityContent> = {
     slug: 'stouffville',
     city: 'Stouffville',
     region: 'York Region',
-    metaTitle: 'Web Design Stouffville | Custom Business Sites | Zenara',
-    metaDescription:
-      'Custom web design in Stouffville for local and commuter-community businesses. Fast, modern, SEO-optimized websites. Free consultation, transparent pricing.',
+    metaTitle: 'Web Design Stouffville, ON | Fixed-Price Sites | Zenara Designs',
+    metaDescription: `Web design for Stouffville businesses, from Main Street shops to trades, by a studio next door in Markham. Fixed prices from ${packagePrice('starter')}. Free consultation.`,
     heroIntro: 'Websites for Stouffville businesses serving a fast-growing commuter community.',
     intro:
       'Whitchurch-Stouffville has grown rapidly from a small town into a thriving commuter community — and new residents research local businesses online before ever visiting.',
@@ -327,6 +328,15 @@ export const cityContent: Record<string, CityContent> = {
     industries: INDUSTRY_LINKS,
     faqs: [
       {
+        question: 'How much does a website cost in Stouffville?',
+        answer: `Our fixed prices are ${packageRangeSentence()}. Each includes responsive design, SEO setup and SSL, and you get a written quote before any work starts.`,
+      },
+      {
+        question: 'Can we meet in person?',
+        answer:
+          'Yes. Whitchurch-Stouffville borders Markham, where we are based, so we are happy to meet at your shop or office for the kickoff and the design review. Day-to-day work happens by email and video call.',
+      },
+      {
         question: 'Is Stouffville too small a market to justify a professional website?',
         answer:
           'The opposite, actually. Whitchurch-Stouffville is one of the fastest-growing towns in York Region, and most of those new residents have no existing loyalty to any local business — they search online to find one. A polished website is how you become their first choice before a competitor does.',
@@ -350,24 +360,50 @@ export const cityContent: Record<string, CityContent> = {
     heroImage: '/images/stouffville-main-street.jpg',
     ogImage: { src: '/images/og/stouffville-main-street-og.jpg', alt: 'Historic storefronts along Main Street Stouffville, Ontario' },
     heroImageAlt: 'Historic storefronts along Main Street Stouffville, Ontario',
-    localSeoBody:
-      'We optimize your Google Business Profile and build citations with real local organizations — the Whitchurch-Stouffville Chamber of Commerce among them — so your business shows up for Stouffville-specific searches, not just the broader York Region term everyone else is chasing.',
+    localSeoBody: 'We set up your Google Business Profile and local listings so you show up for Stouffville searches, and for Ballantrae and Musselman’s Lake if you serve them, rather than only the broad York Region terms. That includes the Whitchurch-Stouffville Chamber of Commerce directory if you are a member.',
     geoBody:
       "When a new resident asks ChatGPT or Perplexity for a good local business in Stouffville, we want your site structured so it can actually be the answer — not buried under results built for Toronto.",
     smallBusinessNote:
       'Most of the businesses lining Main Street are independently owned, and that\'s exactly who we build for — trades, clinics, and shops that need to look established online without an agency-sized budget.',
     focusAreas: ['Retail & Dining', 'Trades', 'Personal Services', 'Professional Services'],
     featuredProjectSlugs: ['ashcam-cutting-solutions', 'heroes-catering', 'pattys-delights'],
-    sectionOrder: ['advantage', 'recentWork', 'whatYouGet', 'industries', 'faq'],
+    localTeam: {
+      heading: 'Just south of you, in Markham',
+      paragraphs: [
+        'Whitchurch-Stouffville shares its southern border with Markham, where we are based. For Stouffville clients we meet in person for the kickoff and design review, on Main Street or wherever suits you; everything in between happens by email and video call.',
+        'The two co-founders who take your first call are the people who design and build your site, so nothing gets lost between a salesperson and a developer.',
+      ],
+    },
+    spotlight: {
+      eyebrow: 'Two kinds of customer',
+      heading: 'Long-time locals and brand-new neighbours',
+      paragraphs: [
+        'Stouffville businesses serve two audiences at once: families who have shopped on Main Street for years, and newcomers in the new subdivisions who have never heard of you and will search before they visit. A good site has to reassure the first and introduce you to the second.',
+      ],
+      points: [
+        {
+          title: 'Main Street shops and restaurants',
+          body: 'Accurate hours, menus and events on the site and your Google profile, so visitors who come for the town’s festivals and weekends find you open.',
+        },
+        {
+          title: 'Trades serving new builds',
+          body: 'Project galleries and a quote form on every page, for contractors and installers working in the new neighbourhoods and the rural north of the town.',
+        },
+        {
+          title: 'Commuters on the Stouffville line',
+          body: 'Many residents commute to Toronto, and they look up local services on their phones. We build mobile-first with click-to-call.',
+        },
+      ],
+    },
+    sectionOrder: ['local', 'advantage', 'pricing', 'spotlight', 'recentWork', 'reviews', 'whatYouGet', 'industries', 'faq'],
   },
   scarborough: {
     slug: 'scarborough',
     city: 'Scarborough',
     region: 'City of Toronto',
-    metaTitle: 'Web Design Scarborough | Small Business Sites | Zenara',
-    metaDescription:
-      'Custom web design in Scarborough for small and growing businesses. Fast, modern, SEO-optimized sites that win local customers. Free consultation.',
-    heroIntro: 'Websites for the small businesses powering one of Toronto’s most diverse communities.',
+    metaTitle: 'Web Design Scarborough, ON | Fixed-Price Sites | Zenara Designs',
+    metaDescription: `Web design for Scarborough small businesses, from a studio next door in Markham. Fixed prices from ${packagePrice('starter')}, live in 1–2 weeks. Free consultation.`,
+    heroIntro: 'Websites for Scarborough’s independent businesses, from a studio just across Steeles in Markham.',
     intro:
       'Scarborough is one of the most culturally diverse parts of Toronto, home to thousands of small and family-run businesses — and customers increasingly check online before they ever visit.',
     economy:
@@ -398,6 +434,20 @@ export const cityContent: Record<string, CityContent> = {
     industries: INDUSTRY_LINKS,
     faqs: [
       {
+        question: 'How much does a website cost in Scarborough?',
+        answer: `Our fixed prices are ${packageRangeSentence()}. Each includes responsive design, SEO setup and SSL, and you get a written quote before any work starts. Most independent Scarborough businesses fit the Small Business plan.`,
+      },
+      {
+        question: 'Can we meet in person?',
+        answer:
+          'Yes. We are based in Markham, just north of Scarborough across Steeles Avenue, so we are glad to meet at your business or somewhere nearby for the kickoff and the design review. Everything in between happens by email and video call.',
+      },
+      {
+        question: 'Have you built websites for Scarborough businesses?',
+        answer:
+          'Yes. FunGen Events, a Scarborough event planning studio, came to us for a logo, business cards and a new website, and Heroes Catering, a Tamil and South Asian food counter in GTA Mall, for a website and Google Business Profile setup. Both case studies are on our projects page.',
+      },
+      {
         question: 'Can you build a multilingual site for my Scarborough customers?',
         answer:
           'Yes. Scarborough is one of the most linguistically diverse parts of the country, and offering key pages in a second language — Mandarin, Cantonese, Tamil, and others are all common here — signals to customers that you understand the community you serve.',
@@ -420,21 +470,50 @@ export const cityContent: Record<string, CityContent> = {
     ],
     heroImage: '/images/scarborough-dining-street.jpg',
     heroImageAlt: 'A restaurant-lined street with a Canadian flag, representing Scarborough’s diverse dining and small business community',
-    localSeoBody:
-      'We optimize your Google Business Profile and build citations with local organizations like the Scarborough Business Association, so your site ranks for searches specific to your neighbourhood — not just the broad "Scarborough" term every competitor is also chasing.',
+    localSeoBody: 'Scarborough isn’t one market. Agincourt, Malvern, Birch Cliff and West Hill each have their own customers, so we write pages that name the neighbourhoods you actually serve, set up your Google Business Profile properly, and list you in the directories that matter locally, including your BIA or business association if you are a member.',
     geoBody:
       'We also structure your content so AI tools like ChatGPT and Perplexity can read and cite it directly — useful in a market where word of mouth already carries real weight and AI-driven recommendations are becoming an extension of that.',
     smallBusinessNote:
       "Scarborough's economy runs on independent and family-run businesses more than almost anywhere else in the GTA — we build for that reality with pricing and turnaround that fit a small operation, not a corporate budget.",
     focusAreas: ['Restaurants & Retail', 'Healthcare & Clinics', 'Education', 'Community Services'],
-    featuredProjectSlugs: ['pattys-delights', 'heroes-catering', 'fungen-events'],
-    sectionOrder: ['advantage', 'industries', 'whatYouGet', 'recentWork', 'faq'],
+    featuredProjectSlugs: ['fungen-events', 'pattys-delights', 'heroes-catering'],
+    localTeam: {
+      heading: 'Next door to Scarborough, not downtown',
+      paragraphs: [
+        'Scarborough’s northern edge is Steeles Avenue, and Markham, where we are based, starts on the other side of it. For Scarborough clients we are glad to meet in person for the kickoff and the design review, at your business or somewhere nearby.',
+        'You deal directly with the two co-founders who design and build your site, from the first call to launch and afterwards. There is no account manager in the middle and no hand-off to a junior team.',
+      ],
+    },
+    spotlight: {
+      eyebrow: 'Scarborough work',
+      heading: 'A Scarborough client: FunGen Events',
+      paragraphs: [
+        'FunGen plans birthdays, weddings, anniversaries, corporate lunches and community fundraisers across Scarborough, Markham and the rest of the GTA. The events were polished; the brand behind them was not yet.',
+        'We designed a gold-and-navy identity and business cards for venue walkthroughs, then built a site where every occasion has its own page and “Check your date” is on every screen, tuned for phones first.',
+      ],
+      link: { href: '/projects/fungen-events', label: 'Read the FunGen Events case study' },
+      points: [
+        {
+          title: 'Known by word of mouth, invisible online',
+          body: 'Like FunGen, many Scarborough businesses run on referrals. We give that reputation a brand and a site that turns a recommendation into a booking.',
+        },
+        {
+          title: 'Enquiries that start with a quote',
+          body: 'For caterers, trades and suppliers we put “Request a Quote” or “Check your date” on every screen, as we did for Patty’s Delights and AshCam.',
+        },
+        {
+          title: 'Customers on their phones',
+          body: 'Most local searches happen on a phone, so every site we build is designed for thumbs first, with click-to-call and short forms.',
+        },
+      ],
+    },
+    sectionOrder: ['local', 'advantage', 'pricing', 'spotlight', 'recentWork', 'reviews', 'industries', 'whatYouGet', 'faq'],
   },
   toronto: {
     slug: 'toronto',
     city: 'Toronto',
     region: 'City of Toronto',
-    metaTitle: 'Web Design Toronto | Small Business Websites | Zenara',
+    metaTitle: 'Web Design Toronto | Small Business Sites | Zenara Designs',
     metaDescription:
       'Web design for Toronto small businesses, from downtown to Scarborough and North York. Fast, SEO-ready websites at fixed, published prices. Free consultation.',
     heroIntro: 'Custom websites for Toronto businesses that compete in Canada’s most crowded market.',
@@ -493,7 +572,7 @@ export const cityContent: Record<string, CityContent> = {
     ogImage: { src: '/images/og/toronto-gooderham-building-og.jpg', alt: 'The Gooderham (Flatiron) Building at Front and Wellington in downtown Toronto' },
     heroImageAlt: 'The historic Gooderham (Flatiron) Building at Front and Wellington in downtown Toronto',
     localSeoBody:
-      'Toronto customers search by neighbourhood — "near Yorkville," "King West," "the Beaches" — so we structure your content and citations around the areas you actually serve, working with organizations like the Toronto Region Board of Trade, rather than competing only for the broad city-wide term everyone else is bidding on.',
+      'Toronto customers search by neighbourhood — "near Yorkville," "King West," "the Beaches" — so we structure your content and local listings around the areas you actually serve, including your BIA or the Toronto Region Board of Trade directory if you are a member, rather than competing only for the broad city-wide term everyone else is bidding on.',
     geoBody:
       "In a market this saturated, showing up in AI-generated answers is a real edge — we structure your site so tools like ChatGPT and Perplexity can read and cite it directly, not just Google's algorithm.",
     smallBusinessNote:
@@ -507,9 +586,8 @@ export const cityContent: Record<string, CityContent> = {
     slug: 'mississauga',
     city: 'Mississauga',
     region: 'Peel Region',
-    metaTitle: 'Web Design Mississauga | Custom Business Sites | Zenara',
-    metaDescription:
-      'Professional web design in Mississauga — from Square One to Port Credit. Modern, fast, SEO-optimized websites that win local customers. Free consultation.',
+    metaTitle: 'Web Design Mississauga | Fixed-Price Custom Sites | Zenara Designs',
+    metaDescription: `Custom web design for Mississauga businesses, from Port Credit to Streetsville and the City Centre. Fixed prices from ${packagePrice('starter')}. Free consultation.`,
     heroIntro: 'Websites built for Mississauga businesses, from Square One to the waterfront.',
     intro:
       'Mississauga is Canada’s sixth-largest city and home to a remarkable concentration of corporate head offices — and its small and mid-sized businesses compete for the same customers.',
@@ -542,6 +620,15 @@ export const cityContent: Record<string, CityContent> = {
     industries: INDUSTRY_LINKS,
     faqs: [
       {
+        question: 'How much does a website cost in Mississauga?',
+        answer: `Our fixed prices are ${packageRangeSentence()}. Each includes responsive design, SEO setup and SSL, and you get a written quote before any work starts.`,
+      },
+      {
+        question: 'You are based in Markham. How does that work for a Mississauga business?',
+        answer:
+          'Most of our projects run on video calls and email day to day, wherever the client is, and Mississauga projects run entirely that way. You still deal directly with the two co-founders who build your site, share your screen for every design review, and get the same fixed price. If an in-person kickoff matters to you, tell us when we scope the project.',
+      },
+      {
         question: 'Mississauga has so many corporate agencies nearby — why choose a small studio?',
         answer:
           "Corporate agencies price for corporate clients. We're built for independent Mississauga businesses that need a genuinely custom site — not a scaled-down version of an enterprise package — at a price that makes sense for your actual size.",
@@ -564,23 +651,43 @@ export const cityContent: Record<string, CityContent> = {
     ],
     heroImage: '/images/mississauga-office-tower.jpg',
     heroImageAlt: 'A modern blue-glass office tower, representing Mississauga’s corporate business district',
-    localSeoBody:
-      'A Port Credit café and an Erin Mills clinic serve entirely different customers, so we build location-aware content and citations — through organizations like the Mississauga Board of Trade — that target your actual town centre instead of one generic "Mississauga" page trying to rank for everything.',
+    localSeoBody: 'A Port Credit café and an Erin Mills clinic serve entirely different customers, so we write location-aware pages and set up your Google Business Profile and local listings, including the Mississauga Board of Trade directory if you are a member, to target your actual town centre rather than one generic “Mississauga” page.',
     geoBody:
       'We also make sure your site is structured for AI search tools, so when someone asks ChatGPT for a recommendation in your specific part of Mississauga, your business is positioned to be part of that answer.',
     smallBusinessNote:
       "Mississauga's corporate head offices set a high bar for polish — independent businesses here need a site that reads as equally established, without the corporate price tag. That's specifically what we build.",
     focusAreas: ['Corporate & Professional Services', 'Retail', 'Trades', 'Local Services'],
     featuredProjectSlugs: ['jb-loans', 'ashcam-cutting-solutions', 'ik-smart-solution'],
-    sectionOrder: ['advantage', 'whatYouGet', 'industries', 'recentWork', 'faq'],
+    spotlight: {
+      eyebrow: 'Mississauga’s town centres',
+      heading: 'One city, several downtowns',
+      paragraphs: [
+        'Mississauga was formed in 1974 from the Town of Mississauga and the towns of Port Credit and Streetsville, and it still shops that way. Port Credit, Streetsville, Cooksville, Malton and the City Centre around Square One each have their own main streets and their own customers.',
+        'The Hazel McCallion Line, the light rail being built along Hurontario Street from Port Credit to Brampton, will tie several of them together; Metrolinx now expects first passengers in 2028. Businesses along the corridor have time to get their websites and listings in order before it opens.',
+      ],
+      points: [
+        {
+          title: 'Port Credit and Streetsville',
+          body: 'Village main streets that trade on character. Sites here should look as independent as the shops, with hours, menus and events kept accurate.',
+        },
+        {
+          title: 'City Centre and the corporate corridors',
+          body: 'Professional and B2B firms near Square One and the airport, competing with head-office polish. Credibility comes first.',
+        },
+        {
+          title: 'Meadowvale, Erin Mills and Clarkson',
+          body: 'Neighbourhood clinics, trades and services whose customers search by area. We write pages that name where you actually work.',
+        },
+      ],
+    },
+    sectionOrder: ['advantage', 'spotlight', 'pricing', 'recentWork', 'reviews', 'whatYouGet', 'industries', 'faq'],
   },
   'richmond-hill': {
     slug: 'richmond-hill',
     city: 'Richmond Hill',
     region: 'York Region',
-    metaTitle: 'Web Design Richmond Hill | Business Websites | Zenara',
-    metaDescription:
-      'Professional web design in Richmond Hill along the Yonge corridor. Fast, modern, SEO-optimized sites for local businesses. Free consultation.',
+    metaTitle: 'Web Design Richmond Hill, ON | Fixed-Price Sites | Zenara Designs',
+    metaDescription: `Web design for Richmond Hill professional practices and local businesses, by a studio next door in Markham. Fixed prices from ${packagePrice('starter')}. Free consultation.`,
     heroIntro: 'Websites for Richmond Hill businesses along the busy Yonge Street corridor.',
     intro:
       'Richmond Hill sits at the heart of York Region with a dense, affluent, diverse population strung along the Yonge Street corridor — and a polished, fast website is the baseline expectation here.',
@@ -612,6 +719,15 @@ export const cityContent: Record<string, CityContent> = {
     industries: INDUSTRY_LINKS,
     faqs: [
       {
+        question: 'How much does a website cost in Richmond Hill?',
+        answer: `Our fixed prices are ${packageRangeSentence()}. Each includes responsive design, SEO setup and SSL, and every project starts with a written quote, so the price you agree to is the price you pay.`,
+      },
+      {
+        question: 'Can we meet in person?',
+        answer:
+          'Yes. Richmond Hill borders Markham, where we are based, so we are glad to meet at your office for the kickoff and the design review. Everything in between happens by email and video call.',
+      },
+      {
         question: 'Richmond Hill customers research everything before buying — how does that change my site?',
         answer:
           'It means information architecture matters as much as design. We build clear service pages, credentials, and trust signals up front, so a careful researcher finds what they need to move from consideration to a call without having to dig.',
@@ -634,23 +750,51 @@ export const cityContent: Record<string, CityContent> = {
     ],
     heroImage: '/images/richmond-hill-residential-street.jpg',
     heroImageAlt: 'A tree-lined residential street in autumn, representing Richmond Hill’s established neighbourhoods',
-    localSeoBody:
-      'We optimize your Google Business Profile and build citations with organizations like the Richmond Hill Board of Trade, targeting Richmond Hill plus your specialty and key neighbourhoods so you appear for the specific local searches your best customers are running.',
+    localSeoBody: 'We set up your Google Business Profile and list you in the directories that matter locally, including the Richmond Hill Board of Trade’s member directory if you are a member, and target Richmond Hill plus your specialty and neighbourhoods, so you appear for the specific searches your best clients run.',
     geoBody:
       'We also structure content so AI tools like ChatGPT and Perplexity can surface your business directly — increasingly how careful researchers start looking, before they ever open Google.',
     smallBusinessNote:
       "Richmond Hill's affluent, research-driven customers hold every business to the same high bar — independent practices and shops need a site that reads as established, not just the larger firms down the street.",
     focusAreas: ['Professional & Financial Services', 'Healthcare', 'Retail', 'Education'],
     featuredProjectSlugs: ['heroes-catering', 'pattys-delights', 'jb-loans'],
-    sectionOrder: ['advantage', 'recentWork', 'industries', 'whatYouGet', 'faq'],
+    localTeam: {
+      heading: 'Your neighbours in Markham',
+      paragraphs: [
+        'Richmond Hill and Markham share a border, and we are based on the Markham side of it. For Richmond Hill clients we meet in person for the kickoff and the design review, at your practice or somewhere nearby.',
+        'You work directly with the two co-founders who design and build the site. For a professional practice that means the people writing your pages understand the rules your profession works under.',
+      ],
+    },
+    spotlight: {
+      eyebrow: 'Professional practices',
+      heading: 'Websites for practices that work under rules',
+      paragraphs: [
+        'Much of Richmond Hill’s economy is professional practices: lawyers, accountants, financial advisors, dentists and clinics. Each answers to a regulator with its own advertising rules, and a website is advertising.',
+        'We write and build with those rules in mind, and we ask you to confirm anything your regulator restricts before it goes live. For law firms, our Ontario checklist covers the Law Society’s marketing rules line by line.',
+      ],
+      link: { href: '/resources/ontario-law-firm-website-checklist', label: 'Read the Ontario law firm website checklist' },
+      points: [
+        {
+          title: 'Law firms',
+          body: 'Claims that are true and verifiable, no “specialist” unless you are certified, and fees stated clearly, as the Law Society’s rules require.',
+        },
+        {
+          title: 'Clinics and health practices',
+          body: 'Ontario’s health regulatory colleges limit how members advertise, including testimonials and claims about results. We build to your college’s rules, not around them.',
+        },
+        {
+          title: 'Accountants and advisors',
+          body: 'Credentials shown the way your professional body allows, services explained plainly, and a secure, simple way to book a first meeting.',
+        },
+      ],
+    },
+    sectionOrder: ['local', 'advantage', 'pricing', 'spotlight', 'recentWork', 'reviews', 'industries', 'whatYouGet', 'faq'],
   },
   vaughan: {
     slug: 'vaughan',
     city: 'Vaughan',
     region: 'York Region',
-    metaTitle: 'Web Design Vaughan | Custom Business Websites | Zenara',
-    metaDescription:
-      'Modern web design in Vaughan — Woodbridge, Thornhill, Maple and the VMC. Fast, SEO-optimized websites that convert. Free consultation, transparent pricing.',
+    metaTitle: 'Web Design Vaughan, ON | Fixed-Price Sites | Zenara Designs',
+    metaDescription: `Web design for Vaughan businesses, from Concord trades and suppliers to Woodbridge family firms. Fixed prices from ${packagePrice('starter')}, live in 1–2 weeks. Free consultation.`,
     heroIntro: 'Websites for Vaughan businesses keeping pace with one of Canada’s fastest-growing cities.',
     intro:
       'Vaughan has transformed in a single decade — the VMC and subway extension turned a suburban patchwork into a genuine urban hub, and customers now judge businesses by their online presence first.',
@@ -682,6 +826,15 @@ export const cityContent: Record<string, CityContent> = {
     industries: INDUSTRY_LINKS,
     faqs: [
       {
+        question: 'How much does a website cost in Vaughan?',
+        answer: `Our fixed prices are ${packageRangeSentence()}. Each includes responsive design, SEO setup and SSL, and you get a written quote before any work starts. Trades with a large project gallery usually fit the Small Business plan.`,
+      },
+      {
+        question: 'Can we meet in person?',
+        answer:
+          'Yes. Vaughan and Markham meet at Thornhill, on either side of Yonge Street, and we are based in Markham. We are glad to meet at your office, shop or yard for the kickoff and the design review; day-to-day work happens by email and video call.',
+      },
+      {
         question: 'Vaughan is growing so fast — how do I keep up online?',
         answer:
           "New competitors are arriving as fast as new residents. The businesses that stay ahead are the ones with a strong, current website already in place — we build that foundation now so you're not scrambling to catch up once the newcomers arrive.",
@@ -704,21 +857,50 @@ export const cityContent: Record<string, CityContent> = {
     ],
     heroImage: '/images/vaughan-glass-development.jpg',
     heroImageAlt: 'A striking modern glass building, representing Vaughan’s rapid development around the Vaughan Metropolitan Centre',
-    localSeoBody:
-      'We build citations with organizations like the Vaughan Chamber of Commerce and structure your content around both "Vaughan" and "Thornhill" searches, since the two overlap at the city line — a detail a competitor targeting only one name will miss entirely.',
+    localSeoBody: 'We set up your Google Business Profile and list you in the directories that matter locally, including the Vaughan Chamber of Commerce directory if you are a member, and structure your content around both “Vaughan” and “Thornhill” searches, since the two overlap at the city line.',
     geoBody:
       "As Vaughan's population grows, so does the number of people asking AI tools like ChatGPT for local recommendations instead of searching Google directly — we structure your site so it can be part of that answer.",
     smallBusinessNote:
       "Long-standing Woodbridge businesses often have real reputations but dated or missing websites. We modernize the presentation while keeping the trust that's already been earned — not replacing it with something generic.",
     focusAreas: ['Construction & Development', 'Retail', 'Professional Services', 'Trades'],
-    featuredProjectSlugs: ['ashcam-cutting-solutions', 'fungen-events', 'ik-smart-solution'],
-    sectionOrder: ['industries', 'advantage', 'whatYouGet', 'recentWork', 'faq'],
+    featuredProjectSlugs: ['ashcam-cutting-solutions', 'ik-smart-solution', 'fungen-events'],
+    localTeam: {
+      heading: 'Across Yonge Street, in Markham',
+      paragraphs: [
+        'Thornhill sits on both sides of Yonge Street, with Vaughan to the west and Markham, where we are based, to the east. For Vaughan clients we meet in person for the kickoff and the design review.',
+        'The two co-founders who take your first call design and build your site themselves, so you are never passed to a junior team after the contract is signed.',
+      ],
+    },
+    spotlight: {
+      eyebrow: 'Trades and suppliers',
+      heading: 'Built for contractors and the people who supply them',
+      paragraphs: [
+        'Concord and Woodbridge are full of contractors, suppliers and family-run trade businesses whose customers want two things from a website: proof you can do the job, and a fast way to get a price.',
+        'AshCam Cutting Solutions, a supplier of Japanese-made carbide cutting blades to contractors across Toronto, Vaughan and Markham, is a good example. We built a site that puts the products one click from the homepage and a “Get a Quote” button on every screen.',
+      ],
+      link: { href: '/projects/ashcam-cutting-solutions', label: 'Read the AshCam case study' },
+      points: [
+        {
+          title: 'Quote first',
+          body: 'A short quote form on every page, with photo uploads where they help, so an estimate request takes a minute on a phone.',
+        },
+        {
+          title: 'Proof of the work',
+          body: 'Project galleries and product pages with real photos, organized the way your customers think about the job.',
+        },
+        {
+          title: 'Built for the jobsite',
+          body: 'Fast on mobile data, readable in daylight, with click-to-call that works from a truck.',
+        },
+      ],
+    },
+    sectionOrder: ['local', 'spotlight', 'advantage', 'pricing', 'recentWork', 'reviews', 'industries', 'whatYouGet', 'faq'],
   },
   pickering: {
     slug: 'pickering',
     city: 'Pickering',
     region: 'Durham Region',
-    metaTitle: 'Web Design Pickering & Ajax | Custom Business Websites | Zenara',
+    metaTitle: 'Web Design Pickering & Ajax | Fixed-Price Sites | Zenara Designs',
     metaDescription: `Custom web design for Pickering, Ajax and Durham Region businesses, from a studio 20 minutes away in Markham. Fixed prices from ${packagePrice('starter')}. Free consultation.`,
     heroIntro: 'Websites for Pickering businesses at the fast-growing gateway to Durham Region.',
     intro:
