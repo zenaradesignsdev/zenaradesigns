@@ -76,6 +76,26 @@ const MERGED_PAGES = [
 const mergedPageRedirects = () =>
   MERGED_PAGES.map(({ source, destination }) => ({ source, destination, permanent: true }));
 
+// Images re-saved from PNG to JPG. They had no transparency, so JPG is a
+// quarter to half the size at the same dimensions.
+const PNG_TO_JPG = [
+  'lawyer-gavel-office',
+  'accountant-computer-office',
+  'lawyer-consultation-document',
+  'clinic-practitioner',
+  'lawyer-professional-meeting',
+  'accountant-website-work',
+  'clinic-wellness-care',
+  'reno-project',
+  'project2',
+  'nova-motion-physio',
+  'accounting-firm-project',
+  'jbloans',
+  'ashcam-site',
+  'fungen-events',
+  'iksmartsolutions',
+];
+
 const INDUSTRY_HUBS = ['lawyers', 'accountants', 'clinics', 'renovations'];
 
 const industryLocationRedirects = () =>
@@ -119,6 +139,8 @@ const nextConfig = {
       // Project screenshots moved from PNG to JPG; keep old image URLs working.
       { source: '/images/heroes-catering.png', destination: '/images/heroes-catering.jpg', permanent: true },
       { source: '/images/pattys-delights.png', destination: '/images/pattys-delights.jpg', permanent: true },
+      // Opaque photos and screenshots re-saved as JPG (2026-10-25); same reason.
+      ...PNG_TO_JPG.map((name) => ({ source: `/images/${name}.png`, destination: `/images/${name}.jpg`, permanent: true })),
     ];
   },
   async headers() {
@@ -156,7 +178,8 @@ const nextConfig = {
               "base-uri 'self'",
               "form-action 'self' https://b15138b6.sibforms.com https://sibforms.com",
               "object-src 'none'",
-              "media-src 'self'",
+              // data: lets the Botpress chat play its inline notification sound.
+              "media-src 'self' data:",
               "worker-src 'self'",
               "manifest-src 'self'",
               'upgrade-insecure-requests',

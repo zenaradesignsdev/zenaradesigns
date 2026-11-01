@@ -117,7 +117,7 @@ const LawFirmConcept = () => (
           >
             <div className="aspect-[16/10] relative bg-slate-900">
               <SafeImage
-                src="/images/project2.png"
+                src="/images/project2.jpg"
                 alt={`The ${demo.name} concept website homepage`}
                 className="w-full h-full object-contain"
                 sizes="(max-width: 1024px) 100vw, 60vw"
