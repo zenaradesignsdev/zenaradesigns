@@ -4,13 +4,13 @@
  * Usage:
  *   node scripts/gsc-audit.js
  *
- * Required env vars:
- *   GSC_SITE_URL      - Your GSC property URL (e.g. https://zenaradesigns.com/)
- *
- * Auth: uses Application Default Credentials (ADC).
- *   Run `gcloud auth application-default login` once to authenticate.
+ * Auth: keyless — your gcloud login (ZENARA_GCLOUD_ACCOUNT) mints a short-lived, read-only
+ *   token for the GSC service account (ZENARA_GSC_SERVICE_ACCOUNT). Same chain as scripts/gsc/gsc.
+ *   Identifiers (not secrets) default to Zenara's; override them in .env.local if needed.
+ *   If the login has expired, run: scripts/gsc/gsc login
  *
  * Optional env vars:
+ *   GSC_SITE_URL                  - Property (default: sc-domain:zenaradesigns.com)
  *   GSC_OUTPUT_FILE               - Output path (default: gsc-audit-report.md)
  *   GSC_MAX_URLS                  - Max URLs to inspect individually (default: 100)
  *   GSC_DAYS                      - Days of search analytics history (default: 28)
@@ -18,10 +18,14 @@
 
 import { google } from 'googleapis';
 import fs from 'fs';
+import { execFileSync } from 'node:child_process';
 
 // ─── Config ───────────────────────────────────────────────────────────────────
 
-const SITE_URL = process.env.GSC_SITE_URL;
+const SITE_URL = process.env.GSC_SITE_URL || 'sc-domain:zenaradesigns.com';
+const GCLOUD_ACCOUNT = process.env.ZENARA_GCLOUD_ACCOUNT || 'admin@zenaradesigns.com';
+const GSC_SERVICE_ACCOUNT =
+  process.env.ZENARA_GSC_SERVICE_ACCOUNT || 'zenara-gsc@composed-region-490022-b2.iam.gserviceaccount.com';
 const OUTPUT_FILE = process.env.GSC_OUTPUT_FILE || 'gsc-audit-report.md';
 const MAX_URLS = parseInt(process.env.GSC_MAX_URLS || '100', 10);
 const DAYS = parseInt(process.env.GSC_DAYS || '28', 10);
@@ -77,12 +81,41 @@ function mdTable(rows, cols) {
 
 // ─── Auth ─────────────────────────────────────────────────────────────────────
 
-function buildAuth() {
-  // Uses Application Default Credentials — run `gcloud auth application-default login` once.
-  // webmasters.readonly is sufficient for all read operations (inspect, sitemaps, analytics).
-  return new google.auth.GoogleAuth({
-    scopes: ['https://www.googleapis.com/auth/webmasters.readonly'],
-  });
+async function buildAuthClient() {
+  // Keyless: gcloud user login -> IAM Credentials generateAccessToken -> 1-hour token for the
+  // zenara-gsc service account. webmasters.readonly covers every call this audit makes.
+  // Tokens stay in memory; never log them.
+  let userToken;
+  try {
+    userToken = execFileSync('gcloud', ['auth', 'print-access-token', GCLOUD_ACCOUNT, '--quiet'], {
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'pipe'],
+      env: { ...process.env, CLOUDSDK_CORE_DISABLE_PROMPTS: '1' },
+    }).trim();
+  } catch (e) {
+    const missing = e.code === 'ENOENT';
+    console.error(missing
+      ? '❌ gcloud CLI not found. Install it (brew install --cask google-cloud-sdk), then run: scripts/gsc/gsc login'
+      : `❌ No valid gcloud login for ${GCLOUD_ACCOUNT}. Run: scripts/gsc/gsc login`);
+    process.exit(missing ? 3 : 2);
+  }
+
+  const res = await fetch(
+    `https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/${GSC_SERVICE_ACCOUNT}:generateAccessToken`,
+    {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${userToken}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ scope: ['https://www.googleapis.com/auth/webmasters.readonly'], lifetime: '3600s' }),
+    },
+  );
+  if (!res.ok) {
+    console.error(`❌ Could not get a Search Console token (HTTP ${res.status}). Run: scripts/gsc/gsc status`);
+    process.exit(res.status === 401 ? 2 : 3);
+  }
+  const { accessToken } = await res.json();
+  const client = new google.auth.OAuth2();
+  client.setCredentials({ access_token: accessToken });
+  return client;
 }
 
 // ─── GSC API calls ────────────────────────────────────────────────────────────
@@ -142,7 +175,7 @@ async function inspectUrl(sc, inspectionUrl, siteUrl) {
 async function main() {
   // Validate required env vars
   if (!SITE_URL) {
-    console.error('❌ GSC_SITE_URL is required (e.g. https://zenaradesigns.com/)');
+    console.error('❌ GSC_SITE_URL is empty (default is sc-domain:zenaradesigns.com)');
     process.exit(1);
   }
 
@@ -161,8 +194,7 @@ async function main() {
   console.log(`   Output:  ${OUTPUT_FILE}\n`);
 
   // ── Auth ────
-  const auth = buildAuth();
-  const authClient = await auth.getClient();
+  const authClient = await buildAuthClient();
   google.options({ auth: authClient });
 
   const wm = google.webmasters({ version: 'v3' });

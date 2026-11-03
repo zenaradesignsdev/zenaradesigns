@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "eslint .",
     "type-check": "tsc --noEmit",
-    "gsc-audit": "node scripts/gsc-audit.js",
+    "gsc-audit": "node --env-file-if-exists=.env.local scripts/gsc-audit.js",
     "pagespeed-audit": "node scripts/pagespeed-audit.js",
     "indexnow": "node scripts/indexnow-submit.mjs"
   },

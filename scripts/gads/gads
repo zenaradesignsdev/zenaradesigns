@@ -1,0 +1,674 @@
+#!/usr/bin/env python3
+"""
+gads — read-only Google Ads Keyword Planner CLI for Zenara Designs.
+
+Keyless auth (same chain as scripts/gsc/gsc, so one Google sign-in covers both):
+  1. `gcloud auth print-access-token admin@zenaradesigns.com` — the human's gcloud login
+  2. IAM Credentials generateAccessToken -> 1-hour token for the zenara-gsc service account
+     with the `adwords` scope
+  3. Google Ads API, as that service account (added to the Ads manager account as Read only)
+
+Fallback: if the service account hasn't been added to Google Ads yet, the old ADC login
+(`gcloud auth application-default ...`, adwords scope) is used when it exists on this machine.
+
+Read-only is enforced twice: Google Ads grants the service account Read-only access, and this
+script refuses any endpoint outside READ_ONLY_ENDPOINTS. Never add mutate endpoints.
+
+Results are cached for 30 days in ~/.cache/zenara/gads (keyword data only — never tokens).
+
+Exit codes: 0 ok · 1 usage/API error · 2 Google sign-in needed (run `gads login`)
+            3 setup problem (service account not added to Google Ads, gcloud missing) · 4 network
+Docs: GOOGLE-INTEGRATIONS.md §2 and .claude/skills/keyword-planner/SKILL.md
+"""
+import argparse
+import csv
+import hashlib
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+import time
+import urllib.error
+import urllib.request
+
+ACCOUNT = os.environ.get("ZENARA_GCLOUD_ACCOUNT", "admin@zenaradesigns.com")
+SERVICE_ACCOUNT = "zenara-gsc@composed-region-490022-b2.iam.gserviceaccount.com"
+PROJECT = "composed-region-490022-b2"
+CUSTOMER = re.sub(r"\D", "", os.environ.get("GADS_CUSTOMER", "3999588184"))  # MCC "Zenara Designs"
+LOGIN_CUSTOMER = re.sub(r"\D", "", os.environ.get("GADS_LOGIN_CUSTOMER", CUSTOMER))
+API_VERSION = "v23"
+BASE = "https://googleads.googleapis.com/" + API_VERSION + "/"
+SCOPE = "https://www.googleapis.com/auth/adwords"
+IAM = "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/"
+
+# The ONLY Google Ads endpoints this tool may call. All are read-only planning/lookup calls.
+READ_ONLY_ENDPOINTS = (
+    "customers:listAccessibleCustomers",
+    "customers/%s:generateKeywordIdeas" % CUSTOMER,
+    "customers/%s:generateKeywordHistoricalMetrics" % CUSTOMER,
+    "geoTargetConstants:suggest",
+)
+
+CACHE_DIR = os.path.join(os.path.expanduser("~"), ".cache", "zenara", "gads")
+CACHE_TTL = 30 * 86400
+GEO_TTL = 180 * 86400
+
+LANG_EN = "languageConstants/1000"
+GEO_IDS = {  # from GOOGLE-INTEGRATIONS.md §2; anything else is looked up via geoTargetConstants:suggest
+    "canada": "2124", "toronto": "1002451", "gta": "9252726", "greater toronto area": "9252726",
+    "markham": "1002334", "scarborough": "1002416", "mississauga": "1002350", "brampton": "1002191",
+}
+DEFAULT_GEO = "gta"
+
+EXIT_OK, EXIT_ERR, EXIT_LOGIN, EXIT_SETUP, EXIT_NET = 0, 1, 2, 3, 4
+
+
+class GadsError(Exception):
+    def __init__(self, code, message):
+        super().__init__(message)
+        self.code = code
+        self.message = message
+
+
+# ─── Auth ─────────────────────────────────────────────────────────────────────
+
+LOGIN_HINTS = re.compile(r"reauth|re-auth|refresh|invalid_grant|login|log in|credentialed|not authenticated|"
+                         r"no credential|expired|revoked|password", re.I)
+NET_HINTS = re.compile(r"unable to find the server|connection|network|resolve|timed out|proxy", re.I)
+_auth = {}
+
+
+def _gcloud():
+    path = shutil.which("gcloud")
+    if not path:
+        raise GadsError(EXIT_SETUP, "gcloud CLI not found on PATH. Install it with "
+                                    "`brew install --cask google-cloud-sdk`, then run `scripts/gads/gads login`.")
+    return path
+
+
+def _run_gcloud(args):
+    env = dict(os.environ, CLOUDSDK_CORE_DISABLE_PROMPTS="1")
+    try:
+        p = subprocess.run([_gcloud()] + args, stdin=subprocess.DEVNULL, capture_output=True,
+                           text=True, timeout=45, env=env)
+    except subprocess.TimeoutExpired:
+        raise GadsError(EXIT_NET, "gcloud timed out (network?).")
+    return p.returncode, (p.stdout.strip().splitlines() or [""])[-1].strip(), " ".join(p.stderr.split())[:300]
+
+
+def user_token():
+    rc, tok, err = _run_gcloud(["auth", "print-access-token", ACCOUNT, "--quiet"])
+    if rc != 0 or not tok:
+        if NET_HINTS.search(err) and not LOGIN_HINTS.search(err):
+            raise GadsError(EXIT_NET, "gcloud could not reach Google: " + err)
+        raise GadsError(EXIT_LOGIN, "Google sign-in needed: the gcloud login for %s is missing or expired (%s). "
+                                    "Run `scripts/gads/gads login`." % (ACCOUNT, err or "no detail"))
+    return tok
+
+
+def sa_token():
+    status, data = http("POST", IAM + SERVICE_ACCOUNT + ":generateAccessToken",
+                        {"Authorization": "Bearer " + user_token()},
+                        {"scope": [SCOPE], "lifetime": "3600s"})
+    if status == 401:
+        raise GadsError(EXIT_LOGIN, "Google rejected the gcloud login for %s. Run `scripts/gads/gads login`." % ACCOUNT)
+    if status != 200 or "accessToken" not in data:
+        raise GadsError(EXIT_SETUP, "Could not mint a token for %s (HTTP %s): %s" % (SERVICE_ACCOUNT, status, _err_text(data)))
+    return data["accessToken"]
+
+
+def adc_headers():
+    """Legacy fallback: the old ADC login made with the Zenara Keyword Planner OAuth client."""
+    rc, tok, _ = _run_gcloud(["auth", "application-default", "print-access-token", "--quiet"])
+    if rc != 0 or not tok:
+        return None
+    return {"Authorization": "Bearer " + tok, "x-goog-user-project": PROJECT}
+
+
+def headers(mode):
+    if mode not in _auth:
+        if mode == "sa":
+            _auth[mode] = {"Authorization": "Bearer " + sa_token()}
+        else:
+            _auth[mode] = adc_headers()
+        if _auth[mode] is not None and LOGIN_CUSTOMER:
+            _auth[mode]["login-customer-id"] = LOGIN_CUSTOMER
+    return _auth[mode]
+
+
+# ─── HTTP ─────────────────────────────────────────────────────────────────────
+
+def _err_text(data):
+    if not isinstance(data, dict):
+        return ""
+    e = data.get("error")
+    if isinstance(e, dict):
+        msg = e.get("message") or e.get("status") or ""
+        codes = []
+        for d in e.get("details", []) or []:
+            for x in d.get("errors", []) or []:
+                for k, v in (x.get("errorCode") or {}).items():
+                    codes.append("%s.%s" % (k, v))
+        return (msg + (" [%s]" % ", ".join(codes) if codes else "")).strip()
+    if isinstance(e, str):
+        return data.get("error_description") or e
+    return ""
+
+
+def http(method, url, hdrs, body=None):
+    payload = json.dumps(body).encode() if body is not None else None
+    req = urllib.request.Request(url, data=payload, method=method)
+    for k, v in hdrs.items():
+        req.add_header(k, v)
+    if payload is not None:
+        req.add_header("Content-Type", "application/json")
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            raw, status = r.read().decode() or "{}", r.status
+    except urllib.error.HTTPError as e:
+        raw, status = e.read().decode() or "{}", e.code
+    except (urllib.error.URLError, TimeoutError, OSError) as e:
+        raise GadsError(EXIT_NET, "Network error calling Google: %s" % getattr(e, "reason", e))
+    try:
+        return status, json.loads(raw)
+    except ValueError:
+        return status, {"error": {"message": raw[:300]}}
+
+
+ADS_ACCESS = re.compile(r"USER_PERMISSION_DENIED|NOT_ADS_USER|CUSTOMER_NOT_ENABLED|PERMISSION_DENIED|"
+                        r"doesn't have permission|does not have permission", re.I)
+
+
+def ads(endpoint, body=None, ttl=CACHE_TTL, use_cache=True):
+    if endpoint not in READ_ONLY_ENDPOINTS:
+        raise GadsError(EXIT_ERR, "Blocked: %r is not on the read-only endpoint allowlist." % endpoint)
+    method = "GET" if body is None else "POST"
+    key = hashlib.sha256((API_VERSION + endpoint + json.dumps(body, sort_keys=True)).encode()).hexdigest()
+    path = os.path.join(CACHE_DIR, key + ".json")
+    if use_cache and ttl and os.path.exists(path) and time.time() - os.path.getmtime(path) < ttl:
+        with open(path) as f:
+            return json.load(f)
+
+    errors = []
+    for mode in ("sa", "adc"):
+        try:
+            h = headers(mode)
+        except GadsError as e:
+            if e.code in (EXIT_LOGIN, EXIT_NET):
+                raise
+            errors.append("service account: " + e.message)
+            continue
+        if h is None:
+            errors.append("legacy ADC login: not present on this machine")
+            continue
+        status, data = _call_with_retry(method, endpoint, h, body)
+        if 200 <= status < 300:
+            if ttl:
+                os.makedirs(CACHE_DIR, exist_ok=True)
+                tmp = path + ".tmp"
+                with open(tmp, "w") as f:
+                    json.dump(data, f)
+                os.replace(tmp, path)
+            _auth["used"] = mode
+            return data
+        msg = _err_text(data) or "HTTP %s" % status
+        if status in (401, 403) or ADS_ACCESS.search(msg):
+            errors.append(("service account" if mode == "sa" else "legacy ADC login") + ": " + msg)
+            continue
+        raise GadsError(EXIT_ERR, "Google Ads API error %s: %s" % (status, msg))
+    raise GadsError(EXIT_SETUP, "No working Google Ads access. Add %s to Google Ads account %s "
+                                "(Admin → Access and security → + → Read only). Details: %s"
+                    % (SERVICE_ACCOUNT, fmt_cid(CUSTOMER), " | ".join(errors)))
+
+
+_last_call = [0.0]
+RATE_GAP = 1.1          # KeywordPlanIdeaService allows ~1 request/second
+RETRY_WAITS = (5, 15, 30, 60)
+RATE_HINT = re.compile(r"RESOURCE_EXHAUSTED|RATE_EXCEEDED|quota|Too many requests", re.I)
+
+
+def _call_with_retry(method, endpoint, h, body):
+    for wait in RETRY_WAITS + (None,):
+        gap = time.time() - _last_call[0]
+        if gap < RATE_GAP:
+            time.sleep(RATE_GAP - gap)
+        status, data = http(method, BASE + endpoint, h, body)
+        _last_call[0] = time.time()
+        if (status == 429 or RATE_HINT.search(_err_text(data))) and wait is not None:
+            print("gads: rate limited by Google, retrying in %ds..." % wait, file=sys.stderr, flush=True)
+            time.sleep(wait)
+            continue
+        return status, data
+
+
+def fmt_cid(c):
+    return "%s-%s-%s" % (c[:3], c[3:6], c[6:]) if len(c) == 10 else c
+
+
+# ─── Helpers ──────────────────────────────────────────────────────────────────
+
+def split_terms(values):
+    out = []
+    for v in values:
+        out.extend(t.strip() for t in v.split(",") if t.strip())
+    seen, uniq = set(), []
+    for t in out:
+        if t.lower() not in seen:
+            seen.add(t.lower())
+            uniq.append(t)
+    return uniq
+
+
+def load_terms(args, attr):
+    terms = list(getattr(args, attr) or [])
+    if getattr(args, "file", None):
+        with open(os.path.expanduser(args.file)) as f:
+            for line in f:
+                line = line.split("#", 1)[0].strip()
+                if line:
+                    # accept plain lists or CSV (first column)
+                    terms.append(next(csv.reader([line]))[0])
+    out = split_terms(terms)
+    if not out:
+        raise GadsError(EXIT_ERR, "No keywords given (pass them as arguments or with --file).")
+    return out
+
+
+def emit(args, headers_, rows):
+    if getattr(args, "csv", False):
+        w = csv.writer(sys.stdout)
+        w.writerow(headers_)
+        w.writerows(rows)
+    else:
+        table(headers_, rows)
+
+
+def resolve_geos(spec):
+    ids = []
+    for name in split_terms([spec or DEFAULT_GEO]):
+        if name.isdigit():
+            ids.append(name)
+        elif name.lower() in GEO_IDS:
+            ids.append(GEO_IDS[name.lower()])
+        else:
+            data = ads("geoTargetConstants:suggest", {"locale": "en", "countryCode": "CA",
+                                                      "locationNames": {"names": [name]}}, ttl=GEO_TTL)
+            sugg = [s.get("geoTargetConstant", {}) for s in data.get("geoTargetConstantSuggestions", [])]
+            if not sugg:
+                raise GadsError(EXIT_ERR, "No Canadian location matches %r. Try `gads geo %s`." % (name, name))
+            ids.append(str(sugg[0].get("id")))
+    if len(ids) > 10:
+        raise GadsError(EXIT_ERR, "Google allows at most 10 locations per request (got %d)." % len(ids))
+    return ["geoTargetConstants/" + i for i in ids]
+
+
+def money(micros):
+    try:
+        return "$%.2f" % (int(micros) / 1e6)
+    except (TypeError, ValueError):
+        return "-"
+
+
+def metrics_row(m):
+    return [int(m.get("avgMonthlySearches") or 0), m.get("competition") or "-",
+            m.get("competitionIndex") or "-", money(m.get("lowTopOfPageBidMicros")),
+            money(m.get("highTopOfPageBidMicros"))]
+
+
+def table(headers_, rows):
+    rows = [["" if v is None else str(v) for v in r] for r in rows]
+    widths = [len(h) for h in headers_]
+    for r in rows:
+        for i, v in enumerate(r):
+            widths[i] = min(max(widths[i], len(v)), 70)
+    def line(vals):
+        return "  ".join((v if len(v) <= 70 else v[:67] + "...").ljust(widths[i]) for i, v in enumerate(vals)).rstrip()
+    print(line(headers_))
+    print(line(["-" * w for w in widths]))
+    for r in rows:
+        print(line(r))
+
+
+def out_json(obj):
+    print(json.dumps(obj, indent=2, ensure_ascii=False))
+
+
+def base_body(args):
+    return {"language": LANG_EN, "geoTargetConstants": resolve_geos(args.geo),
+            "keywordPlanNetwork": "GOOGLE_SEARCH", "includeAdultKeywords": False,
+            "historicalMetricsOptions": {"includeAverageCpc": True}}
+
+
+def historical(args, keywords):
+    """Historical metrics for up to thousands of keywords (batched)."""
+    results = []
+    for i in range(0, len(keywords), 5000):   # API max is 10,000 per request
+        if len(keywords) > 5000:
+            print("gads: volumes for keywords %d-%d of %d..." % (i + 1, min(i + 5000, len(keywords)), len(keywords)),
+                  file=sys.stderr, flush=True)
+        body = dict(base_body(args), keywords=keywords[i:i + 5000])
+        results.extend(ads("customers/%s:generateKeywordHistoricalMetrics" % CUSTOMER, body,
+                           use_cache=not args.no_cache).get("results", []))
+    return results
+
+
+def map_inputs(keywords, results):
+    """Google merges near-duplicates ("website"/"websites") into one result. Map every input back."""
+    by_text = {}
+    for r in results:
+        text = r.get("text") or ""
+        by_text.setdefault(text.lower(), (text, r))
+        for v in r.get("closeVariants", []) or []:
+            by_text.setdefault(v.lower(), (text, r))
+    mapped = []
+    for k in keywords:
+        hit = by_text.get(k.lower())
+        if hit is None:
+            mapped.append((k, None, "no data"))
+        else:
+            text, r = hit
+            mapped.append((k, r, "" if text.lower() == k.lower() else "merged with: " + text))
+    return mapped
+
+
+def geo_note(args):
+    return "geo=%s" % (args.geo or DEFAULT_GEO)
+
+
+# ─── Commands ─────────────────────────────────────────────────────────────────
+
+def cmd_status(args):
+    deadline = time.time() + max(0, args.wait)
+    while True:
+        try:
+            _auth.clear()
+            data = ads("customers:listAccessibleCustomers", ttl=0)
+            ids = [r.split("/")[-1] for r in data.get("resourceNames", [])]
+            if CUSTOMER not in ids:
+                raise GadsError(EXIT_SETUP, "Signed in, but account %s isn't accessible (sees: %s). Add %s to it as "
+                                            "Read only." % (fmt_cid(CUSTOMER), ", ".join(map(fmt_cid, ids)) or "none",
+                                                            SERVICE_ACCOUNT))
+            break
+        except GadsError as e:
+            if e.code in (EXIT_LOGIN, EXIT_NET) and time.time() < deadline:
+                time.sleep(5)
+                continue
+            if args.json:
+                out_json({"ok": False, "code": e.code, "message": e.message})
+            else:
+                print("Keyword Planner session: NOT READY — " + e.message)
+            return e.code
+    mode = "service account %s (keyless)" % SERVICE_ACCOUNT.split("@")[0] if _auth.get("used") == "sa" \
+        else "legacy ADC login (fallback — add the service account to Google Ads to go keyless)"
+    if args.json:
+        out_json({"ok": True, "customer": CUSTOMER, "auth": _auth.get("used"), "accessible": ids})
+    elif args.quiet:
+        print("Keyword Planner session: OK — account %s via %s, read-only." % (fmt_cid(CUSTOMER), mode))
+    else:
+        print("Keyword Planner session: OK")
+        print("  gcloud login   %s" % ACCOUNT)
+        print("  auth           %s" % mode)
+        print("  account        %s (login-customer-id %s)" % (fmt_cid(CUSTOMER), fmt_cid(LOGIN_CUSTOMER)))
+        print("  access         read-only: keyword ideas, historical volumes, geo lookup")
+        print("  cache          %s (30 days)" % CACHE_DIR)
+    return EXIT_OK
+
+
+def cmd_login(args):
+    print("Opening a Google sign-in page for %s in your browser..." % ACCOUNT, flush=True)
+    print("(This is the same gcloud login Search Console uses — one sign-in covers both.)", flush=True)
+    rc = subprocess.call([_gcloud(), "auth", "login", ACCOUNT, "--force"], stdin=subprocess.DEVNULL)
+    if rc != 0:
+        print("gcloud auth login exited with %d." % rc)
+        return EXIT_LOGIN
+    args.wait, args.quiet, args.json = 30, False, False
+    return cmd_status(args)
+
+
+def cmd_accounts(args):
+    data = ads("customers:listAccessibleCustomers", ttl=0)
+    ids = [r.split("/")[-1] for r in data.get("resourceNames", [])]
+    if args.json:
+        return out_json(ids)
+    for i in ids:
+        print(fmt_cid(i) + ("   <- default" if i == CUSTOMER else ""))
+
+
+def cmd_geo(args):
+    names = split_terms(args.names)
+    data = ads("geoTargetConstants:suggest", {"locale": "en", "countryCode": args.country,
+                                              "locationNames": {"names": names}}, ttl=GEO_TTL)
+    rows = []
+    for s in data.get("geoTargetConstantSuggestions", []):
+        g = s.get("geoTargetConstant", {})
+        rows.append([g.get("id"), g.get("canonicalName") or g.get("name"), g.get("targetType"), s.get("reach", "")])
+    if args.json:
+        return out_json(data)
+    table(["id", "location", "type", "reach"], rows) if rows else print("(no matches)")
+
+
+def cmd_ideas(args):
+    seeds = load_terms(args, "seeds") if (args.seeds or args.file) else []
+    if not seeds and not args.url:
+        raise GadsError(EXIT_ERR, "Give seed keywords (arguments or --file) and/or --url.")
+    batches = [seeds[i:i + 20] for i in range(0, len(seeds), 20)] or [[]]   # API max 20 seeds/request
+    merged = {}
+    for n, batch in enumerate(batches, 1):
+        if len(batches) > 1:
+            print("gads: seed batch %d/%d..." % (n, len(batches)), file=sys.stderr, flush=True)
+        body = dict(base_body(args), pageSize=1000)
+        if batch and args.url:
+            body["keywordAndUrlSeed"] = {"url": args.url, "keywords": batch}
+        elif args.url:
+            body["urlSeed"] = {"url": args.url}
+        else:
+            body["keywordSeed"] = {"keywords": batch}
+        for _page in range(args.max_pages):
+            data = ads("customers/%s:generateKeywordIdeas" % CUSTOMER, body, use_cache=not args.no_cache)
+            for r in data.get("results", []):
+                merged.setdefault((r.get("text") or "").lower(), r)
+            if not data.get("nextPageToken"):
+                break
+            body = dict(body, pageToken=data["nextPageToken"])
+    res = [r for r in merged.values() if int((r.get("keywordIdeaMetrics") or {}).get("avgMonthlySearches") or 0) >= args.min_volume]
+    res.sort(key=lambda r: int((r.get("keywordIdeaMetrics") or {}).get("avgMonthlySearches") or 0), reverse=True)
+    res = res[:args.limit]
+    if args.json:
+        return out_json(res)
+    if not args.csv:
+        print("# keyword ideas  seeds=%s%s  %s  ideas found=%d  showing=%d" % (
+            (", ".join(seeds[:5]) + (" (+%d more)" % (len(seeds) - 5) if len(seeds) > 5 else "")) or "-",
+            "  url=" + args.url if args.url else "", geo_note(args), len(merged), len(res)))
+    emit(args, ["keyword", "avg/mo", "comp", "idx", "bid low", "bid high"],
+         [[r.get("text")] + metrics_row(r.get("keywordIdeaMetrics") or {}) for r in res])
+
+
+def cmd_volume(args):
+    kws = load_terms(args, "keywords")
+    res = historical(args, kws)
+    if args.json:
+        return out_json(res)
+    mapped = map_inputs(kws, res)
+    rows = [[k] + (metrics_row(r.get("keywordMetrics") or {}) if r else [0, "-", "-", "-", "-"]) + [note]
+            for k, r, note in mapped]
+    if args.sort == "volume":
+        rows.sort(key=lambda x: x[1], reverse=True)
+    if not args.csv:
+        with_data = sum(1 for _, r, _n in mapped if r)
+        print("# search volume  %s  keywords=%d  with data=%d" % (geo_note(args), len(kws), with_data))
+    emit(args, ["keyword", "avg/mo", "comp", "idx", "bid low", "bid high", "note"], rows)
+
+
+MONTHS = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST",
+          "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"]
+
+
+def cmd_history(args):
+    kws = load_terms(args, "keywords")
+    res = historical(args, kws)
+    if args.json:
+        return out_json(res)
+    series = {}
+    for r in res:
+        for m in (r.get("keywordMetrics") or {}).get("monthlySearchVolumes", []) or []:
+            mi = MONTHS.index(m.get("month")) + 1 if m.get("month") in MONTHS else 0
+            series.setdefault(r.get("text"), {})["%s-%02d" % (m.get("year"), mi)] = int(m.get("monthlySearches") or 0)
+    months = sorted({k for s in series.values() for k in s})[-args.months:]
+    if not args.csv:
+        print("# monthly searches  %s" % geo_note(args))
+    emit(args, ["keyword"] + ([m for m in months] if args.csv else [m[2:] for m in months]),
+         [[k] + [s.get(m, "") for m in months] for k, s in series.items()])
+
+
+CTR = [(1, .28), (2, .15), (3, .10), (4, .07), (5, .05), (10, .03), (20, .01), (999, .005)]
+
+
+def ctr_at(pos):
+    for limit, c in CTR:
+        if pos <= limit:
+            return c
+    return .005
+
+
+def cmd_opportunities(args):
+    gsc = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "gsc", "gsc")
+    p = subprocess.run([sys.executable, gsc, "query", "--dims", "query,page", "--days", str(args.days),
+                        "--all", "--json"], capture_output=True, text=True, stdin=subprocess.DEVNULL)
+    if p.returncode != 0:
+        raise GadsError(p.returncode if p.returncode in (2, 3, 4) else EXIT_ERR,
+                        "Search Console query failed: " + (p.stderr.strip() or p.stdout.strip()))
+    rows = json.loads(p.stdout).get("rows", [])
+    queries = {}
+    for r in rows:
+        q, page = r["keys"][0], r["keys"][1]
+        agg = queries.setdefault(q, {"impr": 0, "clicks": 0, "pos_w": 0.0, "pages": {}})
+        agg["impr"] += r.get("impressions", 0)
+        agg["clicks"] += r.get("clicks", 0)
+        agg["pos_w"] += r.get("position", 0) * r.get("impressions", 0)
+        agg["pages"][page] = agg["pages"].get(page, 0) + r.get("impressions", 0)
+    cands = {}
+    for q, a in queries.items():
+        pos = a["pos_w"] / a["impr"] if a["impr"] else 99
+        if args.min_pos <= pos <= args.max_pos and not re.search(args.exclude, q, re.I):
+            cands[q] = dict(a, pos=pos)
+    if not cands:
+        print("No Search Console queries between positions %s and %s in the last %d days." % (args.min_pos, args.max_pos, args.days))
+        return
+    vols = {}
+    for r in historical(args, sorted(cands, key=lambda k: -cands[k]["impr"])[:args.max_lookup]):
+        m = r.get("keywordMetrics") or {}
+        for t in [r.get("text")] + (r.get("closeVariants") or []):
+            vols[(t or "").lower()] = m
+    out = []
+    for q, a in cands.items():
+        m = vols.get(q.lower())
+        if not m:
+            continue
+        vol = int(m.get("avgMonthlySearches") or 0)
+        if vol < args.min_volume:
+            continue
+        gain = vol * max(0.0, ctr_at(3) - ctr_at(a["pos"]))
+        top_page = max(a["pages"], key=a["pages"].get)
+        out.append({"query": q, "volume": vol, "position": round(a["pos"], 1), "impressions": a["impr"],
+                    "clicks": a["clicks"], "competition": m.get("competition"), "page": top_page,
+                    "pages_ranking": len(a["pages"]), "est_extra_clicks_per_month_at_pos3": round(gain, 1)})
+    out.sort(key=lambda o: o["est_extra_clicks_per_month_at_pos3"], reverse=True)
+    out = out[:args.limit]
+    if args.json:
+        return out_json(out)
+    if not args.csv:
+        print("# opportunities  GSC last %d days × Keyword Planner %s  positions %s–%s" % (args.days, geo_note(args), args.min_pos, args.max_pos))
+    emit(args, ["query", "vol/mo", "pos", "impr", "clicks", "comp", "+clicks@3", "top page", "pages"],
+          [[o["query"], o["volume"], o["position"], o["impressions"], o["clicks"], o["competition"] or "-",
+            o["est_extra_clicks_per_month_at_pos3"], o["page"].replace("https://zenaradesigns.com", ""), o["pages_ranking"]]
+           for o in out])
+    if not args.csv:
+        print("\n+clicks@3 = rough monthly clicks gained by reaching position 3 (generic CTR curve). "
+          "pages > 1 = possible cannibalisation.")
+
+
+# ─── CLI ──────────────────────────────────────────────────────────────────────
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(prog="scripts/gads/gads", description="Read-only Keyword Planner (keyless, via gcloud).")
+    sub = ap.add_subparsers(dest="cmd", required=True)
+
+    def common(p, geo=True):
+        if geo:
+            p.add_argument("--geo", help="comma list of names or IDs (default: GTA). e.g. Toronto,Markham or 2124")
+        p.add_argument("--no-cache", action="store_true", help="ignore the 30-day cache")
+        p.add_argument("--json", action="store_true")
+        p.add_argument("--csv", action="store_true", help="CSV output (pipe to a file for big lists)")
+
+    p = sub.add_parser("status", help="check the session")
+    p.add_argument("--wait", type=int, default=0, metavar="SECONDS")
+    p.add_argument("--quiet", action="store_true")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(fn=cmd_status)
+
+    p = sub.add_parser("login", help="browser sign-in as %s (shared with scripts/gsc/gsc)" % ACCOUNT)
+    p.set_defaults(fn=cmd_login)
+
+    p = sub.add_parser("accounts", help="Google Ads accounts the credentials can read")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(fn=cmd_accounts)
+
+    p = sub.add_parser("geo", help="look up location IDs")
+    p.add_argument("names", nargs="+")
+    p.add_argument("--country", default="CA")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(fn=cmd_geo)
+
+    p = sub.add_parser("ideas", help="keyword ideas from seed keywords and/or a URL")
+    p.add_argument("seeds", nargs="*", help="seed keywords (comma-separated or quoted phrases); >20 are batched")
+    p.add_argument("--file", help="text/CSV file of seed keywords, one per line")
+    p.add_argument("--max-pages", type=int, default=5, help="result pages per seed batch (1,000 ideas each)")
+    p.add_argument("--url", help="seed from a page, e.g. a competitor's service page")
+    p.add_argument("--limit", type=int, default=50)
+    p.add_argument("--min-volume", type=int, default=0)
+    common(p)
+    p.set_defaults(fn=cmd_ideas)
+
+    p = sub.add_parser("volume", help="average monthly searches, competition and bids for exact keywords")
+    p.add_argument("keywords", nargs="*")
+    p.add_argument("--file", help="text/CSV file of keywords, one per line (thousands are fine)")
+    p.add_argument("--sort", default="volume", choices=["volume", "input"])
+    common(p)
+    p.set_defaults(fn=cmd_volume)
+
+    p = sub.add_parser("history", help="month-by-month search volume (seasonality)")
+    p.add_argument("keywords", nargs="*")
+    p.add_argument("--file", help="text/CSV file of keywords, one per line")
+    p.add_argument("--months", type=int, default=12)
+    common(p)
+    p.set_defaults(fn=cmd_history)
+
+    p = sub.add_parser("opportunities", help="join Search Console rankings with search volume to rank SEO opportunities")
+    p.add_argument("--days", type=int, default=90)
+    p.add_argument("--min-pos", type=float, default=4)
+    p.add_argument("--max-pos", type=float, default=40)
+    p.add_argument("--min-volume", type=int, default=10)
+    p.add_argument("--exclude", default="zenara", help="regex of queries to skip (default: brand)")
+    p.add_argument("--max-lookup", type=int, default=2000, help="max queries sent to Keyword Planner")
+    p.add_argument("--limit", type=int, default=30)
+    common(p)
+    p.set_defaults(fn=cmd_opportunities)
+
+    args = ap.parse_args(argv)
+    try:
+        rc = args.fn(args)
+        return rc if isinstance(rc, int) else EXIT_OK
+    except GadsError as e:
+        print("gads: " + e.message, file=sys.stderr)
+        return e.code
+    except KeyboardInterrupt:
+        return 130
+    except BrokenPipeError:  # output piped into head/less that closed early
+        sys.stdout = open(os.devnull, "w")
+        return EXIT_OK
+
+
+if __name__ == "__main__":
+    sys.exit(main())

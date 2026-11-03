@@ -1,0 +1,39 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(scripts/gsc/gsc *)",
+      "Bash(./scripts/gsc/gsc *)",
+      "Bash(scripts/gads/gads *)",
+      "Bash(./scripts/gads/gads *)",
+      "Bash(npm run gsc-audit)",
+      "Bash(npm run gsc-audit *)"
+    ],
+    "ask": [
+      "Bash(scripts/gsc/gsc delete-sitemap *)",
+      "Bash(./scripts/gsc/gsc delete-sitemap *)"
+    ],
+    "deny": [
+      "Bash(gcloud iam service-accounts keys create *)",
+      "Bash(gcloud auth print-access-token *)",
+      "Bash(gcloud auth application-default print-access-token *)",
+      "Bash(curl *googleads.googleapis.com*)"
+    ]
+  },
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3",
+            "args": [
+              "${CLAUDE_PROJECT_DIR}/.claude/hooks/google-session-check.py"
+            ],
+            "timeout": 25,
+            "statusMessage": "Checking Google session"
+          }
+        ]
+      }
+    ]
+  }
+}

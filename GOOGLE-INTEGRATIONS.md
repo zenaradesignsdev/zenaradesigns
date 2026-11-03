@@ -21,8 +21,10 @@ If you are a future Claude session: read this whole file before touching either 
 | GSC service account | `zenara-gsc@composed-region-490022-b2.iam.gserviceaccount.com` (Full user in GSC) |
 | Google Ads manager account (MCC) | **399-958-8184** "Zenara Designs" — CAD, America/Toronto |
 | Google Ads API access level | **Basic** (approved 2026-10-03) |
-| GSC helper script | `~/.config/zenara/gsc` (local machine, not in repo) |
-| Keyword Planner helper script | `~/.config/zenara/gads` (local machine, not in repo) |
+| GSC CLI for zenaradesigns.com | `scripts/gsc/gsc` (in this repo; no secrets — see §1) |
+| GSC helper for other properties | `~/.config/zenara/gsc` (local machine, not in repo) |
+| Keyword Planner CLI | `scripts/gads/gads` (in this repo; keyless, read-only — see §2) |
+| Legacy Keyword Planner helper | `~/.config/zenara/gads` (not present on every machine) |
 
 Both helper scripts are plain bash/python using `curl`/`urllib` — **no npm or pip dependencies**.
 
@@ -38,15 +40,56 @@ keys cannot be created — don't try, and don't disable the policy.** Instead:
 1. The gcloud user `admin@zenaradesigns.com` holds `roles/iam.serviceAccountTokenCreator` on the
    `zenara-gsc@…` service account.
 2. The helper calls IAM Credentials `generateAccessToken` to mint a **1-hour** token for the
-   service account with the `https://www.googleapis.com/auth/webmasters` scope (full, not
-   read-only).
+   service account. The repo CLI (`scripts/gsc/gsc`) asks for `webmasters.readonly` for every read
+   and the full `webmasters` scope only for `submit-sitemap` / `delete-sitemap`. The older
+   `~/.config/zenara/gsc` helper always uses the full scope.
 3. That token calls the Search Console API. Tokens live only in shell variables — never printed,
    never written to disk.
 
 The service account is a **Full** user on `sc-domain:zenaradesigns.com`. Google's API cannot add
 users, so granting access to another property is a manual step in the GSC UI (see below).
 
-### Commands
+### In Claude Code (this repo) — automatic
+
+Added 2026-11-01. Opening Claude Code in this repo and mentioning Search Console just works:
+
+1. `.claude/settings.json` registers a `UserPromptSubmit` hook, `.claude/hooks/google-session-check.py`
+   (shared with Keyword Planner, §2).
+   It does nothing unless the prompt mentions GSC topics (Search Console, GSC, rankings, impressions,
+   CTR, indexing, sitemaps, SERP…).
+2. When it fires it runs `scripts/gsc/gsc status --quiet` (a good result is trusted for 10 minutes).
+   - **Active** → Claude is told it can use the CLI.
+   - **Login missing/expired** → the hook runs `scripts/gsc/gsc login` detached, which opens the Google
+     sign-in page in your browser (at most once every 4 minutes). Sign in as `admin@zenaradesigns.com`.
+     Claude waits with `scripts/gsc/gsc status --wait 240` and carries on when you're done. If no
+     window appears, the URL is in `$TMPDIR/zenara-google/login.log`.
+3. `.claude/skills/gsc/SKILL.md` gives Claude the commands, playbooks and rules.
+4. Permissions (`.claude/settings.json`): every `scripts/gsc/gsc` command and `npm run gsc-audit` run
+   without prompts, `delete-sitemap` always asks, and Claude is blocked from creating SA keys or
+   printing access tokens with gcloud directly.
+
+`gsc login` only refreshes the **gcloud CLI** login (`gcloud auth login admin@zenaradesigns.com --force`).
+It never touches Application Default Credentials, so the Keyword Planner login in §2 is unaffected.
+It does make `admin@zenaradesigns.com` the active gcloud account.
+
+### Repo CLI — `scripts/gsc/gsc` (zenaradesigns.com only)
+
+```bash
+scripts/gsc/gsc status [--quiet] [--wait SECS]   # exit 0 ok · 2 sign-in needed · 3 setup · 4 network
+scripts/gsc/gsc login                            # browser sign-in, then verifies
+scripts/gsc/gsc site                             # permission level
+scripts/gsc/gsc query --days 90 --dims query,page --limit 50
+scripts/gsc/gsc query --dims query --filter query:excludingRegex:zenara --all --json
+scripts/gsc/gsc compare --days 28 --dims page    # totals + biggest movers vs previous period
+scripts/gsc/gsc sitemaps | sitemap <url>
+scripts/gsc/gsc inspect <url> [<url> ...]
+scripts/gsc/gsc submit-sitemap <url> | delete-sitemap <url>
+```
+
+It is locked to `sc-domain:zenaradesigns.com` and refuses URLs outside `zenaradesigns.com` and its
+subdomains. Needs only `gcloud` and the macOS system `python3` (stdlib) — no npm/pip packages.
+
+### Commands — `~/.config/zenara/gsc` (any property the SA can see, e.g. client sites)
 
 ```bash
 ~/.config/zenara/gsc sites                                   # properties the SA can see
@@ -92,13 +135,51 @@ and choose **Full** (or Restricted for read-only). It appears in `gsc sites` imm
   external links → Latest links* and read the CSV.
 - **"Request indexing" and the Removals tool are UI-only** — the API cannot trigger a recrawl.
   The closest API lever is submitting a sitemap with fresh `<lastmod>` dates.
-- If gcloud says *"Reauthentication failed"*, the user login expired: run
-  `gcloud auth login admin@zenaradesigns.com --force` in the background (it opens a browser;
-  the human completes sign-in).
+- If gcloud says *"Reauthentication failed"*, the user login expired: run `scripts/gsc/gsc login`
+  in the background (it runs `gcloud auth login admin@zenaradesigns.com --force`, opens a browser,
+  and the human completes sign-in). In Claude Code the hook does this for you.
 
 ---
 
 ## 2. Google Ads — Keyword Planner (read-only)
+
+### In Claude Code (this repo) — automatic and keyless
+
+Added 2026-11-01. Mentioning Keyword Planner, keyword research, search volume, CPC or seasonality
+in Claude Code triggers the same hook as Search Console (`.claude/hooks/google-session-check.py`).
+It checks `scripts/gads/gads status`, and if the Google login has expired it opens **one** browser
+sign-in that covers both Search Console and Keyword Planner. Skill: `.claude/skills/keyword-planner/SKILL.md`.
+
+**Auth chain** (same as GSC, no OAuth client file or ADC needed):
+gcloud login `admin@zenaradesigns.com` → impersonate `zenara-gsc@…` with the `adwords` scope →
+Google Ads API, using Google Ads' direct service-account access (no domain-wide delegation).
+
+**One-time step (manual, in the Google Ads UI):** in manager account **399-958-8184** go to
+*Admin → Access and security → +*, add `zenara-gsc@composed-region-490022-b2.iam.gserviceaccount.com`
+with **Read only** access. (Service accounts can't hold Email/Admin access. If keyword calls then fail
+with a permission error, raise it to **Standard** — the CLI's endpoint allowlist keeps it read-only.) Until that's done, the CLI
+falls back to the legacy ADC login below if it exists on the machine; `gads status` says which one
+it's using.
+
+**Read-only, enforced twice:** the `adwords` OAuth scope can't be made read-only, so (1) the service
+account only has *Read only* access in Google Ads, and (2) the CLI refuses every endpoint except
+`listAccessibleCustomers`, `generateKeywordIdeas`, `generateKeywordHistoricalMetrics` and
+`geoTargetConstants:suggest`. Claude Code is also blocked from `curl`-ing the Ads API directly.
+
+```bash
+scripts/gads/gads status [--quiet] [--wait SECS]   # exit 0 ok · 2 sign-in · 3 setup · 4 network
+scripts/gads/gads login                            # shared gcloud sign-in (same as gsc login)
+scripts/gads/gads ideas "law firm website design, web design for lawyers" [--url URL] [--geo GTA] [--limit 50]
+scripts/gads/gads volume "web design markham, markham web design" --geo Markham
+scripts/gads/gads volume --file keywords.txt --csv > volumes.csv    # bulk: thousands per request
+scripts/gads/gads history "accountant website design" --months 24    # seasonality
+scripts/gads/gads geo Pickering Ajax Whitby Oshawa                   # location IDs
+scripts/gads/gads opportunities [--days 90] [--min-pos 4 --max-pos 40]   # GSC rankings × volume
+```
+
+Default geo is the **Greater Toronto Area (9252726)**; `--geo` takes names or IDs, comma-separated.
+Results are cached for 30 days in `~/.cache/zenara/gads/` (keyword data only; `--no-cache` to refresh).
+
 
 ### Rules (standing instructions)
 
@@ -107,7 +188,12 @@ and choose **Full** (or Restricted for read-only). It appears in `gsc sites` imm
 - The helper only calls read-only planning/lookup endpoints. Keep it that way.
 - If the Ads UI pushes a "create your first campaign" wizard, abandon it — don't click through.
 
-### How access works
+### Legacy access: ADC + OAuth client (fallback only)
+
+> As of 2026-11-01 `~/.config/zenara/` (this helper and the OAuth client file) is **not** on
+> Kavin's MacBook. The client secret can't be re-downloaded (Google only shows secrets at creation);
+> use the keyless setup above instead of rotating it.
+
 
 Google **sunset developer tokens on 2026-09-09**. API access is now tied to the Google Cloud
 project, managed at *Cloud Console → Google Ads API → Overview* (`/google/ads-apis/overview`).
@@ -157,7 +243,7 @@ The abandoned accounts can't serve ads or charge anything; leave them alone. A n
 can't create client accounts via the API (`CREATION_DENIED_INELIGIBLE_MCC` until it has
 $1,000+ spend history) — not needed anyway.
 
-### Commands
+### Commands — legacy `~/.config/zenara/gads`
 
 ```bash
 ~/.config/zenara/gads accounts
@@ -293,6 +379,8 @@ vasanlaw; tamilbookstore not yet live/crawled.
 
 ## 6. Open follow-ups
 
+- [ ] **Add `zenara-gsc@composed-region-490022-b2.iam.gserviceaccount.com` to Google Ads 399-958-8184 as
+      Read only** (Admin → Access and security). Makes `scripts/gads/gads` keyless; check with `gads status`.
 - [ ] **Remove the temporary demo sitemaps** once `gsc inspect` shows "Excluded by 'noindex'
       tag" for `projecttwo/`, `projectthree/`, `projectthree/contact`, `projectfour/`:
       `gsc delete-sitemap` each one, then delete the `sitemap.xml` files from the three demo repos.
@@ -308,6 +396,8 @@ vasanlaw; tamilbookstore not yet live/crawled.
 
 ## 7. Security notes
 
+- `scripts/gsc/gsc`, `scripts/gads/gads` and `.claude/hooks/google-session-check.py` are safe to commit: they contain only
+  identifiers (account, service-account email, property) and get credentials from gcloud at runtime.
 - **Never commit** `~/.config/zenara/*`, gcloud credentials, OAuth client JSON files, or any
   access token. None of these belong in this repo.
 - Never create a service-account key file (org policy blocks it; don't work around it).

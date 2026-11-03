@@ -1,0 +1,546 @@
+#!/usr/bin/env python3
+"""
+gsc — Google Search Console CLI for zenaradesigns.com (and only zenaradesigns.com).
+
+Keyless auth chain (no files, nothing secret in this repo):
+  1. `gcloud auth print-access-token admin@zenaradesigns.com` — the human's gcloud login
+  2. IAM Credentials generateAccessToken -> 1-hour token for the zenara-gsc service account
+  3. Search Console API with that token
+
+Reads use the webmasters.readonly scope; only submit-sitemap / delete-sitemap ask for the
+read/write webmasters scope. Tokens live in this process's memory only — never printed,
+never written to disk.
+
+Exit codes: 0 ok · 1 usage/API error · 2 Google sign-in needed (run `gsc login`)
+            3 setup problem (gcloud missing, impersonation denied) · 4 network problem
+
+Run `scripts/gsc/gsc -h` or `scripts/gsc/gsc <command> -h` for usage.
+Docs: GOOGLE-INTEGRATIONS.md and .claude/skills/gsc/SKILL.md
+"""
+import argparse
+import datetime as dt
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+import time
+import urllib.error
+import urllib.parse
+import urllib.request
+
+# ─── Fixed identity: this tool only ever touches Zenara's own property ────────
+ACCOUNT = os.environ.get("ZENARA_GCLOUD_ACCOUNT", "admin@zenaradesigns.com")
+SERVICE_ACCOUNT = "zenara-gsc@composed-region-490022-b2.iam.gserviceaccount.com"
+SITE = "sc-domain:zenaradesigns.com"
+DOMAIN = "zenaradesigns.com"
+
+SCOPE_READ = "https://www.googleapis.com/auth/webmasters.readonly"
+SCOPE_WRITE = "https://www.googleapis.com/auth/webmasters"
+
+WM = "https://searchconsole.googleapis.com/webmasters/v3"
+INSPECT = "https://searchconsole.googleapis.com/v1/urlInspection/index:inspect"
+IAM = "https://iamcredentials.googleapis.com/v1/projects/-/serviceAccounts/"
+
+SEARCH_TYPES = ["web", "image", "video", "news", "discover", "googleNews"]
+DIMENSIONS = ["query", "page", "country", "device", "date", "searchAppearance", "hour"]
+FILTER_OPS = ["equals", "notEquals", "contains", "notContains", "includingRegex", "excludingRegex"]
+
+EXIT_OK, EXIT_ERR, EXIT_LOGIN, EXIT_SETUP, EXIT_NET = 0, 1, 2, 3, 4
+
+
+class GscError(Exception):
+    def __init__(self, code, message):
+        super().__init__(message)
+        self.code = code
+        self.message = message
+
+
+# ─── Auth ─────────────────────────────────────────────────────────────────────
+
+_token_cache = {}
+
+LOGIN_HINTS = re.compile(
+    r"reauth|re-auth|refresh|invalid_grant|login|log in|credentialed|not authenticated|"
+    r"no credential|expired|revoked|password",
+    re.I,
+)
+NET_HINTS = re.compile(r"unable to find the server|connection|network|resolve|timed out|proxy", re.I)
+
+
+def _gcloud():
+    path = shutil.which("gcloud")
+    if not path:
+        raise GscError(EXIT_SETUP, "gcloud CLI not found on PATH. Install it with "
+                                   "`brew install --cask google-cloud-sdk`, then run `scripts/gsc/gsc login`.")
+    return path
+
+
+def user_token():
+    """The human's gcloud access token (needs only cloud-platform, which gcloud login grants)."""
+    env = dict(os.environ, CLOUDSDK_CORE_DISABLE_PROMPTS="1")
+    try:
+        p = subprocess.run([_gcloud(), "auth", "print-access-token", ACCOUNT, "--quiet"],
+                           stdin=subprocess.DEVNULL, capture_output=True, text=True,
+                           timeout=45, env=env)
+    except subprocess.TimeoutExpired:
+        raise GscError(EXIT_NET, "gcloud timed out while refreshing the login (network?).")
+    if p.returncode != 0:
+        err = " ".join(p.stderr.split())[:300]
+        if NET_HINTS.search(err) and not LOGIN_HINTS.search(err):
+            raise GscError(EXIT_NET, "gcloud could not reach Google: " + err)
+        raise GscError(EXIT_LOGIN, "Google sign-in needed: the gcloud login for %s is missing or expired "
+                                   "(%s). Run `scripts/gsc/gsc login`." % (ACCOUNT, err or "no detail"))
+    tok = p.stdout.strip().splitlines()[-1].strip() if p.stdout.strip() else ""
+    if not tok:
+        raise GscError(EXIT_LOGIN, "gcloud returned no token for %s. Run `scripts/gsc/gsc login`." % ACCOUNT)
+    return tok
+
+
+def sa_token(scope):
+    """Short-lived token for the zenara-gsc service account, minted by impersonation."""
+    if scope in _token_cache:
+        return _token_cache[scope]
+    status, data = http("POST", IAM + SERVICE_ACCOUNT + ":generateAccessToken", user_token(),
+                        {"scope": [scope], "lifetime": "3600s"}, raise_on_error=False)
+    if status == 401:
+        raise GscError(EXIT_LOGIN, "Google rejected the gcloud login for %s. Run `scripts/gsc/gsc login`." % ACCOUNT)
+    if status == 403:
+        raise GscError(EXIT_SETUP, "%s is not allowed to impersonate %s (needs "
+                                   "roles/iam.serviceAccountTokenCreator on it). %s"
+                       % (ACCOUNT, SERVICE_ACCOUNT, _err_text(data)))
+    if status != 200 or "accessToken" not in data:
+        raise GscError(EXIT_SETUP, "Could not mint a Search Console token (HTTP %s). %s" % (status, _err_text(data)))
+    _token_cache[scope] = data["accessToken"]
+    return data["accessToken"]
+
+
+# ─── HTTP ─────────────────────────────────────────────────────────────────────
+
+def _err_text(data):
+    if isinstance(data, dict):
+        e = data.get("error")
+        if isinstance(e, dict):
+            return e.get("message") or e.get("status") or ""
+        if isinstance(e, str):
+            return data.get("error_description") or e
+    return ""
+
+
+def http(method, url, token, body=None, raise_on_error=True):
+    payload = json.dumps(body).encode() if body is not None else None
+    req = urllib.request.Request(url, data=payload, method=method)
+    req.add_header("Authorization", "Bearer " + token)
+    if payload is not None:
+        req.add_header("Content-Type", "application/json")
+    try:
+        with urllib.request.urlopen(req, timeout=60) as r:
+            raw = r.read().decode() or "{}"
+            status = r.status
+    except urllib.error.HTTPError as e:
+        raw = e.read().decode() or "{}"
+        status = e.code
+    except (urllib.error.URLError, TimeoutError, OSError) as e:
+        raise GscError(EXIT_NET, "Network error calling Google: %s" % getattr(e, "reason", e))
+    try:
+        data = json.loads(raw)
+    except ValueError:
+        data = {"error": {"message": raw[:300]}}
+    if raise_on_error and not (200 <= status < 300):
+        msg = _err_text(data) or "no detail"
+        if status == 401:
+            raise GscError(EXIT_LOGIN, "Search Console rejected the token (401): %s" % msg)
+        if status == 403:
+            raise GscError(EXIT_ERR, "Search Console said 403: %s" % msg)
+        raise GscError(EXIT_ERR, "Search Console API error %s: %s" % (status, msg))
+    return status, data
+
+
+def api(method, path, scope=SCOPE_READ, body=None, base=WM):
+    _, data = http(method, base + path, sa_token(scope), body)
+    return data
+
+
+def q(s):
+    return urllib.parse.quote(s, safe="")
+
+
+SITE_PATH = "/sites/" + q(SITE)
+
+
+# ─── Guards ───────────────────────────────────────────────────────────────────
+
+def own_url(url):
+    """Only zenaradesigns.com and its subdomains (the domain property covers them all)."""
+    p = urllib.parse.urlparse(url)
+    host = (p.hostname or "").lower()
+    if p.scheme not in ("http", "https") or not (host == DOMAIN or host.endswith("." + DOMAIN)):
+        raise GscError(EXIT_ERR, "Refusing %r: this tool only works on %s URLs (property %s)." % (url, DOMAIN, SITE))
+    return url
+
+
+def parse_date(s):
+    try:
+        return dt.date.fromisoformat(s)
+    except ValueError:
+        raise GscError(EXIT_ERR, "Bad date %r (use YYYY-MM-DD)." % s)
+
+
+def date_range(args):
+    today = dt.date.today()
+    # dataState=all includes fresh (partial) data; final data lags ~3 days.
+    default_end = today - dt.timedelta(days=1 if args.state == "all" else 3)
+    end = parse_date(args.end) if args.end else default_end
+    start = parse_date(args.start) if args.start else end - dt.timedelta(days=args.days - 1)
+    if start > end:
+        raise GscError(EXIT_ERR, "--start is after --end.")
+    return start, end
+
+
+# ─── Output helpers ───────────────────────────────────────────────────────────
+
+def out_json(obj):
+    print(json.dumps(obj, indent=2, ensure_ascii=False))
+
+
+def table(headers, rows):
+    rows = [["" if v is None else str(v) for v in r] for r in rows]
+    widths = [len(h) for h in headers]
+    for r in rows:
+        for i, v in enumerate(r):
+            widths[i] = min(max(widths[i], len(v)), 90)
+    def line(vals):
+        return "  ".join((v if len(v) <= 90 else v[:87] + "...").ljust(widths[i]) for i, v in enumerate(vals)).rstrip()
+    print(line(headers))
+    print(line(["-" * w for w in widths]))
+    for r in rows:
+        print(line(r))
+
+
+def metrics(r):
+    return [r.get("clicks", 0), r.get("impressions", 0),
+            "%.1f%%" % (100 * r.get("ctr", 0)), "%.1f" % r.get("position", 0)]
+
+
+# ─── Commands ─────────────────────────────────────────────────────────────────
+
+def check_access(write_too=False):
+    """Returns property info dict or raises GscError."""
+    site = api("GET", SITE_PATH)
+    info = {"account": ACCOUNT, "service_account": SERVICE_ACCOUNT, "property": SITE,
+            "permission": site.get("permissionLevel"), "read": True, "write": False}
+    if write_too:
+        sa_token(SCOPE_WRITE)  # minting proves the write scope is available
+        info["write"] = info["permission"] in ("siteOwner", "siteFullUser")
+    return info
+
+
+def cmd_status(args):
+    deadline = time.time() + max(0, args.wait)
+    while True:
+        try:
+            info = check_access(write_too=True)
+            break
+        except GscError as e:
+            _token_cache.clear()
+            if e.code in (EXIT_LOGIN, EXIT_NET) and time.time() < deadline:
+                time.sleep(5)
+                continue
+            if args.json:
+                out_json({"ok": False, "code": e.code, "message": e.message})
+            else:
+                print("GSC session: NOT READY — " + e.message)
+            return e.code
+    if args.json:
+        out_json(dict(info, ok=True))
+    elif args.quiet:
+        print("GSC session: OK — %s as %s (%s), read%s." % (
+            SITE, SERVICE_ACCOUNT.split("@")[0], info["permission"], " + write" if info["write"] else " only"))
+    else:
+        print("GSC session: OK")
+        print("  gcloud login     %s" % ACCOUNT)
+        print("  service account  %s" % SERVICE_ACCOUNT)
+        print("  property         %s (%s)" % (SITE, info["permission"]))
+        print("  access           read (webmasters.readonly)%s" % (
+            " + write (webmasters: submit/delete sitemaps)" if info["write"] else ""))
+    return EXIT_OK
+
+
+def cmd_login(args):
+    print("Opening a Google sign-in page for %s in your browser..." % ACCOUNT, flush=True)
+    print("(Only the gcloud CLI login is refreshed; Application Default Credentials used by "
+          "the Keyword Planner helper are left alone.)", flush=True)
+    cmd = [_gcloud(), "auth", "login", ACCOUNT, "--force"]
+    rc = subprocess.call(cmd, stdin=subprocess.DEVNULL)
+    if rc != 0:
+        print("gcloud auth login exited with %d." % rc)
+        return EXIT_LOGIN
+    args.wait, args.quiet, args.json = 30, False, False
+    return cmd_status(args)
+
+
+def cmd_site(args):
+    data = api("GET", SITE_PATH)
+    if args.json:
+        return out_json(data)
+    print("%s  permission=%s" % (data.get("siteUrl"), data.get("permissionLevel")))
+
+
+def build_query(args, start, end, dims, limit, start_row=0):
+    body = {"startDate": start.isoformat(), "endDate": end.isoformat(),
+            "type": args.type, "rowLimit": limit, "startRow": start_row,
+            "dataState": "hourly_all" if "hour" in dims else args.state}
+    if dims:
+        body["dimensions"] = dims
+    if args.agg != "auto":
+        body["aggregationType"] = args.agg
+    filters = []
+    for f in args.filter or []:
+        parts = f.split(":", 2)
+        if len(parts) != 3 or parts[0] not in DIMENSIONS or parts[1] not in FILTER_OPS:
+            raise GscError(EXIT_ERR, "Bad --filter %r. Use DIM:OP:EXPR, e.g. page:contains:/blog "
+                                     "(ops: %s)." % (f, ", ".join(FILTER_OPS)))
+        filters.append({"dimension": parts[0], "operator": parts[1], "expression": parts[2]})
+    if filters:
+        body["dimensionFilterGroups"] = [{"groupType": "and", "filters": filters}]
+    return body
+
+
+def run_query(args, start, end, dims, limit, fetch_all=False, max_rows=100000):
+    rows, start_row = [], args.start_row
+    page = 25000 if fetch_all else min(limit, 25000)
+    while True:
+        data = api("POST", SITE_PATH + "/searchAnalytics/query",
+                   body=build_query(args, start, end, dims, page, start_row))
+        batch = data.get("rows", [])
+        rows.extend(batch)
+        if not fetch_all or len(batch) < page or len(rows) >= max_rows:
+            return rows, data.get("responseAggregationType")
+        start_row += page
+
+
+def parse_dims(s):
+    dims = [d.strip() for d in (s or "").split(",") if d.strip()]
+    bad = [d for d in dims if d not in DIMENSIONS]
+    if bad:
+        raise GscError(EXIT_ERR, "Unknown dimension(s) %s. Use: %s" % (bad, ", ".join(DIMENSIONS)))
+    return dims
+
+
+def cmd_query(args):
+    start, end = date_range(args)
+    dims = parse_dims(args.dims)
+    if "hour" in dims:  # hourly data only covers roughly the last 10 days
+        end = max(end, dt.date.today())
+        start = max(start, end - dt.timedelta(days=9))
+    rows, agg = run_query(args, start, end, dims, args.limit, fetch_all=args.all)
+    key = {"clicks": "clicks", "impressions": "impressions", "ctr": "ctr", "position": "position"}[args.sort]
+    rows.sort(key=lambda r: r.get(key, 0), reverse=(args.sort != "position"))
+    if args.json:
+        return out_json({"property": SITE, "startDate": str(start), "endDate": str(end), "type": args.type,
+                         "dimensions": dims, "aggregation": agg, "rows": rows})
+    print("# %s  %s → %s  type=%s  state=%s  rows=%d%s" % (
+        SITE, start, end, args.type, args.state, len(rows), "  agg=%s" % agg if agg else ""))
+    if not rows:
+        print("(no rows)")
+        return
+    table(dims + ["clicks", "impr", "ctr", "pos"], [r.get("keys", []) + metrics(r) for r in rows])
+
+
+def totals(args, start, end):
+    rows, _ = run_query(args, start, end, [], 1)
+    return rows[0] if rows else {"clicks": 0, "impressions": 0, "ctr": 0, "position": 0}
+
+
+def cmd_compare(args):
+    args.start = args.end = None
+    end = dt.date.today() - dt.timedelta(days=1 if args.state == "all" else 3)
+    cur_s = end - dt.timedelta(days=args.days - 1)
+    prev_e = cur_s - dt.timedelta(days=1)
+    prev_s = prev_e - dt.timedelta(days=args.days - 1)
+    dims = parse_dims(args.dims)
+    t_cur, t_prev = totals(args, cur_s, end), totals(args, prev_s, prev_e)
+    cur, _ = run_query(args, cur_s, end, dims, 5000)
+    prev, _ = run_query(args, prev_s, prev_e, dims, 5000)
+    merged = {}
+    for tag, rows in (("c", cur), ("p", prev)):
+        for r in rows:
+            merged.setdefault(tuple(r.get("keys", [])), {})[tag] = r
+    movers = []
+    for k, v in merged.items():
+        c, p = v.get("c", {}), v.get("p", {})
+        movers.append({"keys": list(k), "clicks": c.get("clicks", 0), "clicks_prev": p.get("clicks", 0),
+                       "impr": c.get("impressions", 0), "impr_prev": p.get("impressions", 0),
+                       "pos": c.get("position"), "pos_prev": p.get("position")})
+    movers.sort(key=lambda m: (abs(m["clicks"] - m["clicks_prev"]), abs(m["impr"] - m["impr_prev"])), reverse=True)
+    movers = movers[:args.limit]
+    if args.json:
+        return out_json({"current": [str(cur_s), str(end), t_cur], "previous": [str(prev_s), str(prev_e), t_prev],
+                         "dimensions": dims, "movers": movers})
+    print("# %s  last %d days (%s → %s) vs previous (%s → %s)" % (SITE, args.days, cur_s, end, prev_s, prev_e))
+    table(["metric", "current", "previous", "change"], [
+        ["clicks", t_cur.get("clicks", 0), t_prev.get("clicks", 0), _delta(t_cur.get("clicks", 0), t_prev.get("clicks", 0))],
+        ["impressions", t_cur.get("impressions", 0), t_prev.get("impressions", 0),
+         _delta(t_cur.get("impressions", 0), t_prev.get("impressions", 0))],
+        ["ctr", "%.2f%%" % (100 * t_cur.get("ctr", 0)), "%.2f%%" % (100 * t_prev.get("ctr", 0)), ""],
+        ["avg position", "%.1f" % t_cur.get("position", 0), "%.1f" % t_prev.get("position", 0), ""],
+    ])
+    print("\n# Biggest movers by %s" % ",".join(dims))
+    table(dims + ["clicks", "prev", "impr", "prev", "pos", "prev"],
+          [m["keys"] + [m["clicks"], m["clicks_prev"], m["impr"], m["impr_prev"],
+                        "%.1f" % m["pos"] if m["pos"] else "-", "%.1f" % m["pos_prev"] if m["pos_prev"] else "-"]
+           for m in movers])
+
+
+def _delta(a, b):
+    if not b:
+        return "+%s" % a if a else "0"
+    return "%+.0f%%" % (100.0 * (a - b) / b)
+
+
+def cmd_sitemaps(args):
+    data = api("GET", SITE_PATH + "/sitemaps")
+    maps = data.get("sitemap", [])
+    if args.json:
+        return out_json(maps)
+    if not maps:
+        print("(no sitemaps submitted)")
+        return
+    rows = []
+    for m in maps:
+        submitted = sum(int(c.get("submitted", 0)) for c in m.get("contents", []))
+        rows.append([m.get("path"), m.get("type", ""), (m.get("lastSubmitted") or "")[:10],
+                     (m.get("lastDownloaded") or "")[:10], "yes" if m.get("isPending") else "no",
+                     submitted, m.get("errors", 0), m.get("warnings", 0)])
+    table(["path", "type", "submitted", "downloaded", "pending", "urls", "errors", "warnings"], rows)
+    print("\nNote: the API's per-sitemap 'indexed' count is deprecated (always 0) — use `inspect` for index status.")
+
+
+def cmd_sitemap(args):
+    out_json(api("GET", SITE_PATH + "/sitemaps/" + q(own_url(args.url))))
+
+
+def cmd_inspect(args):
+    results = []
+    for url in args.urls:
+        own_url(url)
+        data = api("POST", "", body={"inspectionUrl": url, "siteUrl": SITE, "languageCode": "en-US"}, base=INSPECT)
+        results.append({"url": url, "result": data.get("inspectionResult", data)})
+    if args.json:
+        return out_json(results)
+    for item in results:
+        r = item["result"]
+        idx = r.get("indexStatusResult", {})
+        print("## %s" % item["url"])
+        for label, val in [
+            ("verdict", idx.get("verdict")), ("coverage", idx.get("coverageState")),
+            ("indexing allowed", idx.get("indexingState")), ("robots.txt", idx.get("robotsTxtState")),
+            ("page fetch", idx.get("pageFetchState")), ("last crawl", idx.get("lastCrawlTime")),
+            ("crawled as", idx.get("crawledAs")), ("google canonical", idx.get("googleCanonical")),
+            ("user canonical", idx.get("userCanonical")),
+            ("in sitemaps", ", ".join(idx.get("sitemap", []) or []) or None),
+            ("referring urls", len(idx.get("referringUrls", []) or []) or None),
+            ("rich results", (r.get("richResultsResult") or {}).get("verdict")),
+            ("mobile usability", (r.get("mobileUsabilityResult") or {}).get("verdict")),
+        ]:
+            if val:
+                print("  %-17s %s" % (label, val))
+        for d in (r.get("richResultsResult") or {}).get("detectedItems", []) or []:
+            issues = sum(len(i.get("issues", []) or []) for i in d.get("items", []) or [])
+            print("  rich type         %s (%d item(s), %d issue(s))" % (d.get("richResultType"), len(d.get("items", [])), issues))
+        if r.get("inspectionResultLink"):
+            print("  open in GSC       %s" % r["inspectionResultLink"])
+        print()
+
+
+def cmd_submit_sitemap(args):
+    api("PUT", SITE_PATH + "/sitemaps/" + q(own_url(args.url)), scope=SCOPE_WRITE)
+    print("Submitted %s to %s. Google will re-read it on its own schedule." % (args.url, SITE))
+
+
+def cmd_delete_sitemap(args):
+    api("DELETE", SITE_PATH + "/sitemaps/" + q(own_url(args.url)), scope=SCOPE_WRITE)
+    print("Removed %s from %s's submitted sitemaps (the file on the site is untouched)." % (args.url, SITE))
+
+
+# ─── CLI ──────────────────────────────────────────────────────────────────────
+
+def add_query_opts(p, default_dims, default_limit):
+    p.add_argument("--dims", default=default_dims, help="comma list: %s (default %s)" % (",".join(DIMENSIONS), default_dims or "none"))
+    p.add_argument("--type", default="web", choices=SEARCH_TYPES, help="search type (default web)")
+    p.add_argument("--state", default="all", choices=["all", "final"], help="all = include fresh data (default); final = settled data only")
+    p.add_argument("--agg", default="auto", choices=["auto", "byPage", "byProperty", "byNewsShowcasePanel"])
+    p.add_argument("--filter", action="append", metavar="DIM:OP:EXPR", help="repeatable, e.g. page:contains:/blog or query:excludingRegex:zenara")
+    p.add_argument("--limit", type=int, default=default_limit)
+    p.add_argument("--start-row", type=int, default=0)
+    p.add_argument("--json", action="store_true", help="raw JSON output")
+
+
+def main(argv=None):
+    ap = argparse.ArgumentParser(prog="scripts/gsc/gsc", description="Search Console for %s (keyless, via gcloud)." % SITE)
+    sub = ap.add_subparsers(dest="cmd", required=True)
+
+    p = sub.add_parser("status", help="check the session (read + write access)")
+    p.add_argument("--wait", type=int, default=0, metavar="SECONDS", help="keep retrying while sign-in is pending")
+    p.add_argument("--quiet", action="store_true", help="one-line output")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(fn=cmd_status)
+
+    p = sub.add_parser("login", help="open a browser to sign in as %s, then verify" % ACCOUNT)
+    p.set_defaults(fn=cmd_login)
+
+    p = sub.add_parser("site", help="property details and permission level")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(fn=cmd_site)
+
+    p = sub.add_parser("query", help="Search Analytics (clicks, impressions, CTR, position)")
+    add_query_opts(p, "query", 25)
+    p.add_argument("--days", type=int, default=28, help="window length ending at --end (default 28; max ~480)")
+    p.add_argument("--start", help="YYYY-MM-DD")
+    p.add_argument("--end", help="YYYY-MM-DD (default yesterday, or 3 days ago with --state final)")
+    p.add_argument("--all", action="store_true", help="page through every row (25k per request, up to 100k)")
+    p.add_argument("--sort", default="clicks", choices=["clicks", "impressions", "ctr", "position"])
+    p.set_defaults(fn=cmd_query)
+
+    p = sub.add_parser("compare", help="last N days vs the N days before: totals + biggest movers")
+    add_query_opts(p, "page", 20)
+    p.add_argument("--days", type=int, default=28)
+    p.set_defaults(fn=cmd_compare)
+
+    p = sub.add_parser("sitemaps", help="submitted sitemaps with errors/warnings")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(fn=cmd_sitemaps)
+
+    p = sub.add_parser("sitemap", help="full detail for one sitemap (JSON)")
+    p.add_argument("url")
+    p.set_defaults(fn=cmd_sitemap)
+
+    p = sub.add_parser("inspect", help="URL Inspection: index status, canonical, crawl, rich results")
+    p.add_argument("urls", nargs="+")
+    p.add_argument("--json", action="store_true")
+    p.set_defaults(fn=cmd_inspect)
+
+    p = sub.add_parser("submit-sitemap", help="WRITE: (re)submit a sitemap URL")
+    p.add_argument("url")
+    p.set_defaults(fn=cmd_submit_sitemap)
+
+    p = sub.add_parser("delete-sitemap", help="WRITE: remove a submitted sitemap from GSC")
+    p.add_argument("url")
+    p.set_defaults(fn=cmd_delete_sitemap)
+
+    args = ap.parse_args(argv)
+    if getattr(args, "limit", 1) < 1 or getattr(args, "limit", 1) > 25000:
+        ap.error("--limit must be 1..25000")
+    try:
+        rc = args.fn(args)
+        return rc if isinstance(rc, int) else EXIT_OK
+    except GscError as e:
+        print("gsc: " + e.message, file=sys.stderr)
+        return e.code
+    except KeyboardInterrupt:
+        return 130
+
+
+if __name__ == "__main__":
+    sys.exit(main())
