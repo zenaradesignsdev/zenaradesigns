@@ -123,8 +123,10 @@ export default function BotpressChat() {
   // On phones the launcher sits over the right edge of full-width form fields
   // and submit buttons, so it steps aside while a form passes through the
   // bottom strip of the screen where the launcher lives (the root margin trims
-  // the observed area to the bottom 15%). Forms can mount late (lazy-loaded
-  // quote forms), hence the MutationObserver.
+  // the observed area to the bottom 15%). The footer counts too: it covered
+  // the footer's phone number and links, and the footer has its own contact
+  // CTA. Forms can mount late (lazy-loaded quote forms), hence the
+  // MutationObserver.
   useEffect(() => {
     if (!mounted) return;
     const visible = new Set<Element>();
@@ -134,7 +136,7 @@ export default function BotpressChat() {
       setFormInView(visible.size > 0);
     }, { rootMargin: '-85% 0px 0px 0px' });
     const observeForms = () => {
-      document.querySelectorAll('form').forEach((form) => {
+      document.querySelectorAll('form, footer').forEach((form) => {
         if (observed.has(form)) return;
         observed.add(form);
         io.observe(form);

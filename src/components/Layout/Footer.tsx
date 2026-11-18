@@ -1,466 +1,131 @@
-'use client';
-
+// Server Component. Only the collapsible link groups (FooterNav) and the
+// newsletter form (FooterNewsletter) ship JavaScript.
 import Link from 'next/link';
 import Image from 'next/image';
-import { Mail, MapPin, Phone, CheckCircle, Instagram, Youtube } from 'lucide-react';
-import { BUSINESS_EMAIL, BUSINESS_PHONE, BUSINESS_PHONE_E164, NAVIGATION_LINKS, FOOTER_ADDITIONAL_LINKS, SERVICE_LINKS, SERVICE_AREA_LINKS, INSTAGRAM_URL, TIKTOK_URL, YOUTUBE_URL, LINKTREE_URL } from '@/lib/constants';
+import { ArrowRight, Instagram, Mail, MapPin, Phone, Youtube } from 'lucide-react';
+import { BUSINESS_EMAIL, BUSINESS_PHONE, BUSINESS_PHONE_E164, INSTAGRAM_URL, TIKTOK_URL, YOUTUBE_URL, LINKTREE_URL } from '@/lib/constants';
 import { TikTokIcon, LinktreeIcon } from '@/components/Layout/BrandIcons';
-import { useState, FormEvent } from 'react';
+import FooterNav from './FooterNav';
+import FooterNewsletter from './FooterNewsletter';
 
 const logo = '/images/zenara-logo-v5.svg';
 
 const SOCIAL_LINKS = [
-  { href: INSTAGRAM_URL, label: '@zenaradesignsinc', ariaLabel: 'Follow us on Instagram @zenaradesignsinc', Icon: Instagram },
-  { href: TIKTOK_URL, label: '@zenaradesigns', ariaLabel: 'Follow us on TikTok @zenaradesigns', Icon: TikTokIcon },
-  { href: YOUTUBE_URL, label: '@ZenaraDesigns', ariaLabel: 'Subscribe to us on YouTube @ZenaraDesigns', Icon: Youtube },
-  { href: LINKTREE_URL, label: 'Linktree', ariaLabel: 'All our links on Linktree', Icon: LinktreeIcon },
+  { href: INSTAGRAM_URL, ariaLabel: 'Follow us on Instagram @zenaradesignsinc', Icon: Instagram },
+  { href: TIKTOK_URL, ariaLabel: 'Follow us on TikTok @zenaradesigns', Icon: TikTokIcon },
+  { href: YOUTUBE_URL, ariaLabel: 'Subscribe to us on YouTube @ZenaraDesigns', Icon: Youtube },
+  { href: LINKTREE_URL, ariaLabel: 'All our links on Linktree', Icon: LinktreeIcon },
 ] as const;
+
+// [top%, left%] — sparse starfield matching the hero.
+const STARS: [number, number][] = [
+  [10, 5], [15, 15], [8, 25], [20, 35], [12, 45], [18, 55], [6, 65], [22, 75], [14, 85], [16, 95],
+  [30, 8], [35, 18], [28, 28], [32, 38], [26, 48], [34, 58], [29, 68], [31, 78], [27, 88], [33, 92],
+  [45, 12], [48, 22], [42, 32], [46, 42], [44, 52], [49, 62], [41, 72], [47, 82], [43, 92],
+  [60, 6], [65, 16], [62, 26], [68, 36], [64, 46], [66, 56], [61, 66], [67, 76], [63, 86], [69, 96],
+  [75, 10], [78, 20], [72, 30], [76, 40], [74, 50], [79, 60], [71, 70], [77, 80], [73, 90],
+  [85, 4], [88, 14], [82, 24], [86, 34], [84, 44], [89, 54], [81, 64], [87, 74], [83, 84], [90, 94],
+];
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [email, setEmail] = useState('');
-
-  const quickLinks = NAVIGATION_LINKS;
-
-
-  const handleNewsletterSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    const formData = new FormData(e.currentTarget);
-    
-    try {
-      const response = await fetch('https://b15138b6.sibforms.com/serve/MUIFAOwmr3O2pUC0JwxhUO33Gtk7KOqHafuooQffpcwbpwvukxO_KjFdXdJ94mg3dohWwtqZHqbUf9fie3SinOqwOMAqeIr0IjoEoGJvVIfQ9k2CyozaAAmjC34YDF4nimW4H95Rprjd8pRQ3yHsdZx7zNaKlb603EbyZ-z-xl-huvYRjyDBmVt68SGFtzdInTGmUbwwHmr0ZYkaBg==', {
-        method: 'POST',
-        body: formData,
-        mode: 'no-cors' // Required for cross-origin form submission
-      });
-
-      // Since we're using no-cors, we can't read the response, but we assume success
-      setShowSuccess(true);
-      setEmail('');
-      setIsSubmitting(false);
-
-      // Hide success message after 5 seconds
-      setTimeout(() => {
-        setShowSuccess(false);
-      }, 5000);
-    } catch (error) {
-      console.error('Newsletter subscription error:', error);
-      setIsSubmitting(false);
-      // Still show success to user (better UX, and form usually works even if we can't verify)
-      setShowSuccess(true);
-      setEmail('');
-      setTimeout(() => {
-        setShowSuccess(false);
-      }, 5000);
-    }
-  };
 
   return (
     <footer className="relative overflow-hidden bg-black">
-      {/* Gradient Background Layers - Matching Hero Section */}
-      <div className="absolute inset-0">
-        {/* Base gradient layer */}
+      {/* Gradient background — matches the hero section */}
+      <div className="absolute inset-0" aria-hidden="true">
         <div className="absolute inset-0 bg-gradient-to-br from-black via-cyan-900/60 to-black"></div>
         <div className="absolute inset-0 bg-gradient-to-tl from-black via-purple-900/50 to-black"></div>
-        {/* Accent gradients with theme colors */}
         <div className="absolute inset-0 bg-gradient-to-r from-cyan-300/20 via-transparent to-purple-300/20"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-cyan-900/35 to-transparent"></div>
       </div>
-      
-      {/* Background Stars */}
-      <div className="absolute inset-0 opacity-30">
-        {/* Small stars */}
-        <div className="bg-star" style={{ top: '10%', left: '5%' }}></div>
-        <div className="bg-star" style={{ top: '15%', left: '15%' }}></div>
-        <div className="bg-star" style={{ top: '8%', left: '25%' }}></div>
-        <div className="bg-star" style={{ top: '20%', left: '35%' }}></div>
-        <div className="bg-star" style={{ top: '12%', left: '45%' }}></div>
-        <div className="bg-star" style={{ top: '18%', left: '55%' }}></div>
-        <div className="bg-star" style={{ top: '6%', left: '65%' }}></div>
-        <div className="bg-star" style={{ top: '22%', left: '75%' }}></div>
-        <div className="bg-star" style={{ top: '14%', left: '85%' }}></div>
-        <div className="bg-star" style={{ top: '16%', left: '95%' }}></div>
-        
-        <div className="bg-star" style={{ top: '30%', left: '8%' }}></div>
-        <div className="bg-star" style={{ top: '35%', left: '18%' }}></div>
-        <div className="bg-star" style={{ top: '28%', left: '28%' }}></div>
-        <div className="bg-star" style={{ top: '32%', left: '38%' }}></div>
-        <div className="bg-star" style={{ top: '26%', left: '48%' }}></div>
-        <div className="bg-star" style={{ top: '34%', left: '58%' }}></div>
-        <div className="bg-star" style={{ top: '29%', left: '68%' }}></div>
-        <div className="bg-star" style={{ top: '31%', left: '78%' }}></div>
-        <div className="bg-star" style={{ top: '27%', left: '88%' }}></div>
-        <div className="bg-star" style={{ top: '33%', left: '92%' }}></div>
-        
-        <div className="bg-star" style={{ top: '45%', left: '12%' }}></div>
-        <div className="bg-star" style={{ top: '48%', left: '22%' }}></div>
-        <div className="bg-star" style={{ top: '42%', left: '32%' }}></div>
-        <div className="bg-star" style={{ top: '46%', left: '42%' }}></div>
-        <div className="bg-star" style={{ top: '44%', left: '52%' }}></div>
-        <div className="bg-star" style={{ top: '49%', left: '62%' }}></div>
-        <div className="bg-star" style={{ top: '41%', left: '72%' }}></div>
-        <div className="bg-star" style={{ top: '47%', left: '82%' }}></div>
-        <div className="bg-star" style={{ top: '43%', left: '92%' }}></div>
-        
-        <div className="bg-star" style={{ top: '60%', left: '6%' }}></div>
-        <div className="bg-star" style={{ top: '65%', left: '16%' }}></div>
-        <div className="bg-star" style={{ top: '62%', left: '26%' }}></div>
-        <div className="bg-star" style={{ top: '68%', left: '36%' }}></div>
-        <div className="bg-star" style={{ top: '64%', left: '46%' }}></div>
-        <div className="bg-star" style={{ top: '66%', left: '56%' }}></div>
-        <div className="bg-star" style={{ top: '61%', left: '66%' }}></div>
-        <div className="bg-star" style={{ top: '67%', left: '76%' }}></div>
-        <div className="bg-star" style={{ top: '63%', left: '86%' }}></div>
-        <div className="bg-star" style={{ top: '69%', left: '96%' }}></div>
-        
-        <div className="bg-star" style={{ top: '75%', left: '10%' }}></div>
-        <div className="bg-star" style={{ top: '78%', left: '20%' }}></div>
-        <div className="bg-star" style={{ top: '72%', left: '30%' }}></div>
-        <div className="bg-star" style={{ top: '76%', left: '40%' }}></div>
-        <div className="bg-star" style={{ top: '74%', left: '50%' }}></div>
-        <div className="bg-star" style={{ top: '79%', left: '60%' }}></div>
-        <div className="bg-star" style={{ top: '71%', left: '70%' }}></div>
-        <div className="bg-star" style={{ top: '77%', left: '80%' }}></div>
-        <div className="bg-star" style={{ top: '73%', left: '90%' }}></div>
-        
-        <div className="bg-star" style={{ top: '85%', left: '4%' }}></div>
-        <div className="bg-star" style={{ top: '88%', left: '14%' }}></div>
-        <div className="bg-star" style={{ top: '82%', left: '24%' }}></div>
-        <div className="bg-star" style={{ top: '86%', left: '34%' }}></div>
-        <div className="bg-star" style={{ top: '84%', left: '44%' }}></div>
-        <div className="bg-star" style={{ top: '89%', left: '54%' }}></div>
-        <div className="bg-star" style={{ top: '81%', left: '64%' }}></div>
-        <div className="bg-star" style={{ top: '87%', left: '74%' }}></div>
-        <div className="bg-star" style={{ top: '83%', left: '84%' }}></div>
-        <div className="bg-star" style={{ top: '90%', left: '94%' }}></div>
+
+      <div className="absolute inset-0 opacity-30" aria-hidden="true">
+        {STARS.map(([top, left]) => (
+          <div key={`${top}-${left}`} className="bg-star" style={{ top: `${top}%`, left: `${left}%` }}></div>
+        ))}
       </div>
 
-      <div className="relative z-10">
-        {/* ZENARA Brand Section */}
-        <div className="py-8 sm:py-12 md:py-16 text-center">
-          {/* Decorative brand wordmark — not a heading (avoids a second <h1>
-              competing with each page's real H1). */}
-          <div aria-hidden="true" className="text-5xl sm:text-7xl md:text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-white/40 to-white/5 leading-none tracking-widest uppercase" style={{
-            fontFamily: 'Poppins, sans-serif',
-            fontWeight: '800',
-            letterSpacing: '0.1em',
-            textShadow: '0 0 20px rgba(255, 255, 255, 0.1)'
-          }}>
+      <div className="relative z-10 mx-auto max-w-7xl px-6">
+        {/* Decorative brand wordmark — not a heading (avoids a second <h1>). */}
+        <div className="pt-8 pb-6 text-center sm:pt-10 md:pt-12 md:pb-8">
+          <div
+            aria-hidden="true"
+            className="bg-gradient-to-b from-white/40 to-white/5 bg-clip-text whitespace-nowrap text-2xl font-extrabold uppercase leading-none text-transparent min-[400px]:text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
+            style={{ fontFamily: 'Poppins, sans-serif', letterSpacing: '0.15em' }}
+          >
             Zenara Designs
           </div>
-          
-          {/* Divider Line */}
-          <div className="mt-8 flex justify-center">
-            <div className="w-64 h-px bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent"></div>
-          </div>
+          <div className="mx-auto mt-5 h-px w-48 bg-gradient-to-r from-transparent via-cyan-400/60 to-transparent md:mt-6"></div>
         </div>
 
-        {/* Footer Content */}
-        <div className="max-w-7xl mx-auto px-6 py-8 sm:py-12">
-          <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-5 gap-6 md:gap-8 lg:gap-10 mb-8">
-            {/* Brand */}
-            <div className="col-span-2 md:col-span-2 lg:col-span-1 space-y-4">
-              <div className="flex items-center space-x-3">
-                <Image src={logo} alt="Zenara Designs - Professional Web Design Agency Markham" className="h-8 w-auto" width={32} height={32} />
-                <span className="font-light text-base sm:text-lg text-white">Zenara Designs</span>
+        <div className="grid gap-8 md:pb-8 lg:grid-cols-12 lg:gap-10 lg:pb-10">
+          {/* Brand + contact + newsletter */}
+          <div className="min-w-0 space-y-5 lg:col-span-4">
+            <div>
+              <div className="flex items-center gap-3">
+                {/* Decorative: the name is right beside it. */}
+                <Image src={logo} alt="" className="h-8 w-auto" width={32} height={32} />
+                <span className="text-lg font-light text-white">Zenara Designs</span>
               </div>
-              <p className="text-slate-300 max-w-md font-light text-xs sm:text-sm">
+              <p className="mt-3 max-w-sm text-sm font-light text-slate-300">
                 Creating high-performing websites for small businesses and professionals using modern development workflows.
               </p>
-              <div className="space-y-3">
-                {/* One location line, matching the Google Business Profile and schema. */}
-                <div className="flex items-baseline space-x-2 text-slate-300">
-                  <MapPin className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5" aria-hidden="true" />
-                  <span className="text-xs sm:text-sm">Markham, ON · Websites for GTA businesses</span>
-                </div>
-                <div className="flex items-baseline space-x-2 text-slate-300">
-                  <Mail className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5" />
-                  <a href={`mailto:${BUSINESS_EMAIL}`} className="hover:text-cyan-400 transition-colors break-all text-xs sm:text-sm" rel="noopener noreferrer">
-                    {BUSINESS_EMAIL}
-                  </a>
-                </div>
-                <div className="flex items-baseline space-x-2 text-slate-300">
-                  <Phone className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5" />
-                  <a href={`tel:${BUSINESS_PHONE_E164}`} className="hover:text-cyan-400 transition-colors text-xs sm:text-sm" rel="noopener noreferrer">
-                    {BUSINESS_PHONE}
-                  </a>
-                </div>
-                {SOCIAL_LINKS.map(({ href, label, ariaLabel, Icon }) => (
-                  <div key={href} className="flex items-baseline space-x-2 text-slate-300">
-                    <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 flex-shrink-0 mt-0.5" />
-                    <a
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-cyan-400 transition-colors text-xs sm:text-sm"
-                      aria-label={ariaLabel}
-                    >
-                      {label}
-                    </a>
-                  </div>
-                ))}
-              </div>
             </div>
 
-            {/* Quick Links */}
-            <div>
-              <h2 className="font-light mb-4 text-white text-sm sm:text-base">Quick Links</h2>
-              <div className="grid grid-cols-1 gap-x-1 gap-y-2">
-                {quickLinks.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
+            <ul className="space-y-2 text-sm text-slate-300">
+              {/* One location line, matching the Google Business Profile and schema. */}
+              <li className="flex items-center gap-2">
+                <MapPin className="h-4 w-4 flex-shrink-0 text-cyan-400/80" aria-hidden="true" />
+                Markham, ON · Websites for GTA businesses
+              </li>
+              <li className="flex flex-wrap items-center gap-x-4 gap-y-2">
+                <a href={`mailto:${BUSINESS_EMAIL}`} className="inline-flex items-center gap-2 hover:text-cyan-400 transition-colors">
+                  <Mail className="h-4 w-4 flex-shrink-0 text-cyan-400/80" aria-hidden="true" />
+                  {BUSINESS_EMAIL}
+                </a>
+                <a href={`tel:${BUSINESS_PHONE_E164}`} className="inline-flex items-center gap-2 hover:text-cyan-400 transition-colors">
+                  <Phone className="h-4 w-4 flex-shrink-0 text-cyan-400/80" aria-hidden="true" />
+                  {BUSINESS_PHONE}
+                </a>
+              </li>
+            </ul>
 
-            {/* Services */}
-            <div>
-              <h2 className="font-light mb-4 text-white text-sm sm:text-base">Services</h2>
-              <div className="grid grid-cols-1 gap-x-1 gap-y-2">
-                {SERVICE_LINKS.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-
-            {/* Industries */}
-            <div>
-              <h2 className="font-light mb-4 text-white text-sm sm:text-base">Industries</h2>
-              <div className="grid grid-cols-1 gap-x-1 gap-y-2">
-                <Link
-                  href="/renovations"
-                  className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
+            <div className="flex flex-wrap items-center gap-1.5">
+              {SOCIAL_LINKS.map(({ href, ariaLabel, Icon }) => (
+                <a
+                  key={href}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={ariaLabel}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-slate-300 transition-colors hover:border-cyan-400/50 hover:text-cyan-400"
                 >
-                  Renovations &amp; Contractors
-                </Link>
-                <Link
-                  href="/clinics"
-                  className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
-                >
-                  Physio &amp; Wellness Clinics
-                </Link>
-                <Link
-                  href="/accountants"
-                  className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
-                >
-                  Accountants &amp; Brokers
-                </Link>
-                <Link
-                  href="/lawyers"
-                  className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
-                >
-                  Law Firms
-                </Link>
-              </div>
-            </div>
-
-            {/* Additional Links */}
-            <div>
-              <h2 className="font-light mb-4 text-white text-sm sm:text-base">Resources</h2>
-              <div className="grid grid-cols-1 gap-x-1 gap-y-2">
-                {FOOTER_ADDITIONAL_LINKS.map((link) => (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          {/* Service areas — Markham-first internal link mesh for crawl discovery */}
-          <div className="border-t border-cyan-400/20 pt-6 pb-8">
-            <h2 className="font-light mb-3 text-white text-sm sm:text-base">Areas We Serve</h2>
-            <div className="flex flex-wrap gap-x-4 gap-y-2">
-              {SERVICE_AREA_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="text-slate-300 hover:text-cyan-400 transition-colors text-xs sm:text-sm"
-                >
-                  {link.label}
-                </Link>
+                  <Icon className="h-4 w-4" aria-hidden="true" />
+                </a>
               ))}
+              <Link
+                href="/contact"
+                className="ml-auto inline-flex h-10 items-center gap-1.5 whitespace-nowrap rounded-full bg-gradient-to-r from-cyan-400 to-purple-500 px-3.5 text-sm font-medium text-white transition-opacity hover:opacity-90 sm:ml-2"
+              >
+                <span className="sm:hidden">Let&apos;s talk</span><span className="hidden sm:inline">Start a project</span>
+                <ArrowRight className="h-4 w-4" aria-hidden="true" />
+              </Link>
             </div>
+
+            <FooterNewsletter />
           </div>
 
-          {/* Newsletter Subscription - Full Width Below */}
-          <div className="border-t border-cyan-400/20 pt-8">
-            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-              <div className="flex-shrink-0">
-                <h2 className="font-light mb-2 text-white text-sm sm:text-base">Newsletter</h2>
-                <p className="text-slate-300 text-xs sm:text-sm font-light">
-                  Subscribe to our newsletter and stay updated.
-                </p>
-              </div>
-              <div className="brevo-newsletter-form flex-1 max-w-md md:max-w-lg">
-                {showSuccess ? (
-                  <div 
-                    className="bg-gradient-to-r from-cyan-500/20 to-purple-500/20 backdrop-blur-md rounded-2xl p-6 border border-cyan-400/30 text-center w-full max-w-md"
-                    style={{
-                      animation: 'fadeIn 0.3s ease-in'
-                    }}
-                  >
-                    <CheckCircle className="h-12 w-12 text-cyan-400 mx-auto mb-3" />
-                    <p className="text-white font-normal mb-2">Successfully subscribed!</p>
-                    <p className="text-slate-300 text-sm font-light">Thank you for subscribing to our newsletter.</p>
-                  </div>
-                ) : (
-                  <div className="sib-form w-full" style={{ textAlign: 'center', backgroundColor: 'transparent' }}>
-                    <div id="sib-form-container" className="sib-form-container w-full">
-                      <div 
-                        id="sib-container" 
-                        className="sib-container--medium sib-container--horizontal" 
-                        style={{
-                          textAlign: 'center',
-                          backgroundColor: 'rgba(255, 255, 255, 0.05)',
-                          width: '100%',
-                          maxWidth: '100%',
-                          borderRadius: '12px',
-                          borderWidth: '1px',
-                          borderColor: 'rgba(139, 92, 246, 0.3)',
-                          borderStyle: 'solid',
-                          padding: '16px',
-                          backdropFilter: 'blur(10px)'
-                        }}
-                      >
-                            <form 
-                              id="sib-form" 
-                              onSubmit={handleNewsletterSubmit}
-                              className="w-full flex flex-col sm:flex-row items-stretch sm:items-center gap-3"
-                              style={{ width: '100%' }}
-                            >
-                              <div className="flex-1">
-                                <div className="sib-input sib-form-block">
-                                  <div className="form__entry entry_block">
-                                    <div className="form__label-row">
-                                      <div className="entry__field">
-                                        <input 
-                                          className="input" 
-                                          type="email" 
-                                          id="EMAIL" 
-                                          name="EMAIL" 
-                                          autoComplete="off" 
-                                          placeholder="Enter your email" 
-                                          data-required="true" 
-                                          required
-                                          value={email}
-                                          onChange={(e) => setEmail(e.target.value)}
-                                          disabled={isSubmitting}
-                                          style={{
-                                            width: '100%',
-                                            padding: '10px 16px',
-                                            borderRadius: '8px',
-                                            border: '1px solid rgba(139, 92, 246, 0.3)',
-                                            backgroundColor: 'rgba(15, 23, 42, 0.8)',
-                                            color: '#ffffff',
-                                            fontSize: '14px',
-                                            fontFamily: 'inherit',
-                                            outline: 'none',
-                                            transition: 'all 0.3s ease',
-                                            opacity: isSubmitting ? 0.6 : 1
-                                          }}
-                                          onFocus={(e) => {
-                                            e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.6)';
-                                            e.currentTarget.style.backgroundColor = 'rgba(15, 23, 42, 0.95)';
-                                          }}
-                                          onBlur={(e) => {
-                                            e.currentTarget.style.borderColor = 'rgba(139, 92, 246, 0.3)';
-                                            e.currentTarget.style.backgroundColor = 'rgba(15, 23, 42, 0.8)';
-                                          }}
-                                        />
-                                      </div>
-                                    </div>
-                                    <label className="entry__error entry__error--primary" style={{ fontSize: '12px', textAlign: 'left', fontFamily: 'Helvetica, sans-serif', color: '#fca5a5', backgroundColor: 'rgba(239, 68, 68, 0.1)', borderRadius: '3px', borderColor: '#ef4444', padding: '4px 8px', marginTop: '4px', display: 'block' }}></label>
-                                  </div>
-                                </div>
-                              </div>
-                              <div className="flex-shrink-0">
-                                <div className="sib-form-block">
-                                  <button 
-                                    className="sib-form-block__button sib-form-block__button-with-loader" 
-                                    type="submit"
-                                    disabled={isSubmitting}
-                                    style={{
-                                      fontSize: '13px',
-                                      textAlign: 'center',
-                                      fontWeight: '600',
-                                      fontFamily: 'Helvetica, sans-serif',
-                                      color: '#FFFFFF',
-                                      background: isSubmitting 
-                                        ? 'linear-gradient(to right, rgb(100, 116, 139), rgb(148, 163, 184))'
-                                        : 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247))',
-                                      borderRadius: '8px',
-                                      borderWidth: '0px',
-                                      padding: '10px 24px',
-                                      whiteSpace: 'nowrap',
-                                      cursor: isSubmitting ? 'not-allowed' : 'pointer',
-                                      transition: 'all 0.3s ease',
-                                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-                                      opacity: isSubmitting ? 0.7 : 1
-                                    }}
-                                    onMouseEnter={(e) => {
-                                      if (!isSubmitting) {
-                                        e.currentTarget.style.background = 'linear-gradient(to right, rgb(34, 211, 238), rgb(147, 51, 234))';
-                                        e.currentTarget.style.transform = 'translateY(-1px)';
-                                        e.currentTarget.style.boxShadow = '0 6px 8px -1px rgba(0, 0, 0, 0.15)';
-                                      }
-                                    }}
-                                    onMouseLeave={(e) => {
-                                      if (!isSubmitting) {
-                                        e.currentTarget.style.background = 'linear-gradient(to right, rgb(34, 211, 238), rgb(168, 85, 247))';
-                                        e.currentTarget.style.transform = 'translateY(0)';
-                                        e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1)';
-                                      }
-                                    }}
-                                  >
-                                    {isSubmitting ? 'SUBSCRIBING...' : 'SUBSCRIBE'}
-                                  </button>
-                                </div>
-                              </div>
-                          <input 
-                            type="text" 
-                            name="email_address_check" 
-                            defaultValue="" 
-                            readOnly
-                            className="input--hidden" 
-                            style={{ display: 'none', visibility: 'hidden', position: 'absolute', left: '-9999px' }}
-                            tabIndex={-1}
-                            aria-hidden="true"
-                          />
-                          <input type="hidden" name="locale" value="en" />
-                          <input type="hidden" name="html_type" value="simple" />
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-          </div>
+          <FooterNav />
+        </div>
 
-          <div className="border-t border-cyan-400/20 mt-8 pt-8 text-center">
-            <p className="text-slate-400 font-light">
-              © {currentYear} Zenara Designs. All rights reserved.
-            </p>
+        {/* Left-aligned from sm up, with extra bottom room, so the floating chat
+            launcher (bottom-right) never covers it at the end of the page. */}
+        <div className="flex flex-col items-center gap-2 py-5 text-xs text-slate-400 sm:flex-row sm:gap-6 sm:pb-10 md:border-t md:border-white/10">
+          <p className="text-xs text-slate-400">© {currentYear} Zenara Designs. All rights reserved.</p>
+          <div className="flex items-center gap-4 [&>a]:inline-flex [&>a]:items-center">
+            <Link href="/privacy" className="hover:text-cyan-400 transition-colors">Privacy Policy</Link>
+            <Link href="/contact" className="hover:text-cyan-400 transition-colors">Contact</Link>
           </div>
         </div>
       </div>

@@ -1,5 +1,5 @@
-// Server Component. It holds no state — Navbar, Footer and SkipLinks are each
-// client components already, and a Server Component can render them.
+// Server Component. It holds no state — Navbar and SkipLinks are client
+// components, Footer is a Server Component with small client islands.
 import { ReactNode } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
